@@ -2,6 +2,7 @@ import unittest
 
 from src.hd.liberty import parse_liberty
 from src.hd.redundancy import _classify
+from src.hd.selftest import depends_on_all_four_inputs, full_support_p_classes
 
 
 LIBERTY = r'''
@@ -40,6 +41,11 @@ class RedundancyTests(unittest.TestCase):
     def test_invalid_candidate(self):
         with self.assertRaises(ValueError):
             _classify(-1, self.cells)
+
+    def test_full_support_class_enumeration(self):
+        classes = full_support_p_classes()
+        self.assertEqual(len(classes), 3904)
+        self.assertTrue(all(depends_on_all_four_inputs(table) for table in classes))
 
 
 if __name__ == "__main__":

@@ -1,34 +1,32 @@
-import pytest
+import unittest
 
 from src.hd.liberty import LibertySyntaxError, parse_liberty, truth_table
 
 
-@pytest.mark.parametrize(
-    ("expression", "expected"),
-    [
-        ("A", 0x2),
-        ("!A", 0x1),
-        ("A & B", 0x8),
-        ("(!A) | (!B)", 0x7),
-        ("(A & !B) | (!A & B)", 0x6),
-        ("A B", 0x8),
-        ("A ^ B", 0x6),
-        ("A'", 0x1),
-    ],
-)
-def test_truth_table_convention(expression, expected):
-    _, table = truth_table(expression)
-    assert table == expected
+class LibertyTests(unittest.TestCase):
+    def test_truth_table_convention(self):
+        examples = (
+            ("A", 0x2),
+            ("!A", 0x1),
+            ("A & B", 0x8),
+            ("(!A) | (!B)", 0x7),
+            ("(A & !B) | (!A & B)", 0x6),
+            ("A B", 0x8),
+            ("A ^ B", 0x6),
+            ("A'", 0x1),
+        )
+        for expression, expected in examples:
+            with self.subTest(expression=expression):
+                _, table = truth_table(expression)
+                self.assertEqual(table, expected)
 
+    def test_four_input_and(self):
+        support, table = truth_table("A & B & C & D")
+        self.assertEqual(support, ("A", "B", "C", "D"))
+        self.assertEqual(table, 0x8000)
 
-def test_four_input_and():
-    support, table = truth_table("A & B & C & D")
-    assert support == ("A", "B", "C", "D")
-    assert table == 0x8000
-
-
-def test_liberty_filters_ineligible_groups():
-    text = r'''
+    def test_liberty_filters_ineligible_groups(self):
+        text = r'''
     library ("test") {
       cell ("good") {
         area : 1.0;
@@ -56,11 +54,17 @@ def test_liberty_filters_ineligible_groups():
       }
     }
     '''
-    cells = parse_liberty(text)
-    assert [(cell.name, cell.truth_table) for cell in cells] == [("good", 0x1)]
-    assert cells[0].area == 1.0
+        cells = parse_liberty(text)
+        self.assertEqual(
+            [(cell.name, cell.truth_table) for cell in cells],
+            [("good", 0x1)],
+        )
+        self.assertEqual(cells[0].area, 1.0)
+
+    def test_invalid_expression_is_explicit(self):
+        with self.assertRaises(LibertySyntaxError):
+            truth_table("A &")
 
 
-def test_invalid_expression_is_explicit():
-    with pytest.raises(LibertySyntaxError):
-        truth_table("A &")
+if __name__ == "__main__":
+    unittest.main()

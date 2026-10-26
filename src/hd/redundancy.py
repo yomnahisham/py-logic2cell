@@ -5,6 +5,7 @@ from __future__ import annotations
 from functools import lru_cache
 from itertools import permutations, product
 import os
+from dataclasses import dataclass
 
 from .classes import canonical_truth_table
 from .liberty import Cell, parse_liberty_file
@@ -59,15 +60,9 @@ def _permute_four(table: int, permutation: tuple[int, ...]) -> int:
     return result
 
 
-def _cell_candidate_tables(cell: Cell) -> set[int]:
-    base = _expand(cell.truth_table, len(cell.support))
-    return _candidate_permutations(base)
-
-
-def _contained(table: int, cell: Cell) -> bool:
+def _substituted_tables(cell: Cell) -> set[int]:
     support_size = len(cell.support)
-    if support_size > 4:
-        return False
+    tables: set[int] = set()
     for mapping in product(range(6), repeat=support_size):
         generated = 0
         for assignment in range(16):
@@ -79,9 +74,40 @@ def _contained(table: int, cell: Cell) -> bool:
                     source |= 1 << source_index
             if (cell.truth_table >> source) & 1:
                 generated |= 1 << assignment
-        if generated in _candidate_permutations(table):
-            return True
-    return False
+        tables.update(_candidate_permutations(generated))
+    return tables
+
+
+@dataclass(frozen=True)
+class _ReferenceIndex:
+    exact: dict[int, str]
+    inverted: dict[int, str]
+    contained: dict[int, str]
+
+
+@lru_cache(maxsize=1)
+def _reference_index(cells: tuple[Cell, ...]) -> _ReferenceIndex:
+    exact: dict[int, str] = {}
+    inverted: dict[int, str] = {}
+    contained: dict[int, str] = {}
+    for cell in cells:
+        if len(cell.support) > 4:
+            continue
+        table = _expand(cell.truth_table, len(cell.support))
+        for candidate_class in _candidate_permutations(table):
+            exact.setdefault(candidate_class, cell.name)
+        inverted.setdefault(
+            canonical_truth_table(table ^ 0xFFFF, 4),
+            cell.name,
+        )
+        for input_index in range(4):
+            inverted.setdefault(
+                canonical_truth_table(_invert_input(table, input_index), 4),
+                cell.name,
+            )
+        for candidate_class in _substituted_tables(cell):
+            contained.setdefault(candidate_class, cell.name)
+    return _ReferenceIndex(exact, inverted, contained)
 
 
 @lru_cache(maxsize=1)
@@ -98,25 +124,21 @@ def _classify(tt16: int, cells: tuple[Cell, ...]) -> Classification:
     if not isinstance(tt16, int) or tt16 < 0 or tt16 > 0xFFFF:
         raise ValueError("tt16 must be an integer in the range 0x0000..0xffff")
     candidate_class = canonical_truth_table(tt16, 4)
-    tables: list[tuple[Cell, int]] = []
-    for cell in cells:
-        if len(cell.support) <= 4:
-            tables.append((cell, _expand(cell.truth_table, len(cell.support))))
-
-    for cell, table in tables:
-        if canonical_truth_table(table, 4) == candidate_class:
-            return "exists", cell.name, "equal after input permutation"
-
-    for cell, table in tables:
-        if canonical_truth_table(table ^ 0xFFFF, 4) == candidate_class:
-            return "exists_inv", cell.name, "equal after output inversion and input permutation"
-        for input_index in range(4):
-            if canonical_truth_table(_invert_input(table, input_index), 4) == candidate_class:
-                return "exists_inv", cell.name, "equal after one input inversion and permutation"
-
-    for cell in cells:
-        if _contained(tt16, cell):
-            return "contained", cell.name, "equal after input substitution and tying inputs"
+    index = _reference_index(cells)
+    if candidate_class in index.exact:
+        return "exists", index.exact[candidate_class], "equal after input permutation"
+    if candidate_class in index.inverted:
+        return (
+            "exists_inv",
+            index.inverted[candidate_class],
+            "equal after output or one-input inversion and permutation",
+        )
+    if candidate_class in index.contained:
+        return (
+            "contained",
+            index.contained[candidate_class],
+            "equal after input substitution and tying inputs",
+        )
 
     return "new", None, "no HD function matched"
 

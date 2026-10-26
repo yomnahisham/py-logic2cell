@@ -7,6 +7,9 @@ IN       ?=
 
 .PHONY: setup check test all demo clean
 
+-include mk/m1.mk
+-include mk/m2.mk
+
 setup:            ## environment, and links to the PDK and the given files
 	ln -sfn $(PDK_ROOT)/sky130A pdk
 	ln -sfn $(GIVEN) given
