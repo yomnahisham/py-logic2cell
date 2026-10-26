@@ -6,7 +6,7 @@ from collections import Counter
 import os
 from pathlib import Path
 
-from .classes import canonical_truth_table
+from .classes import canonical_truth_table, npn_class_count
 from .liberty import Cell, parse_liberty_file
 from .redundancy import Classification, _classify
 
@@ -54,12 +54,37 @@ def write_selftest_report(
     """Write observed redundancy counts without embedding expected values."""
 
     counts = run_full_selftest(library_path)
+    cells = tuple(parse_liberty_file(str(library_path)))
+    hd_cells_checked = 0
+    hd_cells_exists = 0
+    for cell in cells:
+        if len(cell.support) <= 4:
+            hd_cells_checked += 1
+            expanded = _expand_for_selftest(cell.truth_table, len(cell.support))
+            if _classify(expanded, cells)[0] == "exists":
+                hd_cells_exists += 1
+    npn_count = npn_class_count(4)
     output = Path(output_path)
     output.parent.mkdir(parents=True, exist_ok=True)
     total = sum(counts.values())
     with output.open("w", encoding="utf-8") as file:
         file.write(f"library={library_path}\n")
         file.write(f"full_support_p_classes={total}\n")
+        file.write(f"hd_cells_checked={hd_cells_checked}\n")
+        file.write(f"hd_cells_exists={hd_cells_exists}\n")
+        file.write(f"npn_4_input_classes={npn_count}\n")
         for name in ("exists", "exists_inv", "contained", "new"):
             file.write(f"{name}={counts[name]}\n")
     return counts
+
+
+def _expand_for_selftest(table: int, support_size: int) -> int:
+    expanded = 0
+    for assignment in range(16):
+        source = sum(
+            ((assignment >> index) & 1) << index
+            for index in range(support_size)
+        )
+        if (table >> source) & 1:
+            expanded |= 1 << assignment
+    return expanded

@@ -39,6 +39,54 @@ def canonical_truth_table(table: int, support_size: int) -> int:
     )
 
 
+def npn_canonical_truth_table(table: int, support_size: int) -> int:
+    """Return the smallest table under input and output polarity changes."""
+
+    width = 1 << support_size
+    full_mask = (1 << width) - 1
+    variants = []
+    for input_mask in range(width):
+        variant = table
+        for input_index in range(support_size):
+            if input_mask & (1 << input_index):
+                variant = _invert_input(variant, input_index, support_size)
+        variants.extend((variant, variant ^ full_mask))
+    return min(
+        permute_truth_table(variant, permutation)
+        for variant in variants
+        for permutation in permutations(range(support_size))
+    )
+
+
+def npn_class_count(support_size: int) -> int:
+    """Count NPN classes by removing each transformation orbit once."""
+
+    unseen = set(range(1 << (1 << support_size)))
+    count = 0
+    while unseen:
+        representative = next(iter(unseen))
+        count += 1
+        orbit = set()
+        for input_mask in range(1 << support_size):
+            variant = representative
+            for input_index in range(support_size):
+                if input_mask & (1 << input_index):
+                    variant = _invert_input(variant, input_index, support_size)
+            for output_variant in (variant, variant ^ ((1 << (1 << support_size)) - 1)):
+                for permutation in permutations(range(support_size)):
+                    orbit.add(permute_truth_table(output_variant, permutation))
+        unseen.difference_update(orbit)
+    return count
+
+
+def _invert_input(table: int, input_index: int, support_size: int) -> int:
+    result = 0
+    for assignment in range(1 << support_size):
+        if (table >> (assignment ^ (1 << input_index))) & 1:
+            result |= 1 << assignment
+    return result
+
+
 def p_class_id(table: int, support_size: int) -> str:
     """Return a stable printable P-class identifier."""
 
