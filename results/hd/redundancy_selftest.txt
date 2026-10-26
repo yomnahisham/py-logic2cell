@@ -1,5 +1,8 @@
 library=/home/alikhattab/work/pdks/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 full_support_p_classes=3904
+hd_cells_checked=258
+hd_cells_exists=258
+npn_4_input_classes=222
 exists=24
 exists_inv=20
 contained=0
