@@ -66,13 +66,13 @@ def has_y_band(boxes, ymin, ymax):
     """True if a shape has the expected vertical extent."""
     return any(close(b[1], ymin) and close(b[3], ymax) for b in boxes)
 
-def main():
-    if not PLAN.exists():
-        raise FileNotFoundError(f"Plan not found: {PLAN}")
+def main(plan_path=PLAN):
+    if not plan_path.exists():
+        raise FileNotFoundError(f"Plan not found: {plan_path}")
     if not GDS.exists():
         raise FileNotFoundError(f"Combined GDS not found: {GDS}")
 
-    plan = json.loads(PLAN.read_text())
+    plan = json.loads(plan_path.read_text())
     layout = db.Layout()
     layout.read(str(GDS))
     dbu = layout.dbu
@@ -180,4 +180,4 @@ def main():
         raise SystemExit(1)
 
 if __name__ == "__main__":
-    main()
+    main(Path(sys.argv[1]) if len(sys.argv) > 1 else PLAN)
