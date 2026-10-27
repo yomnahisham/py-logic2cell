@@ -57,11 +57,18 @@ class ClassRow:
     single_stage: str
 
 
+def _single_stage(cell: Cell) -> str:
+    from src.common.stage import single_stage
+    if len(cell.support) > 4:
+        return "n/a"
+    return "yes" if single_stage(cell.truth_table, len(cell.support)) else "no"
+
+
 def class_rows(cells: list[Cell]) -> list[ClassRow]:
     """Build deterministic rows for the HD class table.
 
-    Single-stage transistor topology is intentionally left as ``unknown`` until
-    the project defines and implements the CMOS topology test.
+    single_stage is yes when one static CMOS stage with at most 3 transistors in
+    series computes the cell's function, n/a for cells with more than 4 inputs.
     """
 
     rows = [
@@ -71,7 +78,7 @@ def class_rows(cells: list[Cell]) -> list[ClassRow]:
             truth_table=f"0x{cell.truth_table:x}",
             p_class_id=p_class_id(cell.truth_table, len(cell.support)),
             support_size=len(cell.support),
-            single_stage="unknown",
+            single_stage=_single_stage(cell),
         )
         for cell in cells
     ]
@@ -100,3 +107,9 @@ def write_class_table(cells: list[Cell], path: str | Path) -> None:
             )
             for row in rows
         )
+
+
+if __name__ == "__main__":
+    import os
+    from .liberty import parse_liberty_file
+    write_class_table(parse_liberty_file(os.environ["HD_LIB_FULL"]), "results/hd/hd_classes.csv")

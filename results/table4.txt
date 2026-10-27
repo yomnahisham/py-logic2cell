@@ -1,0 +1,14 @@
+classes up to input order, all 4 inputs used: 3904
+contained: 38
+exists: 24
+exists_inv: 20
+new: 3822
+new, one static CMOS stage: 9
+new, one stage, at most 3 in series and 12 transistors: 6
+  0x0017  12 transistors, series 3/3  !(D | ((A | B) & (C | (A & B))))
+  0x011F  12 transistors, series 2/3  !((C & D) | ((A | B) & (C | D)))
+  0x013F  12 transistors, series 3/3  !((B | D) & (C | (D & (A | B))))
+  0x037F  12 transistors, series 3/3  !((B & D) | (C & (D | (A & B))))
+  0x077F  12 transistors, series 3/3  !((C & D) | (A & B & (C | D)))
+  0x17FF  12 transistors, series 3/3  !(D & ((A & B) | (C & (A | B))))
+one stage, every input used once: 8 ({'exists': 6, 'contained': 2})
