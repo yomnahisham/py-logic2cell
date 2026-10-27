@@ -1,0 +1,1 @@
+{"request_id":"X-5","name":"dd2_g5__nand2_1","inputs":["A","B"],"output":"Y","expression":"(A B)'","truth_table":"0x7","sizing":"hd"}
