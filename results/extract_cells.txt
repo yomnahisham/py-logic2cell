@@ -1,4 +1,4 @@
-inv_1: spice 4 lines, lef 78 lines, boundary 1.38 x 2.72 um (GDS boundary)
-nand2_1: spice 6 lines, lef 87 lines, boundary 1.38 x 2.72 um (GDS boundary)
-tapvpwrvgnd_1: spice 2 lines, lef 40 lines, boundary 0.46 x 2.72 um (LEF SIZE fallback)
-fill_1: spice 2 lines, lef 50 lines, boundary 0.46 x 2.72 um (LEF SIZE fallback)
+inv_1: spice 4 lines, lef 71 lines, boundary 1.38 x 2.72 um (GDS boundary)
+nand2_1: spice 6 lines, lef 80 lines, boundary 1.38 x 2.72 um (GDS boundary)
+tapvpwrvgnd_1: spice 2 lines, lef 37 lines, boundary 0.46 x 2.72 um (LEF SIZE fallback)
+fill_1: spice 2 lines, lef 47 lines, boundary 0.46 x 2.72 um (LEF SIZE fallback)
