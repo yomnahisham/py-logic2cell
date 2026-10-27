@@ -1,325 +1,325 @@
 cell,inputs,truth_table,p_class_id,support_size,single_stage
-sky130_fd_sc_hd__a2111o_1,A1 A2 B1 C1 D1,0xfffffff8,p5_fffefefe,5,unknown
-sky130_fd_sc_hd__a2111o_2,A1 A2 B1 C1 D1,0xfffffff8,p5_fffefefe,5,unknown
-sky130_fd_sc_hd__a2111o_4,A1 A2 B1 C1 D1,0xfffffff8,p5_fffefefe,5,unknown
-sky130_fd_sc_hd__a2111oi_0,A1 A2 B1 C1 D1,0x10003,p5_00000007,5,unknown
-sky130_fd_sc_hd__a2111oi_1,A1 A2 B1 C1 D1,0x10003,p5_00000007,5,unknown
-sky130_fd_sc_hd__a2111oi_2,A1 A2 B1 C1 D1,0x10003,p5_00000007,5,unknown
-sky130_fd_sc_hd__a2111oi_4,A1 A2 B1 C1 D1,0x10003,p5_00000007,5,unknown
-sky130_fd_sc_hd__a211o_1,A1 A2 B1 C1,0xfff8,p4_feee,4,unknown
-sky130_fd_sc_hd__a211o_2,A1 A2 B1 C1,0xfff8,p4_feee,4,unknown
-sky130_fd_sc_hd__a211o_4,A1 A2 B1 C1,0xfff8,p4_feee,4,unknown
-sky130_fd_sc_hd__a211oi_1,A1 A2 B1 C1,0x103,p4_0007,4,unknown
-sky130_fd_sc_hd__a211oi_2,A1 A2 B1 C1,0x103,p4_0007,4,unknown
-sky130_fd_sc_hd__a211oi_4,A1 A2 B1 C1,0x103,p4_0007,4,unknown
-sky130_fd_sc_hd__a21bo_1,A1 A2 B1_N,0x8f,p3_8f,3,unknown
-sky130_fd_sc_hd__a21bo_2,A1 A2 B1_N,0x8f,p3_8f,3,unknown
-sky130_fd_sc_hd__a21bo_4,A1 A2 B1_N,0x8f,p3_8f,3,unknown
-sky130_fd_sc_hd__a21boi_0,A1 A2 B1_N,0x4c,p3_2a,3,unknown
-sky130_fd_sc_hd__a21boi_1,A1 A2 B1_N,0x4c,p3_2a,3,unknown
-sky130_fd_sc_hd__a21boi_2,A1 A2 B1_N,0x4c,p3_2a,3,unknown
-sky130_fd_sc_hd__a21boi_4,A1 A2 B1_N,0x4c,p3_2a,3,unknown
-sky130_fd_sc_hd__a21o_1,A1 A2 B1,0xf8,p3_ea,3,unknown
-sky130_fd_sc_hd__a21o_2,A1 A2 B1,0xf8,p3_ea,3,unknown
-sky130_fd_sc_hd__a21o_4,A1 A2 B1,0xf8,p3_ea,3,unknown
-sky130_fd_sc_hd__a21oi_1,A1 A2 B1,0x13,p3_07,3,unknown
-sky130_fd_sc_hd__a21oi_2,A1 A2 B1,0x13,p3_07,3,unknown
-sky130_fd_sc_hd__a21oi_4,A1 A2 B1,0x13,p3_07,3,unknown
-sky130_fd_sc_hd__a221o_1,A1 A2 B1 B2 C1,0xfffff888,p5_feeefaaa,5,unknown
-sky130_fd_sc_hd__a221o_2,A1 A2 B1 B2 C1,0xfffff888,p5_feeefaaa,5,unknown
-sky130_fd_sc_hd__a221o_4,A1 A2 B1 B2 C1,0xfffff888,p5_feeefaaa,5,unknown
-sky130_fd_sc_hd__a221oi_1,A1 A2 B1 B2 C1,0x105030f,p5_00000777,5,unknown
-sky130_fd_sc_hd__a221oi_2,A1 A2 B1 B2 C1,0x105030f,p5_00000777,5,unknown
-sky130_fd_sc_hd__a221oi_4,A1 A2 B1 B2 C1,0x105030f,p5_00000777,5,unknown
-sky130_fd_sc_hd__a222oi_1,A1 A2 B1 B2 C1 C2,0x111055503330fff,p6_0000077707770777,6,unknown
-sky130_fd_sc_hd__a22o_1,A1 A2 B1 B2,0xf888,p4_eac0,4,unknown
-sky130_fd_sc_hd__a22o_2,A1 A2 B1 B2,0xf888,p4_eac0,4,unknown
-sky130_fd_sc_hd__a22o_4,A1 A2 B1 B2,0xf888,p4_eac0,4,unknown
-sky130_fd_sc_hd__a22oi_1,A1 A2 B1 B2,0x153f,p4_0777,4,unknown
-sky130_fd_sc_hd__a22oi_2,A1 A2 B1 B2,0x153f,p4_0777,4,unknown
-sky130_fd_sc_hd__a22oi_4,A1 A2 B1 B2,0x153f,p4_0777,4,unknown
-sky130_fd_sc_hd__a2bb2o_1,A1_N A2_N B1 B2,0x888f,p4_888f,4,unknown
-sky130_fd_sc_hd__a2bb2o_2,A1_N A2_N B1 B2,0x888f,p4_888f,4,unknown
-sky130_fd_sc_hd__a2bb2o_4,A1_N A2_N B1 B2,0x888f,p4_888f,4,unknown
-sky130_fd_sc_hd__a2bb2oi_1,A1_N A2_N B1 B2,0x3f2a,p4_0eee,4,unknown
-sky130_fd_sc_hd__a2bb2oi_2,A1_N A2_N B1 B2,0x3f2a,p4_0eee,4,unknown
-sky130_fd_sc_hd__a2bb2oi_4,A1_N A2_N B1 B2,0x3f2a,p4_0eee,4,unknown
-sky130_fd_sc_hd__a311o_1,A1 A2 A3 B1 C1,0xffffff80,p5_feeeeeee,5,unknown
-sky130_fd_sc_hd__a311o_2,A1 A2 A3 B1 C1,0xffffff80,p5_feeeeeee,5,unknown
-sky130_fd_sc_hd__a311o_4,A1 A2 A3 B1 C1,0xffffff80,p5_feeeeeee,5,unknown
-sky130_fd_sc_hd__a311oi_1,A1 A2 A3 B1 C1,0x1030303,p5_0000007f,5,unknown
-sky130_fd_sc_hd__a311oi_2,A1 A2 A3 B1 C1,0x1030303,p5_0000007f,5,unknown
-sky130_fd_sc_hd__a311oi_4,A1 A2 A3 B1 C1,0x1030303,p5_0000007f,5,unknown
-sky130_fd_sc_hd__a31o_1,A1 A2 A3 B1,0xff80,p4_eaaa,4,unknown
-sky130_fd_sc_hd__a31o_2,A1 A2 A3 B1,0xff80,p4_eaaa,4,unknown
-sky130_fd_sc_hd__a31o_4,A1 A2 A3 B1,0xff80,p4_eaaa,4,unknown
-sky130_fd_sc_hd__a31oi_1,A1 A2 A3 B1,0x1333,p4_007f,4,unknown
-sky130_fd_sc_hd__a31oi_2,A1 A2 A3 B1,0x1333,p4_007f,4,unknown
-sky130_fd_sc_hd__a31oi_4,A1 A2 A3 B1,0x1333,p4_007f,4,unknown
-sky130_fd_sc_hd__a32o_1,A1 A2 A3 B1 B2,0xff808080,p5_eaaac000,5,unknown
-sky130_fd_sc_hd__a32o_2,A1 A2 A3 B1 B2,0xff808080,p5_eaaac000,5,unknown
-sky130_fd_sc_hd__a32o_4,A1 A2 A3 B1 B2,0xff808080,p5_eaaac000,5,unknown
-sky130_fd_sc_hd__a32oi_1,A1 A2 A3 B1 B2,0x153f3f3f,p5_007f7f7f,5,unknown
-sky130_fd_sc_hd__a32oi_2,A1 A2 A3 B1 B2,0x153f3f3f,p5_007f7f7f,5,unknown
-sky130_fd_sc_hd__a32oi_4,A1 A2 A3 B1 B2,0x153f3f3f,p5_007f7f7f,5,unknown
-sky130_fd_sc_hd__a41o_1,A1 A2 A3 A4 B1,0xffff8000,p5_eaaaaaaa,5,unknown
-sky130_fd_sc_hd__a41o_2,A1 A2 A3 A4 B1,0xffff8000,p5_eaaaaaaa,5,unknown
-sky130_fd_sc_hd__a41o_4,A1 A2 A3 A4 B1,0xffff8000,p5_eaaaaaaa,5,unknown
-sky130_fd_sc_hd__a41oi_1,A1 A2 A3 A4 B1,0x13333333,p5_00007fff,5,unknown
-sky130_fd_sc_hd__a41oi_2,A1 A2 A3 A4 B1,0x13333333,p5_00007fff,5,unknown
-sky130_fd_sc_hd__a41oi_4,A1 A2 A3 A4 B1,0x13333333,p5_00007fff,5,unknown
-sky130_fd_sc_hd__and2_0,A B,0x8,p2_8,2,unknown
-sky130_fd_sc_hd__and2_1,A B,0x8,p2_8,2,unknown
-sky130_fd_sc_hd__and2_2,A B,0x8,p2_8,2,unknown
-sky130_fd_sc_hd__and2_4,A B,0x8,p2_8,2,unknown
-sky130_fd_sc_hd__and2b_1,A_N B,0x4,p2_2,2,unknown
-sky130_fd_sc_hd__and2b_2,A_N B,0x4,p2_2,2,unknown
-sky130_fd_sc_hd__and2b_4,A_N B,0x4,p2_2,2,unknown
-sky130_fd_sc_hd__and3_1,A B C,0x80,p3_80,3,unknown
-sky130_fd_sc_hd__and3_2,A B C,0x80,p3_80,3,unknown
-sky130_fd_sc_hd__and3_4,A B C,0x80,p3_80,3,unknown
-sky130_fd_sc_hd__and3b_1,A_N B C,0x40,p3_08,3,unknown
-sky130_fd_sc_hd__and3b_2,A_N B C,0x40,p3_08,3,unknown
-sky130_fd_sc_hd__and3b_4,A_N B C,0x40,p3_08,3,unknown
-sky130_fd_sc_hd__and4_1,A B C D,0x8000,p4_8000,4,unknown
-sky130_fd_sc_hd__and4_2,A B C D,0x8000,p4_8000,4,unknown
-sky130_fd_sc_hd__and4_4,A B C D,0x8000,p4_8000,4,unknown
-sky130_fd_sc_hd__and4b_1,A_N B C D,0x4000,p4_0080,4,unknown
-sky130_fd_sc_hd__and4b_2,A_N B C D,0x4000,p4_0080,4,unknown
-sky130_fd_sc_hd__and4b_4,A_N B C D,0x4000,p4_0080,4,unknown
-sky130_fd_sc_hd__and4bb_1,A_N B_N C D,0x1000,p4_0008,4,unknown
-sky130_fd_sc_hd__and4bb_2,A_N B_N C D,0x1000,p4_0008,4,unknown
-sky130_fd_sc_hd__and4bb_4,A_N B_N C D,0x1000,p4_0008,4,unknown
-sky130_fd_sc_hd__buf_1,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__buf_12,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__buf_16,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__buf_2,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__buf_4,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__buf_6,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__buf_8,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__bufbuf_16,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__bufbuf_8,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__bufinv_16,A,0x1,p1_1,1,unknown
-sky130_fd_sc_hd__bufinv_8,A,0x1,p1_1,1,unknown
-sky130_fd_sc_hd__clkbuf_1,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__clkbuf_16,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__clkbuf_2,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__clkbuf_4,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__clkbuf_8,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__clkdlybuf4s15_1,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__clkdlybuf4s15_2,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__clkdlybuf4s18_1,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__clkdlybuf4s18_2,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__clkdlybuf4s25_1,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__clkdlybuf4s25_2,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__clkdlybuf4s50_1,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__clkdlybuf4s50_2,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__clkinv_1,A,0x1,p1_1,1,unknown
-sky130_fd_sc_hd__clkinv_16,A,0x1,p1_1,1,unknown
-sky130_fd_sc_hd__clkinv_2,A,0x1,p1_1,1,unknown
-sky130_fd_sc_hd__clkinv_4,A,0x1,p1_1,1,unknown
-sky130_fd_sc_hd__clkinv_8,A,0x1,p1_1,1,unknown
-sky130_fd_sc_hd__clkinvlp_2,A,0x1,p1_1,1,unknown
-sky130_fd_sc_hd__clkinvlp_4,A,0x1,p1_1,1,unknown
-sky130_fd_sc_hd__dlygate4sd1_1,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__dlygate4sd2_1,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__dlygate4sd3_1,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__dlymetal6s2s_1,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__dlymetal6s4s_1,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__dlymetal6s6s_1,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__inv_1,A,0x1,p1_1,1,unknown
-sky130_fd_sc_hd__inv_12,A,0x1,p1_1,1,unknown
-sky130_fd_sc_hd__inv_16,A,0x1,p1_1,1,unknown
-sky130_fd_sc_hd__inv_2,A,0x1,p1_1,1,unknown
-sky130_fd_sc_hd__inv_4,A,0x1,p1_1,1,unknown
-sky130_fd_sc_hd__inv_6,A,0x1,p1_1,1,unknown
-sky130_fd_sc_hd__inv_8,A,0x1,p1_1,1,unknown
-sky130_fd_sc_hd__lpflow_clkbufkapwr_1,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__lpflow_clkbufkapwr_16,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__lpflow_clkbufkapwr_2,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__lpflow_clkbufkapwr_4,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__lpflow_clkbufkapwr_8,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__lpflow_clkinvkapwr_1,A,0x1,p1_1,1,unknown
-sky130_fd_sc_hd__lpflow_clkinvkapwr_16,A,0x1,p1_1,1,unknown
-sky130_fd_sc_hd__lpflow_clkinvkapwr_2,A,0x1,p1_1,1,unknown
-sky130_fd_sc_hd__lpflow_clkinvkapwr_4,A,0x1,p1_1,1,unknown
-sky130_fd_sc_hd__lpflow_clkinvkapwr_8,A,0x1,p1_1,1,unknown
-sky130_fd_sc_hd__lpflow_inputiso0n_1,A SLEEP_B,0x8,p2_8,2,unknown
-sky130_fd_sc_hd__lpflow_inputiso0p_1,A SLEEP,0x4,p2_2,2,unknown
-sky130_fd_sc_hd__lpflow_inputiso1n_1,A SLEEP_B,0xb,p2_b,2,unknown
-sky130_fd_sc_hd__lpflow_inputiso1p_1,A SLEEP,0xe,p2_e,2,unknown
-sky130_fd_sc_hd__lpflow_isobufsrc_1,A SLEEP,0x2,p2_2,2,unknown
-sky130_fd_sc_hd__lpflow_isobufsrc_16,A SLEEP,0x2,p2_2,2,unknown
-sky130_fd_sc_hd__lpflow_isobufsrc_2,A SLEEP,0x2,p2_2,2,unknown
-sky130_fd_sc_hd__lpflow_isobufsrc_4,A SLEEP,0x2,p2_2,2,unknown
-sky130_fd_sc_hd__lpflow_isobufsrc_8,A SLEEP,0x2,p2_2,2,unknown
-sky130_fd_sc_hd__lpflow_isobufsrckapwr_16,A SLEEP,0x2,p2_2,2,unknown
-sky130_fd_sc_hd__lpflow_lsbuf_lh_hl_isowell_tap_1,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__lpflow_lsbuf_lh_hl_isowell_tap_2,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__lpflow_lsbuf_lh_hl_isowell_tap_4,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__lpflow_lsbuf_lh_isowell_4,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__lpflow_lsbuf_lh_isowell_tap_1,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__lpflow_lsbuf_lh_isowell_tap_2,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__lpflow_lsbuf_lh_isowell_tap_4,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__macro_sparecell,,0x0,p0_0,0,unknown
-sky130_fd_sc_hd__maj3_1,A B C,0xe8,p3_e8,3,unknown
-sky130_fd_sc_hd__maj3_2,A B C,0xe8,p3_e8,3,unknown
-sky130_fd_sc_hd__maj3_4,A B C,0xe8,p3_e8,3,unknown
-sky130_fd_sc_hd__mux2_1,A0 A1 S,0xe2,p3_ac,3,unknown
-sky130_fd_sc_hd__mux2_2,A0 A1 S,0xe2,p3_ac,3,unknown
-sky130_fd_sc_hd__mux2_4,A0 A1 S,0xe2,p3_ac,3,unknown
-sky130_fd_sc_hd__mux2_8,A0 A1 S,0xe2,p3_ac,3,unknown
-sky130_fd_sc_hd__mux2i_1,A0 A1 S,0x1d,p3_1b,3,unknown
-sky130_fd_sc_hd__mux2i_2,A0 A1 S,0x1d,p3_1b,3,unknown
-sky130_fd_sc_hd__mux2i_4,A0 A1 S,0x1d,p3_1b,3,unknown
-sky130_fd_sc_hd__mux4_1,A0 A1 A2 A3 S0 S1,0xfef2cec23e320e02,p6_aaaaccccf0f0ff00,6,unknown
-sky130_fd_sc_hd__mux4_2,A0 A1 A2 A3 S0 S1,0xfef2cec23e320e02,p6_aaaaccccf0f0ff00,6,unknown
-sky130_fd_sc_hd__mux4_4,A0 A1 A2 A3 S0 S1,0xfef2cec23e320e02,p6_aaaaccccf0f0ff00,6,unknown
-sky130_fd_sc_hd__nand2_1,A B,0x7,p2_7,2,unknown
-sky130_fd_sc_hd__nand2_2,A B,0x7,p2_7,2,unknown
-sky130_fd_sc_hd__nand2_4,A B,0x7,p2_7,2,unknown
-sky130_fd_sc_hd__nand2_8,A B,0x7,p2_7,2,unknown
-sky130_fd_sc_hd__nand2b_1,A_N B,0xb,p2_b,2,unknown
-sky130_fd_sc_hd__nand2b_2,A_N B,0xb,p2_b,2,unknown
-sky130_fd_sc_hd__nand2b_4,A_N B,0xb,p2_b,2,unknown
-sky130_fd_sc_hd__nand3_1,A B C,0x7f,p3_7f,3,unknown
-sky130_fd_sc_hd__nand3_2,A B C,0x7f,p3_7f,3,unknown
-sky130_fd_sc_hd__nand3_4,A B C,0x7f,p3_7f,3,unknown
-sky130_fd_sc_hd__nand3b_1,A_N B C,0xbf,p3_bf,3,unknown
-sky130_fd_sc_hd__nand3b_2,A_N B C,0xbf,p3_bf,3,unknown
-sky130_fd_sc_hd__nand3b_4,A_N B C,0xbf,p3_bf,3,unknown
-sky130_fd_sc_hd__nand4_1,A B C D,0x7fff,p4_7fff,4,unknown
-sky130_fd_sc_hd__nand4_2,A B C D,0x7fff,p4_7fff,4,unknown
-sky130_fd_sc_hd__nand4_4,A B C D,0x7fff,p4_7fff,4,unknown
-sky130_fd_sc_hd__nand4b_1,A_N B C D,0xbfff,p4_bfff,4,unknown
-sky130_fd_sc_hd__nand4b_2,A_N B C D,0xbfff,p4_bfff,4,unknown
-sky130_fd_sc_hd__nand4b_4,A_N B C D,0xbfff,p4_bfff,4,unknown
-sky130_fd_sc_hd__nand4bb_1,A_N B_N C D,0xefff,p4_efff,4,unknown
-sky130_fd_sc_hd__nand4bb_2,A_N B_N C D,0xefff,p4_efff,4,unknown
-sky130_fd_sc_hd__nand4bb_4,A_N B_N C D,0xefff,p4_efff,4,unknown
-sky130_fd_sc_hd__nor2_1,A B,0x1,p2_1,2,unknown
-sky130_fd_sc_hd__nor2_2,A B,0x1,p2_1,2,unknown
-sky130_fd_sc_hd__nor2_4,A B,0x1,p2_1,2,unknown
-sky130_fd_sc_hd__nor2_8,A B,0x1,p2_1,2,unknown
-sky130_fd_sc_hd__nor2b_1,A B_N,0x4,p2_2,2,unknown
-sky130_fd_sc_hd__nor2b_2,A B_N,0x4,p2_2,2,unknown
-sky130_fd_sc_hd__nor2b_4,A B_N,0x4,p2_2,2,unknown
-sky130_fd_sc_hd__nor3_1,A B C,0x1,p3_01,3,unknown
-sky130_fd_sc_hd__nor3_2,A B C,0x1,p3_01,3,unknown
-sky130_fd_sc_hd__nor3_4,A B C,0x1,p3_01,3,unknown
-sky130_fd_sc_hd__nor3b_1,A B C_N,0x10,p3_02,3,unknown
-sky130_fd_sc_hd__nor3b_2,A B C_N,0x10,p3_02,3,unknown
-sky130_fd_sc_hd__nor3b_4,A B C_N,0x10,p3_02,3,unknown
-sky130_fd_sc_hd__nor4_1,A B C D,0x1,p4_0001,4,unknown
-sky130_fd_sc_hd__nor4_2,A B C D,0x1,p4_0001,4,unknown
-sky130_fd_sc_hd__nor4_4,A B C D,0x1,p4_0001,4,unknown
-sky130_fd_sc_hd__nor4b_1,A B C D_N,0x100,p4_0002,4,unknown
-sky130_fd_sc_hd__nor4b_2,A B C D_N,0x100,p4_0002,4,unknown
-sky130_fd_sc_hd__nor4b_4,A B C D_N,0x100,p4_0002,4,unknown
-sky130_fd_sc_hd__nor4bb_1,A B C_N D_N,0x1000,p4_0008,4,unknown
-sky130_fd_sc_hd__nor4bb_2,A B C_N D_N,0x1000,p4_0008,4,unknown
-sky130_fd_sc_hd__nor4bb_4,A B C_N D_N,0x1000,p4_0008,4,unknown
-sky130_fd_sc_hd__o2111a_1,A1 A2 B1 C1 D1,0xc0008000,p5_80808000,5,unknown
-sky130_fd_sc_hd__o2111a_2,A1 A2 B1 C1 D1,0xc0008000,p5_80808000,5,unknown
-sky130_fd_sc_hd__o2111a_4,A1 A2 B1 C1 D1,0xc0008000,p5_80808000,5,unknown
-sky130_fd_sc_hd__o2111ai_1,A1 A2 B1 C1 D1,0x1fffffff,p5_1fffffff,5,unknown
-sky130_fd_sc_hd__o2111ai_2,A1 A2 B1 C1 D1,0x1fffffff,p5_1fffffff,5,unknown
-sky130_fd_sc_hd__o2111ai_4,A1 A2 B1 C1 D1,0x1fffffff,p5_1fffffff,5,unknown
-sky130_fd_sc_hd__o211a_1,A1 A2 B1 C1,0xc080,p4_8880,4,unknown
-sky130_fd_sc_hd__o211a_2,A1 A2 B1 C1,0xc080,p4_8880,4,unknown
-sky130_fd_sc_hd__o211a_4,A1 A2 B1 C1,0xc080,p4_8880,4,unknown
-sky130_fd_sc_hd__o211ai_1,A1 A2 B1 C1,0x1fff,p4_1fff,4,unknown
-sky130_fd_sc_hd__o211ai_2,A1 A2 B1 C1,0x1fff,p4_1fff,4,unknown
-sky130_fd_sc_hd__o211ai_4,A1 A2 B1 C1,0x1fff,p4_1fff,4,unknown
-sky130_fd_sc_hd__o21a_1,A1 A2 B1,0xc8,p3_a8,3,unknown
-sky130_fd_sc_hd__o21a_2,A1 A2 B1,0xc8,p3_a8,3,unknown
-sky130_fd_sc_hd__o21a_4,A1 A2 B1,0xc8,p3_a8,3,unknown
-sky130_fd_sc_hd__o21ai_0,A1 A2 B1,0x1f,p3_1f,3,unknown
-sky130_fd_sc_hd__o21ai_1,A1 A2 B1,0x1f,p3_1f,3,unknown
-sky130_fd_sc_hd__o21ai_2,A1 A2 B1,0x1f,p3_1f,3,unknown
-sky130_fd_sc_hd__o21ai_4,A1 A2 B1,0x1f,p3_1f,3,unknown
-sky130_fd_sc_hd__o21ba_1,A1 A2 B1_N,0x32,p3_0e,3,unknown
-sky130_fd_sc_hd__o21ba_2,A1 A2 B1_N,0x32,p3_0e,3,unknown
-sky130_fd_sc_hd__o21ba_4,A1 A2 B1_N,0x32,p3_0e,3,unknown
-sky130_fd_sc_hd__o21bai_1,A1 A2 B1_N,0xf1,p3_ab,3,unknown
-sky130_fd_sc_hd__o21bai_2,A1 A2 B1_N,0xf1,p3_ab,3,unknown
-sky130_fd_sc_hd__o21bai_4,A1 A2 B1_N,0xf1,p3_ab,3,unknown
-sky130_fd_sc_hd__o221a_1,A1 A2 B1 B2 C1,0xf0a0c080,p5_a8a8a800,5,unknown
-sky130_fd_sc_hd__o221a_2,A1 A2 B1 B2 C1,0xf0a0c080,p5_a8a8a800,5,unknown
-sky130_fd_sc_hd__o221a_4,A1 A2 B1 B2 C1,0xf0a0c080,p5_a8a8a800,5,unknown
-sky130_fd_sc_hd__o221ai_1,A1 A2 B1 B2 C1,0x111fffff,p5_0357ffff,5,unknown
-sky130_fd_sc_hd__o221ai_2,A1 A2 B1 B2 C1,0x111fffff,p5_0357ffff,5,unknown
-sky130_fd_sc_hd__o221ai_4,A1 A2 B1 B2 C1,0x111fffff,p5_0357ffff,5,unknown
-sky130_fd_sc_hd__o22a_1,A1 A2 B1 B2,0xfac8,p4_eee0,4,unknown
-sky130_fd_sc_hd__o22a_2,A1 A2 B1 B2,0xfac8,p4_eee0,4,unknown
-sky130_fd_sc_hd__o22a_4,A1 A2 B1 B2,0xfac8,p4_eee0,4,unknown
-sky130_fd_sc_hd__o22ai_1,A1 A2 B1 B2,0x111f,p4_0357,4,unknown
-sky130_fd_sc_hd__o22ai_2,A1 A2 B1 B2,0x111f,p4_0357,4,unknown
-sky130_fd_sc_hd__o22ai_4,A1 A2 B1 B2,0x111f,p4_0357,4,unknown
-sky130_fd_sc_hd__o2bb2a_1,A1_N A2_N B1 B2,0x5f4c,p4_0eee,4,unknown
-sky130_fd_sc_hd__o2bb2a_2,A1_N A2_N B1 B2,0x5f4c,p4_0eee,4,unknown
-sky130_fd_sc_hd__o2bb2a_4,A1_N A2_N B1 B2,0x5f4c,p4_0eee,4,unknown
-sky130_fd_sc_hd__o2bb2ai_1,A1_N A2_N B1 B2,0xf111,p4_888f,4,unknown
-sky130_fd_sc_hd__o2bb2ai_2,A1_N A2_N B1 B2,0xf111,p4_888f,4,unknown
-sky130_fd_sc_hd__o2bb2ai_4,A1_N A2_N B1 B2,0xf111,p4_888f,4,unknown
-sky130_fd_sc_hd__o311a_1,A1 A2 A3 B1 C1,0xc0c0c080,p5_88888880,5,unknown
-sky130_fd_sc_hd__o311a_2,A1 A2 A3 B1 C1,0xc0c0c080,p5_88888880,5,unknown
-sky130_fd_sc_hd__o311a_4,A1 A2 A3 B1 C1,0xc0c0c080,p5_88888880,5,unknown
-sky130_fd_sc_hd__o311ai_0,A1 A2 A3 B1 C1,0x1ffffff,p5_01ffffff,5,unknown
-sky130_fd_sc_hd__o311ai_1,A1 A2 A3 B1 C1,0x1ffffff,p5_01ffffff,5,unknown
-sky130_fd_sc_hd__o311ai_2,A1 A2 A3 B1 C1,0x1ffffff,p5_01ffffff,5,unknown
-sky130_fd_sc_hd__o311ai_4,A1 A2 A3 B1 C1,0x1ffffff,p5_01ffffff,5,unknown
-sky130_fd_sc_hd__o31a_1,A1 A2 A3 B1,0xccc8,p4_aaa8,4,unknown
-sky130_fd_sc_hd__o31a_2,A1 A2 A3 B1,0xccc8,p4_aaa8,4,unknown
-sky130_fd_sc_hd__o31a_4,A1 A2 A3 B1,0xccc8,p4_aaa8,4,unknown
-sky130_fd_sc_hd__o31ai_1,A1 A2 A3 B1,0x1ff,p4_01ff,4,unknown
-sky130_fd_sc_hd__o31ai_2,A1 A2 A3 B1,0x1ff,p4_01ff,4,unknown
-sky130_fd_sc_hd__o31ai_4,A1 A2 A3 B1,0x1ff,p4_01ff,4,unknown
-sky130_fd_sc_hd__o32a_1,A1 A2 A3 B1 B2,0xfcfcfca8,p5_eeeeeee0,5,unknown
-sky130_fd_sc_hd__o32a_2,A1 A2 A3 B1 B2,0xfcfcfca8,p5_eeeeeee0,5,unknown
-sky130_fd_sc_hd__o32a_4,A1 A2 A3 B1 B2,0xfcfcfca8,p5_eeeeeee0,5,unknown
-sky130_fd_sc_hd__o32ai_1,A1 A2 A3 B1 B2,0x10101ff,p5_00035557,5,unknown
-sky130_fd_sc_hd__o32ai_2,A1 A2 A3 B1 B2,0x10101ff,p5_00035557,5,unknown
-sky130_fd_sc_hd__o32ai_4,A1 A2 A3 B1 B2,0x10101ff,p5_00035557,5,unknown
-sky130_fd_sc_hd__o41a_1,A1 A2 A3 A4 B1,0xccccccc8,p5_aaaaaaa8,5,unknown
-sky130_fd_sc_hd__o41a_2,A1 A2 A3 A4 B1,0xccccccc8,p5_aaaaaaa8,5,unknown
-sky130_fd_sc_hd__o41a_4,A1 A2 A3 A4 B1,0xccccccc8,p5_aaaaaaa8,5,unknown
-sky130_fd_sc_hd__o41ai_1,A1 A2 A3 A4 B1,0x1ffff,p5_0001ffff,5,unknown
-sky130_fd_sc_hd__o41ai_2,A1 A2 A3 A4 B1,0x1ffff,p5_0001ffff,5,unknown
-sky130_fd_sc_hd__o41ai_4,A1 A2 A3 A4 B1,0x1ffff,p5_0001ffff,5,unknown
-sky130_fd_sc_hd__or2_0,A B,0xe,p2_e,2,unknown
-sky130_fd_sc_hd__or2_1,A B,0xe,p2_e,2,unknown
-sky130_fd_sc_hd__or2_2,A B,0xe,p2_e,2,unknown
-sky130_fd_sc_hd__or2_4,A B,0xe,p2_e,2,unknown
-sky130_fd_sc_hd__or2b_1,A B_N,0xb,p2_b,2,unknown
-sky130_fd_sc_hd__or2b_2,A B_N,0xb,p2_b,2,unknown
-sky130_fd_sc_hd__or2b_4,A B_N,0xb,p2_b,2,unknown
-sky130_fd_sc_hd__or3_1,A B C,0xfe,p3_fe,3,unknown
-sky130_fd_sc_hd__or3_2,A B C,0xfe,p3_fe,3,unknown
-sky130_fd_sc_hd__or3_4,A B C,0xfe,p3_fe,3,unknown
-sky130_fd_sc_hd__or3b_1,A B C_N,0xef,p3_ef,3,unknown
-sky130_fd_sc_hd__or3b_2,A B C_N,0xef,p3_ef,3,unknown
-sky130_fd_sc_hd__or3b_4,A B C_N,0xef,p3_ef,3,unknown
-sky130_fd_sc_hd__or4_1,A B C D,0xfffe,p4_fffe,4,unknown
-sky130_fd_sc_hd__or4_2,A B C D,0xfffe,p4_fffe,4,unknown
-sky130_fd_sc_hd__or4_4,A B C D,0xfffe,p4_fffe,4,unknown
-sky130_fd_sc_hd__or4b_1,A B C D_N,0xfeff,p4_feff,4,unknown
-sky130_fd_sc_hd__or4b_2,A B C D_N,0xfeff,p4_feff,4,unknown
-sky130_fd_sc_hd__or4b_4,A B C D_N,0xfeff,p4_feff,4,unknown
-sky130_fd_sc_hd__or4bb_1,A B C_N D_N,0xefff,p4_efff,4,unknown
-sky130_fd_sc_hd__or4bb_2,A B C_N D_N,0xefff,p4_efff,4,unknown
-sky130_fd_sc_hd__or4bb_4,A B C_N D_N,0xefff,p4_efff,4,unknown
-sky130_fd_sc_hd__probe_p_8,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__probec_p_8,A,0x2,p1_2,1,unknown
-sky130_fd_sc_hd__xnor2_1,A B,0x9,p2_9,2,unknown
-sky130_fd_sc_hd__xnor2_2,A B,0x9,p2_9,2,unknown
-sky130_fd_sc_hd__xnor2_4,A B,0x9,p2_9,2,unknown
-sky130_fd_sc_hd__xnor3_1,A B C,0x69,p3_69,3,unknown
-sky130_fd_sc_hd__xnor3_2,A B C,0x69,p3_69,3,unknown
-sky130_fd_sc_hd__xnor3_4,A B C,0x69,p3_69,3,unknown
-sky130_fd_sc_hd__xor2_1,A B,0x6,p2_6,2,unknown
-sky130_fd_sc_hd__xor2_2,A B,0x6,p2_6,2,unknown
-sky130_fd_sc_hd__xor2_4,A B,0x6,p2_6,2,unknown
-sky130_fd_sc_hd__xor3_1,A B C,0x96,p3_96,3,unknown
-sky130_fd_sc_hd__xor3_2,A B C,0x96,p3_96,3,unknown
-sky130_fd_sc_hd__xor3_4,A B C,0x96,p3_96,3,unknown
+sky130_fd_sc_hd__a2111o_1,A1 A2 B1 C1 D1,0xfffffff8,p5_fffefefe,5,no
+sky130_fd_sc_hd__a2111o_2,A1 A2 B1 C1 D1,0xfffffff8,p5_fffefefe,5,no
+sky130_fd_sc_hd__a2111o_4,A1 A2 B1 C1 D1,0xfffffff8,p5_fffefefe,5,no
+sky130_fd_sc_hd__a2111oi_0,A1 A2 B1 C1 D1,0x10003,p5_00000007,5,yes
+sky130_fd_sc_hd__a2111oi_1,A1 A2 B1 C1 D1,0x10003,p5_00000007,5,yes
+sky130_fd_sc_hd__a2111oi_2,A1 A2 B1 C1 D1,0x10003,p5_00000007,5,yes
+sky130_fd_sc_hd__a2111oi_4,A1 A2 B1 C1 D1,0x10003,p5_00000007,5,yes
+sky130_fd_sc_hd__a211o_1,A1 A2 B1 C1,0xfff8,p4_feee,4,no
+sky130_fd_sc_hd__a211o_2,A1 A2 B1 C1,0xfff8,p4_feee,4,no
+sky130_fd_sc_hd__a211o_4,A1 A2 B1 C1,0xfff8,p4_feee,4,no
+sky130_fd_sc_hd__a211oi_1,A1 A2 B1 C1,0x103,p4_0007,4,yes
+sky130_fd_sc_hd__a211oi_2,A1 A2 B1 C1,0x103,p4_0007,4,yes
+sky130_fd_sc_hd__a211oi_4,A1 A2 B1 C1,0x103,p4_0007,4,yes
+sky130_fd_sc_hd__a21bo_1,A1 A2 B1_N,0x8f,p3_8f,3,no
+sky130_fd_sc_hd__a21bo_2,A1 A2 B1_N,0x8f,p3_8f,3,no
+sky130_fd_sc_hd__a21bo_4,A1 A2 B1_N,0x8f,p3_8f,3,no
+sky130_fd_sc_hd__a21boi_0,A1 A2 B1_N,0x4c,p3_2a,3,no
+sky130_fd_sc_hd__a21boi_1,A1 A2 B1_N,0x4c,p3_2a,3,no
+sky130_fd_sc_hd__a21boi_2,A1 A2 B1_N,0x4c,p3_2a,3,no
+sky130_fd_sc_hd__a21boi_4,A1 A2 B1_N,0x4c,p3_2a,3,no
+sky130_fd_sc_hd__a21o_1,A1 A2 B1,0xf8,p3_ea,3,no
+sky130_fd_sc_hd__a21o_2,A1 A2 B1,0xf8,p3_ea,3,no
+sky130_fd_sc_hd__a21o_4,A1 A2 B1,0xf8,p3_ea,3,no
+sky130_fd_sc_hd__a21oi_1,A1 A2 B1,0x13,p3_07,3,yes
+sky130_fd_sc_hd__a21oi_2,A1 A2 B1,0x13,p3_07,3,yes
+sky130_fd_sc_hd__a21oi_4,A1 A2 B1,0x13,p3_07,3,yes
+sky130_fd_sc_hd__a221o_1,A1 A2 B1 B2 C1,0xfffff888,p5_feeefaaa,5,no
+sky130_fd_sc_hd__a221o_2,A1 A2 B1 B2 C1,0xfffff888,p5_feeefaaa,5,no
+sky130_fd_sc_hd__a221o_4,A1 A2 B1 B2 C1,0xfffff888,p5_feeefaaa,5,no
+sky130_fd_sc_hd__a221oi_1,A1 A2 B1 B2 C1,0x105030f,p5_00000777,5,yes
+sky130_fd_sc_hd__a221oi_2,A1 A2 B1 B2 C1,0x105030f,p5_00000777,5,yes
+sky130_fd_sc_hd__a221oi_4,A1 A2 B1 B2 C1,0x105030f,p5_00000777,5,yes
+sky130_fd_sc_hd__a222oi_1,A1 A2 B1 B2 C1 C2,0x111055503330fff,p6_0000077707770777,6,yes
+sky130_fd_sc_hd__a22o_1,A1 A2 B1 B2,0xf888,p4_eac0,4,no
+sky130_fd_sc_hd__a22o_2,A1 A2 B1 B2,0xf888,p4_eac0,4,no
+sky130_fd_sc_hd__a22o_4,A1 A2 B1 B2,0xf888,p4_eac0,4,no
+sky130_fd_sc_hd__a22oi_1,A1 A2 B1 B2,0x153f,p4_0777,4,yes
+sky130_fd_sc_hd__a22oi_2,A1 A2 B1 B2,0x153f,p4_0777,4,yes
+sky130_fd_sc_hd__a22oi_4,A1 A2 B1 B2,0x153f,p4_0777,4,yes
+sky130_fd_sc_hd__a2bb2o_1,A1_N A2_N B1 B2,0x888f,p4_888f,4,no
+sky130_fd_sc_hd__a2bb2o_2,A1_N A2_N B1 B2,0x888f,p4_888f,4,no
+sky130_fd_sc_hd__a2bb2o_4,A1_N A2_N B1 B2,0x888f,p4_888f,4,no
+sky130_fd_sc_hd__a2bb2oi_1,A1_N A2_N B1 B2,0x3f2a,p4_0eee,4,no
+sky130_fd_sc_hd__a2bb2oi_2,A1_N A2_N B1 B2,0x3f2a,p4_0eee,4,no
+sky130_fd_sc_hd__a2bb2oi_4,A1_N A2_N B1 B2,0x3f2a,p4_0eee,4,no
+sky130_fd_sc_hd__a311o_1,A1 A2 A3 B1 C1,0xffffff80,p5_feeeeeee,5,no
+sky130_fd_sc_hd__a311o_2,A1 A2 A3 B1 C1,0xffffff80,p5_feeeeeee,5,no
+sky130_fd_sc_hd__a311o_4,A1 A2 A3 B1 C1,0xffffff80,p5_feeeeeee,5,no
+sky130_fd_sc_hd__a311oi_1,A1 A2 A3 B1 C1,0x1030303,p5_0000007f,5,yes
+sky130_fd_sc_hd__a311oi_2,A1 A2 A3 B1 C1,0x1030303,p5_0000007f,5,yes
+sky130_fd_sc_hd__a311oi_4,A1 A2 A3 B1 C1,0x1030303,p5_0000007f,5,yes
+sky130_fd_sc_hd__a31o_1,A1 A2 A3 B1,0xff80,p4_eaaa,4,no
+sky130_fd_sc_hd__a31o_2,A1 A2 A3 B1,0xff80,p4_eaaa,4,no
+sky130_fd_sc_hd__a31o_4,A1 A2 A3 B1,0xff80,p4_eaaa,4,no
+sky130_fd_sc_hd__a31oi_1,A1 A2 A3 B1,0x1333,p4_007f,4,yes
+sky130_fd_sc_hd__a31oi_2,A1 A2 A3 B1,0x1333,p4_007f,4,yes
+sky130_fd_sc_hd__a31oi_4,A1 A2 A3 B1,0x1333,p4_007f,4,yes
+sky130_fd_sc_hd__a32o_1,A1 A2 A3 B1 B2,0xff808080,p5_eaaac000,5,no
+sky130_fd_sc_hd__a32o_2,A1 A2 A3 B1 B2,0xff808080,p5_eaaac000,5,no
+sky130_fd_sc_hd__a32o_4,A1 A2 A3 B1 B2,0xff808080,p5_eaaac000,5,no
+sky130_fd_sc_hd__a32oi_1,A1 A2 A3 B1 B2,0x153f3f3f,p5_007f7f7f,5,yes
+sky130_fd_sc_hd__a32oi_2,A1 A2 A3 B1 B2,0x153f3f3f,p5_007f7f7f,5,yes
+sky130_fd_sc_hd__a32oi_4,A1 A2 A3 B1 B2,0x153f3f3f,p5_007f7f7f,5,yes
+sky130_fd_sc_hd__a41o_1,A1 A2 A3 A4 B1,0xffff8000,p5_eaaaaaaa,5,no
+sky130_fd_sc_hd__a41o_2,A1 A2 A3 A4 B1,0xffff8000,p5_eaaaaaaa,5,no
+sky130_fd_sc_hd__a41o_4,A1 A2 A3 A4 B1,0xffff8000,p5_eaaaaaaa,5,no
+sky130_fd_sc_hd__a41oi_1,A1 A2 A3 A4 B1,0x13333333,p5_00007fff,5,yes
+sky130_fd_sc_hd__a41oi_2,A1 A2 A3 A4 B1,0x13333333,p5_00007fff,5,yes
+sky130_fd_sc_hd__a41oi_4,A1 A2 A3 A4 B1,0x13333333,p5_00007fff,5,yes
+sky130_fd_sc_hd__and2_0,A B,0x8,p2_8,2,no
+sky130_fd_sc_hd__and2_1,A B,0x8,p2_8,2,no
+sky130_fd_sc_hd__and2_2,A B,0x8,p2_8,2,no
+sky130_fd_sc_hd__and2_4,A B,0x8,p2_8,2,no
+sky130_fd_sc_hd__and2b_1,A_N B,0x4,p2_2,2,no
+sky130_fd_sc_hd__and2b_2,A_N B,0x4,p2_2,2,no
+sky130_fd_sc_hd__and2b_4,A_N B,0x4,p2_2,2,no
+sky130_fd_sc_hd__and3_1,A B C,0x80,p3_80,3,no
+sky130_fd_sc_hd__and3_2,A B C,0x80,p3_80,3,no
+sky130_fd_sc_hd__and3_4,A B C,0x80,p3_80,3,no
+sky130_fd_sc_hd__and3b_1,A_N B C,0x40,p3_08,3,no
+sky130_fd_sc_hd__and3b_2,A_N B C,0x40,p3_08,3,no
+sky130_fd_sc_hd__and3b_4,A_N B C,0x40,p3_08,3,no
+sky130_fd_sc_hd__and4_1,A B C D,0x8000,p4_8000,4,no
+sky130_fd_sc_hd__and4_2,A B C D,0x8000,p4_8000,4,no
+sky130_fd_sc_hd__and4_4,A B C D,0x8000,p4_8000,4,no
+sky130_fd_sc_hd__and4b_1,A_N B C D,0x4000,p4_0080,4,no
+sky130_fd_sc_hd__and4b_2,A_N B C D,0x4000,p4_0080,4,no
+sky130_fd_sc_hd__and4b_4,A_N B C D,0x4000,p4_0080,4,no
+sky130_fd_sc_hd__and4bb_1,A_N B_N C D,0x1000,p4_0008,4,no
+sky130_fd_sc_hd__and4bb_2,A_N B_N C D,0x1000,p4_0008,4,no
+sky130_fd_sc_hd__and4bb_4,A_N B_N C D,0x1000,p4_0008,4,no
+sky130_fd_sc_hd__buf_1,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__buf_12,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__buf_16,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__buf_2,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__buf_4,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__buf_6,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__buf_8,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__bufbuf_16,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__bufbuf_8,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__bufinv_16,A,0x1,p1_1,1,yes
+sky130_fd_sc_hd__bufinv_8,A,0x1,p1_1,1,yes
+sky130_fd_sc_hd__clkbuf_1,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__clkbuf_16,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__clkbuf_2,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__clkbuf_4,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__clkbuf_8,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__clkdlybuf4s15_1,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__clkdlybuf4s15_2,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__clkdlybuf4s18_1,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__clkdlybuf4s18_2,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__clkdlybuf4s25_1,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__clkdlybuf4s25_2,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__clkdlybuf4s50_1,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__clkdlybuf4s50_2,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__clkinv_1,A,0x1,p1_1,1,yes
+sky130_fd_sc_hd__clkinv_16,A,0x1,p1_1,1,yes
+sky130_fd_sc_hd__clkinv_2,A,0x1,p1_1,1,yes
+sky130_fd_sc_hd__clkinv_4,A,0x1,p1_1,1,yes
+sky130_fd_sc_hd__clkinv_8,A,0x1,p1_1,1,yes
+sky130_fd_sc_hd__clkinvlp_2,A,0x1,p1_1,1,yes
+sky130_fd_sc_hd__clkinvlp_4,A,0x1,p1_1,1,yes
+sky130_fd_sc_hd__dlygate4sd1_1,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__dlygate4sd2_1,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__dlygate4sd3_1,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__dlymetal6s2s_1,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__dlymetal6s4s_1,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__dlymetal6s6s_1,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__inv_1,A,0x1,p1_1,1,yes
+sky130_fd_sc_hd__inv_12,A,0x1,p1_1,1,yes
+sky130_fd_sc_hd__inv_16,A,0x1,p1_1,1,yes
+sky130_fd_sc_hd__inv_2,A,0x1,p1_1,1,yes
+sky130_fd_sc_hd__inv_4,A,0x1,p1_1,1,yes
+sky130_fd_sc_hd__inv_6,A,0x1,p1_1,1,yes
+sky130_fd_sc_hd__inv_8,A,0x1,p1_1,1,yes
+sky130_fd_sc_hd__lpflow_clkbufkapwr_1,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__lpflow_clkbufkapwr_16,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__lpflow_clkbufkapwr_2,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__lpflow_clkbufkapwr_4,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__lpflow_clkbufkapwr_8,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__lpflow_clkinvkapwr_1,A,0x1,p1_1,1,yes
+sky130_fd_sc_hd__lpflow_clkinvkapwr_16,A,0x1,p1_1,1,yes
+sky130_fd_sc_hd__lpflow_clkinvkapwr_2,A,0x1,p1_1,1,yes
+sky130_fd_sc_hd__lpflow_clkinvkapwr_4,A,0x1,p1_1,1,yes
+sky130_fd_sc_hd__lpflow_clkinvkapwr_8,A,0x1,p1_1,1,yes
+sky130_fd_sc_hd__lpflow_inputiso0n_1,A SLEEP_B,0x8,p2_8,2,no
+sky130_fd_sc_hd__lpflow_inputiso0p_1,A SLEEP,0x4,p2_2,2,no
+sky130_fd_sc_hd__lpflow_inputiso1n_1,A SLEEP_B,0xb,p2_b,2,no
+sky130_fd_sc_hd__lpflow_inputiso1p_1,A SLEEP,0xe,p2_e,2,no
+sky130_fd_sc_hd__lpflow_isobufsrc_1,A SLEEP,0x2,p2_2,2,no
+sky130_fd_sc_hd__lpflow_isobufsrc_16,A SLEEP,0x2,p2_2,2,no
+sky130_fd_sc_hd__lpflow_isobufsrc_2,A SLEEP,0x2,p2_2,2,no
+sky130_fd_sc_hd__lpflow_isobufsrc_4,A SLEEP,0x2,p2_2,2,no
+sky130_fd_sc_hd__lpflow_isobufsrc_8,A SLEEP,0x2,p2_2,2,no
+sky130_fd_sc_hd__lpflow_isobufsrckapwr_16,A SLEEP,0x2,p2_2,2,no
+sky130_fd_sc_hd__lpflow_lsbuf_lh_hl_isowell_tap_1,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__lpflow_lsbuf_lh_hl_isowell_tap_2,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__lpflow_lsbuf_lh_hl_isowell_tap_4,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__lpflow_lsbuf_lh_isowell_4,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__lpflow_lsbuf_lh_isowell_tap_1,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__lpflow_lsbuf_lh_isowell_tap_2,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__lpflow_lsbuf_lh_isowell_tap_4,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__macro_sparecell,,0x0,p0_0,0,yes
+sky130_fd_sc_hd__maj3_1,A B C,0xe8,p3_e8,3,no
+sky130_fd_sc_hd__maj3_2,A B C,0xe8,p3_e8,3,no
+sky130_fd_sc_hd__maj3_4,A B C,0xe8,p3_e8,3,no
+sky130_fd_sc_hd__mux2_1,A0 A1 S,0xe2,p3_ac,3,no
+sky130_fd_sc_hd__mux2_2,A0 A1 S,0xe2,p3_ac,3,no
+sky130_fd_sc_hd__mux2_4,A0 A1 S,0xe2,p3_ac,3,no
+sky130_fd_sc_hd__mux2_8,A0 A1 S,0xe2,p3_ac,3,no
+sky130_fd_sc_hd__mux2i_1,A0 A1 S,0x1d,p3_1b,3,no
+sky130_fd_sc_hd__mux2i_2,A0 A1 S,0x1d,p3_1b,3,no
+sky130_fd_sc_hd__mux2i_4,A0 A1 S,0x1d,p3_1b,3,no
+sky130_fd_sc_hd__mux4_1,A0 A1 A2 A3 S0 S1,0xfef2cec23e320e02,p6_aaaaccccf0f0ff00,6,no
+sky130_fd_sc_hd__mux4_2,A0 A1 A2 A3 S0 S1,0xfef2cec23e320e02,p6_aaaaccccf0f0ff00,6,no
+sky130_fd_sc_hd__mux4_4,A0 A1 A2 A3 S0 S1,0xfef2cec23e320e02,p6_aaaaccccf0f0ff00,6,no
+sky130_fd_sc_hd__nand2_1,A B,0x7,p2_7,2,yes
+sky130_fd_sc_hd__nand2_2,A B,0x7,p2_7,2,yes
+sky130_fd_sc_hd__nand2_4,A B,0x7,p2_7,2,yes
+sky130_fd_sc_hd__nand2_8,A B,0x7,p2_7,2,yes
+sky130_fd_sc_hd__nand2b_1,A_N B,0xb,p2_b,2,no
+sky130_fd_sc_hd__nand2b_2,A_N B,0xb,p2_b,2,no
+sky130_fd_sc_hd__nand2b_4,A_N B,0xb,p2_b,2,no
+sky130_fd_sc_hd__nand3_1,A B C,0x7f,p3_7f,3,yes
+sky130_fd_sc_hd__nand3_2,A B C,0x7f,p3_7f,3,yes
+sky130_fd_sc_hd__nand3_4,A B C,0x7f,p3_7f,3,yes
+sky130_fd_sc_hd__nand3b_1,A_N B C,0xbf,p3_bf,3,no
+sky130_fd_sc_hd__nand3b_2,A_N B C,0xbf,p3_bf,3,no
+sky130_fd_sc_hd__nand3b_4,A_N B C,0xbf,p3_bf,3,no
+sky130_fd_sc_hd__nand4_1,A B C D,0x7fff,p4_7fff,4,yes
+sky130_fd_sc_hd__nand4_2,A B C D,0x7fff,p4_7fff,4,yes
+sky130_fd_sc_hd__nand4_4,A B C D,0x7fff,p4_7fff,4,yes
+sky130_fd_sc_hd__nand4b_1,A_N B C D,0xbfff,p4_bfff,4,no
+sky130_fd_sc_hd__nand4b_2,A_N B C D,0xbfff,p4_bfff,4,no
+sky130_fd_sc_hd__nand4b_4,A_N B C D,0xbfff,p4_bfff,4,no
+sky130_fd_sc_hd__nand4bb_1,A_N B_N C D,0xefff,p4_efff,4,no
+sky130_fd_sc_hd__nand4bb_2,A_N B_N C D,0xefff,p4_efff,4,no
+sky130_fd_sc_hd__nand4bb_4,A_N B_N C D,0xefff,p4_efff,4,no
+sky130_fd_sc_hd__nor2_1,A B,0x1,p2_1,2,yes
+sky130_fd_sc_hd__nor2_2,A B,0x1,p2_1,2,yes
+sky130_fd_sc_hd__nor2_4,A B,0x1,p2_1,2,yes
+sky130_fd_sc_hd__nor2_8,A B,0x1,p2_1,2,yes
+sky130_fd_sc_hd__nor2b_1,A B_N,0x4,p2_2,2,no
+sky130_fd_sc_hd__nor2b_2,A B_N,0x4,p2_2,2,no
+sky130_fd_sc_hd__nor2b_4,A B_N,0x4,p2_2,2,no
+sky130_fd_sc_hd__nor3_1,A B C,0x1,p3_01,3,yes
+sky130_fd_sc_hd__nor3_2,A B C,0x1,p3_01,3,yes
+sky130_fd_sc_hd__nor3_4,A B C,0x1,p3_01,3,yes
+sky130_fd_sc_hd__nor3b_1,A B C_N,0x10,p3_02,3,no
+sky130_fd_sc_hd__nor3b_2,A B C_N,0x10,p3_02,3,no
+sky130_fd_sc_hd__nor3b_4,A B C_N,0x10,p3_02,3,no
+sky130_fd_sc_hd__nor4_1,A B C D,0x1,p4_0001,4,yes
+sky130_fd_sc_hd__nor4_2,A B C D,0x1,p4_0001,4,yes
+sky130_fd_sc_hd__nor4_4,A B C D,0x1,p4_0001,4,yes
+sky130_fd_sc_hd__nor4b_1,A B C D_N,0x100,p4_0002,4,no
+sky130_fd_sc_hd__nor4b_2,A B C D_N,0x100,p4_0002,4,no
+sky130_fd_sc_hd__nor4b_4,A B C D_N,0x100,p4_0002,4,no
+sky130_fd_sc_hd__nor4bb_1,A B C_N D_N,0x1000,p4_0008,4,no
+sky130_fd_sc_hd__nor4bb_2,A B C_N D_N,0x1000,p4_0008,4,no
+sky130_fd_sc_hd__nor4bb_4,A B C_N D_N,0x1000,p4_0008,4,no
+sky130_fd_sc_hd__o2111a_1,A1 A2 B1 C1 D1,0xc0008000,p5_80808000,5,no
+sky130_fd_sc_hd__o2111a_2,A1 A2 B1 C1 D1,0xc0008000,p5_80808000,5,no
+sky130_fd_sc_hd__o2111a_4,A1 A2 B1 C1 D1,0xc0008000,p5_80808000,5,no
+sky130_fd_sc_hd__o2111ai_1,A1 A2 B1 C1 D1,0x1fffffff,p5_1fffffff,5,yes
+sky130_fd_sc_hd__o2111ai_2,A1 A2 B1 C1 D1,0x1fffffff,p5_1fffffff,5,yes
+sky130_fd_sc_hd__o2111ai_4,A1 A2 B1 C1 D1,0x1fffffff,p5_1fffffff,5,yes
+sky130_fd_sc_hd__o211a_1,A1 A2 B1 C1,0xc080,p4_8880,4,no
+sky130_fd_sc_hd__o211a_2,A1 A2 B1 C1,0xc080,p4_8880,4,no
+sky130_fd_sc_hd__o211a_4,A1 A2 B1 C1,0xc080,p4_8880,4,no
+sky130_fd_sc_hd__o211ai_1,A1 A2 B1 C1,0x1fff,p4_1fff,4,yes
+sky130_fd_sc_hd__o211ai_2,A1 A2 B1 C1,0x1fff,p4_1fff,4,yes
+sky130_fd_sc_hd__o211ai_4,A1 A2 B1 C1,0x1fff,p4_1fff,4,yes
+sky130_fd_sc_hd__o21a_1,A1 A2 B1,0xc8,p3_a8,3,no
+sky130_fd_sc_hd__o21a_2,A1 A2 B1,0xc8,p3_a8,3,no
+sky130_fd_sc_hd__o21a_4,A1 A2 B1,0xc8,p3_a8,3,no
+sky130_fd_sc_hd__o21ai_0,A1 A2 B1,0x1f,p3_1f,3,yes
+sky130_fd_sc_hd__o21ai_1,A1 A2 B1,0x1f,p3_1f,3,yes
+sky130_fd_sc_hd__o21ai_2,A1 A2 B1,0x1f,p3_1f,3,yes
+sky130_fd_sc_hd__o21ai_4,A1 A2 B1,0x1f,p3_1f,3,yes
+sky130_fd_sc_hd__o21ba_1,A1 A2 B1_N,0x32,p3_0e,3,no
+sky130_fd_sc_hd__o21ba_2,A1 A2 B1_N,0x32,p3_0e,3,no
+sky130_fd_sc_hd__o21ba_4,A1 A2 B1_N,0x32,p3_0e,3,no
+sky130_fd_sc_hd__o21bai_1,A1 A2 B1_N,0xf1,p3_ab,3,no
+sky130_fd_sc_hd__o21bai_2,A1 A2 B1_N,0xf1,p3_ab,3,no
+sky130_fd_sc_hd__o21bai_4,A1 A2 B1_N,0xf1,p3_ab,3,no
+sky130_fd_sc_hd__o221a_1,A1 A2 B1 B2 C1,0xf0a0c080,p5_a8a8a800,5,no
+sky130_fd_sc_hd__o221a_2,A1 A2 B1 B2 C1,0xf0a0c080,p5_a8a8a800,5,no
+sky130_fd_sc_hd__o221a_4,A1 A2 B1 B2 C1,0xf0a0c080,p5_a8a8a800,5,no
+sky130_fd_sc_hd__o221ai_1,A1 A2 B1 B2 C1,0x111fffff,p5_0357ffff,5,yes
+sky130_fd_sc_hd__o221ai_2,A1 A2 B1 B2 C1,0x111fffff,p5_0357ffff,5,yes
+sky130_fd_sc_hd__o221ai_4,A1 A2 B1 B2 C1,0x111fffff,p5_0357ffff,5,yes
+sky130_fd_sc_hd__o22a_1,A1 A2 B1 B2,0xfac8,p4_eee0,4,no
+sky130_fd_sc_hd__o22a_2,A1 A2 B1 B2,0xfac8,p4_eee0,4,no
+sky130_fd_sc_hd__o22a_4,A1 A2 B1 B2,0xfac8,p4_eee0,4,no
+sky130_fd_sc_hd__o22ai_1,A1 A2 B1 B2,0x111f,p4_0357,4,yes
+sky130_fd_sc_hd__o22ai_2,A1 A2 B1 B2,0x111f,p4_0357,4,yes
+sky130_fd_sc_hd__o22ai_4,A1 A2 B1 B2,0x111f,p4_0357,4,yes
+sky130_fd_sc_hd__o2bb2a_1,A1_N A2_N B1 B2,0x5f4c,p4_0eee,4,no
+sky130_fd_sc_hd__o2bb2a_2,A1_N A2_N B1 B2,0x5f4c,p4_0eee,4,no
+sky130_fd_sc_hd__o2bb2a_4,A1_N A2_N B1 B2,0x5f4c,p4_0eee,4,no
+sky130_fd_sc_hd__o2bb2ai_1,A1_N A2_N B1 B2,0xf111,p4_888f,4,no
+sky130_fd_sc_hd__o2bb2ai_2,A1_N A2_N B1 B2,0xf111,p4_888f,4,no
+sky130_fd_sc_hd__o2bb2ai_4,A1_N A2_N B1 B2,0xf111,p4_888f,4,no
+sky130_fd_sc_hd__o311a_1,A1 A2 A3 B1 C1,0xc0c0c080,p5_88888880,5,no
+sky130_fd_sc_hd__o311a_2,A1 A2 A3 B1 C1,0xc0c0c080,p5_88888880,5,no
+sky130_fd_sc_hd__o311a_4,A1 A2 A3 B1 C1,0xc0c0c080,p5_88888880,5,no
+sky130_fd_sc_hd__o311ai_0,A1 A2 A3 B1 C1,0x1ffffff,p5_01ffffff,5,yes
+sky130_fd_sc_hd__o311ai_1,A1 A2 A3 B1 C1,0x1ffffff,p5_01ffffff,5,yes
+sky130_fd_sc_hd__o311ai_2,A1 A2 A3 B1 C1,0x1ffffff,p5_01ffffff,5,yes
+sky130_fd_sc_hd__o311ai_4,A1 A2 A3 B1 C1,0x1ffffff,p5_01ffffff,5,yes
+sky130_fd_sc_hd__o31a_1,A1 A2 A3 B1,0xccc8,p4_aaa8,4,no
+sky130_fd_sc_hd__o31a_2,A1 A2 A3 B1,0xccc8,p4_aaa8,4,no
+sky130_fd_sc_hd__o31a_4,A1 A2 A3 B1,0xccc8,p4_aaa8,4,no
+sky130_fd_sc_hd__o31ai_1,A1 A2 A3 B1,0x1ff,p4_01ff,4,yes
+sky130_fd_sc_hd__o31ai_2,A1 A2 A3 B1,0x1ff,p4_01ff,4,yes
+sky130_fd_sc_hd__o31ai_4,A1 A2 A3 B1,0x1ff,p4_01ff,4,yes
+sky130_fd_sc_hd__o32a_1,A1 A2 A3 B1 B2,0xfcfcfca8,p5_eeeeeee0,5,no
+sky130_fd_sc_hd__o32a_2,A1 A2 A3 B1 B2,0xfcfcfca8,p5_eeeeeee0,5,no
+sky130_fd_sc_hd__o32a_4,A1 A2 A3 B1 B2,0xfcfcfca8,p5_eeeeeee0,5,no
+sky130_fd_sc_hd__o32ai_1,A1 A2 A3 B1 B2,0x10101ff,p5_00035557,5,yes
+sky130_fd_sc_hd__o32ai_2,A1 A2 A3 B1 B2,0x10101ff,p5_00035557,5,yes
+sky130_fd_sc_hd__o32ai_4,A1 A2 A3 B1 B2,0x10101ff,p5_00035557,5,yes
+sky130_fd_sc_hd__o41a_1,A1 A2 A3 A4 B1,0xccccccc8,p5_aaaaaaa8,5,no
+sky130_fd_sc_hd__o41a_2,A1 A2 A3 A4 B1,0xccccccc8,p5_aaaaaaa8,5,no
+sky130_fd_sc_hd__o41a_4,A1 A2 A3 A4 B1,0xccccccc8,p5_aaaaaaa8,5,no
+sky130_fd_sc_hd__o41ai_1,A1 A2 A3 A4 B1,0x1ffff,p5_0001ffff,5,yes
+sky130_fd_sc_hd__o41ai_2,A1 A2 A3 A4 B1,0x1ffff,p5_0001ffff,5,yes
+sky130_fd_sc_hd__o41ai_4,A1 A2 A3 A4 B1,0x1ffff,p5_0001ffff,5,yes
+sky130_fd_sc_hd__or2_0,A B,0xe,p2_e,2,no
+sky130_fd_sc_hd__or2_1,A B,0xe,p2_e,2,no
+sky130_fd_sc_hd__or2_2,A B,0xe,p2_e,2,no
+sky130_fd_sc_hd__or2_4,A B,0xe,p2_e,2,no
+sky130_fd_sc_hd__or2b_1,A B_N,0xb,p2_b,2,no
+sky130_fd_sc_hd__or2b_2,A B_N,0xb,p2_b,2,no
+sky130_fd_sc_hd__or2b_4,A B_N,0xb,p2_b,2,no
+sky130_fd_sc_hd__or3_1,A B C,0xfe,p3_fe,3,no
+sky130_fd_sc_hd__or3_2,A B C,0xfe,p3_fe,3,no
+sky130_fd_sc_hd__or3_4,A B C,0xfe,p3_fe,3,no
+sky130_fd_sc_hd__or3b_1,A B C_N,0xef,p3_ef,3,no
+sky130_fd_sc_hd__or3b_2,A B C_N,0xef,p3_ef,3,no
+sky130_fd_sc_hd__or3b_4,A B C_N,0xef,p3_ef,3,no
+sky130_fd_sc_hd__or4_1,A B C D,0xfffe,p4_fffe,4,no
+sky130_fd_sc_hd__or4_2,A B C D,0xfffe,p4_fffe,4,no
+sky130_fd_sc_hd__or4_4,A B C D,0xfffe,p4_fffe,4,no
+sky130_fd_sc_hd__or4b_1,A B C D_N,0xfeff,p4_feff,4,no
+sky130_fd_sc_hd__or4b_2,A B C D_N,0xfeff,p4_feff,4,no
+sky130_fd_sc_hd__or4b_4,A B C D_N,0xfeff,p4_feff,4,no
+sky130_fd_sc_hd__or4bb_1,A B C_N D_N,0xefff,p4_efff,4,no
+sky130_fd_sc_hd__or4bb_2,A B C_N D_N,0xefff,p4_efff,4,no
+sky130_fd_sc_hd__or4bb_4,A B C_N D_N,0xefff,p4_efff,4,no
+sky130_fd_sc_hd__probe_p_8,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__probec_p_8,A,0x2,p1_2,1,no
+sky130_fd_sc_hd__xnor2_1,A B,0x9,p2_9,2,no
+sky130_fd_sc_hd__xnor2_2,A B,0x9,p2_9,2,no
+sky130_fd_sc_hd__xnor2_4,A B,0x9,p2_9,2,no
+sky130_fd_sc_hd__xnor3_1,A B C,0x69,p3_69,3,no
+sky130_fd_sc_hd__xnor3_2,A B C,0x69,p3_69,3,no
+sky130_fd_sc_hd__xnor3_4,A B C,0x69,p3_69,3,no
+sky130_fd_sc_hd__xor2_1,A B,0x6,p2_6,2,no
+sky130_fd_sc_hd__xor2_2,A B,0x6,p2_6,2,no
+sky130_fd_sc_hd__xor2_4,A B,0x6,p2_6,2,no
+sky130_fd_sc_hd__xor3_1,A B C,0x96,p3_96,3,no
+sky130_fd_sc_hd__xor3_2,A B C,0x96,p3_96,3,no
+sky130_fd_sc_hd__xor3_4,A B C,0x96,p3_96,3,no

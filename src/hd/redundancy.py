@@ -91,20 +91,19 @@ def _reference_index(cells: tuple[Cell, ...]) -> _ReferenceIndex:
     inverted: dict[int, str] = {}
     contained: dict[int, str] = {}
     for cell in cells:
-        if len(cell.support) > 4:
-            continue
-        table = _expand(cell.truth_table, len(cell.support))
-        for candidate_class in _candidate_permutations(table):
-            exact.setdefault(candidate_class, cell.name)
-        inverted.setdefault(
-            canonical_truth_table(table ^ 0xFFFF, 4),
-            cell.name,
-        )
-        for input_index in range(4):
+        if len(cell.support) <= 4:
+            table = _expand(cell.truth_table, len(cell.support))
+            for candidate_class in _candidate_permutations(table):
+                exact.setdefault(candidate_class, cell.name)
             inverted.setdefault(
-                canonical_truth_table(_invert_input(table, input_index), 4),
+                canonical_truth_table(table ^ 0xFFFF, 4),
                 cell.name,
             )
+            for input_index in range(4):
+                inverted.setdefault(
+                    canonical_truth_table(_invert_input(table, input_index), 4),
+                    cell.name,
+                )
         for candidate_class in _substituted_tables(cell):
             contained.setdefault(candidate_class, cell.name)
     return _ReferenceIndex(exact, inverted, contained)

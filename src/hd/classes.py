@@ -95,6 +95,26 @@ def p_class_id(table: int, support_size: int) -> str:
     return f"p{support_size}_{canonical:0{digits}x}"
 
 
+def is_single_stage(table: int, support_size: int) -> bool:
+    """Return whether the function is negative-unate in every used input.
+
+    The project defines a single static CMOS stage by a series-parallel
+    pull-down. Its pull-down function is the complement of the output, so the
+    output must be negative-unate in each input.
+    """
+
+    width = 1 << support_size
+    for input_index in range(support_size):
+        for assignment in range(width):
+            if assignment & (1 << input_index):
+                continue
+            low = (table >> assignment) & 1
+            high = (table >> (assignment | (1 << input_index))) & 1
+            if low == 0 and high == 1:
+                return False
+    return True
+
+
 @dataclass(frozen=True)
 class ClassRow:
     cell: str
@@ -106,11 +126,7 @@ class ClassRow:
 
 
 def class_rows(cells: list[Cell]) -> list[ClassRow]:
-    """Build deterministic rows for the HD class table.
-
-    Single-stage transistor topology is intentionally left as ``unknown`` until
-    the project defines and implements the CMOS topology test.
-    """
+    """Build deterministic rows for the HD class table."""
 
     rows = [
         ClassRow(
@@ -119,7 +135,9 @@ def class_rows(cells: list[Cell]) -> list[ClassRow]:
             truth_table=f"0x{cell.truth_table:x}",
             p_class_id=p_class_id(cell.truth_table, len(cell.support)),
             support_size=len(cell.support),
-            single_stage="unknown",
+            single_stage=(
+                "yes" if is_single_stage(cell.truth_table, len(cell.support)) else "no"
+            ),
         )
         for cell in cells
     ]
