@@ -7,9 +7,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 import klayout.db as db
-from paths import GDS, PREFIX, ROOT
+from paths import GDS, PREFIX, PLAN_HD as PLAN
 
-PLAN = ROOT / "plan_hd.json"
 TOL = 0.001  # um
 
 # Table 1: required vertical extents, in micrometers.
