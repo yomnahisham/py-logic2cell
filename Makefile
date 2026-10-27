@@ -34,11 +34,11 @@ test:             ## every test, including the broken cases in tests/broken/
 	$(PY) src/frame_check.py
 
 all:              ## the whole flow
-	@echo "not written yet" && exit 1
+	for r in requests/hd/*.json; do $(PY) -m src.cell.build $$r --hd $$(basename $$r .json) || exit 1; done
 
 demo:             ## what the interview runs: make demo IN=<request or design>
 	@test -n "$(IN)" || (echo "usage: make demo IN=<request or design>" && exit 1)
-	@echo "not written yet" && exit 1
+	$(PY) -m src.cell.build $(IN)
 
 clean:
 	rm -rf build
