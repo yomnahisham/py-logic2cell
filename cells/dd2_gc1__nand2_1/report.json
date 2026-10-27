@@ -1,35 +1,42 @@
 {
   "network": {
-    "fets": 2,
+    "fets": 4,
     "switch_check": "pass"
   },
   "order": {
-    "name": "dd2_inv_1",
+    "name": "dd2_gc1__nand2_1",
     "width": 1.38,
     "width_sites": 3,
     "gate_x": [
-      0.69
-    ],
-    "col_x": [
       0.48,
       0.9
     ],
+    "col_x": [
+      0.27,
+      0.69,
+      1.11
+    ],
     "pad_x": {
-      "A": 0.48
+      "B": 0.27,
+      "A": 1.11
     },
     "gates": [
+      "B",
       "A"
     ],
     "n_nodes": [
       "VGND",
+      "n1",
       "Y"
     ],
     "p_nodes": [
       "VPWR",
-      "Y"
+      "Y",
+      "VPWR"
     ],
     "inputs": [
-      "A"
+      "A",
+      "B"
     ],
     "output": "Y"
   },
@@ -37,27 +44,27 @@
     "drc": 0,
     "drc_why": "",
     "lvs": "match",
-    "rc_r": 9,
-    "rc_c": 21,
+    "rc_r": 19,
+    "rc_c": 35,
     "rc_lvs": "match"
   },
   "abutment": {
     "cases": {
-      "dd2_inv_1__tapvpwrvgnd_1__left": 0,
-      "dd2_inv_1__tapvpwrvgnd_1__right": 0,
-      "dd2_inv_1__tapvpwrvgnd_1__mirrored": 0,
-      "dd2_inv_1__tapvpwrvgnd_1__flip_vpwr": 0,
-      "dd2_inv_1__tapvpwrvgnd_1__flip_vgnd": 0,
-      "dd2_inv_1__inv_1__left": 0,
-      "dd2_inv_1__inv_1__right": 0,
-      "dd2_inv_1__inv_1__mirrored": 0,
-      "dd2_inv_1__inv_1__flip_vpwr": 0,
-      "dd2_inv_1__inv_1__flip_vgnd": 0,
-      "dd2_inv_1__fill_1__left": 0,
-      "dd2_inv_1__fill_1__right": 0,
-      "dd2_inv_1__fill_1__mirrored": 0,
-      "dd2_inv_1__fill_1__flip_vpwr": 0,
-      "dd2_inv_1__fill_1__flip_vgnd": 0
+      "dd2_gc1__nand2_1__tapvpwrvgnd_1__left": 0,
+      "dd2_gc1__nand2_1__tapvpwrvgnd_1__right": 0,
+      "dd2_gc1__nand2_1__tapvpwrvgnd_1__mirrored": 0,
+      "dd2_gc1__nand2_1__tapvpwrvgnd_1__flip_vpwr": 0,
+      "dd2_gc1__nand2_1__tapvpwrvgnd_1__flip_vgnd": 0,
+      "dd2_gc1__nand2_1__inv_1__left": 0,
+      "dd2_gc1__nand2_1__inv_1__right": 0,
+      "dd2_gc1__nand2_1__inv_1__mirrored": 0,
+      "dd2_gc1__nand2_1__inv_1__flip_vpwr": 0,
+      "dd2_gc1__nand2_1__inv_1__flip_vgnd": 0,
+      "dd2_gc1__nand2_1__fill_1__left": 0,
+      "dd2_gc1__nand2_1__fill_1__right": 0,
+      "dd2_gc1__nand2_1__fill_1__mirrored": 0,
+      "dd2_gc1__nand2_1__fill_1__flip_vpwr": 0,
+      "dd2_gc1__nand2_1__fill_1__flip_vgnd": 0
     },
     "errors": 0,
     "passed": true
@@ -73,6 +80,18 @@
       },
       {
         "inputs": 1,
+        "expected": 1,
+        "y": 1.8,
+        "passed": true
+      },
+      {
+        "inputs": 2,
+        "expected": 1,
+        "y": 1.8,
+        "passed": true
+      },
+      {
+        "inputs": 3,
         "expected": 0,
         "y": 0.0,
         "passed": true
@@ -82,15 +101,15 @@
     "transient": {
       "slew_ns": 0.122474,
       "load_pf": 0.00952062,
-      "steps": 4,
+      "steps": 16,
       "errors": [],
       "passed": true
     },
     "passed": true
   },
   "compare": {
-    "cell": "dd2_inv_1",
-    "hd": "sky130_fd_sc_hd__inv_1",
+    "cell": "dd2_gc1__nand2_1",
+    "hd": "sky130_fd_sc_hd__nand2_1",
     "frame": {
       "expected": {
         "boundary": [
@@ -195,6 +214,16 @@
     "lvs_vs_hd": "match",
     "pins": {
       "ours": {
+        "B": [
+          {
+            "layer": "li1",
+            "band": "npc",
+            "size": [
+              0.17,
+              0.17
+            ]
+          }
+        ],
         "A": [
           {
             "layer": "li1",
@@ -266,6 +295,24 @@
               0.17
             ]
           },
+          {
+            "layer": "li1",
+            "band": "row",
+            "size": [
+              0.17,
+              0.17
+            ]
+          },
+          {
+            "layer": "li1",
+            "band": "npc",
+            "size": [
+              0.17,
+              0.17
+            ]
+          }
+        ],
+        "B": [
           {
             "layer": "li1",
             "band": "npc",
@@ -350,12 +397,16 @@
     "gates": {
       "ours": {
         "gate_x": [
-          0.69
+          0.48,
+          0.9
         ],
         "order": [
+          "B",
           "A"
         ],
-        "pitch": [],
+        "pitch": [
+          0.42
+        ],
         "diffusion_breaks": {
           "n": 0,
           "p": 0
@@ -363,12 +414,16 @@
       },
       "hd": {
         "gate_x": [
-          0.675
+          0.49,
+          0.91
         ],
         "order": [
+          "B",
           "A"
         ],
-        "pitch": [],
+        "pitch": [
+          0.42
+        ],
         "diffusion_breaks": {
           "p": 0,
           "n": 0
@@ -378,38 +433,44 @@
     "parasitics": {
       "ours": {
         "cap_fF": {
-          "VGND": 0.3703,
-          "Y": 0.3508,
-          "VPWR": 0.4679,
-          "VPB": 0.4825,
-          "A": 0.1531,
-          "VNB": 1.0173
+          "B": 0.1708,
+          "VPWR": 0.5578,
+          "A": 0.171,
+          "Y": 0.4933,
+          "VPB": 0.4856,
+          "VGND": 0.3945,
+          "VNB": 1.0805
         },
         "res_ohm": {
-          "VGND": 174.16,
-          "Y": 420.27,
-          "VPWR": 271.09,
+          "VGND": 170.71,
+          "Y": 441.43,
+          "VPWR": 534.87,
           "A": 548.67,
-          "VPB": 348.15,
-          "VNB": 1600.0
+          "B": 548.67,
+          "VPB": 449.85,
+          "VNB": 2164.4,
+          "a_111_47": 49.85
         }
       },
       "hd": {
         "cap_fF": {
-          "VGND": 0.4391,
-          "Y": 0.3519,
-          "VPWR": 0.4011,
-          "VPB": 0.4815,
-          "A": 0.1562,
-          "VNB": 1.0181
+          "VPB": 0.4822,
+          "VPWR": 0.5639,
+          "A": 0.1725,
+          "B": 0.183,
+          "VGND": 0.4506,
+          "Y": 0.4293,
+          "VNB": 1.089
         },
         "res_ohm": {
-          "VGND": 166.95,
-          "Y": 392.42,
-          "VPWR": 264.9,
-          "A": 547.52,
-          "VPB": 348.15,
-          "VNB": 1600.0
+          "VGND": 158.05,
+          "Y": 459.0,
+          "VPWR": 510.97,
+          "A": 542.3,
+          "B": 544.37,
+          "VPB": 455.76,
+          "VNB": 2192.88,
+          "a_113_47": 49.85
         }
       }
     }

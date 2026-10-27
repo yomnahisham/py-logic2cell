@@ -71,8 +71,8 @@ def parse_request(data: dict) -> Request:
     pins = [*inputs, output]
     if not all(isinstance(pin, str) and _NAME.match(pin) for pin in pins) or len(set(pins)) != len(pins):
         raise RequestError("fail", f"bad pin names {pins}")
-    if not str(data["name"]).startswith("dd2_"):
-        raise RequestError("fail", f"cell name must start with dd2_: {data['name']}")
+    if not str(data["name"]).startswith("dd2_gc1__"):
+        raise RequestError("fail", f"cell name must start with dd2_gc1__: {data['name']}")
     if data["sizing"] not in SIZINGS:
         raise RequestError("fail", f"sizing must be hd or stack: {data['sizing']}")
 

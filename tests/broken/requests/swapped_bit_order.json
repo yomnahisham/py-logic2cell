@@ -1,1 +1,1 @@
-{"request_id":"X-6","name":"dd2_g5__ab_1","inputs":["A","B"],"output":"Y","expression":"A & !B","truth_table":"0x4","sizing":"hd"}
+{"request_id":"X-6","name":"dd2_gc1__ab_1","inputs":["A","B"],"output":"Y","expression":"A & !B","truth_table":"0x4","sizing":"hd"}
