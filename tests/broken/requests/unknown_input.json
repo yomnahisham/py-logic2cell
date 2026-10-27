@@ -1,0 +1,1 @@
+{"request_id":"X-4","name":"dd2_gc1__nand2_1","inputs":["A","B"],"output":"Y","expression":"!(A & C)","truth_table":"0x7","sizing":"hd"}

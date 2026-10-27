@@ -1,0 +1,1 @@
+{"request_id":"X-2","name":"dd2_gc1__and5_1","inputs":["A","B","C","D","E"],"output":"Y","expression":"A & B & C & D & E","truth_table":"0x80000000","sizing":"hd"}

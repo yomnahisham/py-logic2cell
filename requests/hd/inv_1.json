@@ -1,0 +1,11 @@
+{
+  "request_id": "HD-inv_1",
+  "name": "dd2_gc1__inv_1",
+  "inputs": [
+    "A"
+  ],
+  "output": "Y",
+  "expression": "!A",
+  "truth_table": "0x1",
+  "sizing": "hd"
+}

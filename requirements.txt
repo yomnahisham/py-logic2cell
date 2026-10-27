@@ -1,0 +1,4 @@
+gdsfactory==9.51.0
+klayout==0.30.12
+matplotlib==3.11.2
+pytest==8.4.2

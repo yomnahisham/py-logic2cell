@@ -1,9 +1,17 @@
 yosys -V
-Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)
+Yosys 0.64 (git sha1 d8dab5b32666564eca8e18f412973853ce006e61, clang++ 17.0.0 -fPIC -O3)
 iverilog -V 2>/dev/null | head -1
 Icarus Verilog version 13.0 (stable) (v13_0)
 python3 --version
-Python 3.14.7
+Python 3.14.8
 docker run --rm dd2-layout-tools magic --version
-request returned 500 Internal Server Error for API route and version http://%2FUsers%2Fabdurahmanmahmoud%2F.docker%2Frun%2Fdocker.sock/_ping, check if the server supports the requested API version
-make: *** [check] Error 1
+8.3.684.684
+docker run --rm dd2-layout-tools netgen -batch quit
+Netgen 1.5.132 compiled on Tue Oct 27 19:22:38 UTC 2026
+Warning: netgen command 'global' use fully-qualified name '::netgen::global'
+docker run --rm dd2-layout-tools /opt/dd2/stress_test/check_stress.sh
+ngspice: ngspice-47  /usr/local/bin/ngspice  sha256 81a8991415fbee4065e1e54fcdf68ac67183eb9b1d2c4119c252066d370705ad
+current ratio, stressed / unstressed: 1.03504
+PASS: mobility stress is applied (fixed build)
+docker run --rm dd2-yosys yosys -V | grep -q "Yosys 0.33" || (echo "dd2-yosys is not Yosys 0.33" && exit 1)
+check: OK
