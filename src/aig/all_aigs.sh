@@ -7,7 +7,7 @@ TOPS=("cpu8" "dsp8" "cpu" "uart_apb_master" "cpu" "fir10")
 for i in "${!DESIGNS[@]}"; do
     DESIGN="${DESIGNS[$i]}"
     TOP="${TOPS[$i]}"
-    V_ABS=$(realpath "designs/${DESIGN}.v")
+    V_ABS=$(realpath "given/designs/${DESIGN}.v")
 
     echo "Processing design: ${DESIGN}"
 

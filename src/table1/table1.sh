@@ -2,8 +2,8 @@
 set -euo pipefail
 
 # 1. Update these two paths to point to where your global Liberty files are stored:
-LIB_USABLE="libs/hd_usable.lib"  # Usable HD library (307 cells)
-LIB_REDUCED="libs/hd_reduced.lib"                   # Reduced HD library (189 cells)
+LIB_USABLE="given/hd_usable.lib"  # Usable HD library (307 cells)
+LIB_REDUCED="given/hd_reduced.lib"                   # Reduced HD library (189 cells)
 
 # 2. Required designs and their matching top modules from Table 2
 DESIGNS=("cpu8" "dsp8" "arlet6502" "uart_apb" "risc8" "fir10")
@@ -15,7 +15,7 @@ echo "---------------------------------------------------------"
 for i in "${!DESIGNS[@]}"; do
     DESIGN="${DESIGNS[$i]}"
     TOP="${TOPS[$i]}"
-    VERILOG="designs/${DESIGN}.v"
+    VERILOG="given/designs/${DESIGN}.v"
 
     for SCRIPT in "A" "B"; do
         for LIB_TYPE in "usable" "reduced"; do
