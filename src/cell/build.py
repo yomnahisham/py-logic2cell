@@ -19,6 +19,7 @@ from src.cell import abutment, compare, simulate, verify
 from src.cell.layout import draw
 from src.cell.network import NetworkError, build_stage, euler_order, schematic, switch_check
 from src.common.request import RequestError, read_request, write_response
+from src.common.stage import expression, single_stage
 from src.layer_check import check as layer_check
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -51,7 +52,9 @@ def build(request_path: Path, hd: str | None = None) -> dict:
     if request.sizing not in SIZES:
         return refuse(f"sizing {request.sizing} not built yet")
     try:
-        stage = build_stage(request.inputs, request.output, request.expression)
+        form = single_stage(request.truth_table, len(request.inputs))
+        expr = expression(form, list(request.inputs)) if form else request.expression
+        stage = build_stage(request.inputs, request.output, expr)
     except NetworkError as error:
         return refuse(str(error))
     errors = switch_check(stage, request.truth_table)
