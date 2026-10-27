@@ -4,7 +4,7 @@ from cut_enumerator import CutEnumerator
 def test_verifier():
     # Use one of exported raw AIGs
     # Note: convert binary .aig to ascii .aag using yosys/aiger tools if needed
-    aig_path = "out/aigs/aag/cpu8_raw.aag"
+    aig_path = str(__import__("pathlib").Path(__file__).resolve().parents[2] / "build/aigs/cpu8_raw.aag")
     
     print("Testing Cut Enumerator & Brute-Force Checker...")
     enumerator = CutEnumerator(aig_path)

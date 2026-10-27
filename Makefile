@@ -17,6 +17,7 @@ setup:            ## environment, and links to the PDK and the given files
 	ln -sfn $(GIVEN) given
 	test -d .venv || python3 -m venv .venv
 	$(PY) -m pip install -q -r requirements.txt
+	docker build -q -t dd2-yosys docker/yosys
 
 check:            ## tool versions, PDK, and the ngspice stress test for Option 1
 	@test -d pdk || (echo "pdk link missing: run make setup" && exit 1)
@@ -27,6 +28,7 @@ check:            ## tool versions, PDK, and the ngspice stress test for Option 
 	docker run --rm dd2-layout-tools magic --version
 	docker run --rm dd2-layout-tools netgen -batch quit
 	docker run --rm dd2-layout-tools /opt/dd2/stress_test/check_stress.sh
+	docker run --rm dd2-yosys yosys -V | grep -q "Yosys 0.33" || (echo "dd2-yosys is not Yosys 0.33" && exit 1)
 	@echo "check: OK"
 
 test:             ## every test, including the broken cases in tests/broken/
@@ -34,6 +36,8 @@ test:             ## every test, including the broken cases in tests/broken/
 	$(PY) src/frame_check.py
 
 all:              ## the whole flow
+	$(PY) -m src.table1.table1
+	$(PY) -m src.aig.aigs
 	for r in requests/hd/*.json; do $(PY) -m src.cell.build $$r --hd $$(basename $$r .json) || exit 1; done
 
 demo:             ## what the interview runs: make demo IN=<request or design>
