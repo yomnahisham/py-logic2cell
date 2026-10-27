@@ -26,7 +26,7 @@ for i in "${!DESIGNS[@]}"; do
             fi
 
             # Execute map.sh
-            OUTPUT=$(bash ./scripts/map.sh "$VERILOG" "$TOP" "$LIB" "$SCRIPT" 2>/dev/null)
+            OUTPUT=$(bash ./src/table1/map.sh "$VERILOG" "$TOP" "$LIB" "$SCRIPT" 2>/dev/null)
             
             # Extract chip area line
             AREA=$(echo "$OUTPUT" | grep -i "Chip area" | awk '{print $NF}')
