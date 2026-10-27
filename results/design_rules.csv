@@ -1,0 +1,22 @@
+what,value,how,pdk,rule,ok
+gate length,0.15,equal,0.15,poly.1a,True
+poly spacing,0.21,equal,0.21,poly.2,True
+poly past diffusion (endcap),0.13,equal,0.13,poly.8,True
+contact size,0.17,equal,0.17,licon.1,True
+contact to standard cell gate,0.05,equal,0.05,licon.11,True
+diffusion around contact,0.04,equal,0.04,licon.5a,True
+poly around poly contact,0.05,equal,0.05,licon.8,True
+"poly around poly contact, one direction",0.08,equal,0.08,licon.8a,True
+diffusion spacing,0.27,equal,0.27,diff/tap.3,True
+li width,0.17,equal,0.17,li.1,True
+li spacing,0.17,equal,0.17,li.3,True
+"li around contact, one direction",0.08,equal,0.08,li.5,True
+npc around poly contact,0.1,equal,0.1,licon.15,True
+gate pitch over a contacted column,0.42,>=,0.42,poly.1a + 2 licon.11 + licon.1,True
+gate pitch over shared diffusion,0.36,>=,0.36,poly.1a + poly.2,True
+contact pitch,0.34,>=,0.34,licon.1 + licon.2,True
+poly contact to NMOS diffusion,0.19,>=,0.19,licon.14,True
+poly contact pad to NMOS diffusion,0.11,>=,0.075,poly.4,True
+input pin li area,0.0792,>=,0.0561,li.6 (um2),True
+input pin li to NMOS row li,0.17,>=,0.17,li.3,True
+input pin li to PMOS row li,0.17,>=,0.17,li.3,True
