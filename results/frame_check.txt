@@ -1,0 +1,35 @@
+=== 1. plan_hd.json vs Table 1 ===
+  PASS: Site width = 0.46 um
+  PASS: Site height = 2.72 um
+  PASS: Boundary y = 0.00 to 2.72 um
+  PASS: Plan VGND rail y = -0.24 to 0.24 um; expected -0.24 to 0.24 um
+  PASS: Plan nsdm y = -0.19 to 1.015 um; expected -0.19 to 1.015 um
+  PASS: Plan npc y = 0.975 to 1.345 um; expected 0.975 to 1.345 um
+  PASS: Plan hvtp y = 1.25 to 2.72 um; expected 1.25 to 2.72 um
+  PASS: Plan nwell y = 1.305 to 2.91 um; expected 1.305 to 2.91 um
+  PASS: Plan psdm y = 1.355 to 2.91 um; expected 1.355 to 2.91 um
+  PASS: Plan VPWR rail y = 2.48 to 2.96 um; expected 2.48 to 2.96 um
+
+=== 2. Installed GDS vs Table 1 ===
+
+inv_1 (sky130_fd_sc_hd__inv_1)
+  PASS: prBoundary is 3 sites wide (1.38 um) and 2.72 um tall
+  PASS: VGND rail (68/20) has expected y extent -0.24 to 0.24 um
+  PASS: nsdm (93/44) has expected y extent -0.19 to 1.015 um
+  PASS: npc (95/20) has expected y extent 0.975 to 1.345 um
+  PASS: hvtp (78/44) has expected y extent 1.25 to 2.72 um
+  PASS: nwell (64/20) has expected y extent 1.305 to 2.91 um
+  PASS: psdm (94/20) has expected y extent 1.355 to 2.91 um
+  PASS: VPWR rail (68/20) has expected y extent 2.48 to 2.96 um
+
+nand2_1 (sky130_fd_sc_hd__nand2_1)
+  PASS: prBoundary is 3 sites wide (1.38 um) and 2.72 um tall
+  PASS: VGND rail (68/20) has expected y extent -0.24 to 0.24 um
+  PASS: nsdm (93/44) has expected y extent -0.19 to 1.015 um
+  PASS: npc (95/20) has expected y extent 0.975 to 1.345 um
+  PASS: hvtp (78/44) has expected y extent 1.25 to 2.72 um
+  PASS: nwell (64/20) has expected y extent 1.305 to 2.91 um
+  PASS: psdm (94/20) has expected y extent 1.355 to 2.91 um
+  PASS: VPWR rail (68/20) has expected y extent 2.48 to 2.96 um
+
+=== Summary: 26 PASS, 0 FAIL ===

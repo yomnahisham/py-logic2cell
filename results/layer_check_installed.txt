@@ -1,0 +1,8 @@
+sky130_fd_sc_hd__inv_1: pmos=1 nmos=1 poly_contacts=1
+PASS
+sky130_fd_sc_hd__nand2_1: pmos=1 nmos=1 poly_contacts=2
+PASS
+sky130_fd_sc_hd__tapvpwrvgnd_1: pmos=0 nmos=0 poly_contacts=0
+PASS
+sky130_fd_sc_hd__fill_1: pmos=0 nmos=0 poly_contacts=0
+PASS
