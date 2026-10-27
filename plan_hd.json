@@ -1,0 +1,47 @@
+{
+  "about": "Frame of a sky130_fd_sc_hd standard cell, measured from the GDS of sky130_fd_sc_hd__inv_1 and __nand2_1 in the SkyWater HD library repository. Units: um. 'frame' is the compatibility contract: do not change it. 'reference' shows the choices HD makes inside the frame; those are yours to make.",
+  "units": "um",
+  "grid": 0.005,
+  "frame": {
+    "site": {"name": "unithd", "width": 0.46, "height": 2.72},
+    "cell_width": "whole number of sites; inv_1 and nand2_1 are 3 sites (1.38)",
+    "boundary": {"layer": "prBoundary", "gds": [236, 0], "x": [0, "width"], "y": [0.0, 2.72]},
+    "areaid_sc": {"layer": "areaid.sc", "gds": [81, 4], "x": [0, "width"], "y": [0.0, 2.72]},
+    "rails": {
+      "VGND": {
+        "met1": {"gds": [68, 20], "x": [0, "width"], "y": [-0.24, 0.24]},
+        "li1": {"gds": [67, 20], "x": [0, "width"], "y": [-0.085, 0.085]},
+        "mcon": {"gds": [67, 44], "size": 0.17, "y": [-0.085, 0.085], "x_centres": "0.23 + 0.46*k, one per site"}
+      },
+      "VPWR": {
+        "met1": {"gds": [68, 20], "x": [0, "width"], "y": [2.48, 2.96]},
+        "li1": {"gds": [67, 20], "x": [0, "width"], "y": [2.635, 2.805]},
+        "mcon": {"gds": [67, 44], "size": 0.17, "y": [2.635, 2.805], "x_centres": "0.23 + 0.46*k, one per site"}
+      }
+    },
+    "nwell": {"gds": [64, 20], "x": [-0.19, "width + 0.19"], "y": [1.305, 2.91]},
+    "nsdm": {"gds": [93, 44], "x": [0, "width"], "y": [-0.19, 1.015]},
+    "psdm": {"gds": [94, 20], "x": [0, "width"], "y": [1.355, 2.91]},
+    "hvtp": {"gds": [78, 44], "x": [0, "width"], "y": [1.25, 2.72]},
+    "npc_band": {"gds": [95, 20], "x": [0, "width"], "y": [0.975, 1.345]},
+    "pins": {
+      "inputs": "li1 shape over the poly contact, inside the npc band; label 67/5, pin 67/16",
+      "output": "li1 shape; label 67/5, pin 67/16",
+      "VGND, VPWR": "met1 rail and li1 strip; label 68/5, pin 68/16",
+      "VPB": "n-well; label 64/5, pin 64/16, at the top edge",
+      "VNB": "substrate; label 64/59, pin 122/16, at the bottom edge"
+    },
+    "devices": {"nmos": "sky130_fd_pr__nfet_01v8", "pmos": "sky130_fd_pr__pfet_01v8_hvt", "l": 0.15},
+    "spice_port_order": "inputs, then VGND VNB VPB VPWR, then outputs"
+  },
+  "reference": {
+    "nmos_diffusion_y": [0.235, 0.885],
+    "pmos_diffusion_y": [1.485, 2.485],
+    "poly_y": [0.105, 2.615],
+    "poly_width": 0.15,
+    "nand2_1_gate_pitch": 0.42,
+    "hd_x1_widths": {"nmos": 0.65, "pmos": 1.0},
+    "inv_1": {"nmos_diffusion_x": [0.34, 1.01], "gate_x": [0.6, 0.75], "sa_sb": 0.26},
+    "nand2_1": {"diffusion_x": [0.155, 1.245], "gate_x": [[0.415, 0.565], [0.835, 0.985]]}
+  }
+}
