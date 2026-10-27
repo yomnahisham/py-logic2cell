@@ -1,0 +1,5 @@
+[
+  {"name": "nand2_missing_pullup", "inputs": ["A", "B"], "expression": "!(A & B)", "delete": ["p", "A"]},
+  {"name": "a21oi_missing_pulldown", "inputs": ["A", "B", "C"], "expression": "!((A & B) | C)", "delete": ["n", "C"]},
+  {"name": "nand2_wrong_table", "inputs": ["A", "B"], "expression": "!(A & B)", "truth_table": "0x6"}
+]
