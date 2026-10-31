@@ -16,8 +16,8 @@ import sys
 from pathlib import Path
 
 from src.cell import abutment, compare, simulate, verify
-from src.cell.layout import draw
-from src.cell.network import NetworkError, build_stage, euler_order, schematic, switch_check
+from src.cell.layout import draw, place
+from src.cell.network import NetworkError, euler_orders, schematic, stage_variants, switch_check
 from src.common.request import RequestError, read_request, write_response
 from src.common.stage import expression, single_stage
 from src.layer_check import check as layer_check
@@ -54,21 +54,43 @@ def build(request_path: Path, hd: str | None = None) -> dict:
     try:
         form = single_stage(request.truth_table, len(request.inputs))
         expr = expression(form, list(request.inputs)) if form else request.expression
-        stage = build_stage(request.inputs, request.output, expr)
+        variants = stage_variants(request.inputs, request.output, expr)
     except NetworkError as error:
         return refuse(str(error))
-    errors = switch_check(stage, request.truth_table)
-    if errors:
-        return refuse("switch-level check: " + "; ".join(errors))
-    order = euler_order(stage)
-    if order is None:
-        return refuse("no common Euler path (diffusion breaks not built yet)")
-
+    for variant in variants:
+        errors = switch_check(variant, request.truth_table)
+        if errors:
+            return refuse("switch-level check: " + "; ".join(errors))
+    if hd:
+        # the reference cells of section 4.1: the installed cell's netlist and transistor sizes
+        variants = [v for v in variants if compare.same_netlist(v, hd)]
+        if not variants:
+            return refuse(f"no series order of the network matches the transistors of {hd}")
+    widths = compare.hd_sizes(hd) if hd else {}
     wn, wp = SIZES[request.sizing]
-    component, meta = draw(name, stage, order, wn, wp)
-    meta.update(inputs=list(request.inputs), output=request.output)
+
+    # every series order and Euler path; the narrowest cell wins, the first found on a tie
+    best, tried, unrouted = None, 0, []
+    for variant in variants:
+        for order in euler_orders(variant):
+            tried += 1
+            try:
+                width = place(variant, order, wn, wp, widths).width
+            except ValueError as error:
+                unrouted.append(f"{' '.join(order.gates)}: {error}")
+                continue
+            if best is None or width < best[0] - 1e-9:
+                best = (width, variant, order)
+    if best is None:
+        if not tried:
+            return refuse("no common Euler path (diffusion breaks not built yet)")
+        return refuse(f"no Euler order can be drawn: {'; '.join(unrouted[:3])}")
+    _, stage, order = best
+    component, meta = draw(name, stage, order, wn, wp, widths)
+    meta.update(inputs=list(request.inputs), output=request.output, orders_tried=tried,
+                orders_drawable=tried - len(unrouted))
     component.write_gds(str(work / f"{name}.gds"), with_metadata=False)
-    (work / f"{name}.spice").write_text(schematic(stage, name, wn, wp))
+    (work / f"{name}.spice").write_text(schematic(stage, name, wn, wp, widths=widths))
     (work / f"{name}.json").write_text(json.dumps(meta, indent=2) + "\n")
 
     checks = verify.verify(work, name)

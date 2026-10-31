@@ -9,7 +9,8 @@ import json
 import re
 import shutil
 import sys
-from collections import defaultdict
+from collections import Counter, defaultdict
+from itertools import permutations
 from pathlib import Path
 
 import klayout.db as kdb
@@ -102,23 +103,39 @@ def wiring(layout, cell) -> dict:
 
 
 def gates(layout, cell) -> dict:
-    """Gate x positions and pitch, diffusion strips per row, and gate order by nearest input label."""
-    poly = region(layout, cell, (66, 20))
+    """Per row: gate x positions, the input each gate belongs to, and the gate pitch; and diffusion
+    strips per row. A gate belongs to the input whose label sits on the li over its poly contact."""
+    dbu = layout.dbu
+    poly = list(region(layout, cell, (66, 20)).merged().each())
+    li = list(region(layout, cell, (67, 20)).merged().each())
+    licon = region(layout, cell, (66, 44))
+    owner = {}
+    index = layout.find_layer(67, 5)
+    for s in cell.shapes(index).each():
+        if not s.is_text():     # only an input's li reaches a poly contact; HD's o21ai_1 B1 sits above npc
+            continue
+        point = kdb.Point(s.text_pos.x, s.text_pos.y)
+        wires = kdb.Region([w for w in li if w.inside(point)])
+        for i, shape in enumerate(poly):
+            if not (kdb.Region(shape) & licon & wires).is_empty():
+                owner[i] = s.text_string
     diff = region(layout, cell, (65, 20))
-    channels = (poly & diff)
-    xs = sorted({round(b.center().x, 3) for b in (p.bbox().to_dtype(layout.dbu) for p in channels.each())})
+    out = {}
+    for row in ("n", "p"):
+        found = []
+        for i, shape in enumerate(poly):
+            for ch in (kdb.Region(shape) & diff).each():
+                b = ch.bbox().to_dtype(dbu)
+                if (b.center().y < 1.2) == (row == "n"):
+                    found.append((round(b.center().x, 3), owner.get(i, "?")))
+        found.sort()
+        xs = [x for x, _ in found]
+        out[row] = {"gate_x": xs, "order": [name for _, name in found],
+                    "pitch": [round(q - p, 3) for p, q in zip(xs, xs[1:])]}
     rows = defaultdict(int)
     for b in boxes(layout, cell, (65, 20)):
         rows["n" if b.top < 1.2 else "p"] += 1
-    labels = []
-    index = layout.find_layer(67, 5)
-    for s in cell.shapes(index).each():
-        if s.is_text() and PLAN["npc_band"]["y"][0] <= s.text_pos.y * layout.dbu <= PLAN["npc_band"]["y"][1]:
-            labels.append((s.text_pos.x * layout.dbu, s.text_string))
-    inputs = sorted({name for _, name in labels if name != "Y"})
-    order = [min(((abs(x - lx), n) for lx, n in labels if n in inputs), default=(0, "?"))[1] for x in xs]
-    pitch = sorted({round(b - a, 3) for a, b in zip(xs, xs[1:])})
-    return {"gate_x": xs, "order": order, "pitch": pitch, "diffusion_breaks": {k: v - 1 for k, v in rows.items()}}
+    return {**out, "diffusion_breaks": {k: v - 1 for k, v in rows.items()}}
 
 
 def parasitics(folder: Path, name: str) -> dict:
@@ -140,6 +157,47 @@ def parasitics(folder: Path, name: str) -> dict:
             _, a, b, value = line.split()[:4]
             r[a.split(".")[0]] += float(value)
     return {"cap_fF": {k: round(v, 4) for k, v in c.items()}, "res_ohm": {k: round(v, 2) for k, v in r.items()}}
+
+
+def hd_fets(short: str) -> tuple[list[str], list[tuple]]:
+    """Ports and transistors (kind, gate, drain, source, w in um) of the installed cell, from the PDK SPICE."""
+    name = PREFIX + short
+    text = HD_SPICE.read_text()
+    start = text.index(f".subckt {name} ")
+    lines = text[start:text.index(".ends", start)].splitlines()
+    fets = []
+    for line in lines[1:]:
+        tok = line.split()
+        if tok and tok[0].startswith("X"):
+            w = round(float(re.search(r"\bw=([\d.e+-]+)u", line)[1]) / 1e6, 4)
+            fets.append(("n" if "nfet" in tok[5] else "p", tok[2], tok[1], tok[3], w))
+    return lines[0].split()[2:], fets
+
+
+def hd_sizes(short: str) -> dict:
+    """Transistor widths (um) of the installed cell, per (kind, gate)."""
+    sizes = {}
+    for kind, gate, _, _, w in hd_fets(short)[1]:
+        if sizes.setdefault((kind, gate), w) != w:
+            raise ValueError(f"{PREFIX + short}: the {kind}MOS on {gate} come in more than one width")
+    return sizes
+
+
+def same_netlist(stage, short: str) -> bool:
+    """True if the stage's transistors connect as the installed cell's do, up to the internal net names."""
+    ports, theirs = hd_fets(short)
+    key = lambda kind, gate, a, b: (kind, gate, frozenset((a, b)))
+    theirs = Counter(key(k, g, d, s) for k, g, d, s, _ in theirs)
+    inner_ours = sorted({n for f in stage.fets for n in (f.a, f.b)} - set(ports))
+    inner_theirs = sorted({n for k, g, ab in theirs for n in ab} - set(ports))
+    if len(inner_ours) != len(inner_theirs):
+        return False
+    for perm in permutations(inner_theirs):
+        rename = dict(zip(inner_ours, perm))
+        ours = Counter(key(f.kind, f.gate, rename.get(f.a, f.a), rename.get(f.b, f.b)) for f in stage.fets)
+        if ours == theirs:
+            return True
+    return False
 
 
 def hd_reference(work: Path, short: str) -> Path:
@@ -168,7 +226,8 @@ def picture(path: Path, cells: list):
     colours = {(64, 20): ("#c8c8ff", .3), (65, 20): ("#2e9e2e", .6), (66, 20): ("#d62728", .6),
                (66, 44): ("#000000", .9), (67, 20): ("#9467bd", .45), (67, 44): ("#444444", .9),
                (68, 20): ("#1f77b4", .35), (95, 20): ("#ff7f0e", .15)}
-    fig, axes = plt.subplots(1, len(cells), figsize=(4 * len(cells), 6))
+    right = max(region(layout, cell, (236, 0)).bbox().right * layout.dbu for _, (layout, cell) in cells) + 0.3
+    fig, axes = plt.subplots(1, len(cells), figsize=((right + 0.3) * 1.6 * len(cells), 6))
     for ax, (title, (layout, cell)) in zip(axes, cells):
         for layer, (colour, alpha) in colours.items():
             for p in region(layout, cell, layer).merged().each():
@@ -176,7 +235,7 @@ def picture(path: Path, cells: list):
                 ax.add_patch(Polygon(points, color=colour, alpha=alpha, lw=0))
         bb = region(layout, cell, (236, 0)).bbox().to_dtype(layout.dbu)
         ax.add_patch(Rectangle((bb.left, bb.bottom), bb.width(), bb.height(), fill=False, ls="--", lw=1))
-        ax.set_xlim(-0.3, 2.2)
+        ax.set_xlim(-0.3, right)
         ax.set_ylim(-0.35, 3.05)
         ax.set_aspect("equal")
         ax.set_title(title)
@@ -212,14 +271,16 @@ def compare(folder: Path, name: str, short: str) -> dict:
 
 if __name__ == "__main__":
     folder = Path(sys.argv[1]).resolve()
-    r = compare(folder.parent, folder.name, sys.argv[2])
+    r = compare(folder, folder.name, sys.argv[2])
     print(f"frame: {'match' if r['frame']['match'] else 'DIFFERS'}   xor: {r['xor_um2']}")
     print(f"transistors (LVS vs HD): {r['lvs_vs_hd']}")
     print(f"width: {r['width_sites']['ours']} sites, HD {r['width_sites']['hd']}")
     print(f"wiring: ours {r['wiring']['ours']}   HD {r['wiring']['hd']}")
     for who in ("ours", "hd"):
         g = r["gates"][who]
-        print(f"gates {who:4s}: order {g['order']} at {g['gate_x']}, pitch {g['pitch']}, breaks {g['diffusion_breaks']}")
+        for row in ("n", "p"):
+            print(f"gates {who:4s} {row}: order {g[row]['order']} at {g[row]['gate_x']}, pitch {g[row]['pitch']}")
+        print(f"breaks {who:4s}: {g['diffusion_breaks']}")
     for who in ("ours", "hd"):
         print(f"pins {who:4s}: " + "; ".join(f"{k} {v[0]['layer']}/{v[0]['band']}/{v[0]['size']}" for k, v in sorted(r["pins"][who].items())))
     for who in ("ours", "hd"):

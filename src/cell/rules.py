@@ -25,6 +25,7 @@ EXACT = [
     ("contact size", "CUT", "licon.1", "P-diffusion contact width"),
     ("contact to standard cell gate", "CUT_GATE", "licon.11", "standard cell gate"),
     ("diffusion around contact", "CUT_DIFF", "licon.5a", "N-diffusion overlap"),
+    ("diffusion around contact, one direction", "CUT_DIFF_DIR", "licon.5c", "P-diffusion overlap of P-diffusion contact"),
     ("poly around poly contact", "POLY_CUT", "licon.8", "poly overlap of poly contact <"),
     ("poly around poly contact, one direction", "POLY_CUT_DIR", "licon.8a", "poly overlap of poly contact"),
     ("diffusion spacing", "DIFF_SPACE", "diff/tap.3", "Diffusion spacing"),

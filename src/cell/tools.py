@@ -15,7 +15,8 @@ ROOT = Path(__file__).resolve().parents[2]
 IMAGE = os.getenv("LAYOUT_IMAGE", "dd2-layout-tools")
 ENTRY = {"magic": "magic", "netgen": "netgen", "ngspice": "ngspice"}
 
-PDK = ROOT / "pdk"
+# resolved, because only the final target is mounted: pdk may point to another link
+PDK = (ROOT / "pdk").resolve()
 TECH = PDK / "libs.tech/magic/sky130A.tech"
 LVS_SETUP = PDK / "libs.tech/netgen/sky130A_setup.tcl"
 MODELS = PDK / "libs.tech/ngspice/sky130.lib.spice"
