@@ -63,6 +63,7 @@ PAD_HALF = CUT / 2 + LI_CUT_DIR          # half width of an input pad on li
 STRIP_HALF = LI / 2                      # half width of a narrow li strip
 WIDE_HALF = CUT / 2 + LI_CUT_DIR         # li strip over contacts that does not reach a rail
 LANE_Y = {"n": (N_LI[1] - LI, N_LI[1]), "p": (P_LI[0], P_LI[0] + LI)}   # li lane on the row's inner edge
+OUTER_Y = {"n": (N_LI[0], N_LI[0] + LI), "p": (P_LI[1] - LI, P_LI[1])}  # li lane on the row's outer edge, by the rail
 ROWS = {"n": ("VGND", N_DIFF, N_LI), "p": ("VPWR", P_DIFF, P_LI)}
 WIDEN_STEPS = tuple(round(0.06 * k, 2) for k in range(8))   # extra width (um) tried for a column between two gates
 MAX_WIDENINGS, MAX_CROSSINGS = 300, 60
@@ -104,13 +105,25 @@ class Plan:
     cont: dict = field(default_factory=dict)      # row -> contacted columns
     half: dict = field(default_factory=dict)      # (row, column) -> half width of its li strip
     ys: dict = field(default_factory=dict)        # (row, column) -> contact centres
-    lanes: dict = field(default_factory=dict)     # row -> [(net, x0, x1)] li along the inner edge
+    lanes: dict = field(default_factory=dict)     # row -> [(net, x0, x1, "inner" | "outer")] li along an edge
 
     def half_at(self, row, x):
         for j in self.cont[row]:
             if abs(self.col_x[j] - x) < 1e-6:
                 return self.half[(row, j)]
         return WIDE_HALF
+
+    def band(self, row, x0, x1, net):
+        """y extent of net's li between x0 and x1: the row's li band, less any outer lane of
+        another net that passes within li spacing."""
+        lo, hi = ROWS[row][2]
+        for other, a, b, edge in self.lanes[row]:
+            if edge == "outer" and other != net and a < x1 + LI_SPACE - 1e-9 and b > x0 - LI_SPACE + 1e-9:
+                if row == "n":
+                    lo = OUTER_Y["n"][1] + LI_SPACE
+                else:
+                    hi = OUTER_Y["p"][0] - LI_SPACE
+        return lo, hi
 
 
 def is_internal(net):
@@ -201,7 +214,10 @@ def plan_row(plan: Plan, row: str, nodes):
     A strip next to a contact of another signal net is narrow, as in HD, and its contacts keep the
     li.5 overlap at both ends. A net whose contacts lie on both sides of a rail contact joins them
     with a lane along the row's inner edge, and the rail column's contacts move away from the lane
-    (HD's nand3_1, a21oi_1 and o21ai_1 do the same)."""
+    (HD's nand3_1, a21oi_1 and o21ai_1 do the same). Where it must pass another signal net's
+    contact instead, the lane runs along the outer edge, by the rail, and that contact moves inward:
+    a rail strip reaches the outer edge and a signal strip the inner one, so each edge can pass
+    only one kind. Each stretch between two of the net's contacts picks its own edge."""
     rail, band, li = ROWS[row]
     cont = plan.cont[row]
     for j in cont:
@@ -223,15 +239,46 @@ def plan_row(plan: Plan, row: str, nodes):
         lo, hi = min(xs), max(xs)
         if not near(lo - plan.half_at(row, lo), hi + plan.half_at(row, hi), net):
             continue
-        # a lane: full strips on the net's own columns, joined along the inner edge
-        x0 = snap(lo - (plan.half_at(row, lo) if lo in plan.col_x else STRIP_HALF))
-        x1 = snap(hi + (plan.half_at(row, hi) if hi in plan.col_x else STRIP_HALF))
-        passed = near(x0, x1, net)
-        blocking = sorted({nodes[k] for k in passed} - {rail})
-        if blocking:
-            raise ValueError(f"{net} cannot pass {', '.join(blocking)} in the {row} row on li")
-        plan.lanes[row].append((net, x0, x1))
-        moved |= set(passed)
+        # a lane: full strips on the net's own columns, joined along an edge; each stretch between
+        # two of the net's positions takes the inner edge past rails, the outer edge past signals
+        left = lambda x: snap(x - (plan.half_at(row, x) if x in plan.col_x else STRIP_HALF))
+        right = lambda x: snap(x + (plan.half_at(row, x) if x in plan.col_x else STRIP_HALF))
+        stretches = []
+        for a, b in zip(sorted(xs), sorted(xs)[1:]):
+            passed = near(left(a), right(b), net)
+            signals = sorted({nodes[k] for k in passed} - {rail})
+            if signals and len(signals) < len({nodes[k] for k in passed}):
+                raise ValueError(f"{net} cannot pass {', '.join(signals)} and {rail} at once in the {row} row on li")
+            edge = "outer" if signals else "inner"
+            if stretches and stretches[-1][0] == edge:
+                stretches[-1][2] = right(b)
+                stretches[-1][3] |= set(passed)
+            else:
+                stretches.append([edge, left(a), right(b), set(passed)])
+        for edge, x0, x1, passed in stretches:
+            plan.lanes[row].append((net, x0, x1, edge))
+            if edge == "inner":
+                moved |= passed
+
+    # an outer lane may pass only strips that stop short of the outer edge
+    for net, x0, x1, edge in plan.lanes[row]:
+        if edge != "outer":
+            continue
+        for k in near(x0, x1, net):
+            if any(other == nodes[k] and e == "outer" for other, *_, e in plan.lanes[row]):
+                raise ValueError(f"the outer lanes of {net} and {nodes[k]} meet in the {row} row")
+
+    # Under another net's outer lane a narrow strip, which covers its contact by li.5 above and
+    # below, leaves no room for the contact in the NMOS row. Widen it where the neighbours allow:
+    # li.5 holds on two opposite sides, so a wide strip covers the contact sideways instead.
+    for j in cont:
+        x = plan.col_x[j]
+        if nodes[j] == rail or plan.half[(row, j)] != STRIP_HALF or plan.band(row, x - STRIP_HALF, x + STRIP_HALF, nodes[j]) == li:
+            continue
+        others = [(plan.col_x[k], plan.half[(row, k)]) for k in cont if nodes[k] != nodes[j]]
+        others += [(cx, STRIP_HALF) for net, cx in plan.crossing.items() if net != nodes[j]]
+        if all(abs(x - ox) >= WIDE_HALF + oh + LI_SPACE - 1e-9 for ox, oh in others):
+            plan.half[(row, j)] = WIDE_HALF
 
     lane = LANE_Y[row]
     for j in cont:
@@ -243,6 +290,11 @@ def plan_row(plan: Plan, row: str, nodes):
             lo = lane[1] + LI_SPACE + LI_CUT_DIR
         elif nodes[j] != rail and plan.half[(row, j)] == STRIP_HALF:
             lo, hi = li[0] + LI_CUT_DIR, li[1] - LI_CUT_DIR
+        x = plan.col_x[j]
+        band = plan.band(row, x - plan.half[(row, j)], x + plan.half[(row, j)], nodes[j])
+        if nodes[j] != rail and band != li:     # under another net's outer lane: the strip and its contacts move inward
+            ends = LI_CUT_DIR if plan.half[(row, j)] == STRIP_HALF else 0     # a wide strip meets li.5 sideways
+            lo, hi = max(lo, band[0] + ends), min(hi, band[1] - ends)
         ys = contacts_y(row, min(ws), lo, hi)
         if not ys:
             raise ValueError(f"no room for a contact in column {j} of the {row} row")
@@ -250,12 +302,15 @@ def plan_row(plan: Plan, row: str, nodes):
 
 
 def check_lanes(plan: Plan):
-    """Lanes must keep li spacing from each other and from the other nets' crossings."""
+    """Lanes on the same edge must keep li spacing from each other, and inner lanes from the other
+    nets' crossings."""
     for row, lanes in plan.lanes.items():
-        for i, (net, x0, x1) in enumerate(lanes):
-            for other, y0, y1 in lanes[i + 1:]:
-                if x0 < y1 + LI_SPACE and y0 < x1 + LI_SPACE:
+        for i, (net, x0, x1, edge) in enumerate(lanes):
+            for other, y0, y1, e in lanes[i + 1:]:
+                if e == edge and other != net and x0 < y1 + LI_SPACE and y0 < x1 + LI_SPACE:
                     raise ValueError(f"the lanes of {net} and {other} meet in the {row} row")
+            if edge == "outer":
+                continue
             for other, x in plan.crossing.items():
                 if other != net and x0 - LI_SPACE < x + STRIP_HALF and x - STRIP_HALF < x1 + LI_SPACE:
                     raise ValueError(f"{other} crosses the lane of {net} in the {row} row")
@@ -412,16 +467,20 @@ def draw(name: str, stage: Stage, order: Order, wn: float = 0.65, wp: float = 1.
             xs = [plan.col_x[i] for i in cont if nodes[i] == net]
             if net in laned:
                 for x in xs:
-                    rect(c, "li", x - plan.half_at(row, x), li[0], x + plan.half_at(row, x), li[1])
+                    x0, x1 = x - plan.half_at(row, x), x + plan.half_at(row, x)
+                    y0, y1 = plan.band(row, x0, x1, net)
+                    rect(c, "li", x0, y0, x1, y1)
                 continue
             if net in plan.crossing:
                 xs.append(plan.crossing[net])
             if not xs:
                 continue
-            lo, hi = min(xs), max(xs)
-            rect(c, "li", lo - plan.half_at(row, lo), li[0], hi + plan.half_at(row, hi), li[1])
-        for net, x0, x1 in plan.lanes[row]:
-            rect(c, "li", x0, LANE_Y[row][0], x1, LANE_Y[row][1])
+            x0, x1 = min(xs) - plan.half_at(row, min(xs)), max(xs) + plan.half_at(row, max(xs))
+            y0, y1 = plan.band(row, x0, x1, net)
+            rect(c, "li", x0, y0, x1, y1)
+        for net, x0, x1, edge in plan.lanes[row]:
+            y0, y1 = (LANE_Y if edge == "inner" else OUTER_Y)[row]
+            rect(c, "li", x0, y0, x1, y1)
 
     p_laned = {net for net, *_ in plan.lanes["p"]}
     for net, x in plan.crossing.items():
