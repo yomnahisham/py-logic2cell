@@ -1,0 +1,508 @@
+{
+  "network": {
+    "fets": 4,
+    "switch_check": "pass"
+  },
+  "order": {
+    "name": "dd2_gc1__nor2_1",
+    "width": 1.38,
+    "width_sites": 3,
+    "gate_x": [
+      0.48,
+      0.9
+    ],
+    "col_x": [
+      0.27,
+      0.69,
+      1.11
+    ],
+    "pad_x": {
+      "A": 0.27,
+      "B": 1.11
+    },
+    "gates": [
+      "A",
+      "B"
+    ],
+    "n_nodes": [
+      "VGND",
+      "Y",
+      "VGND"
+    ],
+    "p_nodes": [
+      "VPWR",
+      "p1",
+      "Y"
+    ],
+    "diff_w": {
+      "n": [
+        0.65,
+        0.65
+      ],
+      "p": [
+        1.0,
+        1.0
+      ]
+    },
+    "lanes": {
+      "n": [],
+      "p": []
+    },
+    "inputs": [
+      "A",
+      "B"
+    ],
+    "output": "Y",
+    "orders_tried": 4,
+    "orders_drawable": 4
+  },
+  "checks": {
+    "drc": 0,
+    "drc_why": "",
+    "lvs": "match",
+    "rc_r": 19,
+    "rc_c": 35,
+    "rc_lvs": "match"
+  },
+  "abutment": {
+    "cases": {
+      "dd2_gc1__nor2_1__tapvpwrvgnd_1__left": 0,
+      "dd2_gc1__nor2_1__tapvpwrvgnd_1__right": 0,
+      "dd2_gc1__nor2_1__tapvpwrvgnd_1__mirrored": 0,
+      "dd2_gc1__nor2_1__tapvpwrvgnd_1__flip_vpwr": 0,
+      "dd2_gc1__nor2_1__tapvpwrvgnd_1__flip_vgnd": 0,
+      "dd2_gc1__nor2_1__inv_1__left": 0,
+      "dd2_gc1__nor2_1__inv_1__right": 0,
+      "dd2_gc1__nor2_1__inv_1__mirrored": 0,
+      "dd2_gc1__nor2_1__inv_1__flip_vpwr": 0,
+      "dd2_gc1__nor2_1__inv_1__flip_vgnd": 0,
+      "dd2_gc1__nor2_1__fill_1__left": 0,
+      "dd2_gc1__nor2_1__fill_1__right": 0,
+      "dd2_gc1__nor2_1__fill_1__mirrored": 0,
+      "dd2_gc1__nor2_1__fill_1__flip_vpwr": 0,
+      "dd2_gc1__nor2_1__fill_1__flip_vgnd": 0
+    },
+    "errors": 0,
+    "passed": true
+  },
+  "layers": "pass",
+  "simulation": {
+    "dc": [
+      {
+        "inputs": 0,
+        "expected": 1,
+        "y": 1.8,
+        "passed": true
+      },
+      {
+        "inputs": 1,
+        "expected": 0,
+        "y": 0.0,
+        "passed": true
+      },
+      {
+        "inputs": 2,
+        "expected": 0,
+        "y": 0.0,
+        "passed": true
+      },
+      {
+        "inputs": 3,
+        "expected": 0,
+        "y": 0.0,
+        "passed": true
+      }
+    ],
+    "dc_passed": true,
+    "transient": {
+      "slew_ns": 0.122474,
+      "load_pf": 0.00952062,
+      "steps": 16,
+      "errors": [],
+      "passed": true
+    },
+    "passed": true
+  },
+  "compare": {
+    "cell": "dd2_gc1__nor2_1",
+    "hd": "sky130_fd_sc_hd__nor2_1",
+    "frame": {
+      "expected": {
+        "boundary": [
+          0.0,
+          2.72
+        ],
+        "nwell": [
+          1.305,
+          2.91
+        ],
+        "nsdm": [
+          -0.19,
+          1.015
+        ],
+        "psdm": [
+          1.355,
+          2.91
+        ],
+        "hvtp": [
+          1.25,
+          2.72
+        ],
+        "VGND": [
+          -0.24,
+          0.24
+        ],
+        "VPWR": [
+          2.48,
+          2.96
+        ]
+      },
+      "ours": {
+        "boundary": [
+          0.0,
+          2.72
+        ],
+        "nwell": [
+          1.305,
+          2.91
+        ],
+        "nsdm": [
+          -0.19,
+          1.015
+        ],
+        "psdm": [
+          1.355,
+          2.91
+        ],
+        "hvtp": [
+          1.25,
+          2.72
+        ],
+        "VGND": [
+          -0.24,
+          0.24
+        ],
+        "VPWR": [
+          2.48,
+          2.96
+        ]
+      },
+      "hd": {
+        "boundary": [
+          0.0,
+          2.72
+        ],
+        "nwell": [
+          1.305,
+          2.91
+        ],
+        "nsdm": [
+          -0.19,
+          1.015
+        ],
+        "psdm": [
+          1.355,
+          2.91
+        ],
+        "hvtp": [
+          1.25,
+          2.72
+        ],
+        "VGND": [
+          -0.24,
+          0.24
+        ],
+        "VPWR": [
+          2.48,
+          2.96
+        ]
+      },
+      "match": true
+    },
+    "xor_um2": {
+      "boundary": 0.0,
+      "nwell": 0.0,
+      "nsdm": 0.0,
+      "psdm": 0.0,
+      "hvtp": 0.0,
+      "rails": 0.0
+    },
+    "lvs_vs_hd": "match",
+    "pins": {
+      "ours": {
+        "A": [
+          {
+            "layer": "li1",
+            "band": "npc",
+            "size": [
+              0.17,
+              0.17
+            ]
+          }
+        ],
+        "B": [
+          {
+            "layer": "li1",
+            "band": "npc",
+            "size": [
+              0.17,
+              0.17
+            ]
+          }
+        ],
+        "Y": [
+          {
+            "layer": "li1",
+            "band": "row",
+            "size": [
+              0.17,
+              0.17
+            ]
+          }
+        ],
+        "VGND": [
+          {
+            "layer": "met1",
+            "band": "VGND rail",
+            "size": [
+              0.17,
+              0.17
+            ]
+          }
+        ],
+        "VPWR": [
+          {
+            "layer": "met1",
+            "band": "VPWR rail",
+            "size": [
+              0.17,
+              0.17
+            ]
+          }
+        ],
+        "VPB": [
+          {
+            "layer": "nwell",
+            "band": "VPWR rail",
+            "size": [
+              0.17,
+              0.17
+            ]
+          }
+        ],
+        "VNB": [
+          {
+            "layer": "pwell",
+            "band": "VGND rail",
+            "size": [
+              0.17,
+              0.17
+            ]
+          }
+        ]
+      },
+      "hd": {
+        "B": [
+          {
+            "layer": "li1",
+            "band": "npc",
+            "size": [
+              0.17,
+              0.17
+            ]
+          }
+        ],
+        "Y": [
+          {
+            "layer": "li1",
+            "band": "row",
+            "size": [
+              0.17,
+              0.17
+            ]
+          }
+        ],
+        "A": [
+          {
+            "layer": "li1",
+            "band": "npc",
+            "size": [
+              0.17,
+              0.17
+            ]
+          }
+        ],
+        "VGND": [
+          {
+            "layer": "met1",
+            "band": "VGND rail",
+            "size": [
+              0.17,
+              0.17
+            ]
+          }
+        ],
+        "VPWR": [
+          {
+            "layer": "met1",
+            "band": "VPWR rail",
+            "size": [
+              0.17,
+              0.17
+            ]
+          }
+        ],
+        "VPB": [
+          {
+            "layer": "nwell",
+            "band": "VPWR rail",
+            "size": [
+              0.17,
+              0.17
+            ]
+          }
+        ],
+        "VNB": [
+          {
+            "layer": "pwell",
+            "band": "VGND rail",
+            "size": [
+              0.17,
+              0.17
+            ]
+          }
+        ]
+      }
+    },
+    "wiring": {
+      "ours": {
+        "layers": [
+          "li1",
+          "met1"
+        ],
+        "met1_only_rails": true
+      },
+      "hd": {
+        "layers": [
+          "li1",
+          "met1"
+        ],
+        "met1_only_rails": true
+      }
+    },
+    "width_sites": {
+      "ours": 3,
+      "hd": 3
+    },
+    "gates": {
+      "ours": {
+        "n": {
+          "gate_x": [
+            0.48,
+            0.9
+          ],
+          "order": [
+            "A",
+            "B"
+          ],
+          "pitch": [
+            0.42
+          ]
+        },
+        "p": {
+          "gate_x": [
+            0.48,
+            0.9
+          ],
+          "order": [
+            "A",
+            "B"
+          ],
+          "pitch": [
+            0.42
+          ]
+        },
+        "diffusion_breaks": {
+          "n": 0,
+          "p": 0
+        }
+      },
+      "hd": {
+        "n": {
+          "gate_x": [
+            0.47,
+            0.89
+          ],
+          "order": [
+            "B",
+            "A"
+          ],
+          "pitch": [
+            0.42
+          ]
+        },
+        "p": {
+          "gate_x": [
+            0.47,
+            0.83
+          ],
+          "order": [
+            "B",
+            "A"
+          ],
+          "pitch": [
+            0.36
+          ]
+        },
+        "diffusion_breaks": {
+          "p": 0,
+          "n": 0
+        }
+      }
+    },
+    "parasitics": {
+      "ours": {
+        "cap_fF": {
+          "A": 0.1708,
+          "VPB": 0.4818,
+          "VGND": 0.4971,
+          "Y": 0.4487,
+          "VPWR": 0.4793,
+          "B": 0.1674,
+          "VNB": 1.0829
+        },
+        "res_ohm": {
+          "VGND": 341.02,
+          "Y": 423.21,
+          "VPWR": 267.63,
+          "B": 548.67,
+          "A": 548.67,
+          "VPB": 449.85,
+          "VNB": 2164.4,
+          "a_111_297": 53.19
+        }
+      },
+      "hd": {
+        "cap_fF": {
+          "VPWR": 0.4671,
+          "Y": 0.3889,
+          "VGND": 0.4486,
+          "A": 0.1909,
+          "VPB": 0.4892,
+          "B": 0.1827,
+          "VNB": 1.0907
+        },
+        "res_ohm": {
+          "VGND": 325.25,
+          "VPWR": 250.67,
+          "Y": 1147.23,
+          "A": 543.1,
+          "B": 547.08,
+          "VPB": 402.49,
+          "VNB": 2107.45,
+          "a_109_297": 41.37
+        }
+      }
+    }
+  }
+}

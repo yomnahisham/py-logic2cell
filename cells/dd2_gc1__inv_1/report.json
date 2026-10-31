@@ -28,10 +28,24 @@
       "VPWR",
       "Y"
     ],
+    "diff_w": {
+      "n": [
+        0.65
+      ],
+      "p": [
+        1.0
+      ]
+    },
+    "lanes": {
+      "n": [],
+      "p": []
+    },
     "inputs": [
       "A"
     ],
-    "output": "Y"
+    "output": "Y",
+    "orders_tried": 4,
+    "orders_drawable": 4
   },
   "checks": {
     "drc": 0,
@@ -349,26 +363,48 @@
     },
     "gates": {
       "ours": {
-        "gate_x": [
-          0.69
-        ],
-        "order": [
-          "A"
-        ],
-        "pitch": [],
+        "n": {
+          "gate_x": [
+            0.69
+          ],
+          "order": [
+            "A"
+          ],
+          "pitch": []
+        },
+        "p": {
+          "gate_x": [
+            0.69
+          ],
+          "order": [
+            "A"
+          ],
+          "pitch": []
+        },
         "diffusion_breaks": {
           "n": 0,
           "p": 0
         }
       },
       "hd": {
-        "gate_x": [
-          0.675
-        ],
-        "order": [
-          "A"
-        ],
-        "pitch": [],
+        "n": {
+          "gate_x": [
+            0.675
+          ],
+          "order": [
+            "A"
+          ],
+          "pitch": []
+        },
+        "p": {
+          "gate_x": [
+            0.675
+          ],
+          "order": [
+            "A"
+          ],
+          "pitch": []
+        },
         "diffusion_breaks": {
           "p": 0,
           "n": 0
@@ -380,9 +416,9 @@
         "cap_fF": {
           "VGND": 0.3703,
           "A": 0.1531,
-          "Y": 0.3508,
-          "VPB": 0.4825,
           "VPWR": 0.4679,
+          "VPB": 0.4825,
+          "Y": 0.3508,
           "VNB": 1.0173
         },
         "res_ohm": {
@@ -398,9 +434,9 @@
         "cap_fF": {
           "A": 0.1562,
           "VPB": 0.4815,
-          "VPWR": 0.4011,
-          "Y": 0.3519,
           "VGND": 0.4391,
+          "Y": 0.3519,
+          "VPWR": 0.4011,
           "VNB": 1.0181
         },
         "res_ohm": {

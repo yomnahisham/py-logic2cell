@@ -1,0 +1,23 @@
+{
+  "request_id": "HD-nand3_1",
+  "status": "pass",
+  "reason": null,
+  "cell": "dd2_gc1__nand3_1",
+  "stages": 1,
+  "transistors": 6,
+  "width_sites": 5,
+  "area_um2": 6.256,
+  "files": {
+    "gds": "cells/dd2_gc1__nand3_1/cell.gds",
+    "report": "cells/dd2_gc1__nand3_1/report.json"
+  },
+  "checks": {
+    "drc": 0,
+    "lvs": "match",
+    "rc_lvs": "match",
+    "truth_table": "pass",
+    "abutment": 0,
+    "layers": "pass"
+  },
+  "tool_version": "git:e335af6"
+}
