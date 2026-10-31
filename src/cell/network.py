@@ -6,7 +6,7 @@ A network is ("in", name), ("s", [...]) for series or ("p", [...]) for parallel.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from itertools import product
+from itertools import permutations, product
 import re
 import sys
 
@@ -140,6 +140,35 @@ def build_stage(inputs, output, expression) -> Stage:
     return Stage(tuple(inputs), output, tuple(fets))
 
 
+def reorders(net):
+    """The network with the transistors of each series stack in every order (Uehara and
+    vanCleemput's gate reordering). The function stays the same; the order changes which
+    nodes are internal, and so the Euler paths and the netlist the cell matches."""
+    if net[0] == "in":
+        return [net]
+    choices = [reorders(c) for c in net[1]]
+    if net[0] == "p":
+        return [("p", list(cs)) for cs in product(*choices)]
+    out = []
+    for perm in permutations(range(len(choices))):
+        out += [("s", list(cs)) for cs in product(*(choices[i] for i in perm))]
+    return out
+
+
+def stage_variants(inputs, output, expression) -> list[Stage]:
+    """build_stage, then every reordering of the series stacks; the expression's own order first."""
+    first = build_stage(inputs, output, expression)
+    pdn = pull_down(parse(expression))
+    out, seen = [first], {frozenset(first.fets)}
+    for down in reorders(pdn):
+        for up in reorders(dual(pdn)):
+            fets = expand(down, "n", output, "VGND", [0]) + expand(up, "p", output, "VPWR", [0])
+            if frozenset(fets) not in seen:
+                seen.add(frozenset(fets))
+                out.append(Stage(tuple(inputs), output, tuple(fets)))
+    return out
+
+
 def switch_check(stage: Stage, table: int) -> list[str]:
     """Every input combination with ideal switches. Returns the errors found."""
     errors = []
@@ -175,23 +204,27 @@ class Order:
 
 
 def euler_order(stage: Stage) -> Order | None:
-    """Common Euler path of both rows, or None if the rows need a diffusion break.
-    Tries every pair of start nets and keeps the order with the fewest contacts."""
+    """Common Euler path of both rows with the fewest contacts, or None if the rows need a diffusion break."""
+    orders = euler_orders(stage)
+    return orders[0] if orders else None
+
+
+def euler_orders(stage: Stage) -> list[Order]:
+    """Every common Euler path of both rows, from every pair of start nets, fewest contacts first.
+    The layout takes the first one it can route."""
     n = [f for f in stage.fets if f.kind == "n"]
     p = [f for f in stage.fets if f.kind == "p"]
     if len(n) != len(p):
-        return None
-    best = None
+        return []
+    found = {}
 
     def other(f, node):
         return f.b if f.a == node else f.a if f.b == node else None
 
     def walk(at_n, at_p, used_n, used_p, gates, n_nodes, p_nodes):
-        nonlocal best
         if len(gates) == len(n):
             order = Order(tuple(gates), tuple(n_nodes), tuple(p_nodes))
-            if best is None or contacts(order) < contacts(best):
-                best = order
+            found.setdefault(order, len(found))
             return
         for i, fn in enumerate(n):
             next_n = other(fn, at_n)
@@ -208,7 +241,7 @@ def euler_order(stage: Stage) -> Order | None:
     starts_p = sorted({x for f in p for x in (f.a, f.b)})
     for start_n, start_p in product(starts_n, starts_p):
         walk(start_n, start_p, 0, 0, [], [start_n], [start_p])
-    return best
+    return sorted(found, key=lambda order: (contacts(order), found[order]))
 
 
 def contacts(order: Order) -> int:
@@ -221,14 +254,18 @@ def contacts(order: Order) -> int:
     return total
 
 
-def schematic(stage: Stage, name: str, wn: float, wp: float, l: float = 0.15) -> str:
-    """SPICE subcircuit with HD's port order: inputs, VGND VNB VPB VPWR, output."""
+def schematic(stage: Stage, name: str, wn: float, wp: float, l: float = 0.15, widths: dict | None = None) -> str:
+    """SPICE subcircuit with HD's port order: inputs, VGND VNB VPB VPWR, output.
+    widths overrides wn and wp per (kind, gate)."""
+    widths = widths or {}
     lines = [f".subckt {name} {' '.join(stage.inputs)} VGND VNB VPB VPWR {stage.output}"]
     for i, f in enumerate(stage.fets):
         if f.kind == "n":
-            lines.append(f"X{i} {f.a} {f.gate} {f.b} VNB sky130_fd_pr__nfet_01v8 w={wn:g} l={l:g}")
+            w = widths.get(("n", f.gate), wn)
+            lines.append(f"X{i} {f.a} {f.gate} {f.b} VNB sky130_fd_pr__nfet_01v8 w={w:g} l={l:g}")
         else:
-            lines.append(f"X{i} {f.a} {f.gate} {f.b} VPB sky130_fd_pr__pfet_01v8_hvt w={wp:g} l={l:g}")
+            w = widths.get(("p", f.gate), wp)
+            lines.append(f"X{i} {f.a} {f.gate} {f.b} VPB sky130_fd_pr__pfet_01v8_hvt w={w:g} l={l:g}")
     return "\n".join(lines + [".ends", ""])
 
 
