@@ -30,6 +30,7 @@ from src.hd.classes import canonical_truth_table
 from src.paths import ROOT
 
 CUTS = ROOT / "results/cuts"
+SIZES = ROOT / "results/aig_sizes.csv"
 OUT = ROOT / "results/hd/cut_classes.csv"
 
 
@@ -122,14 +123,29 @@ def read(paths) -> dict[tuple[str, str], AigCuts]:
     return out
 
 
+def aig_sizes(path=SIZES) -> dict[tuple[str, str], int]:
+    """AND nodes of each design's AIGs, from the AIG export's results/aig_sizes.csv."""
+    if not path.exists():
+        return {}
+    with path.open() as f:
+        return {(r["design"], aig): int(r[f"ands_{aig}"]) for r in csv.DictReader(f) for aig in ("raw", "abc")}
+
+
 def summary(aigs: dict[tuple[str, str], AigCuts]) -> list[dict]:
-    rows = []
-    for (design, aig), a in sorted(aigs.items()):
-        keys = a.classes.keys()
-        rows.append(dict(design=design, aig=aig, cuts=a.cuts, dropped=a.dropped,
-                         classes=len(keys), classes_4=sum(n == 4 for n, _ in keys),
-                         npn_classes=len({(n, npn_class(t, n)) for n, t in keys}),
-                         npn_classes_4=len({npn_class(t, n) for n, t in keys if n == 4})))
+    """One row per design and AIG, then one row per AIG for all designs together."""
+    sizes = aig_sizes()
+
+    def row(design, aig, cuts, dropped, keys):
+        return dict(design=design, aig=aig, ands=sizes.get((design, aig), ""), cuts=cuts, dropped=dropped,
+                    classes=len(keys), classes_4=sum(n == 4 for n, _ in keys),
+                    npn_classes=len({(n, npn_class(t, n)) for n, t in keys}),
+                    npn_classes_4=len({npn_class(t, n) for n, t in keys if n == 4}))
+
+    rows = [row(design, aig, a.cuts, a.dropped, set(a.classes)) for (design, aig), a in sorted(aigs.items())]
+    for aig in sorted({aig for _, aig in aigs}):
+        mine = [a for (_, g), a in aigs.items() if g == aig]
+        rows.append(row("all", aig, sum(a.cuts for a in mine), sum(a.dropped for a in mine),
+                        set().union(*(a.classes for a in mine))))
     return rows
 
 
