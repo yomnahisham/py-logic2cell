@@ -17,13 +17,15 @@ from pathlib import Path
 
 from src.cell import abutment, compare, simulate, verify
 from src.cell.layout import draw, place
-from src.cell.network import NetworkError, euler_orders, schematic, stage_variants, switch_check
+from src.cell.network import (MAX_BREAKS, Cell, NetworkError, cell_check, cell_variants, euler_orders, schematic,
+                               stage_variants)
 from src.common.request import RequestError, read_request, write_response
 from src.common.stage import expression, single_stage
 from src.layer_check import check as layer_check
 
 ROOT = Path(__file__).resolve().parents[2]
 SIZES = {"hd": (0.65, 1.0)}
+MAX_ORDERS = 40     # Euler orders tried per variant, fewest contacts first
 
 
 def tool_version() -> str:
@@ -52,40 +54,47 @@ def build(request_path: Path, hd: str | None = None) -> dict:
     if request.sizing not in SIZES:
         return refuse(f"sizing {request.sizing} not built yet")
     try:
+        # one stage when the truth table allows it, otherwise a split into stages;
         form = single_stage(request.truth_table, len(request.inputs))
-        expr = expression(form, list(request.inputs)) if form else request.expression
-        variants = stage_variants(request.inputs, request.output, expr)
+        if form:
+            stages = stage_variants(request.inputs, request.output, expression(form, list(request.inputs)))
+            variants = [Cell((s,), s) for s in stages]
+        else:
+            variants = cell_variants(request.inputs, request.output, request.truth_table)
     except NetworkError as error:
         return refuse(str(error))
     for variant in variants:
-        errors = switch_check(variant, request.truth_table)
+        errors = cell_check(variant, request.truth_table)
         if errors:
             return refuse("switch-level check: " + "; ".join(errors))
-    if hd:
-        # the reference cells of section 4.1: the installed cell's netlist and transistor sizes
-        variants = [v for v in variants if compare.same_netlist(v, hd)]
+    multi = len(variants[0].stages) > 1
+    if hd and not multi:
+        variants = [v for v in variants if compare.same_netlist(v.flat, hd)]
         if not variants:
             return refuse(f"no series order of the network matches the transistors of {hd}")
-    widths = compare.hd_sizes(hd) if hd else {}
+    widths = compare.hd_sizes(hd) if hd and not multi else {}
     wn, wp = SIZES[request.sizing]
 
-    # every series order and Euler path; the narrowest cell wins, the first found on a tie
+    # every series order and Euler path, the first MAX_ORDERS of each by contacts; a cell wired on
+    # li alone wins over one that needs met1, then the narrowest, the first found on a tie
     best, tried, unrouted = None, 0, []
     for variant in variants:
-        for order in euler_orders(variant):
+        for order in euler_orders(variant.flat)[:MAX_ORDERS]:
             tried += 1
             try:
-                width = place(variant, order, wn, wp, widths).width
+                plan = place(variant.flat, order, wn, wp, widths)
             except ValueError as error:
                 unrouted.append(f"{' '.join(order.gates)}: {error}")
                 continue
-            if best is None or width < best[0] - 1e-9:
-                best = (width, variant, order)
+            key = (any(mcons for _, mcons, _ in plan.joins.values()), plan.width)
+            if best is None or key[0] < best[0][0] or (key[0] == best[0][0] and key[1] < best[0][1] - 1e-9):
+                best = (key, variant, order)
     if best is None:
         if not tried:
-            return refuse("no common Euler path (diffusion breaks not built yet)")
+            return refuse(f"no common Euler path with at most {MAX_BREAKS} diffusion breaks")
         return refuse(f"no Euler order can be drawn: {'; '.join(unrouted[:3])}")
-    _, stage, order = best
+    _, cell, order = best
+    stage = cell.flat
     component, meta = draw(name, stage, order, wn, wp, widths)
     meta.update(inputs=list(request.inputs), output=request.output, orders_tried=tried,
                 orders_drawable=tried - len(unrouted))
@@ -97,7 +106,10 @@ def build(request_path: Path, hd: str | None = None) -> dict:
     abut = abutment.check(work, name)
     layers = layer_check(str(work / f"{name}.gds"))
     sim = simulate.simulate(work, name, request.truth_table)
-    report = dict(network=dict(fets=len(stage.fets), switch_check="pass"), order=meta, checks=checks,
+    network = dict(fets=len(stage.fets), switch_check="pass")
+    if multi:
+        network["stages"] = [dict(inputs=list(s.inputs), output=s.output, fets=len(s.fets)) for s in cell.stages]
+    report = dict(network=network, order=meta, checks=checks,
                   abutment=abut, layers="pass" if layers else "fail", simulation=sim)
     if hd:
         report["compare"] = compare.compare(work, name, hd)
@@ -114,7 +126,7 @@ def build(request_path: Path, hd: str | None = None) -> dict:
     return write_response(
         out / "response.json", request.request_id, "pass" if passed else "fail",
         None if passed else "a check failed, see report.json",
-        cell=name, stages=1, transistors=len(stage.fets), width_sites=meta["width_sites"], area_um2=area,
+        cell=name, stages=len(cell.stages), transistors=len(stage.fets), width_sites=meta["width_sites"], area_um2=area,
         files={"gds": f"cells/{name}/cell.gds", "report": f"cells/{name}/report.json"},
         checks={"drc": checks["drc"], "lvs": checks["lvs"], "rc_lvs": checks["rc_lvs"],
                 "truth_table": "pass" if sim["passed"] else "fail", "abutment": abut["errors"],

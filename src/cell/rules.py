@@ -33,6 +33,12 @@ EXACT = [
     ("li spacing", "LI_SPACE", "li.3", "Local interconnect spacing"),
     ("li around contact, one direction", "LI_CUT_DIR", "li.5", "overlap of poly contact"),
     ("npc around poly contact", "NPC_CUT", "licon.15", None),
+    ("mcon size", "MCON", "mcon.1", "mcon.width"),
+    ("mcon spacing", "MCON_SPACE", "mcon.2", "mcon.spacing"),
+    ("met1 width", "M1", "met1.1", "Metal1 width"),
+    ("met1 spacing", "M1_SPACE", "met1.2", "Metal1 spacing"),
+    ("met1 around mcon", "M1_CUT", "met1.4", "Metal1 overlap of local interconnect contact"),
+    ("met1 around mcon, one direction", "M1_CUT_DIR", "met1.5", "Metal1 overlap of local interconnect contact"),
 ]
 
 

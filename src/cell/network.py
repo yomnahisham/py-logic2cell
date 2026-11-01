@@ -6,9 +6,11 @@ A network is ("in", name), ("s", [...]) for series or ("p", [...]) for parallel.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from itertools import permutations, product
+from itertools import islice, permutations, product
 import re
 import sys
+
+from src.common.stage import FULL, N, expression, forms, support, widen
 
 MAX_SERIES = 3
 
@@ -196,6 +198,109 @@ def switch_check(stage: Stage, table: int) -> list[str]:
     return errors
 
 
+# Multi-stage cells. One stage computes Y = !G with G monotone in its gate signals. A function that
+# is not negative unate gets those signals from more stages: inverted inputs, and an output inverter.
+
+def split(inputs, output, table: int, max_series: int = MAX_SERIES) -> list[tuple[tuple[str, ...], str, str]]:
+    """Stages (inputs, output, expression), in signal order, with the fewest transistors: input
+    inverters, then one complex stage over the inputs and their inverses, then an output inverter
+    if that is smaller. The complex stage is the smallest form of stage.py over its signals."""
+    n, t = len(inputs), widen(table, len(inputs))
+    best = None
+    for out_inverter in (False, True):
+        # the complex stage computes !G; G = !Y without an output inverter, G = Y with one
+        g = t if out_inverter else FULL ^ t
+        signals = []    # (input index, inverted): G rises with the input, or with its inverse
+        for k in support(t):
+            rises = any(not g >> i & 1 and g >> (i | 1 << k) & 1 for i in range(1 << N) if not i >> k & 1)
+            falls = any(g >> i & 1 and not g >> (i | 1 << k) & 1 for i in range(1 << N) if not i >> k & 1)
+            signals += [(k, False)] * rises + [(k, True)] * falls
+        if len(signals) > N:
+            continue
+        # G over the signals: the smallest monotone function that agrees with g whenever every
+        # inverse really is the inverse of its input
+        value = lambda i, k, inv: (i >> k & 1) ^ inv
+        on = [i for i in range(1 << N) if g >> i & 1]
+        over = sum(1 << m for m in range(1 << len(signals))
+                   if any(all(value(i, k, inv) <= (m >> j & 1) for j, (k, inv) in enumerate(signals)) for i in on))
+        form = forms(max_series).get(widen(over, len(signals)))
+        if form is None:
+            continue
+        names = [inputs[k] + "_b" if inv else inputs[k] for k, inv in signals]
+        inverted = [inputs[k] for k, inv in signals if inv]
+        size = 2 * form.size + 2 * len(inverted) + 2 * out_inverter
+        stages = [((x,), x + "_b", f"!{x}") for x in inverted]
+        middle = output + "_b" if out_inverter else output
+        stages.append((tuple(names), middle, expression(form, names)))
+        if out_inverter:
+            stages.append(((middle,), output, f"!{middle}"))
+        if best is None or (size, len(stages)) < best[0]:
+            best = ((size, len(stages)), stages)
+    if best is None:
+        raise NetworkError("no split into stages of at most 4 signals and 3 transistors in series")
+    return best[1]
+
+
+@dataclass(frozen=True)
+class Cell:
+    stages: tuple[Stage, ...]   # in signal order
+    flat: Stage                 # every transistor as one network, for ordering, layout and the schematic
+
+
+def cell_variants(inputs, output, table: int, limit: int = 64) -> list[Cell]:
+    """The stages of split(), each in every series order, as cells. The internal nodes of the
+    stages are renumbered so that they stay apart in the flat network."""
+    choices = []
+    for stage_inputs, stage_output, expr in split(inputs, output, table):
+        choices.append(stage_variants(stage_inputs, stage_output, expr))
+    out = []
+    for combo in islice(product(*choices), limit):
+        count, stages = {"n": 0, "p": 0}, []
+        for stage in combo:
+            rename = {}
+            for f in stage.fets:
+                for node in (f.a, f.b):
+                    if node[0] in "np" and node[1:].isdigit() and node not in rename:
+                        count[node[0]] += 1
+                        rename[node] = f"{node[0]}{count[node[0]]}"
+            fets = tuple(Fet(f.kind, f.gate, rename.get(f.a, f.a), rename.get(f.b, f.b)) for f in stage.fets)
+            stages.append(Stage(stage.inputs, stage.output, fets))
+        flat = Stage(tuple(inputs), output, tuple(f for s in stages for f in s.fets))
+        out.append(Cell(tuple(stages), flat))
+    return out
+
+
+def cell_check(cell: Cell, table: int) -> list[str]:
+    """Every input combination with ideal switches, stage by stage. Returns the errors found."""
+    errors, inputs = [], cell.flat.inputs
+    for i in range(1 << len(inputs)):
+        value = {name: i >> k & 1 for k, name in enumerate(inputs)}
+        bits = f"{i:0{len(inputs)}b}"
+        for stage in cell.stages:
+            parent = {}
+
+            def find(x):
+                while parent.get(x, x) != x:
+                    x = parent[x]
+                return x
+
+            for f in stage.fets:
+                if value[f.gate] == (f.kind == "n"):
+                    parent[find(f.a)] = find(f.b)
+            y, vpwr, vgnd = find(stage.output), find("VPWR"), find("VGND")
+            if vpwr == vgnd:
+                errors.append(f"{bits}: VPWR shorted to VGND in the stage of {stage.output}")
+                break
+            if y not in (vpwr, vgnd):
+                errors.append(f"{bits}: {stage.output} floats")
+                break
+            value[stage.output] = int(y == vpwr)
+        else:
+            if value[cell.flat.output] != table >> i & 1:
+                errors.append(f"{bits}: output {value[cell.flat.output]}, expected {table >> i & 1}")
+    return errors
+
+
 @dataclass(frozen=True)
 class Order:
     gates: tuple[str, ...]
@@ -203,15 +308,21 @@ class Order:
     p_nodes: tuple[str, ...]
 
 
+BREAK = "|"         # in Order.gates: a diffusion break in both rows instead of a gate
+MAX_BREAKS = 3
+
+
 def euler_order(stage: Stage) -> Order | None:
     """Common Euler path of both rows with the fewest contacts, or None if the rows need a diffusion break."""
-    orders = euler_orders(stage)
+    orders = euler_orders(stage, max_breaks=0)
     return orders[0] if orders else None
 
 
-def euler_orders(stage: Stage) -> list[Order]:
+def euler_orders(stage: Stage, max_breaks: int = MAX_BREAKS) -> list[Order]:
     """Every common Euler path of both rows, from every pair of start nets, fewest contacts first.
-    The layout takes the first one it can route."""
+    The layout takes the first one it can route. Where no path covers every transistor, the rows
+    are cut by diffusion breaks (BREAK in the gate order), as few as will do, at most max_breaks:
+    each piece is a common path of its own, and the two sides of a break have their own columns."""
     n = [f for f in stage.fets if f.kind == "n"]
     p = [f for f in stage.fets if f.kind == "p"]
     if len(n) != len(p):
@@ -221,8 +332,8 @@ def euler_orders(stage: Stage) -> list[Order]:
     def other(f, node):
         return f.b if f.a == node else f.a if f.b == node else None
 
-    def walk(at_n, at_p, used_n, used_p, gates, n_nodes, p_nodes):
-        if len(gates) == len(n):
+    def walk(at_n, at_p, used_n, used_p, gates, n_nodes, p_nodes, breaks):
+        if used_n == (1 << len(n)) - 1:
             order = Order(tuple(gates), tuple(n_nodes), tuple(p_nodes))
             found.setdefault(order, len(found))
             return
@@ -235,12 +346,22 @@ def euler_orders(stage: Stage) -> list[Order]:
                 if used_p >> j & 1 or fp.gate != fn.gate or next_p is None:
                     continue
                 walk(next_n, next_p, used_n | 1 << i, used_p | 1 << j,
-                     gates + [fn.gate], n_nodes + [next_n], p_nodes + [next_p])
+                     gates + [fn.gate], n_nodes + [next_n], p_nodes + [next_p], breaks)
+        if breaks and gates and gates[-1] != BREAK:
+            for start_n, start_p in starts(used_n, used_p):
+                walk(start_n, start_p, used_n, used_p, gates + [BREAK], n_nodes + [start_n],
+                     p_nodes + [start_p], breaks - 1)
 
-    starts_n = sorted({x for f in n for x in (f.a, f.b)})
-    starts_p = sorted({x for f in p for x in (f.a, f.b)})
-    for start_n, start_p in product(starts_n, starts_p):
-        walk(start_n, start_p, 0, 0, [], [start_n], [start_p])
+    def starts(used_n, used_p):
+        left_n = sorted({x for i, f in enumerate(n) if not used_n >> i & 1 for x in (f.a, f.b)})
+        left_p = sorted({x for j, f in enumerate(p) if not used_p >> j & 1 for x in (f.a, f.b)})
+        return product(left_n, left_p)
+
+    for breaks in range(max_breaks + 1):
+        for start_n, start_p in starts(0, 0):
+            walk(start_n, start_p, 0, 0, [], [start_n], [start_p], breaks)
+        if found:
+            break
     return sorted(found, key=lambda order: (contacts(order), found[order]))
 
 

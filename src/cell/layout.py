@@ -9,12 +9,13 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 import json
 import math
-from itertools import islice, product
+from itertools import combinations, islice, product
 from pathlib import Path
 
 import gdsfactory as gf
 
-from src.cell.network import Order, Stage
+from src.cell import band as midband
+from src.cell.network import BREAK, Order, Stage
 
 ROOT = Path(__file__).resolve().parents[2]
 PLAN = json.loads((ROOT / "given/plan_hd.json").read_text())
@@ -45,6 +46,12 @@ LI = 0.17           # li.1
 LI_SPACE = 0.17     # li.3
 LI_CUT_DIR = 0.08   # li.5 li overlap of contact in one direction
 NPC_CUT = 0.10      # npc enclosure of poly contact
+MCON = 0.17         # mcon.1
+MCON_SPACE = 0.19   # mcon.2
+M1 = 0.14           # met1.1
+M1_SPACE = 0.14     # met1.2
+M1_CUT = 0.03       # met1.4 met1 overlap of mcon
+M1_CUT_DIR = 0.06   # met1.5 ... in one direction
 
 # Vertical plan (y, um). Rows and sizes from plan_hd.json "reference"
 N_DIFF = (0.235, 0.885)
@@ -58,6 +65,17 @@ VPWR_LI_BOT = FRAME["rails"]["VPWR"]["li1"]["y"][0]            # 2.635
 N_LI = (VGND_LI_TOP + LI_SPACE, PAD_LI[0] - LI_SPACE)          # 0.255 .. 0.905
 P_LI = (PAD_LI[1] + LI_SPACE, VPWR_LI_BOT - LI_SPACE)          # 1.485 .. 2.465
 POLY_Y = (N_DIFF[0] - ENDCAP, P_DIFF[1] + ENDCAP)
+# met1 bridges: mcons on the contacts' li in the band; track 0 along the band, the others over the
+# rows, a met1 width and spacing apart, kept met1 spacing from the rails
+MCON_Y = sum(PAD_LI) / 2
+TRACK_PITCH = MCON + 2 * M1_CUT + M1_SPACE
+# the first track off the band clears the stubs' feet, which reach met1.5 past their mcons
+TRACK_FIRST = MCON / 2 + M1_CUT_DIR + M1_SPACE + MCON / 2 + M1_CUT
+TRACK_Y = (MCON_Y,) + tuple(  # the band first, then up over the PMOS row, then down over the NMOS row
+    y for y in [MCON_Y + TRACK_FIRST + k * TRACK_PITCH for k in range(7)]
+    + [MCON_Y - TRACK_FIRST - k * TRACK_PITCH for k in range(7)]
+    if y + MCON / 2 + M1_CUT <= FRAME["rails"]["VPWR"]["met1"]["y"][0] - M1_SPACE
+    and y - MCON / 2 - M1_CUT >= FRAME["rails"]["VGND"]["met1"]["y"][1] + M1_SPACE)
 
 PAD_HALF = CUT / 2 + LI_CUT_DIR          # half width of an input pad on li
 STRIP_HALF = LI / 2                      # half width of a narrow li strip
@@ -67,6 +85,8 @@ OUTER_Y = {"n": (N_LI[0], N_LI[0] + LI), "p": (P_LI[1] - LI, P_LI[1])}  # li lan
 ROWS = {"n": ("VGND", N_DIFF, N_LI), "p": ("VPWR", P_DIFF, P_LI)}
 WIDEN_STEPS = tuple(round(0.06 * k, 2) for k in range(8))   # extra width (um) tried for a column between two gates
 MAX_WIDENINGS, MAX_CROSSINGS = 300, 60
+MAX_GROWTH = 12    # targeted widening rounds after the search above
+BAND_BUDGET, BAND_TRIES = 2000, 20     # search steps, and complete band placements tried, per widening
 CROSSING_SHIFTS = tuple(sorted({round(s * 0.03 * k, 2) for k in range(8) for s in (1, -1)}, key=lambda d: (abs(d), d)))   # crossing off a gate (um)
 PAD_REACH = 0.40    # farthest a poly contact sits from its gate
 
@@ -98,7 +118,9 @@ class Plan:
     width: float = 0
     gate_x: list = field(default_factory=list)
     col_x: list = field(default_factory=list)
-    pad_x: dict = field(default_factory=dict)
+    pad_x: dict = field(default_factory=dict)      # net -> x of its first poly contact
+    pads: dict = field(default_factory=dict)       # net -> [(x, first gate, last gate)], one per run of its gates
+    joins: dict = field(default_factory=dict)      # net -> ([(x0, x1)] li in the band, [x] mcons of a met1 bridge, its track)
     crossing: dict = field(default_factory=dict)
     diff_x: tuple = (0, 0)
     diff_w: dict = field(default_factory=dict)    # row -> diffusion width under each gate
@@ -106,6 +128,7 @@ class Plan:
     half: dict = field(default_factory=dict)      # (row, column) -> half width of its li strip
     ys: dict = field(default_factory=dict)        # (row, column) -> contact centres
     lanes: dict = field(default_factory=dict)     # row -> [(net, x0, x1, "inner" | "outer")] li along an edge
+    jogs: dict = field(default_factory=dict)      # row -> [(net, x)] li across the row where a lane switches edge
 
     def half_at(self, row, x):
         for j in self.cont[row]:
@@ -141,12 +164,12 @@ def contacted(order: Order):
 def place(stage: Stage, order: Order, wn: float = 0.65, wp: float = 1.0, widths: dict | None = None) -> Plan:
     """Raises ValueError when this order cannot be drawn; the caller tries the next one."""
     widths = widths or {}
-    diff_w = {"n": [widths.get(("n", g), wn) for g in order.gates],
-              "p": [widths.get(("p", g), wp) for g in order.gates]}
+    diff_w = {"n": [None if g == BREAK else widths.get(("n", g), wn) for g in order.gates],
+              "p": [None if g == BREAK else widths.get(("p", g), wp) for g in order.gates]}
     for row, ws in diff_w.items():
-        band = ROWS[row][1]
-        if max(ws) > band[1] - band[0] + 1e-9:
-            raise ValueError(f"a {row}MOS {max(ws)} um wide does not fit the row (folding is not built yet)")
+        band, widest = ROWS[row][1], max(w for w in ws if w is not None)
+        if widest > band[1] - band[0] + 1e-9:
+            raise ValueError(f"a {row}MOS {widest} um wide does not fit the row (folding is not built yet)")
 
     n_cont, p_cont = contacted(order)
     either = n_cont | p_cont
@@ -155,25 +178,139 @@ def place(stage: Stage, order: Order, wn: float = 0.65, wp: float = 1.0, widths:
     # Try the cheapest crossings first; if no crossing leaves room for every input's poly contact,
     # widen the columns between gates a step at a time, as HD's nand3_1 and o21ai_1 do.
     inner = list(range(1, cols - 1))
-    widenings = sorted(product(WIDEN_STEPS, repeat=len(inner)), key=lambda e: (sum(e), max(e, default=0), e))
     error = ValueError("no crossing leaves room for the poly contacts")
-    for extra in widenings[:MAX_WIDENINGS]:
-        col_x, gate_x = columns(cols, either, dict(zip(inner, extra)))
+
+    def attempt(extra):
+        """The plan for these widenings, or None and the gates whose contact found no room."""
+        nonlocal error
+        col_x, gate_x = columns(order, either, extra)
         options = route_crossings(stage, order, col_x, gate_x, n_cont, p_cont)
+        crowded = set()
         for choice in islice(product(*options.values()), MAX_CROSSINGS):
             crossing = dict(zip(options, choice))
+            xs = sorted(crossing.values())
+            if any(b - a < 2 * STRIP_HALF + LI_SPACE - 1e-9 for a, b in zip(xs, xs[1:])):
+                error = ValueError("two crossings meet")
+                continue
             try:
-                pads = place_pads(order, gate_x, list(crossing.values()))
-                return finish(order, col_x, gate_x, crossing, pads, diff_w, n_cont, p_cont)
+                pads, joins = place_pads(order, gate_x, crossing)
+                return finish(order, col_x, gate_x, crossing, pads, joins, diff_w, n_cont, p_cont), crowded
+            except NoRoom as e:
+                crowded.add(e.gate)
+                error = e
             except ValueError as e:
                 error = e
+        return None, crowded
+
+    def search(extra):
+        """As attempt, but the crossings and contacts are placed together by midband.solutions, which
+        backtracks where place_pads would not: li first, then with met1 bridges where li is full."""
+        nonlocal error
+        col_x, gate_x = columns(order, either, extra)
+        options = route_crossings(stage, order, col_x, gate_x, n_cont, p_cont)
+        items = [midband.Item(net, "crossing", STRIP_HALF, candidates=tuple(xs)) for net, xs in options.items()]
+        for gate, runs in gate_runs(order).items():
+            blocked = tuple((x, CUT / 2 + POLY_CUT + POLY_SPACE + L / 2)
+                            for j, x in enumerate(gate_x) if order.gates[j] not in (gate, BREAK))
+            items += [midband.Item(gate, "pad", PAD_HALF, gates=(gate_x[first], gate_x[last]), reach=PAD_REACH,
+                                blocked=blocked, run=(first, last)) for first, last in runs]
+        crowded = set()
+        for li_only in (True, False):
+            stats = midband.Stats()
+            for found in islice(midband.solutions(items, band_clear, GRID, LI_SPACE, li_only, BAND_BUDGET, stats),
+                                BAND_TRIES):
+                crossing = {items[i].net: x for i, x in found.items() if items[i].kind == "crossing"}
+                pads = {}
+                for i in sorted(found, key=lambda i: (items[i].kind, items[i].run)):
+                    if items[i].kind == "pad":
+                        pads.setdefault(items[i].net, []).append((found[i], *items[i].run))
+                pads = {gate: pads[gate] for gate in gate_runs(order)}
+                try:
+                    joins = join_nets(pads, crossing)
+                    return finish(order, col_x, gate_x, crossing, pads, joins, diff_w, n_cont, p_cont), crowded
+                except ValueError as e:
+                    error = e
+            crowded |= {items[i].net for i, n in stats.dead.items() if items[i].kind == "pad" and n}
+        if crowded:
+            error = NoRoom(sorted(crowded)[0])
+        return None, crowded
+
+    for extra in islice(widenings(len(inner)), MAX_WIDENINGS):
+        plan, _ = attempt(dict(zip(inner, extra)))
+        if plan:
+            return plan
+    # With many columns the cheapest-first search runs out before it reaches the one column that
+    # needs widening. Then widen only the columns beside gates whose contact found no room, a step
+    # at a time, placing the band by search.
+    extra = dict.fromkeys(inner, 0)
+    for _ in range(MAX_GROWTH):
+        plan, crowded = search(extra)
+        if plan:
+            return plan
+        grow = [i for i in inner if {order.gates[i - 1], order.gates[i]} & crowded]
+        if not grow:
+            break
+        for i in grow:
+            extra[i] = round(extra[i] + WIDEN_STEPS[1], 2)
     raise error
 
 
-def columns(cols: int, either: set, extra: dict):
-    """x of every column and gate, with the left diffusion edge at 0. extra[i] widens column i."""
+class NoRoom(ValueError):
+    """No place for a net's poly contact."""
+    def __init__(self, gate):
+        super().__init__(f"no room for the {gate} contact")
+        self.gate = gate
+
+
+def band_clear(a: midband.Item, b: midband.Item) -> float:
+    """Least distance between the centres of two band objects of different nets: li spacing
+    between their li, as place_pads and place keep it."""
+    half = {"pad": PAD_HALF, "crossing": STRIP_HALF}
+    return half[a.kind] + LI_SPACE + half[b.kind]
+
+
+def gate_runs(order: Order) -> dict:
+    """{net: [[first, last]]}: the runs of side-by-side gates of each gate net, left to right."""
+    out = {}
+    for gate in dict.fromkeys(g for g in order.gates if g != BREAK):
+        at = [i for i, g in enumerate(order.gates) if g == gate]
+        runs = [[at[0], at[0]]]
+        for i in at[1:]:
+            if i == runs[-1][1] + 1:
+                runs[-1][1] = i
+            else:
+                runs.append([i, i])
+        out[gate] = runs
+    return out
+
+
+def widenings(k: int):
+    """Extra widths for k columns, least extra first, then the smallest largest step: WIDEN_STEPS
+    indexes, built a total at a time rather than sorted, since 8^k gets large past 5 gates."""
+    def split(total, k):
+        if k == 0:
+            if total == 0:
+                yield ()
+            return
+        for first in range(min(total, len(WIDEN_STEPS) - 1) + 1):
+            for rest in split(total - first, k - 1):
+                yield (first,) + rest
+    for total in range((len(WIDEN_STEPS) - 1) * k + 1):
+        for steps in sorted(split(total, k), key=lambda e: (max(e, default=0), e)):
+            yield tuple(WIDEN_STEPS[s] for s in steps)
+
+
+def columns(order: Order, either: set, extra: dict):
+    """x of every column and gate, with the left diffusion edge at 0. extra[i] widens column i.
+    At a break the diffusion ends past the contact and starts again past diff/tap.3; its "gate"
+    x is the middle of the gap."""
     col_x, gate_x = [CUT_DIFF + CUT / 2], []
-    for i in range(1, cols):
+    for i in range(1, len(order.gates) + 1):
+        if order.gates[i - 1] == BREAK:
+            edge = col_x[-1] + CUT / 2 + CUT_DIFF + extra.get(i - 1, 0) / 2
+            gate_x.append(edge + DIFF_SPACE / 2)
+            col_x.append(edge + DIFF_SPACE + CUT_DIFF + CUT / 2 + extra.get(i, 0) / 2)
+            continue
         if i - 1 in either:
             left = col_x[-1] + CUT / 2 + CUT_GATE + extra.get(i - 1, 0) / 2
         else:
@@ -184,28 +321,69 @@ def columns(cols: int, either: set, extra: dict):
     return col_x, gate_x
 
 
-def finish(order, col_x, gate_x, crossing, pads, diff_w, n_cont, p_cont) -> Plan:
+def finish(order, col_x, gate_x, crossing, pads, joins, diff_w, n_cont, p_cont) -> Plan:
     """Cell width, centring, and the li of each row."""
     diff_right = col_x[-1] + CUT / 2 + CUT_DIFF
-    poly = [g - L / 2 for g in gate_x] + [p - CUT / 2 - POLY_CUT for p in pads.values()]
-    poly_r = [g + L / 2 for g in gate_x] + [p + CUT / 2 + POLY_CUT for p in pads.values()]
-    li = [x - WIDE_HALF for x in col_x] + [p - PAD_HALF for p in pads.values()]
-    li_r = [x + WIDE_HALF for x in col_x] + [p + PAD_HALF for p in pads.values()]
-    shift = max(DIFF_SPACE / 2, POLY_SPACE / 2 - min(poly), LI_SPACE / 2 - min(li))
-    need = max(diff_right + DIFF_SPACE / 2, max(poly_r) + POLY_SPACE / 2, max(li_r) + LI_SPACE / 2) + shift
+    gates = [g for g, name in zip(gate_x, order.gates) if name != BREAK]
+    pad_xs = [p for runs in pads.values() for p, *_ in runs]
+    poly = [g - L / 2 for g in gates] + [p - CUT / 2 - POLY_CUT for p in pad_xs]
+    poly_r = [g + L / 2 for g in gates] + [p + CUT / 2 + POLY_CUT for p in pad_xs]
+    li = [x - WIDE_HALF for x in col_x] + [p - PAD_HALF for p in pad_xs]
+    li_r = [x + WIDE_HALF for x in col_x] + [p + PAD_HALF for p in pad_xs]
+    m1 = [min(m) - MCON / 2 - M1_CUT_DIR for _, m, _ in joins.values() if m]
+    m1_r = [max(m) + MCON / 2 + M1_CUT_DIR for _, m, _ in joins.values() if m]
+    shift = max(DIFF_SPACE / 2, POLY_SPACE / 2 - min(poly), LI_SPACE / 2 - min(li), *(M1_SPACE / 2 - x for x in m1))
+    need = max(diff_right + DIFF_SPACE / 2, max(poly_r) + POLY_SPACE / 2, max(li_r) + LI_SPACE / 2,
+               *(x + M1_SPACE / 2 for x in m1_r)) + shift
     width = snap(math.ceil(need / SITE - 1e-9) * SITE)
     shift = snap(shift + (width - need) / 2)
 
     plan = Plan(width=width, diff_x=(shift, snap(shift + diff_right)), diff_w=diff_w,
-                cont={"n": n_cont, "p": p_cont}, lanes={"n": [], "p": []})
+                cont={"n": n_cont, "p": p_cont}, lanes={"n": [], "p": []}, jogs={"n": [], "p": []})
     plan.col_x = [snap(x + shift) for x in col_x]
     plan.gate_x = [snap(g + shift) for g in gate_x]
-    plan.pad_x = {k: snap(v + shift) for k, v in pads.items()}
+    plan.pads = {k: [(snap(p + shift), first, last) for p, first, last in v] for k, v in pads.items()}
+    plan.pad_x = {k: v[0][0] for k, v in plan.pads.items()}
+    plan.joins = {k: ([(snap(a + shift), snap(b + shift)) for a, b in li_joins], [snap(x + shift) for x in mcons], track)
+                  for k, (li_joins, mcons, track) in joins.items()}
     plan.crossing = {k: snap(v + shift) for k, v in crossing.items()}
     for row, nodes in (("n", order.n_nodes), ("p", order.p_nodes)):
         plan_row(plan, row, nodes)
+        check_row(plan, row, nodes)
     check_lanes(plan)
     return plan
+
+
+def check_row(plan: Plan, row: str, nodes):
+    """The li of different nets that are not laned, each from its contacts to its crossing, must
+    keep li spacing; with one crossing net this always holds, with several it may not."""
+    rail, laned = ROWS[row][0], {net for net, *_ in plan.lanes[row]}
+    spans = []
+    for net in sorted(set(nodes) - {rail} - laned):
+        xs = [plan.col_x[j] for j in plan.cont[row] if nodes[j] == net]
+        xs += [plan.crossing[net]] if net in plan.crossing else []
+        if xs:
+            spans.append((net, min(xs) - plan.half_at(row, min(xs)), max(xs) + plan.half_at(row, max(xs))))
+    for (a, a0, a1), (b, b0, b1) in combinations(spans, 2):
+        if a0 < b1 + LI_SPACE - 1e-9 and b0 < a1 + LI_SPACE - 1e-9:
+            raise ValueError(f"{a} and {b} meet in the {row} row")
+    for net, x in plan.jogs[row]:
+        for other, s0, s1 in spans:
+            if other != net and s0 < x + STRIP_HALF + LI_SPACE - 1e-9 and x - STRIP_HALF < s1 + LI_SPACE - 1e-9:
+                raise ValueError(f"{other} meets the jog of {net} in the {row} row")
+
+
+def jog_at(plan: Plan, row: str, left: int, right: int, net: str) -> float:
+    """x of a jog of net between contacted columns left and right: li spacing from both strips and
+    from the other nets' crossings, in the middle of the room if it can."""
+    lo = plan.col_x[left] + plan.half[(row, left)] + LI_SPACE + STRIP_HALF
+    hi = plan.col_x[right] - plan.half[(row, right)] - LI_SPACE - STRIP_HALF
+    for x in (snap((lo + hi) / 2), math.ceil(lo / GRID - 1e-9) * GRID, math.floor(hi / GRID + 1e-9) * GRID):
+        x = round(x, 4)
+        if lo - 1e-9 <= x <= hi + 1e-9 and all(abs(x - cx) >= 2 * STRIP_HALF + LI_SPACE - 1e-9
+                                               for other, cx in plan.crossing.items() if other != net):
+            return x
+    raise ValueError(f"no room for {net} to switch edges in the {row} row")
 
 
 def plan_row(plan: Plan, row: str, nodes):
@@ -217,7 +395,8 @@ def plan_row(plan: Plan, row: str, nodes):
     (HD's nand3_1, a21oi_1 and o21ai_1 do the same). Where it must pass another signal net's
     contact instead, the lane runs along the outer edge, by the rail, and that contact moves inward:
     a rail strip reaches the outer edge and a signal strip the inner one, so each edge can pass
-    only one kind. Each stretch between two of the net's contacts picks its own edge."""
+    only one kind. Each stretch between two of the net's contacts picks its own edge, and switches
+    edge by a jog wherever it must pass a rail and then a signal (or the other way round)."""
     rail, band, li = ROWS[row]
     cont = plan.cont[row]
     for j in cont:
@@ -245,16 +424,31 @@ def plan_row(plan: Plan, row: str, nodes):
         right = lambda x: snap(x + (plan.half_at(row, x) if x in plan.col_x else STRIP_HALF))
         stretches = []
         for a, b in zip(sorted(xs), sorted(xs)[1:]):
-            passed = near(left(a), right(b), net)
-            signals = sorted({nodes[k] for k in passed} - {rail})
-            if signals and len(signals) < len({nodes[k] for k in passed}):
-                raise ValueError(f"{net} cannot pass {', '.join(signals)} and {rail} at once in the {row} row on li")
-            edge = "outer" if signals else "inner"
-            if stretches and stretches[-1][0] == edge:
-                stretches[-1][2] = right(b)
-                stretches[-1][3] |= set(passed)
-            else:
-                stretches.append([edge, left(a), right(b), set(passed)])
+            # the contacts in the way, left to right, in runs that take the same edge; between two
+            # runs the lane switches edge by a jog, a strip across the row where nothing is contacted
+            runs = []
+            for k in sorted(near(left(a), right(b), net), key=lambda k: plan.col_x[k]):
+                edge = "inner" if nodes[k] == rail else "outer"
+                if runs and runs[-1][0] == edge:
+                    runs[-1][1].append(k)
+                else:
+                    runs.append([edge, [k]])
+            runs = runs or [["inner", []]]
+            x0 = left(a)
+            for i, (edge, ks) in enumerate(runs):
+                if i + 1 < len(runs):
+                    x = jog_at(plan, row, ks[-1], runs[i + 1][1][0], net)
+                    plan.jogs[row].append((net, x))
+                    x1 = snap(x + STRIP_HALF)
+                else:
+                    x1 = right(b)
+                if stretches and stretches[-1][0] == edge:
+                    stretches[-1][2] = x1
+                    stretches[-1][3] |= set(ks)
+                else:
+                    stretches.append([edge, x0, x1, set(ks)])
+                if i + 1 < len(runs):
+                    x0 = snap(x - STRIP_HALF)
         for edge, x0, x1, passed in stretches:
             plan.lanes[row].append((net, x0, x1, edge))
             if edge == "inner":
@@ -277,12 +471,13 @@ def plan_row(plan: Plan, row: str, nodes):
             continue
         others = [(plan.col_x[k], plan.half[(row, k)]) for k in cont if nodes[k] != nodes[j]]
         others += [(cx, STRIP_HALF) for net, cx in plan.crossing.items() if net != nodes[j]]
+        others += [(jx, STRIP_HALF) for net, jx in plan.jogs[row] if net != nodes[j]]
         if all(abs(x - ox) >= WIDE_HALF + oh + LI_SPACE - 1e-9 for ox, oh in others):
             plan.half[(row, j)] = WIDE_HALF
 
     lane = LANE_Y[row]
     for j in cont:
-        ws = [plan.diff_w[row][g] for g in (j - 1, j) if 0 <= g < len(plan.gate_x)]
+        ws = [plan.diff_w[row][g] for g in (j - 1, j) if 0 <= g < len(plan.gate_x) and plan.diff_w[row][g] is not None]
         lo, hi = -math.inf, math.inf
         if j in moved and row == "n":
             hi = lane[0] - LI_SPACE - LI_CUT_DIR
@@ -314,13 +509,19 @@ def check_lanes(plan: Plan):
             for other, x in plan.crossing.items():
                 if other != net and x0 - LI_SPACE < x + STRIP_HALF and x - STRIP_HALF < x1 + LI_SPACE:
                     raise ValueError(f"{other} crosses the lane of {net} in the {row} row")
+        # a jog crosses the whole row: no other net's lane may pass it
+        for net, x in plan.jogs[row]:
+            for other, x0, x1, _ in lanes:
+                if other != net and x0 < x + STRIP_HALF + LI_SPACE - 1e-9 and x - STRIP_HALF < x1 + LI_SPACE - 1e-9:
+                    raise ValueError(f"the lane of {other} meets the jog of {net} in the {row} row")
 
 
 def route_crossings(stage, order, col_x, gate_x, n_cont, p_cont) -> dict:
     """For each net in both rows, the x where its li may cross the npc band, best first: on a column
     or over a gate, as HD's nand3_1 does. The net's li in each row reaches from its contacts to the
-    crossing, so no other net's contact may lie in between; a rail contact only with a lane (plan_row).
-    Positions count in half columns: 2k is column k, 2k + 1 the gate after it."""
+    crossing; another net's contact in between needs a lane (plan_row): inner past a rail, outer past
+    a signal. Options that pass a signal come last. Positions count in half columns: 2k is column k,
+    2k + 1 the gate after it."""
     out = {}
     for net in sorted(set(order.n_nodes) & set(order.p_nodes) - {"VGND", "VPWR"}):
         n_cols = [2 * i for i, v in enumerate(order.n_nodes) if v == net and i in n_cont]
@@ -329,18 +530,26 @@ def route_crossings(stage, order, col_x, gate_x, n_cont, p_cont) -> dict:
         for h in range(2 * len(col_x) - 1):
             spans = [(min(n_cols + [h]), max(n_cols + [h]), order.n_nodes, n_cont, "VGND"),
                      (min(p_cols + [h]), max(p_cols + [h]), order.p_nodes, p_cont, "VPWR")]
-            jumps, ok = 0, True
+            jumps, passes, ok = 0, 0, True
             for lo, hi, nodes, cont, rail in spans:
+                signals = 0
                 for k in range((lo + 1) // 2, hi // 2 + 1):
                     if nodes[k] == net or k not in cont:
                         continue
-                    if nodes[k] == rail and 2 * k != h:
+                    if 2 * k == h:
+                        ok = False
+                    elif nodes[k] == rail:
                         jumps += 1
                     else:
-                        ok = False
+                        signals += 1
+                # past another signal's contact only on an outer lane (plan_row), which must end at a
+                # full strip of the net, so the crossing sits on one of the net's own contacts
+                if signals and not (h % 2 == 0 and nodes[h // 2] == net and h // 2 in cont):
+                    ok = False
+                passes += signals
             if not ok:
                 continue
-            cost = (jumps, sum(hi - lo for lo, hi, *_ in spans), h % 2)
+            cost = (passes, jumps, sum(hi - lo for lo, hi, *_ in spans), h % 2)
             if h % 2 == 0:
                 options.append((cost + (0, h), col_x[h // 2]))
                 continue
@@ -355,25 +564,109 @@ def route_crossings(stage, order, col_x, gate_x, n_cont, p_cont) -> dict:
     return out
 
 
-def place_pads(order, gate_x, crossings):
-    """x of each input's poly contact, left to right: the point nearest its gate (left first on a tie)
-    that keeps li spacing to the crossings and the pads already placed, and poly spacing to the other
-    gates. A pad up to PAD_REACH from its gate is joined to it by a poly stub."""
-    pads = {}
-    for i, (gate, g) in enumerate(zip(order.gates, gate_x)):
-        if gate in pads:
-            continue
-        keep_out = [(c, PAD_HALF + LI_SPACE + STRIP_HALF) for c in crossings]
-        keep_out += [(q, 2 * PAD_HALF + LI_SPACE) for q in pads.values()]
-        keep_out += [(x, CUT / 2 + POLY_CUT + POLY_SPACE + L / 2)
-                     for j, x in enumerate(gate_x) if order.gates[j] != gate]
-        candidates = {g} | {x + s * d for x, d in keep_out for s in (1, -1)}
-        fits = [p for p in map(snap, candidates)
-                if abs(p - g) <= PAD_REACH + 1e-9 and all(abs(p - x) >= d - 1e-9 for x, d in keep_out)]
-        if not fits:
-            raise ValueError(f"no room for the {gate} contact")
-        pads[gate] = min(fits, key=lambda p: (abs(p - g), p))
-    return pads
+def place_pads(order, gate_x, crossing: dict):
+    """Poly contacts, {net: [(x, first gate, last gate)]}: one per run of side-by-side gates of a net,
+    joined to them by a poly bar. Left to right, each sits at the point nearest its gates (left first
+    on a tie), at most PAD_REACH away, that keeps li spacing to the other nets' crossings and the nets
+    already placed, and poly spacing to the other gates.
+
+    The middle band is one li track. A net's pads, and its crossing if it is made inside the cell
+    (a stage output), are joined along it, so each net takes a stretch of the band that no other
+    net may enter: with one pad and no crossing per net, as in a single stage, that is just spacing."""
+    pads, taken = {}, []        # taken: (net, li left edge, li right edge) in the band
+    for gate, runs in gate_runs(order).items():
+        pads[gate] = []
+        for first, last in runs:
+            lo, hi = gate_x[first], gate_x[last]
+            keep_out = [(c, c, PAD_HALF + LI_SPACE + STRIP_HALF) for net, c in crossing.items() if net != gate]
+            keep_out += [(a, b, PAD_HALF + LI_SPACE) for net, a, b in taken if net != gate]
+            keep_out += [(x, x, CUT / 2 + POLY_CUT + POLY_SPACE + L / 2)
+                         for j, x in enumerate(gate_x) if order.gates[j] not in (gate, BREAK)]
+            candidates = {gate_x[i] for i in range(first, last + 1)} | {a - d for a, b, d in keep_out} \
+                | {b + d for a, b, d in keep_out}
+            if gate in crossing:
+                candidates.add(crossing[gate])
+            reach = lambda p: max(lo - p, 0, p - hi)
+            fits = [p for p in map(snap, candidates) if reach(p) <= PAD_REACH + 1e-9
+                    and all(p <= a - d + 1e-9 or p >= b + d - 1e-9 for a, b, d in keep_out)]
+            if not fits:
+                raise NoRoom(gate)
+            p = min(fits, key=lambda p: (reach(p), p))
+            pads[gate].append((p, first, last))
+            taken.append((gate, p - PAD_HALF, p + PAD_HALF))
+    return pads, join_nets(pads, crossing)
+
+
+def join_nets(pads: dict, crossing: dict) -> dict:
+    """How each net's pads and own crossing are joined in the middle band: {net: (li joins, mcons)},
+    li joins as (x, x) spans between contact centres, mcons as x.
+
+    On li when every net's stretch of the band keeps li spacing from the others, as in a single
+    stage. Otherwise the fewest nets move to a met1 bridge (handout step 5: met1 only where li1
+    cannot): on li such a net keeps only its contacts, joined where they are too close to part, with
+    an mcon on each group, and the bridge takes a track of TRACK_Y (see tracks_for)."""
+    groups = {}     # net -> [[first centre, last centre, left edge, right edge]], left to right
+    for net in sorted(set(pads) | set(crossing)):
+        items = [(p, PAD_HALF) for p, *_ in pads.get(net, [])]
+        items += [(crossing[net], STRIP_HALF)] if net in crossing else []
+        groups[net] = []
+        for x, half in sorted(items):
+            g = groups[net]
+            if g and x - half < g[-1][3] + LI_SPACE - 1e-9:
+                g[-1][1], g[-1][3] = x, max(g[-1][3], x + half)
+            else:
+                g.append([x, x, x - half, x + half])
+
+    def meet(spans, space):
+        for (a, a0, a1), (b, b0, b1) in combinations(spans, 2):
+            if a != b and a0 < b1 + space - 1e-9 and b0 < a1 + space - 1e-9:
+                return a, b
+
+    def tracks_for(bridged):
+        """A met1 track of TRACK_Y for each bridged net, or None. Track 0 runs along the band; the
+        others run over a row and reach the band by stubs at the net's mcons. Two nets on one track
+        keep apart; a net farther out on the same side keeps its stubs clear of the nearer net's
+        span (the band counts as nearer to both sides); nets on opposite sides only keep their
+        mcons apart, so interleaved spans can still be bridged."""
+        span = {net: (groups[net][0][0] - MCON / 2 - M1_CUT_DIR, groups[net][-1][0] + MCON / 2 + M1_CUT_DIR)
+                for net in bridged}
+        stub = MCON / 2 + M1_CUT + M1_SPACE
+        out = lambda t: TRACK_Y[t] - MCON_Y         # signed distance from the band
+        for tracks in product(range(len(TRACK_Y)), repeat=len(bridged)):
+            on = dict(zip(bridged, tracks))
+            fits = True
+            for a, b in combinations(bridged, 2):
+                (a0, a1), (b0, b1) = span[a], span[b]
+                da, db = out(on[a]), out(on[b])
+                if on[a] == on[b]:
+                    fits = not (a0 < b1 + M1_SPACE - 1e-9 and b0 < a1 + M1_SPACE - 1e-9)
+                elif da * db >= 0:      # the band and one side, or the same side
+                    far, near = (a, b) if abs(da) > abs(db) else (b, a)
+                    n0, n1 = span[near]
+                    fits = all(x + stub <= n0 + 1e-9 or x - stub >= n1 - 1e-9 for x, *_ in groups[far])
+                else:
+                    fits = all(abs(x - y) >= 2 * (MCON / 2 + M1_CUT) + M1_SPACE - 1e-9
+                               for x, *_ in groups[a] for y, *_ in groups[b])
+                if not fits:
+                    break
+            if fits:
+                return on
+        return None
+
+    first = None
+    multi = [net for net, g in groups.items() if len(g) > 1]
+    for k in range(len(multi) + 1):
+        for bridged in combinations(multi, k):
+            li = [(net, g[0][2], g[-1][3]) for net, g in groups.items() if net not in bridged]
+            li += [(net, a, b) for net in bridged for _, _, a, b in groups[net]]
+            clash = meet(li, LI_SPACE)
+            first = first or clash
+            on = None if clash else tracks_for(bridged)
+            if on is None:
+                continue
+            return {net: ([(g[0][0], g[-1][1])], [], 0) if net not in bridged else
+                    ([(x0, x1) for x0, x1, *_ in g], [x0 for x0, *_ in g], on[net]) for net, g in groups.items()}
+    raise ValueError(f"{first[0]} and {first[1]} meet in the middle band, on li and on met1")
 
 
 def rect(c, layer, x0, y0, x1, y1):
@@ -388,25 +681,32 @@ def box(c, layer, x, y, w, h):
 
 
 def diffusion(c, plan: Plan, row: str):
-    """One diffusion strip per row. Where the width under two gates differs, the edge away from
-    the rail steps at the column between them, as in HD's o21ai_1."""
-    x0, x1 = plan.diff_x
-    runs = []
-    for i, w in enumerate(plan.diff_w[row]):
-        xa = x0 if i == 0 else plan.col_x[i]
-        xb = x1 if i == len(plan.gate_x) - 1 else plan.col_x[i + 1]
+    """One diffusion strip per row and piece between breaks. Where the width under two gates
+    differs, the edge away from the rail steps at the column between them, as in HD's o21ai_1."""
+    ws, col_x = plan.diff_w[row], plan.col_x
+    pieces, runs = [], []
+    for i, w in enumerate(ws):
+        if w is None:
+            pieces.append(runs)
+            runs = []
+            continue
+        xa = col_x[i] - CUT / 2 - CUT_DIFF if not runs else col_x[i]
+        xb = col_x[i + 1] + CUT / 2 + CUT_DIFF if i + 1 == len(ws) or ws[i + 1] is None else col_x[i + 1]
         if runs and abs(runs[-1][2] - w) < 1e-9:
             runs[-1][1] = xb
         else:
             runs.append([xa, xb, w])
+    pieces.append(runs)
     edge, sign = (N_DIFF[0], 1) if row == "n" else (P_DIFF[1], -1)
-    if len(runs) == 1:
-        rect(c, "diff", x0, min(edge, edge + sign * runs[0][2]), x1, max(edge, edge + sign * runs[0][2]))
-        return
-    points = [(x0, edge), (x1, edge)]
-    for xa, xb, w in reversed(runs):
-        points += [(xb, edge + sign * w), (xa, edge + sign * w)]
-    c.add_polygon([(snap(x), snap(y)) for x, y in points], layer=LAYER["diff"])
+    for runs in pieces:
+        x0, x1 = runs[0][0], runs[-1][1]
+        if len(runs) == 1:
+            rect(c, "diff", x0, min(edge, edge + sign * runs[0][2]), x1, max(edge, edge + sign * runs[0][2]))
+            continue
+        points = [(x0, edge), (x1, edge)]
+        for xa, xb, w in reversed(runs):
+            points += [(xb, edge + sign * w), (xa, edge + sign * w)]
+        c.add_polygon([(snap(x), snap(y)) for x, y in points], layer=LAYER["diff"])
 
 
 def draw(name: str, stage: Stage, order: Order, wn: float = 0.65, wp: float = 1.0, widths: dict | None = None):
@@ -432,20 +732,42 @@ def draw(name: str, stage: Stage, order: Order, wn: float = 0.65, wp: float = 1.
     # diffusion and gates
     diffusion(c, plan, "n")
     diffusion(c, plan, "p")
-    for g in plan.gate_x:
-        rect(c, "poly", g - L / 2, POLY_Y[0], g + L / 2, POLY_Y[1])
+    for g, gate in zip(plan.gate_x, order.gates):
+        if gate != BREAK:
+            rect(c, "poly", g - L / 2, POLY_Y[0], g + L / 2, POLY_Y[1])
 
-    # input contacts
+    # poly contacts: one per run of a net's gates, with a poly bar over the run; a net's contacts and
+    # its own crossing joined along the middle band, on li or over it on met1; pins on the cell's inputs only
     pins = {}
-    for i, gate in enumerate(order.gates):
-        g, p = plan.gate_x[i], plan.pad_x[gate]
-        if order.gates.index(gate) != i:
-            continue
-        box(c, "licon", p, sum(PAD_CUT) / 2, CUT, CUT)
-        rect(c, "poly", min(p - CUT / 2 - POLY_CUT, g - L / 2), PAD_POLY[0],
-             max(p + CUT / 2 + POLY_CUT, g + L / 2), PAD_POLY[1])
-        rect(c, "li", p - PAD_HALF, PAD_LI[0], p + PAD_HALF, PAD_LI[1])
-        pins[gate] = (p - PAD_HALF + 0.04, PAD_LI[1] - 0.04 - CUT)
+    for gate, runs in plan.pads.items():
+        for p, first, last in runs:
+            lo, hi = plan.gate_x[first], plan.gate_x[last]
+            box(c, "licon", p, sum(PAD_CUT) / 2, CUT, CUT)
+            rect(c, "poly", min(p - CUT / 2 - POLY_CUT, lo - L / 2), PAD_POLY[0],
+                 max(p + CUT / 2 + POLY_CUT, hi + L / 2), PAD_POLY[1])
+            rect(c, "li", p - PAD_HALF, PAD_LI[0], p + PAD_HALF, PAD_LI[1])
+        if gate in stage.inputs:
+            p = runs[0][0]
+            pins[gate] = (p - PAD_HALF + 0.04, PAD_LI[1] - 0.04 - CUT)
+    for net, (li_joins, mcons, track) in plan.joins.items():
+        for x0, x1 in li_joins:
+            if x1 - x0 > 1e-9:
+                rect(c, "li", x0, PAD_LI[0], x1, PAD_LI[1])
+        for x in mcons:
+            box(c, "mcon", x, MCON_Y, MCON, MCON)
+        if mcons and track == 0:    # along the band, met1.5 sideways
+            rect(c, "met1", min(mcons) - MCON / 2 - M1_CUT_DIR, MCON_Y - MCON / 2 - M1_CUT,
+                 max(mcons) + MCON / 2 + M1_CUT_DIR, MCON_Y + MCON / 2 + M1_CUT)
+        elif mcons:                 # a stub from each mcon to the track (met1.5 on the band side), and the track
+            y = TRACK_Y[track]
+            for x in mcons:
+                if y > MCON_Y:
+                    y0, y1 = MCON_Y - MCON / 2 - M1_CUT_DIR, y + MCON / 2 + M1_CUT
+                else:
+                    y0, y1 = y - MCON / 2 - M1_CUT, MCON_Y + MCON / 2 + M1_CUT_DIR
+                rect(c, "met1", x - MCON / 2 - M1_CUT, y0, x + MCON / 2 + M1_CUT, y1)
+            rect(c, "met1", min(mcons) - MCON / 2 - M1_CUT, y - MCON / 2 - M1_CUT, max(mcons) + MCON / 2 + M1_CUT,
+                 y + MCON / 2 + M1_CUT)
 
     # diffusion contacts and li
     rows = [("n", order.n_nodes, N_LI, "VGND"), ("p", order.p_nodes, P_LI, "VPWR")]
@@ -481,10 +803,14 @@ def draw(name: str, stage: Stage, order: Order, wn: float = 0.65, wp: float = 1.
         for net, x0, x1, edge in plan.lanes[row]:
             y0, y1 = (LANE_Y if edge == "inner" else OUTER_Y)[row]
             rect(c, "li", x0, y0, x1, y1)
+        for net, x in plan.jogs[row]:
+            rect(c, "li", x - STRIP_HALF, li[0], x + STRIP_HALF, li[1])
 
     p_laned = {net for net, *_ in plan.lanes["p"]}
     for net, x in plan.crossing.items():
         rect(c, "li", x - STRIP_HALF, N_LI[1] - 0.01, x + STRIP_HALF, P_LI[0] + 0.01)
+        if net != stage.output:     # a net between stages has no pin
+            continue
         half = plan.half_at("p", x)
         on_column = net not in p_laned or any(abs(plan.col_x[j] - x) < 1e-6 for j in plan.cont["p"])
         if on_column and half > STRIP_HALF:
