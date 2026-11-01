@@ -1,0 +1,9 @@
+{
+  "request_id": "HD-nand3_1",
+  "name": "dd2_gc1__nand3_1",
+  "inputs": ["A", "B", "C"],
+  "output": "Y",
+  "expression": "!(A & B & C)",
+  "truth_table": "0x7F",
+  "sizing": "hd"
+}
