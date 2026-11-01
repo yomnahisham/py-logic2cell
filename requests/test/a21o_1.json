@@ -1,0 +1,9 @@
+{
+  "request_id": "T6-a21o_1",
+  "name": "dd2_gc1__a21o_1",
+  "inputs": ["A", "B", "C"],
+  "output": "Y",
+  "expression": "(A & B) | C",
+  "truth_table": "0xF8",
+  "sizing": "hd"
+}

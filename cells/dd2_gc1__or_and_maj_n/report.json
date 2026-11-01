@@ -1,0 +1,250 @@
+{
+  "network": {
+    "fets": 12,
+    "switch_check": "pass"
+  },
+  "order": {
+    "name": "dd2_gc1__or_and_maj_n",
+    "width": 4.14,
+    "width_sites": 9,
+    "gate_x": [
+      0.6,
+      1.2,
+      1.8,
+      2.34,
+      2.94,
+      3.54
+    ],
+    "col_x": [
+      0.39,
+      0.9,
+      1.5,
+      2.07,
+      2.64,
+      3.24,
+      3.75
+    ],
+    "pad_x": {
+      "D": 0.48,
+      "C": 1.32,
+      "A": 1.82,
+      "B": 2.34
+    },
+    "gates": [
+      "D",
+      "C",
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "n_nodes": [
+      "VGND",
+      "n1",
+      "Y",
+      "n2",
+      "n3",
+      "VGND",
+      "n3"
+    ],
+    "p_nodes": [
+      "p1",
+      "Y",
+      "p1",
+      "VPWR",
+      "p1",
+      "p2",
+      "VPWR"
+    ],
+    "diff_w": {
+      "n": [
+        0.65,
+        0.65,
+        0.65,
+        0.65,
+        0.65,
+        0.65
+      ],
+      "p": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "lanes": {
+      "n": [
+        [
+          "n3",
+          2.475,
+          3.915,
+          "inner"
+        ]
+      ],
+      "p": [
+        [
+          "p1",
+          0.305,
+          1.585,
+          "outer"
+        ],
+        [
+          "p1",
+          1.415,
+          2.805,
+          "inner"
+        ]
+      ]
+    },
+    "inputs": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "output": "Y",
+    "orders_tried": 384,
+    "orders_drawable": 24
+  },
+  "checks": {
+    "drc": 0,
+    "drc_why": "",
+    "lvs": "match",
+    "rc_r": 61,
+    "rc_c": 84,
+    "rc_lvs": "match"
+  },
+  "abutment": {
+    "cases": {
+      "dd2_gc1__or_and_maj_n__tapvpwrvgnd_1__left": 0,
+      "dd2_gc1__or_and_maj_n__tapvpwrvgnd_1__right": 0,
+      "dd2_gc1__or_and_maj_n__tapvpwrvgnd_1__mirrored": 0,
+      "dd2_gc1__or_and_maj_n__tapvpwrvgnd_1__flip_vpwr": 0,
+      "dd2_gc1__or_and_maj_n__tapvpwrvgnd_1__flip_vgnd": 0,
+      "dd2_gc1__or_and_maj_n__inv_1__left": 0,
+      "dd2_gc1__or_and_maj_n__inv_1__right": 0,
+      "dd2_gc1__or_and_maj_n__inv_1__mirrored": 0,
+      "dd2_gc1__or_and_maj_n__inv_1__flip_vpwr": 0,
+      "dd2_gc1__or_and_maj_n__inv_1__flip_vgnd": 0,
+      "dd2_gc1__or_and_maj_n__fill_1__left": 0,
+      "dd2_gc1__or_and_maj_n__fill_1__right": 0,
+      "dd2_gc1__or_and_maj_n__fill_1__mirrored": 0,
+      "dd2_gc1__or_and_maj_n__fill_1__flip_vpwr": 0,
+      "dd2_gc1__or_and_maj_n__fill_1__flip_vgnd": 0
+    },
+    "errors": 0,
+    "passed": true
+  },
+  "layers": "pass",
+  "simulation": {
+    "dc": [
+      {
+        "inputs": 0,
+        "expected": 1,
+        "y": 1.8,
+        "passed": true
+      },
+      {
+        "inputs": 1,
+        "expected": 1,
+        "y": 1.8,
+        "passed": true
+      },
+      {
+        "inputs": 2,
+        "expected": 1,
+        "y": 1.8,
+        "passed": true
+      },
+      {
+        "inputs": 3,
+        "expected": 1,
+        "y": 1.8,
+        "passed": true
+      },
+      {
+        "inputs": 4,
+        "expected": 1,
+        "y": 1.8,
+        "passed": true
+      },
+      {
+        "inputs": 5,
+        "expected": 1,
+        "y": 1.8,
+        "passed": true
+      },
+      {
+        "inputs": 6,
+        "expected": 1,
+        "y": 1.8,
+        "passed": true
+      },
+      {
+        "inputs": 7,
+        "expected": 0,
+        "y": 0.0,
+        "passed": true
+      },
+      {
+        "inputs": 8,
+        "expected": 1,
+        "y": 1.8,
+        "passed": true
+      },
+      {
+        "inputs": 9,
+        "expected": 1,
+        "y": 1.8,
+        "passed": true
+      },
+      {
+        "inputs": 10,
+        "expected": 1,
+        "y": 1.8,
+        "passed": true
+      },
+      {
+        "inputs": 11,
+        "expected": 0,
+        "y": 0.0,
+        "passed": true
+      },
+      {
+        "inputs": 12,
+        "expected": 0,
+        "y": 0.0,
+        "passed": true
+      },
+      {
+        "inputs": 13,
+        "expected": 0,
+        "y": 0.0,
+        "passed": true
+      },
+      {
+        "inputs": 14,
+        "expected": 0,
+        "y": 0.0,
+        "passed": true
+      },
+      {
+        "inputs": 15,
+        "expected": 0,
+        "y": 0.0,
+        "passed": true
+      }
+    ],
+    "dc_passed": true,
+    "transient": {
+      "slew_ns": 0.122474,
+      "load_pf": 0.00952062,
+      "steps": 128,
+      "errors": [],
+      "passed": true
+    },
+    "passed": true
+  }
+}
