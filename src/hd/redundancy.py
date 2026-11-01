@@ -69,12 +69,13 @@ def _index(cells: tuple[Cell, ...]) -> tuple[dict, dict, dict]:
     Built once per library: every input order of every cell for exists, of its inverted
     output or one inverted input for exists_inv, and every way of tying its inputs to the
     candidate's inputs or to 0 or 1 for contained. Cells with the same function are done once.
+    Cells are taken smallest area first, so the cell recorded for a table is the smallest that gives it.
     """
     exists: dict[int, tuple[str, str]] = {}
     exists_inv: dict[int, tuple[str, str]] = {}
     contained: dict[int, tuple[str, str]] = {}
     seen = set()
-    for cell in cells:
+    for cell in sorted(cells, key=lambda c: (c.area is None, c.area or 0.0, c.name)):
         size = len(cell.support)
         if (cell.truth_table, size) in seen:
             continue
