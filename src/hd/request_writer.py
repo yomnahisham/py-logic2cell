@@ -1,10 +1,12 @@
 """Cell requests for the best candidates (option 2 handout, section 4, step 8; overview, Appendix A).
 
-Everything comes from results/hd/ranked.json: the candidates with a positive estimated saving,
-best first, at most `limit` of them. Each request is checked with Option 1's own request reader
+Everything comes from results/hd/ranked.json: by default a request for each candidate (step 8),
+including those Option 1's structure cannot build, which the group may ask the instructor for
+(overview, section 2, rule 3). --limit writes only the cells of the Liberty file (selected()),
+--names the named ones. Each request is checked with Option 1's own request reader
 (src.common.request) before it is written, so its expression and truth table agree.
 
-    python -m src.hd.request_writer [--limit 10] [--names <cell> ...]  -> requests/candidates/<name>.json
+    python -m src.hd.request_writer [--limit 10 | --names <cell> ...]  -> requests/candidates/<name>.json
 """
 
 from __future__ import annotations
@@ -21,16 +23,21 @@ OUT = ROOT / "requests/candidates"
 LIMIT = 10      # the final set holds at most 10 new cells (handout, section 4, step 10)
 
 
+def candidates(ranked=RANKED) -> list[dict]:
+    return json.loads(ranked.read_text())["candidates"]
+
+
 def selected(limit: int = LIMIT, names: list[str] | None = None, ranked=RANKED) -> list[dict]:
-    """The candidates to write: the named ones, or the best `limit` with a positive saving."""
-    candidates = json.loads(ranked.read_text())["candidates"]
+    """The cells for the Liberty file: the named ones, or the best `limit` that have a positive
+    saving and that Option 1's structure can build."""
+    every = candidates(ranked)
     if names:
-        chosen = [c for c in candidates if c["name"] in names]
+        chosen = [c for c in every if c["name"] in names]
         missing = set(names) - {c["name"] for c in chosen}
         if missing:
             raise SystemExit(f"not in {ranked}: {sorted(missing)}")
         return chosen
-    return [c for c in candidates if c["saving_um2"]["total"] > 0][:limit]
+    return [c for c in every if c["saving_um2"]["total"] > 0 and c.get("buildable", True)][:limit]
 
 
 def request(c: dict) -> dict:
@@ -43,15 +50,17 @@ def request(c: dict) -> dict:
 
 def main(argv: list[str]):
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    parser.add_argument("--limit", type=int, default=LIMIT)
+    parser.add_argument("--limit", type=int)
     parser.add_argument("--names", nargs="*")
     args = parser.parse_args(argv)
+    chosen = selected(args.limit, args.names) if args.limit or args.names else candidates()
     OUT.mkdir(parents=True, exist_ok=True)
     for old in OUT.glob("*.json"):
         old.unlink()
-    for c in selected(args.limit, args.names):
+    for c in chosen:
         (OUT / f"{c['name']}.json").write_text(json.dumps(request(c), indent=2) + "\n")
-        print(f"{c['rank']:3} {c['name']}: {c['expression']}, {c['area_um2']} um2")
+        print(f"{c['rank']:3} {c['name']}: {'' if c.get('buildable', True) else '(not buildable) '}"
+              f"{c['expression']}, {c['area_um2']} um2")
 
 
 if __name__ == "__main__":

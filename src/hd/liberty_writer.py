@@ -1,7 +1,8 @@
 """The extended Liberty file: hd_reduced.lib plus the new cells (option 2 handout, section 6).
 
-Each new cell's function, truth table and area come from results/hd/ranked.json (the same
-candidates as the request writer). Capacitance and timing are placeholders from a simple
+Each new cell's function, truth table and area come from results/hd/ranked.json (the cells
+src.hd.request_writer.selected picks: by default the best 10 that have a positive saving and that
+Option 1's structure can build). Capacitance and timing are placeholders from a simple
 logical-effort model anchored on HD's inv_1, read from hd_reduced.lib:
   - input capacitance: inv_1's input capacitance x (transistors the input drives) / 2, since
     every HD finger has the same width;

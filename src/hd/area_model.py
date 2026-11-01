@@ -18,7 +18,7 @@ import re
 import statistics
 from pathlib import Path
 
-from src.hd.cost import cost
+from src.hd.cost import cost, estimate
 from src.hd.liberty import parse_liberty_file
 from src.paths import LEF, LIB, PREFIX, ROOT, SPICE
 
@@ -90,10 +90,12 @@ def training_rows() -> list[dict]:
             continue
         n = len(cell.support)
         c = cost(cell.truth_table, n) if n <= 4 else None
+        e = estimate(cell.truth_table, n) if n <= 4 else None
         rows.append(dict(cell=cell.name.removeprefix(PREFIX), inputs=n,
                          stages="single" if one_stage(cell.truth_table, n) else "multi",
                          transistors=spice[cell.name], sites=round(widths[cell.name] / site_w),
-                         cost_transistors=c.transistors if c else ""))
+                         cost_transistors=c.transistors if c else "",
+                         estimate_transistors=e.transistors if e else ""))
     return sorted(rows, key=lambda r: r["cell"])
 
 
@@ -119,11 +121,12 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     with (OUT / "area_model.csv").open("w", newline="") as f:
         w = csv.writer(f)
-        w.writerow(["cell", "inputs", "stages", "transistors_spice", "transistors_cost", "sites",
-                    "sites_model", "error_sites"])
+        w.writerow(["cell", "inputs", "stages", "transistors_spice", "transistors_cost",
+                    "transistors_estimate", "sites", "sites_model", "error_sites"])
         for r in rows:
             w.writerow([r["cell"], r["inputs"], r["stages"], r["transistors"], r["cost_transistors"],
-                        r["sites"], model.sites(r["transistors"]), model.sites(r["transistors"]) - r["sites"]])
+                        r["estimate_transistors"], r["sites"], model.sites(r["transistors"]),
+                        model.sites(r["transistors"]) - r["sites"]])
     summary = dict(model="sites = ceil(a + b * transistors)", a=round(model.a, 4), b=round(model.b, 4),
                    site_um=[model.site_w, model.site_h], source=dict(
                        cells=str(USABLE.relative_to(ROOT)), transistors=str(SPICE.relative_to(ROOT)),

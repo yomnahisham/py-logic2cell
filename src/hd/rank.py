@@ -1,14 +1,18 @@
 """Cost, redundancy, area and ranking of the cut classes (option 2 handout, section 4, steps 4 to 7).
 
 For every class found in the ABC-restructured AIGs of the required designs:
-  - polarity: of the class's two functions (t and !t, each up to input order), the one that
-    is cheaper to build (src.hd.cost), then the more frequent, then the smaller table;
+  - cost of every class (src.hd.cost.estimate): Option 1's structure where it can build the
+    class (buildable), a Shannon-split estimate where it cannot;
+  - polarity: of the class's two functions (t and !t, each up to input order), a buildable one
+    first, then the cheaper, then the more frequent, then the smaller table;
   - redundancy (Table 3) against the full HD library, with the smallest HD cell that matches;
   - estimated area from the area model (src.hd.area_model);
   - estimated saving per design: (AND nodes its occurrences cover) x a_node - occurrences x
     (area of the new cell), where a_node is the design's baseline combinational area (script A,
     reduced library, flip-flops and latches taken out) over the AND nodes of its ABC AIG.
 
+Every class Table 3 keeps is ranked; a candidate Option 1's structure cannot build is marked
+buildable: false (overview, section 2, rule 3: the group may ask the instructor for it).
 The ranking is a guess: cuts overlap and share logic (handout, section 4, step 7).
 
     python -m src.hd.rank [cut files]
@@ -29,7 +33,7 @@ import sys
 
 from src.common.stage import widen
 from src.hd.area_model import fit
-from src.hd.cost import cost, expression
+from src.hd.cost import estimate
 from src.hd.cut_classes import Occurrences, class_id, cut_files, invert, p_class, read
 from src.hd.liberty import cell_areas
 from src.hd.redundancy import classify
@@ -71,25 +75,22 @@ def a_node(design: str, areas: dict, ands: dict[str, int], maps=MAPS) -> dict:
 
 
 def choose_polarity(n: int, key: int, occurrences: list[Occurrences]):
-    """The cheaper of the class's two functions; None if neither can be built."""
+    """The class's function to build, and its estimate: buildable first, then the cheaper."""
     counts = defaultdict(int)
     for occ in occurrences:
         for p, c in occ.polarity_counts().items():
             counts[p] += c
     options = []
     for t in {p_class(key, n), p_class(invert(key, n), n)}:
-        c = cost(t, n)
-        if c is not None:
-            options.append((c.transistors, c.stages, -counts[t], t, c))
-    return min(options, key=lambda o: o[:4])[3:] if options else (p_class(key, n), None)
+        e = estimate(t, n)
+        options.append((not e.buildable, e.transistors, e.stages, -counts[t], t, e))
+    return min(options, key=lambda o: o[:5])[4:]
 
 
 def decide(table3: str, est_area: float | None, hd_area: float, inv_area: float) -> tuple[str, str]:
     """Table 3's 'What to do' column."""
     if table3 == "exists":
         return "drop", "HD has it"
-    if est_area is None and table3 != "new":
-        return "drop", "an HD cell gives it, and Option 1's structure cannot build it"
     if table3 == "exists_inv":
         if est_area is not None and est_area < hd_area + inv_area:
             return "keep", "smaller than the HD cell plus an inverter"
@@ -120,25 +121,20 @@ def main(argv: list[str]):
     rows = []
     for n, key in keys:
         occ = {d: aigs[(d, RANK_AIG)].classes.get((n, key), Occurrences()) for d in REQUIRED}
-        table, c = choose_polarity(n, key, list(occ.values()))
+        table, e = choose_polarity(n, key, list(occ.values()))
         table3, hd_cell, note = classify(widen(table, n))
         hd_area = full[hd_cell][0] if hd_cell else None
-        est = model.area(c.transistors) if c else None
+        est = model.area(e.transistors)
         decision, why = decide(table3, est, hd_area, inv_area)
-        if decision == "keep" and c is None:
-            decision, why = "not_buildable", "no build with Option 1's structure of stages"
-        saving = {d: round(o.cone_total * nodes[d]["a_node_um2"] - o.count * est, 4) if est else None
-                  for d, o in occ.items()}
+        saving = {d: round(o.cone_total * nodes[d]["a_node_um2"] - o.count * est, 4) for d, o in occ.items()}
         rows.append(dict(
             class_id=class_id(key, n), inputs=n, truth_table=f"0x{table:0{max(1, (1 << n) // 4)}X}",
             occurrences=sum(o.count for o in occ.values()), cone_nodes=sum(o.cone_total for o in occ.values()),
             table3=table3, hd_cell=(hd_cell or "").removeprefix(PREFIX), hd_area_um2=hd_area or "",
-            stages=c.stages if c else "", inverters=c.inverters if c else "",
-            transistors=c.transistors if c else "", series=c.series if c else "",
-            est_sites=model.sites(c.transistors) if c else "", est_area_um2=est or "",
-            decision=decision, why=why,
-            saving_um2=round(sum(saving.values()), 4) if est else "",
-            _table=table, _cost=c, _occ=occ, _saving=saving,
+            buildable="yes" if e.buildable else "no", stages=e.stages, inverters=e.inverters,
+            transistors=e.transistors, series=e.series, est_sites=model.sites(e.transistors), est_area_um2=est,
+            decision=decision, why=why, saving_um2=round(sum(saving.values()), 4),
+            _table=table, _estimate=e, _occ=occ, _saving=saving,
             _other={d: aigs[(d, RANK_AIG)].classes.get((n, key), Occurrences()).count for d in others}))
 
     OUT.mkdir(parents=True, exist_ok=True)
@@ -168,13 +164,12 @@ def main(argv: list[str]):
 
 
 def candidate(rank: int, r: dict) -> dict:
-    table, n, c = r["_table"], r["inputs"], r["_cost"]
+    table, n, e = r["_table"], r["inputs"], r["_estimate"]
     return dict(
         rank=rank, class_id=r["class_id"], name=cell_name(table, n), request_id=request_id(table, n),
-        inputs=list(NAMES[:n]), output="Y", truth_table=r["truth_table"],
-        expression=expression(c, list(NAMES[:n])),
-        cost=dict(stages=c.stages, inverters=c.inverters, transistors=c.transistors, series=c.series,
-                  inverted_inputs=[NAMES[k] for k in c.inverted], output_inverter=c.out_inverter),
+        inputs=list(NAMES[:n]), output="Y", truth_table=r["truth_table"], expression=e.expression,
+        buildable=e.buildable,
+        cost=dict(stages=e.stages, inverters=e.inverters, transistors=e.transistors, series=e.series),
         sites=r["est_sites"], area_um2=r["est_area_um2"],
         redundancy=dict(table3=r["table3"], hd_cell=r["hd_cell"] or None, why=r["why"]),
         occurrences={d: o.count for d, o in r["_occ"].items()},
@@ -200,7 +195,9 @@ def redundancy_summary(rows: list[dict]) -> str:
     kept = [r for r in rows if r["decision"] == "keep"]
     lines += ["", f"kept: {len(kept)}, of which with a positive estimated saving: "
                   f"{sum(r['saving_um2'] > 0 for r in kept)}",
-              f"not buildable with Option 1's structure: {sum(r['decision'] == 'not_buildable' for r in rows)}"]
+              f"kept but not buildable with Option 1's structure (estimated by a Shannon split): "
+              f"{sum(r['buildable'] == 'no' for r in kept)}, with a positive saving: "
+              f"{sum(r['buildable'] == 'no' and r['saving_um2'] > 0 for r in kept)}"]
     return "\n".join(lines) + "\n"
 
 
