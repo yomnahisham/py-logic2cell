@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 IMAGE = os.getenv("LAYOUT_IMAGE", "dd2-layout-tools")
-ENTRY = {"magic": "magic", "netgen": "netgen", "ngspice": "ngspice"}
+ENTRY = {"magic": "magic", "netgen": "netgen", "ngspice": "ngspice", "sh": "sh"}
 
 # resolved, because only the final target is mounted: pdk may point to another link
 PDK = (ROOT / "pdk").resolve()
@@ -22,12 +22,14 @@ LVS_SETUP = PDK / "libs.tech/netgen/sky130A_setup.tcl"
 MODELS = PDK / "libs.tech/ngspice/sky130.lib.spice"
 
 
-def run(tool: str, args: list[str], cwd: Path, log: Path, stdin: str | None = None, timeout: int = 600) -> str:
+def run(tool: str, args: list[str], cwd: Path, log: Path, stdin: str | None = None, timeout: int = 600,
+        image: str | None = None) -> str:
+    """image overrides the container, e.g. a stock ngspice build for the comparison of Table 5."""
     pdk_real = PDK.resolve()
     cmd = ["docker", "run", "--rm", "-i", "--user", f"{os.getuid()}:{os.getgid()}",
            "-e", "HOME=/tmp", "-e", "OMP_NUM_THREADS=1",
            "-v", f"{ROOT}:{ROOT}", "-v", f"{pdk_real}:{pdk_real}:ro",
-           "-w", str(cwd), "--entrypoint", ENTRY[tool], IMAGE, *args]
+           "-w", str(Path(cwd).resolve()), "--entrypoint", ENTRY[tool], image or IMAGE, *args]
     p = subprocess.run(cmd, input=stdin, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                        timeout=timeout)
     log.parent.mkdir(parents=True, exist_ok=True)
