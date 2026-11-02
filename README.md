@@ -35,8 +35,8 @@ Option 2: map the designs onto the usable and reduced HD libraries (Table 1) →
 | `python -m src.common.request <request>` | a request | its truth table, or why it is refused |
 | `python -m src.cell.network <request>` | a request | the networks, switch-level check, Euler order, schematic |
 | `python -m src.cell.rules` | `src/cell/layout.py`, PDK DRC decks | `results/design_rules.csv` |
-| `python -m src.table1.table1` | `given/designs`, `given/*.lib` | `results/table1.csv`, `results/map/*.log` |
-| `python -m src.table1.map_extended` | `build/libs/hd_reduced_ext.lib` | `results/table1_extended.csv`, `results/map_extended/*.log` |
+| `python -m src.map_library.table1` | `given/designs`, `given/*.lib` | `results/table1.csv`, `results/map/*.log` |
+| `python -m src.map_library.map_extended` | `build/libs/hd_reduced_ext.lib` | `results/table1_extended.csv`, `results/map_extended/*.log` |
 | `python -m src.aig.aigs` | `given/designs` | `build/aigs/`, `results/aig_sizes.csv` |
 | `python -m src.cut_enum.write_cuts` | `build/aigs/` | checked raw/ABC cut tables in `results/cuts/` |
 | `python -m src.hd.cut_classes` | `results/cuts/` | `results/hd/cut_classes.csv`, `results/hd/a_node.csv` |
@@ -51,7 +51,7 @@ Option 2: map the designs onto the usable and reduced HD libraries (Table 1) →
 ## 5. Layout
 - `src/common/`: request reader and response writer, smallest single stage for a truth table, Yosys runner
 - `src/cell/`: Option 1 (network, layout, verify, abutment, simulate, compare, build, rules)
-- `src/hd/`, `src/aig/`, `src/cut_enum/`, `src/table1/`: Option 2
+- `src/hd/`, `src/aig/`, `src/cut_enum/`, `src/map_library/`: Option 2
 - `src/frame_check.py`, `src/layer_check.py`, `src/extract_cells.py`: HD frame and layer checks
 - `requests/`: cell requests; `cells/`: generated cells; `results/`: every table and log the reports use
 - `tests/`: tests; `tests/broken/`: broken cases

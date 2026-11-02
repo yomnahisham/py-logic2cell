@@ -31,7 +31,7 @@ Pass or fail comes from the check scripts, never from an assistant's opinion.
 4. Expected values (Table 1, Table 2, Table 4) appear only in test files, never inside the tool. If the tool's result differs from the handout, report the difference; do not adjust code or definitions just to force a match.
 5. Truth-table convention: a truth table is an int; bit i is the output for the input combination in which input k equals bit k of i; input A is the least significant. A 4-input function has 16 bits.
 6. Library facts (cell functions, areas) are parsed from the Liberty file at run time. Input support is derived from the function, not from the pin list.
-7. Option 1 code goes in `src/cell/`, Option 2 code in `src/hd/`, `src/aig/`, `src/cut_enum/` and `src/table1/`, shared code in `src/common/`.
+7. Option 1 code goes in `src/cell/`, Option 2 code in `src/hd/`, `src/aig/`, `src/cut_enum/` and `src/map_library/`, shared code in `src/common/`.
 
 ## What the assistant must never do
 1. Do NOT edit check scripts or broken cases: `src/frame_check.py`, `src/layer_check.py`, anything in `tests/` and `tests/broken/`. If a check seems wrong, say so and explain why; a human changes it.

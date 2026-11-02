@@ -1,6 +1,6 @@
 """Map the required designs with the generated extended reduced library.
 
-    python -m src.table1.map_extended
+    python -m src.map_library.map_extended
         -> results/table1_extended.csv
         -> results/map_extended/<design>_extended_<A|B>.log
 """
@@ -11,7 +11,7 @@ import csv
 from concurrent.futures import ThreadPoolExecutor
 
 from src.common.yosys import ROOT
-from src.table1.table1 import DESIGNS, map_design
+from src.map_library.table1 import DESIGNS, map_design
 
 EXTENDED = ROOT / "build/libs/hd_reduced_ext.lib"
 OUT = ROOT / "results/table1_extended.csv"

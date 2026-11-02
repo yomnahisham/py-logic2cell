@@ -38,7 +38,7 @@ from src.hd.cut_classes import Occurrences, class_id, cut_files, invert, p_class
 from src.hd.liberty import cell_areas
 from src.hd.redundancy import classify
 from src.paths import PREFIX, ROOT
-from src.table1.table1 import DESIGNS
+from src.map_library.table1 import DESIGNS
 
 REQUIRED = list(DESIGNS)
 RANK_AIG = "abc"

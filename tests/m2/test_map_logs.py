@@ -3,7 +3,7 @@
 import pytest
 
 from src.hd.rank import stat
-from src.table1.table1 import check_log
+from src.map_library.table1 import check_log
 
 LOG = """
    Number of cells:                  5

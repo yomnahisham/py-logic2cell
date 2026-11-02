@@ -16,7 +16,7 @@ from pathlib import Path
 
 from src.cut_enum.cut_enumerator import CutEnumerator
 from src.paths import ROOT
-from src.table1.table1 import DESIGNS
+from src.map_library.table1 import DESIGNS
 
 AIGS = ROOT / "build/aigs"
 OUT = ROOT / "results/cuts"

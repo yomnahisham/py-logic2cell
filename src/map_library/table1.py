@@ -1,6 +1,6 @@
 """Reproduce Table 1 and save the complete mapping logs used by later steps.
 
-    python -m src.table1.table1
+    python -m src.map_library.table1
         -> results/table1.csv
         -> results/map/<design>_<usable|reduced>_<A|B>.log
 """
