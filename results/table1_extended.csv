@@ -1,0 +1,13 @@
+design,script,library,area_um2,cells
+cpu8,A,extended,4196.5248,553
+cpu8,B,extended,4361.6832,380
+dsp8,A,extended,5830.5920,948
+dsp8,B,extended,6159.6576,841
+arlet6502,A,extended,9661.7664,1374
+arlet6502,B,extended,9895.7408,1371
+uart_apb,A,extended,12938.6592,1192
+uart_apb,B,extended,13170.1312,1160
+risc8,A,extended,28189.5360,3451
+risc8,B,extended,27458.8352,3262
+fir10,A,extended,25958.6464,4961
+fir10,B,extended,28742.5664,3761

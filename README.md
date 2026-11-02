@@ -36,6 +36,7 @@ Option 2: map the designs onto the usable and reduced HD libraries (Table 1) →
 | `python -m src.cell.network <request>` | a request | the networks, switch-level check, Euler order, schematic |
 | `python -m src.cell.rules` | `src/cell/layout.py`, PDK DRC decks | `results/design_rules.csv` |
 | `python -m src.table1.table1` | `given/designs`, `given/*.lib` | `results/table1.csv`, `results/map/*.log` |
+| `python -m src.table1.map_extended` | `build/libs/hd_reduced_ext.lib` | `results/table1_extended.csv`, `results/map_extended/*.log` |
 | `python -m src.aig.aigs` | `given/designs` | `build/aigs/`, `results/aig_sizes.csv` |
 | `python -m src.cut_enum.write_cuts` | `build/aigs/` | checked raw/ABC cut tables in `results/cuts/` |
 | `python -m src.hd.cut_classes` | `results/cuts/` | `results/hd/cut_classes.csv`, `results/hd/a_node.csv` |
@@ -61,7 +62,9 @@ Option 2: map the designs onto the usable and reduced HD libraries (Table 1) →
 - `results/design_rules.csv`: the rule behind every number in the layout; gate pitch 0.42 µm = poly.1a + 2 licon.11 + licon.1.
 - `results/frame_check.txt`, `results/layer_check_*.txt`: the HD frame and layer checks.
 - `results/table1.csv`: Table 1 reproduced exactly with Yosys 0.33.
+- `results/table1_extended.csv`: the required designs mapped with the generated extended reduced library.
 - `results/map/*.log`: complete baseline mapping logs used to split combinational and sequential area during ranking.
+- `results/map_extended/*.log`: complete extended-library mapping logs.
 - `results/aig_sizes.csv`: AIG sizes match Table 2 exactly (with `write_aiger -zinit`); ABC restructuring shrinks every design.
 - `results/cuts/<design>_{raw,abc}.csv`: every non-trivial cut of up to four leaves, with its truth table and cone size; each table is checked against an independent simulation before being written.
 - `results/hd/hd_classes.csv`: the class table of HD.
@@ -96,7 +99,7 @@ AGENTS.md · ai/use_log.md · ai/mistakes_log.md · report/ai_report.pdf
 ## 9. Limitations
 - Option 1 builds single-stage cells only; multi-stage cells (and2, a21o, mux2, xor2), diffusion breaks and stack sizing are not done yet.
 - No characterized Liberty timing data or Verilog model yet, so the model-level simulation of section 4.2 is not run; the generated Liberty extension contains placeholder timing from `inv_1`.
-- Option 2 now estimates and ranks candidates, writes requests, and emits a Liberty extension. Mapping the new cells into the designs and measuring the Table 5 area impact is still not implemented.
+- Option 2 estimates and ranks candidates, writes requests, emits a Liberty extension, and maps the required designs with it. Table 5's area-impact analysis is still not implemented.
 
 ## 10. Third-party files
 | File | Source | Licence |

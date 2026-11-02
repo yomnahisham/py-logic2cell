@@ -10,6 +10,7 @@ from __future__ import annotations
 import csv
 import re
 from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
 
 from src.common.yosys import ROOT, run
 
@@ -33,13 +34,23 @@ def check_log(text: str, name: str = "log") -> tuple[float, int]:
     return float(area[-1]), int(cells[-1])
 
 
-def map_design(design: str, top: str, lib: str, script: str) -> tuple[float, int]:
+def map_design(
+    design: str,
+    top: str,
+    lib: str,
+    script: str,
+    *,
+    library: str | None = None,
+    map_out: Path | None = None,
+) -> tuple[float, int]:
     """Run one baseline mapping and retain the full stat log for rank.py."""
-    log = MAP_OUT / f"{design}_{lib}_{script}.log"
+    library = library or LIBS[lib]
+    map_out = map_out or MAP_OUT
+    log = map_out / f"{design}_{lib}_{script}.log"
     run(["yosys", "-q", "-p",
-         f"read_verilog given/designs/{design}.v; synth -flatten -top {top}; dfflibmap -liberty {LIBS[lib]}; "
-         f'abc -liberty {LIBS[lib]} -script "{SCRIPTS[script]}"; opt_clean -purge; '
-         f"tee -o {log} stat -liberty {LIBS[lib]}"])
+         f"read_verilog given/designs/{design}.v; synth -flatten -top {top}; dfflibmap -liberty {library}; "
+         f'abc -liberty {library} -script "{SCRIPTS[script]}"; opt_clean -purge; '
+         f"tee -o {log} stat -liberty {library}"])
     return check_log(log.read_text(), log.name)
 
 
