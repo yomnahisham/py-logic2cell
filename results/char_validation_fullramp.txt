@@ -1,0 +1,33 @@
+Characterizer validation_fullramp: inv_1, nand2_1, nor2_1, nand3_1, a21oi_1, o21ai_1 against sky130_fd_sc_hd__tt_025C_1v80.lib
+ngspice: ngspice-47  sha256 8098c56b7b7f4bf03daf3d296e3b8ec9115d74ef90d1ac5f1d1e3428477deea2  image dd2-layout-tools
+ramp: FULL RAMP = table slew (broken case)
+setup read from the Liberty: {"input_threshold_pct_rise": 50.0, "input_threshold_pct_fall": 50.0, "output_threshold_pct_rise": 50.0, "output_threshold_pct_fall": 50.0, "slew_lower_threshold_pct_rise": 20.0, "slew_lower_threshold_pct_fall": 20.0, "slew_upper_threshold_pct_rise": 80.0, "slew_upper_threshold_pct_fall": 80.0, "slew_derate_from_library": 1.0, "nom_voltage": 1.8, "nom_temperature": 25.0, "time_unit": "1ns", "voltage_unit": "1V", "capacitive_load_unit": "1.0000000000, pf"}
+setup used by every run equals the Liberty's: yes
+
+cell       entries  med |err| delay  med |err| trans  med |err| all med err (signed)  max |err|
+inv_1          196            9.92%            8.40%          9.59%           -7.32%  +66.5% at A cell_fall slew 1.5 load 0.0005
+nand2_1        392            6.73%            8.78%          7.23%           -2.03%  +98.5% at A cell_fall slew 1.5 load 0.0005
+nor2_1         392            8.20%            8.81%          8.48%           -4.46%  +470.8% at B cell_fall slew 1.5 load 0.0005
+nand3_1        588            5.89%            8.36%          6.70%           -0.39%  +43.9% at B cell_fall slew 1.5 load 0.0005
+a21oi_1        588            6.92%            7.65%          7.29%           -2.21%  +1185.6% at B1 cell_fall slew 1.5 load 0.0005
+o21ai_1        588            6.27%            7.43%          7.15%           -2.41%  +117.6% at A2 cell_fall slew 1.5 load 0.0005
+
+delay and transition: median |error| 7.42% over 2744 entries (limit 5.0%): FAIL
+largest: +1185.6% at a21oi_1 B1 cell_fall slew 1.5 ns load 0.0005 pF
+
+capacitance inv_1    A   ours 0.002372 HD 0.002302 pF   +3.0% (limit 10.0%): PASS   [whole run: 0.002619, +13.8%]
+capacitance nand2_1  A   ours 0.002312 HD 0.002315 pF   -0.1% (limit 10.0%): PASS   [whole run: 0.002634, +13.8%]
+capacitance nand2_1  B   ours 0.002425 HD 0.002324 pF   +4.3% (limit 10.0%): PASS   [whole run: 0.002584, +11.2%]
+capacitance nor2_1   A   ours 0.002402 HD 0.002373 pF   +1.2% (limit 10.0%): PASS   [whole run: 0.002622, +10.5%]
+capacitance nor2_1   B   ours 0.002339 HD 0.002353 pF   -0.6% (limit 10.0%): PASS   [whole run: 0.002653, +12.8%]
+capacitance nand3_1  A   ours 0.002282 HD 0.002301 pF   -0.8% (limit 10.0%): PASS   [whole run: 0.002639, +14.7%]
+capacitance nand3_1  B   ours 0.002380 HD 0.002395 pF   -0.6% (limit 10.0%): PASS   [whole run: 0.002645, +10.4%]
+capacitance nand3_1  C   ours 0.002428 HD 0.002355 pF   +3.1% (limit 10.0%): PASS   [whole run: 0.002601, +10.5%]
+capacitance a21oi_1  A1  ours 0.002348 HD 0.002352 pF   -0.2% (limit 10.0%): PASS   [whole run: 0.002649, +12.6%]
+capacitance a21oi_1  A2  ours 0.002358 HD 0.002321 pF   +1.6% (limit 10.0%): PASS   [whole run: 0.002472, +6.5%]
+capacitance a21oi_1  B1  ours 0.002381 HD 0.002323 pF   +2.5% (limit 10.0%): PASS   [whole run: 0.002704, +16.4%]
+capacitance o21ai_1  A1  ours 0.002362 HD 0.002335 pF   +1.1% (limit 10.0%): PASS   [whole run: 0.002459, +5.3%]
+capacitance o21ai_1  A2  ours 0.002490 HD 0.002459 pF   +1.3% (limit 10.0%): PASS   [whole run: 0.002736, +11.3%]
+capacitance o21ai_1  B1  ours 0.002064 HD 0.001996 pF   +3.4% (limit 10.0%): PASS   [whole run: 0.002350, +17.7%]
+
+TABLE 5 (delay, transition, capacitance, setup): FAIL
