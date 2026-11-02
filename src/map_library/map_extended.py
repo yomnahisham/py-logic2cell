@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 import csv
+import re
 from concurrent.futures import ThreadPoolExecutor
 
 from src.common.yosys import ROOT
@@ -16,6 +17,15 @@ from src.map_library.table1 import DESIGNS, map_design
 EXTENDED = ROOT / "build/libs/hd_reduced_ext.lib"
 OUT = ROOT / "results/table1_extended.csv"
 MAP_EXTENDED_OUT = ROOT / "results/map_extended"
+
+
+def count_new_cell_instances(text: str) -> int:
+    """Sum instances of generated cells in a Yosys ``stat`` log."""
+    return sum(
+        int(count)
+        for name, count in re.findall(r"^\s+(\S+)\s+(\d+)\s*$", text, re.M)
+        if name.startswith("dd2_")
+    )
 
 
 def main() -> None:
@@ -42,9 +52,16 @@ def main() -> None:
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with OUT.open("w", newline="") as output:
         writer = csv.writer(output)
-        writer.writerow(["design", "script", "library", "area_um2", "cells"])
+        writer.writerow([
+            "design", "script", "library", "area_um2", "cells",
+            "new_cell_instances",
+        ])
         for (design, _, script), (area, cells) in zip(jobs, results):
-            writer.writerow([design, script, "extended", f"{area:.4f}", cells])
+            log = MAP_EXTENDED_OUT / f"{design}_extended_{script}.log"
+            new_cells = count_new_cell_instances(log.read_text())
+            writer.writerow([
+                design, script, "extended", f"{area:.4f}", cells, new_cells,
+            ])
     print(OUT.read_text())
 
 
