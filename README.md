@@ -6,6 +6,8 @@ GC1 · Option 3 (Options 1 and 2) · AI used as a development aid
 | Name | Student ID |
 |---|---|
 | Yomna Othman | 900231105 |
+| Jacques Elia | 900233349 |
+
 
 
 ## 2. Quick start

@@ -1,6 +1,6 @@
 # DD2 Project 1: the targets the overview requires (section 5.1).
 
-PDK_ROOT ?= $(HOME)/.ciel
+PDK_ROOT ?= $(HOME)/work/pdks
 GIVEN    ?= ../DD2_Project1_student_pack/given
 IN       ?=
 
@@ -40,6 +40,12 @@ all:              ## the whole flow
 	$(PY) -m src.table1.table1
 	$(PY) -m src.aig.aigs
 	$(PY) -m src.hd.table4
+	$(PY) -m src.cut_enum.write_cuts
+	$(PY) -m src.hd.cut_classes
+	$(PY) -m src.hd.area_model
+	$(PY) -m src.hd.rank
+	$(PY) -m src.hd.request_writer --limit 10
+	$(PY) -m src.hd.liberty_writer --limit 10
 	$(PY) -m src.hd.classes
 	$(PY) -m src.cell.rules
 	for r in requests/hd/*.json; do $(PY) -m src.cell.build $$r --hd $$(basename $$r .json) || exit 1; done

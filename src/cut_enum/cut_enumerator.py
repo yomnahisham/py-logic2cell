@@ -98,3 +98,6 @@ class CutEnumerator:
         """Every cut's table against simulation. Returns the cuts that disagree."""
         return [(n, c) for n, cuts in node_cuts.items() if n in self.ands
                 for c, t in cuts.items() if not self.verify_cut(n, c, t)]
+
+if __name__ == "__main__":
+    ce = CutEnumerator(Path("build/aigs/cpu8_raw.aig"))
