@@ -33,7 +33,7 @@ Option 2: map the designs onto the usable and reduced HD libraries (Table 1) →
 | `python -m src.common.request <request>` | a request | its truth table, or why it is refused |
 | `python -m src.cell.network <request>` | a request | the networks, switch-level check, Euler order, schematic |
 | `python -m src.cell.rules` | `src/cell/layout.py`, PDK DRC decks | `results/design_rules.csv` |
-| `python -m src.table1.table1` | `given/designs`, `given/*.lib` | `results/table1.csv` |
+| `python -m src.table1.table1` | `given/designs`, `given/*.lib` | `results/table1.csv`, `results/map/*.log` |
 | `python -m src.aig.aigs` | `given/designs` | `build/aigs/`, `results/aig_sizes.csv` |
 | `python -m src.hd.classes` | HD Liberty | `results/hd/hd_classes.csv` |
 | `python -m src.hd.table4` | HD Liberty | `results/table4.txt` |
@@ -53,6 +53,7 @@ Option 2: map the designs onto the usable and reduced HD libraries (Table 1) →
 - `results/design_rules.csv`: the rule behind every number in the layout; gate pitch 0.42 µm = poly.1a + 2 licon.11 + licon.1.
 - `results/frame_check.txt`, `results/layer_check_*.txt`: the HD frame and layer checks.
 - `results/table1.csv`: Table 1 reproduced exactly with Yosys 0.33.
+- `results/map/*.log`: complete baseline mapping logs used to split combinational and sequential area during ranking.
 - `results/aig_sizes.csv`: AIG sizes match Table 2 exactly (with `write_aiger -zinit`); ABC restructuring shrinks every design.
 - `results/hd/hd_classes.csv`: the class table of HD.
 - `results/table4.txt`: Table 4 reproduced (24 / 20 / 38 / 3822, 9 one-stage, 6 + 2 read-once), except one row: we find 6 new single-stage functions within 3 in series and 12 transistors, the handout says 5. All 6 are listed.
