@@ -1,0 +1,23 @@
+{
+  "request_id": "T6-xor2_1",
+  "status": "pass",
+  "reason": null,
+  "cell": "dd2_gc1__xor2_1",
+  "stages": 3,
+  "transistors": 12,
+  "width_sites": 11,
+  "area_um2": 13.7632,
+  "files": {
+    "gds": "cells/dd2_gc1__xor2_1/cell.gds",
+    "report": "cells/dd2_gc1__xor2_1/report.json"
+  },
+  "checks": {
+    "drc": 0,
+    "lvs": "match",
+    "rc_lvs": "match",
+    "truth_table": "pass",
+    "abutment": 0,
+    "layers": "pass"
+  },
+  "tool_version": "git:f030390"
+}

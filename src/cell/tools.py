@@ -1,4 +1,4 @@
-"""Run Magic, Netgen and ngspice in the dd2-layout-tools container.
+"""Run Magic, Netgen and ngspice in the dd2-layout-tools container, and Yosys and OpenSTA in theirs.
 
 The repo is mounted at the same path inside the container, and the PDK
 read-only at the path the pdk link points to, so paths mean the same thing
@@ -13,20 +13,25 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 IMAGE = os.getenv("LAYOUT_IMAGE", "dd2-layout-tools")
-ENTRY = {"magic": "magic", "netgen": "netgen", "ngspice": "ngspice"}
+ENTRY = {"magic": "magic", "netgen": "netgen", "ngspice": "ngspice", "sh": "sh", "yosys": "yosys", "sta": "sta"}
+YOSYS_IMAGE = os.getenv("YOSYS_IMAGE", "dd2-yosys")       # Yosys 0.33 (docker/yosys)
+STA_IMAGE = os.getenv("STA_IMAGE", "dd2-opensta")         # OpenSTA (docker/opensta)
 
-PDK = ROOT / "pdk"
+# resolved, because only the final target is mounted: pdk may point to another link
+PDK = (ROOT / "pdk").resolve()
 TECH = PDK / "libs.tech/magic/sky130A.tech"
 LVS_SETUP = PDK / "libs.tech/netgen/sky130A_setup.tcl"
 MODELS = PDK / "libs.tech/ngspice/sky130.lib.spice"
 
 
-def run(tool: str, args: list[str], cwd: Path, log: Path, stdin: str | None = None, timeout: int = 600) -> str:
+def run(tool: str, args: list[str], cwd: Path, log: Path, stdin: str | None = None, timeout: int = 600,
+        image: str | None = None) -> str:
+    """image overrides the container, e.g. a stock ngspice build for the comparison of Table 5."""
     pdk_real = PDK.resolve()
     cmd = ["docker", "run", "--rm", "-i", "--user", f"{os.getuid()}:{os.getgid()}",
            "-e", "HOME=/tmp", "-e", "OMP_NUM_THREADS=1",
            "-v", f"{ROOT}:{ROOT}", "-v", f"{pdk_real}:{pdk_real}:ro",
-           "-w", str(cwd), "--entrypoint", ENTRY[tool], IMAGE, *args]
+           "-w", str(Path(cwd).resolve()), "--entrypoint", ENTRY[tool], image or IMAGE, *args]
     p = subprocess.run(cmd, input=stdin, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                        timeout=timeout)
     log.parent.mkdir(parents=True, exist_ok=True)

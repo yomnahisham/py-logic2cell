@@ -1,0 +1,9 @@
+{
+  "request_id": "T6-nor3_1",
+  "name": "dd2_gc1__nor3_1",
+  "inputs": ["A", "B", "C"],
+  "output": "Y",
+  "expression": "!(A | B | C)",
+  "truth_table": "0x01",
+  "sizing": "hd"
+}

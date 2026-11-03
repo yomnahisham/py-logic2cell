@@ -244,3 +244,14 @@ def parse_liberty_file(path: str) -> list[Cell]:
 
     with open(path, encoding="utf-8") as file:
         return parse_liberty(file.read())
+
+
+def cell_areas(text: str) -> dict[str, tuple[float | None, bool]]:
+    """Every cell group's area, and whether it is sequential (has an ff, latch or statetable)."""
+
+    out = {}
+    for cell_name, body in _braced_groups(text, _CELL_GROUP):
+        area_match = _AREA.search(body)
+        out[cell_name] = (float(area_match.group(1)) if area_match else None,
+                          re.search(r"\b(?:ff|latch|statetable)\s*\(", body) is not None)
+    return out

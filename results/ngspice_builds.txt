@@ -1,0 +1,10 @@
+== dd2-layout-tools
+ngspice: ngspice-47  /usr/local/bin/ngspice  sha256 81a8991415fbee4065e1e54fcdf68ac67183eb9b1d2c4119c252066d370705ad
+current ratio, stressed / unstressed: 1.03504
+PASS: mobility stress is applied (fixed build)
+exit 0
+== dd2-ngspice-stock
+ngspice: ngspice-47  /usr/local/bin/ngspice  sha256 19c5047738bb2ae7e7ea5b1b50cedff2cba1ab62df4884808ad42da7f762d8dd
+current ratio, stressed / unstressed: 1
+FAIL: mobility stress is discarded (stock build); use the course image
+exit 1

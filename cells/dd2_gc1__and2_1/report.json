@@ -1,0 +1,165 @@
+{
+  "network": {
+    "fets": 6,
+    "switch_check": "pass",
+    "stages": [
+      {
+        "inputs": [
+          "A",
+          "B"
+        ],
+        "output": "Y_b",
+        "fets": 4
+      },
+      {
+        "inputs": [
+          "Y_b"
+        ],
+        "output": "Y",
+        "fets": 2
+      }
+    ]
+  },
+  "order": {
+    "name": "dd2_gc1__and2_1",
+    "width": 2.3,
+    "width_sites": 5,
+    "gate_x": [
+      0.58,
+      1.24,
+      1.72
+    ],
+    "col_x": [
+      0.37,
+      0.91,
+      1.48,
+      1.93
+    ],
+    "pad_x": {
+      "Y_b": 0.79,
+      "B": 1.29,
+      "A": 1.79
+    },
+    "gates": [
+      "Y_b",
+      "B",
+      "A"
+    ],
+    "n_nodes": [
+      "Y",
+      "VGND",
+      "n1",
+      "Y_b"
+    ],
+    "p_nodes": [
+      "Y",
+      "VPWR",
+      "Y_b",
+      "VPWR"
+    ],
+    "diff_w": {
+      "n": [
+        0.65,
+        0.65,
+        0.65
+      ],
+      "p": [
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "lanes": {
+      "n": [
+        [
+          "Y_b",
+          0.705,
+          2.095,
+          "inner"
+        ]
+      ],
+      "p": [
+        [
+          "Y_b",
+          0.705,
+          1.645,
+          "inner"
+        ]
+      ]
+    },
+    "inputs": [
+      "A",
+      "B"
+    ],
+    "output": "Y",
+    "orders_tried": 4,
+    "orders_drawable": 4
+  },
+  "checks": {
+    "drc": 0,
+    "drc_why": "",
+    "lvs": "match",
+    "rc_r": 30,
+    "rc_c": 44,
+    "rc_lvs": "match"
+  },
+  "abutment": {
+    "cases": {
+      "dd2_gc1__and2_1__tapvpwrvgnd_1__left": 0,
+      "dd2_gc1__and2_1__tapvpwrvgnd_1__right": 0,
+      "dd2_gc1__and2_1__tapvpwrvgnd_1__mirrored": 0,
+      "dd2_gc1__and2_1__tapvpwrvgnd_1__flip_vpwr": 0,
+      "dd2_gc1__and2_1__tapvpwrvgnd_1__flip_vgnd": 0,
+      "dd2_gc1__and2_1__inv_1__left": 0,
+      "dd2_gc1__and2_1__inv_1__right": 0,
+      "dd2_gc1__and2_1__inv_1__mirrored": 0,
+      "dd2_gc1__and2_1__inv_1__flip_vpwr": 0,
+      "dd2_gc1__and2_1__inv_1__flip_vgnd": 0,
+      "dd2_gc1__and2_1__fill_1__left": 0,
+      "dd2_gc1__and2_1__fill_1__right": 0,
+      "dd2_gc1__and2_1__fill_1__mirrored": 0,
+      "dd2_gc1__and2_1__fill_1__flip_vpwr": 0,
+      "dd2_gc1__and2_1__fill_1__flip_vgnd": 0
+    },
+    "errors": 0,
+    "passed": true
+  },
+  "layers": "pass",
+  "simulation": {
+    "dc": [
+      {
+        "inputs": 0,
+        "expected": 0,
+        "y": 0.0,
+        "passed": true
+      },
+      {
+        "inputs": 1,
+        "expected": 0,
+        "y": 0.0,
+        "passed": true
+      },
+      {
+        "inputs": 2,
+        "expected": 0,
+        "y": 0.0,
+        "passed": true
+      },
+      {
+        "inputs": 3,
+        "expected": 1,
+        "y": 1.8,
+        "passed": true
+      }
+    ],
+    "dc_passed": true,
+    "transient": {
+      "slew_ns": 0.122474,
+      "load_pf": 0.00952062,
+      "steps": 16,
+      "errors": [],
+      "passed": true
+    },
+    "passed": true
+  }
+}

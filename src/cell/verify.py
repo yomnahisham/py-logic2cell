@@ -82,7 +82,9 @@ def lvs(folder: Path, layout_net: str, layout_cell: str, schematic: str, schemat
     run("netgen", ["-batch", "lvs", f"{layout_net}.spice {layout_cell}", f"{schematic} {schematic_cell}",
                    str(LVS_SETUP), str(report)], folder, folder / f"{layout_net}_netgen.log")
     text = report.read_text().lower()
-    return "circuits match uniquely." in text and "do not match" not in text and "property errors" not in text
+    # netgen still says "match" when an open leaves a port touching nothing (it pairs the cut-off internal node with the schematic's port), so a disconnected node is a failure too
+    return ("circuits match uniquely." in text and "do not match" not in text and "property errors" not in text
+            and "disconnected node" not in text)
 
 
 def collapse_rc(folder: Path, name: str) -> tuple[int, int]:

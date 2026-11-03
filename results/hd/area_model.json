@@ -1,0 +1,38 @@
+{
+  "model": "sites = ceil(a + b * transistors)",
+  "a": -0.5828,
+  "b": 0.7772,
+  "site_um": [
+    0.46,
+    2.72
+  ],
+  "source": {
+    "cells": "given/hd_usable.lib",
+    "transistors": "pdk/libs.ref/sky130_fd_sc_hd/spice/sky130_fd_sc_hd.spice",
+    "widths": "pdk/libs.ref/sky130_fd_sc_hd/lef/sky130_fd_sc_hd.lef",
+    "site": "pdk/libs.ref/sky130_fd_sc_hd/techlef/sky130_fd_sc_hd__nom.tlef"
+  },
+  "error": {
+    "single": {
+      "cells": 26,
+      "mean_abs_sites": 0.769,
+      "max_abs_sites": 2,
+      "mean_sites": 0.615,
+      "mean_abs_um2": 0.9625
+    },
+    "multi": {
+      "cells": 57,
+      "mean_abs_sites": 0.684,
+      "max_abs_sites": 3,
+      "mean_sites": 0.544,
+      "mean_abs_um2": 0.8561
+    },
+    "all": {
+      "cells": 83,
+      "mean_abs_sites": 0.711,
+      "max_abs_sites": 3,
+      "mean_sites": 0.566,
+      "mean_abs_um2": 0.8894
+    }
+  }
+}

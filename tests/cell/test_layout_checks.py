@@ -94,6 +94,20 @@ def test_broken_simulation_missing_pullup(nand2):
     assert not simulate.simulate(broken, "t_sim", 0x7)["passed"]
 
 
+def test_broken_rc_lvs_missing_resistor(nand2):
+    folder, _ = nand2
+    broken = folder.parent / "t_rc"
+    shutil.rmtree(broken, ignore_errors=True)
+    broken.mkdir()
+    pex = (folder / "t_nand2_pex.spice").read_text().replace("t_nand2", "t_rc")
+    resistors = [line for line in pex.splitlines() if re.match(r"^R\S*\s", line)]
+    pex = pex.replace(resistors[0] + "\n", "")                              # one wire cut open
+    (broken / "t_rc_pex.spice").write_text(pex)
+    (broken / "t_rc.spice").write_text((folder / "t_nand2.spice").read_text().replace("t_nand2", "t_rc"))
+    verify.collapse_rc(broken, "t_rc")
+    assert not verify.lvs(broken, "t_rc_rc", "t_rc", "t_rc.spice", "t_rc")
+
+
 def test_broken_layer_check_no_hvtp():
     folder = generate("t_hvtp", ("A",), "!A")
     edit_gds(folder / "t_hvtp.gds", (78, 44), keep=(0, 2.6, 1.38, 2.72))

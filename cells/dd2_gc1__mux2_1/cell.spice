@@ -1,0 +1,14 @@
+.subckt dd2_gc1__mux2_1 A B C VGND VNB VPB VPWR Y
+X0 C_b C VGND VNB sky130_fd_pr__nfet_01v8 w=0.65 l=0.15
+X1 C_b C VPWR VPB sky130_fd_pr__pfet_01v8_hvt w=1 l=0.15
+X2 Y_b A n1 VNB sky130_fd_pr__nfet_01v8 w=0.65 l=0.15
+X3 n1 C_b VGND VNB sky130_fd_pr__nfet_01v8 w=0.65 l=0.15
+X4 Y_b B n2 VNB sky130_fd_pr__nfet_01v8 w=0.65 l=0.15
+X5 n2 C VGND VNB sky130_fd_pr__nfet_01v8 w=0.65 l=0.15
+X6 Y_b A p1 VPB sky130_fd_pr__pfet_01v8_hvt w=1 l=0.15
+X7 Y_b C_b p1 VPB sky130_fd_pr__pfet_01v8_hvt w=1 l=0.15
+X8 p1 B VPWR VPB sky130_fd_pr__pfet_01v8_hvt w=1 l=0.15
+X9 p1 C VPWR VPB sky130_fd_pr__pfet_01v8_hvt w=1 l=0.15
+X10 Y Y_b VGND VNB sky130_fd_pr__nfet_01v8 w=0.65 l=0.15
+X11 Y Y_b VPWR VPB sky130_fd_pr__pfet_01v8_hvt w=1 l=0.15
+.ends

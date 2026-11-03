@@ -1,0 +1,9 @@
+{
+  "request_id": "HD-mux2_1",
+  "name": "dd2_gc1__mux2_1_hd",
+  "inputs": ["A0", "A1", "S"],
+  "output": "X",
+  "expression": "(A0 & !S) | (A1 & S)",
+  "truth_table": "0xCA",
+  "sizing": "hd"
+}

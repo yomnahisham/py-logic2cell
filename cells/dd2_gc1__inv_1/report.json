@@ -28,10 +28,24 @@
       "VPWR",
       "Y"
     ],
+    "diff_w": {
+      "n": [
+        0.65
+      ],
+      "p": [
+        1.0
+      ]
+    },
+    "lanes": {
+      "n": [],
+      "p": []
+    },
     "inputs": [
       "A"
     ],
-    "output": "Y"
+    "output": "Y",
+    "orders_tried": 4,
+    "orders_drawable": 4
   },
   "checks": {
     "drc": 0,
@@ -263,7 +277,7 @@
             "band": "row",
             "size": [
               0.17,
-              0.17
+              0.16
             ]
           },
           {
@@ -271,7 +285,7 @@
             "band": "npc",
             "size": [
               0.17,
-              0.17
+              0.16
             ]
           }
         ],
@@ -281,7 +295,7 @@
             "band": "npc",
             "size": [
               0.17,
-              0.17
+              0.16
             ]
           }
         ],
@@ -290,8 +304,8 @@
             "layer": "met1",
             "band": "VGND rail",
             "size": [
-              0.17,
-              0.17
+              0.16,
+              0.16
             ]
           }
         ],
@@ -300,8 +314,8 @@
             "layer": "met1",
             "band": "VPWR rail",
             "size": [
-              0.17,
-              0.17
+              0.16,
+              0.16
             ]
           }
         ],
@@ -310,8 +324,8 @@
             "layer": "nwell",
             "band": "VPWR rail",
             "size": [
-              0.17,
-              0.17
+              0.16,
+              0.16
             ]
           }
         ],
@@ -320,8 +334,8 @@
             "layer": "pwell",
             "band": "VGND rail",
             "size": [
-              0.17,
-              0.17
+              0.16,
+              0.16
             ]
           }
         ]
@@ -349,26 +363,48 @@
     },
     "gates": {
       "ours": {
-        "gate_x": [
-          0.69
-        ],
-        "order": [
-          "A"
-        ],
-        "pitch": [],
+        "n": {
+          "gate_x": [
+            0.69
+          ],
+          "order": [
+            "A"
+          ],
+          "pitch": []
+        },
+        "p": {
+          "gate_x": [
+            0.69
+          ],
+          "order": [
+            "A"
+          ],
+          "pitch": []
+        },
         "diffusion_breaks": {
           "n": 0,
           "p": 0
         }
       },
       "hd": {
-        "gate_x": [
-          0.675
-        ],
-        "order": [
-          "A"
-        ],
-        "pitch": [],
+        "n": {
+          "gate_x": [
+            0.675
+          ],
+          "order": [
+            "A"
+          ],
+          "pitch": []
+        },
+        "p": {
+          "gate_x": [
+            0.675
+          ],
+          "order": [
+            "A"
+          ],
+          "pitch": []
+        },
         "diffusion_breaks": {
           "p": 0,
           "n": 0

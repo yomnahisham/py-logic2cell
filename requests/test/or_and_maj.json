@@ -1,0 +1,9 @@
+{
+  "request_id": "T6-or_and_maj",
+  "name": "dd2_gc1__or_and_maj",
+  "inputs": ["A", "B", "C", "D"],
+  "output": "Y",
+  "expression": "(C & D) | (A & B & (C | D))",
+  "truth_table": "0xF880",
+  "sizing": "hd"
+}

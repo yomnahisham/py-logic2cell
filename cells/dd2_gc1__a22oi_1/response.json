@@ -1,0 +1,23 @@
+{
+  "request_id": "T6-a22oi_1",
+  "status": "pass",
+  "reason": null,
+  "cell": "dd2_gc1__a22oi_1",
+  "stages": 1,
+  "transistors": 8,
+  "width_sites": 6,
+  "area_um2": 7.5072,
+  "files": {
+    "gds": "cells/dd2_gc1__a22oi_1/cell.gds",
+    "report": "cells/dd2_gc1__a22oi_1/report.json"
+  },
+  "checks": {
+    "drc": 0,
+    "lvs": "match",
+    "rc_lvs": "match",
+    "truth_table": "pass",
+    "abutment": 0,
+    "layers": "pass"
+  },
+  "tool_version": "git:f030390"
+}

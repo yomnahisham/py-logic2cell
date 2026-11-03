@@ -1,0 +1,15 @@
+function,cell,hd,sites_ours,sites_hd,extra_sites,area_ours_um2,area_hd_um2,frame,lvs_vs_hd,met1_inside,breaks_ours,breaks_hd,delay_slew
+!(A & B),dd2_gc1__nand2_1,sky130_fd_sc_hd__nand2_1,3,3,0,3.7536,3.7536,match,match,no,0,0,needs the characterizer
+!(A | B),dd2_gc1__nor2_1,sky130_fd_sc_hd__nor2_1,3,3,0,3.7536,3.7536,match,match,no,0,0,needs the characterizer
+!(A & B & C),dd2_gc1__nand3_1,sky130_fd_sc_hd__nand3_1,5,4,1,6.256,5.0048,match,match,no,0,0,needs the characterizer
+!(A | B | C),dd2_gc1__nor3_1,sky130_fd_sc_hd__nor3_1,5,4,1,6.256,5.0048,match,match,no,0,0,needs the characterizer
+!((A & B) | C),dd2_gc1__a21oi_1,sky130_fd_sc_hd__a21oi_1,5,4,1,6.256,5.0048,match,match,no,0,0,needs the characterizer
+!((A | B) & C),dd2_gc1__o21ai_1,sky130_fd_sc_hd__o21ai_1,5,4,1,6.256,5.0048,match,match,no,0,0,needs the characterizer
+!((A & B) | (C & D)),dd2_gc1__a22oi_1,sky130_fd_sc_hd__a22oi_1,6,6,0,7.5072,7.5072,match,match,no,0,2,needs the characterizer
+!((A | B) & (C | D)),dd2_gc1__o22ai_1,sky130_fd_sc_hd__o22ai_1,6,5,1,7.5072,6.256,match,match,no,0,0,needs the characterizer
+A & B,dd2_gc1__and2_1,sky130_fd_sc_hd__and2_1,5,5,0,6.256,6.256,match,fail,no,0,0,needs the characterizer
+(A & B) | C,dd2_gc1__a21o_1,sky130_fd_sc_hd__a21o_1,7,6,1,8.7584,7.5072,match,match,no,2,1,needs the characterizer
+(A & !C) | (B & C),dd2_gc1__mux2_1,sky130_fd_sc_hd__mux2_1,10,9,1,12.512,11.2608,match,fail,yes,2,0,needs the characterizer
+(A & B) | (C & (A | B)),dd2_gc1__maj3_1,sky130_fd_sc_hd__maj3_1,9,8,1,11.2608,10.0096,match,fail,yes,0,0,needs the characterizer
+A ^ B,dd2_gc1__xor2_1,sky130_fd_sc_hd__xor2_1,11,7,4,13.7632,8.7584,match,fail,yes,2,1,needs the characterizer
+!((A1 | A2 | A3) & B1),dd2_gc1__o31ai_1,sky130_fd_sc_hd__o31ai_1,6,6,0,7.5072,7.5072,match,match,no,0,0,needs the characterizer
