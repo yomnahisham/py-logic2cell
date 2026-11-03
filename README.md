@@ -9,7 +9,7 @@ GC1 · Option 3 (Options 1 and 2) · AI used as a development aid
 
 
 ## 2. Quick start
-Tools: Python 3.14.8 (gdsfactory 9.51.0, klayout 0.30.12), Magic 8.3.684, Netgen 1.5.133 (the git tag reports itself as 1.5.132), ngspice 47 with the BSIM4 fix (sha256 81a89914…), Yosys 0.33 and its ABC (in the `dd2-yosys` container), Icarus Verilog 13.0, Docker.
+Tools: Python 3.14.8 (gdsfactory 9.51.0, klayout 0.30.12), Magic 8.3.684, Netgen 1.5.133 (the git tag reports itself as 1.5.132), ngspice 47 with the BSIM4 fix (sha256 083dd184… as built on the machine of `results/ngspice_builds.txt`; the hash depends on where the image was built, so every Liberty file records its own), Yosys 0.33 and its ABC (in the `dd2-yosys` container), OpenSTA 3.1.0 (`dd2-opensta`, commit f2f431a), Icarus Verilog 13.0, Docker.
 
     make setup     # links pdk/ and given/, makes .venv, builds the two containers: ~20 min the first time, seconds after
     make check     # tool versions and the ngspice stress test: ~1 s
@@ -38,6 +38,10 @@ Option 2: map the designs onto the usable and reduced HD libraries (Table 1) →
 | `python -m src.hd.classes` | HD Liberty | `results/hd/hd_classes.csv` |
 | `python -m src.hd.table4` | HD Liberty | `results/table4.txt` |
 | `scripts/run_checks.sh` | | frame, layer and front-end check logs in `results/` |
+| `make table5` | the six installed reference cells, HD TT Liberty | every row of Table 5 except the design level, in `results/` (~6 min) |
+| `python -m src.cell.char_validate [--image dd2-ngspice-stock --tag _stock] [--full-ramp]` | installed HD cells | `results/char_validation<tag>.txt`, `_entries.csv`, `_caps.csv` |
+| `python -m src.cell.liberty_write validation` | `build/char/*/..._timing.json` | `libs/char_validation.lib`, `build/sta/hd_tt_ours.lib` (HD with the six cells replaced) |
+| `python -m src.cell.liberty_check <lib> ...` | Liberty files | `results/liberty_syntax.txt` (Yosys and OpenSTA) |
 
 ## 5. Layout
 - `src/common/`: request reader and response writer, smallest single stage for a truth table, Yosys runner
@@ -46,7 +50,8 @@ Option 2: map the designs onto the usable and reduced HD libraries (Table 1) →
 - `src/frame_check.py`, `src/layer_check.py`, `src/extract_cells.py`: HD frame and layer checks
 - `requests/`: cell requests; `cells/`: generated cells; `results/`: every table and log the reports use
 - `tests/`: tests; `tests/broken/`: broken cases
-- `docker/yosys/`: the Yosys 0.33 container; `ai/`: AI logs; `report/`: reports
+- `docker/yosys/`: the Yosys 0.33 container; `docker/opensta/`: OpenSTA; `docker/ngspice-stock/`: stock ngspice 47, only for the Simulator row of Table 5
+- `libs/`: Liberty files we write; `ai/`: AI logs; `report/`: reports
 
 ## 6. Results
 - `cells/dd2_gc1__inv_1/`, `cells/dd2_gc1__nand2_1/`: both pass DRC (0 errors), LVS, RC-LVS, abutment (15 cases, 0 errors), the layer check and simulation; LVS-match the installed HD cells including W and L; 3 sites wide like HD; frame layers XOR to zero against HD.
@@ -55,6 +60,7 @@ Option 2: map the designs onto the usable and reduced HD libraries (Table 1) →
 - `results/table1.csv`: Table 1 reproduced exactly with Yosys 0.33.
 - `results/aig_sizes.csv`: AIG sizes match Table 2 exactly (with `write_aiger -zinit`); ABC restructuring shrinks every design.
 - `results/hd/hd_classes.csv`: the class table of HD.
+- Table 5 (characterizer validation, six reference cells, 7x7, 2744 entries): fixed ngspice median |error| 3.40% (`results/char_validation.txt`), every input capacitance within +5.3%; stock ngspice 5.26%, over the 5% limit (`results/char_validation_stock.txt`); full-ramp broken case flagged (`results/char_validation_fullramp.txt`); our Liberty loads in Yosys and OpenSTA with no errors (`results/liberty_syntax.txt`); the stress test passes on the course image and fails on the stock one (`results/ngspice_builds.txt`).
 - `results/table4.txt`: Table 4 reproduced (24 / 20 / 38 / 3822, 9 one-stage, 6 + 2 read-once), except one row: we find 6 new single-stage functions within 3 in series and 12 transistors, the handout says 5. All 6 are listed.
 
 ## 7. Tests
@@ -80,7 +86,7 @@ AGENTS.md · ai/use_log.md · ai/mistakes_log.md · report/ai_report.pdf
 
 ## 9. Limitations
 - Option 1 builds single-stage cells only; multi-stage cells (and2, a21o, mux2, xor2), diffusion breaks and stack sizing are not done yet.
-- No Liberty file, Verilog model or characterization yet, so the model-level simulation of section 4.2 is not run.
+- The characterizer is validated (Table 5) but our generated cells are not characterized yet, and there is no Verilog model, so the model-level simulation of section 4.2 is not run.
 - Option 2 stops at the cut enumerator and redundancy checker: no costing, area model, Liberty writer or Table 5 yet.
 
 ## 10. Third-party files
