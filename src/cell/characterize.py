@@ -22,9 +22,6 @@ One measurement, at input slew s (the table index) and load C:
     at the table point nearest 100 ps and 10 fF (the point of section 6).
 Every threshold, the voltage and the temperature come from the Liberty header (liberty_timing.read_setup).
 
-Every side setting is measured, and each table entry keeps the slowest (section 5: "use the slowest, as the
-HD TT library does"); the per-setting tables are kept in the JSON too. The input capacitance is the mean
-over the pin's side settings, and `capacitance` the mean of rise and fall.
 """
 
 from __future__ import annotations
@@ -50,6 +47,8 @@ TD = 0.1e-9          # s before the input edge; the DC operating point sets the 
 # 100 ns/pF is about 5x the slowest x1 pull-up among the reference cells (two hvt PMOS in series).
 SETTLE = 1e-9
 SETTLE_PER_PF = 100e-9
+# default_arc_mode (read from the Liberty). We only support worst_edges now sincxe thats what we need. Any other config will stop the run.
+SIDE_RULES = {"worst_edges": max}
 CAP_POINT = (0.1, 0.01)   # ns, pF: the HD table point nearest 100 ps and 10 fF (section 6)
 
 
@@ -155,13 +154,14 @@ def measure(folder: Path, name: str, netlist: str, ports: list[str], output: str
                 delay=delay, transition=trans, capacitance=cap, capacitance_full=cap_full, errors=errors)
 
 
-def slowest(tables: list[list[list[float | None]]]) -> list[list[float | None]]:
+def combine(tables: list[list[list[float | None]]], rule) -> list[list[float | None]]:
+    """One table from the tables of several side settings, entry by entry."""
     rows, cols = len(tables[0]), len(tables[0][0])
     out = [[None] * cols for _ in range(rows)]
     for i in range(rows):
         for j in range(cols):
             values = [t[i][j] for t in tables]
-            out[i][j] = None if None in values else max(values)
+            out[i][j] = None if None in values else rule(values)
     return out
 
 
@@ -172,6 +172,9 @@ def nearest(values: list[float], target: float) -> int:
 def characterize(folder: Path, name: str, netlist: str, inputs: list[str], output: str, table: int,
                  grids: dict, setup: dict, full_ramp: bool = False, image: str = IMAGE, tag: str = "") -> dict:
     """grids: pin -> (slews ns, loads pF). Writes <name>_timing<tag>.json in folder and returns it."""
+    mode = setup["default_arc_mode"]
+    if mode not in SIDE_RULES:
+        raise ValueError(f"default_arc_mode {mode!r}: no side-input rule for it")
     text = (folder / netlist).read_text()
     ports = re.search(rf"(?im)^\.subckt\s+{re.escape(name)}\s+(.+)", text)[1].split()
     jobs = []
@@ -187,7 +190,7 @@ def characterize(folder: Path, name: str, netlist: str, inputs: list[str], outpu
 
     result = dict(cell=name, netlist=netlist, inputs=inputs, output=output, truth_table=f"0x{table:X}",
                   ngspice=ngspice_id(folder, image), setup=setup, full_ramp=full_ramp,
-                  side_rule="slowest side setting per table entry (handout section 5)", pins={}, arcs=[])
+                  side_rule=f"default_arc_mode {mode}: {SIDE_RULES[mode].__name__} over the side settings per entry", pins={}, arcs=[])
     for arc in arcs(inputs, table):
         mine = [r for r in runs if r["pin"] == arc.pin]
         slews, loads = grids[arc.pin]
@@ -206,8 +209,8 @@ def characterize(folder: Path, name: str, netlist: str, inputs: list[str], outpu
         for edge_out in ("rise", "fall"):
             chosen = [r for r in mine if r["edge_out"] == edge_out]
             if chosen:
-                tables[f"cell_{edge_out}"] = slowest([r["delay"] for r in chosen])
-                tables[f"{edge_out}_transition"] = slowest([r["transition"] for r in chosen])
+                tables[f"cell_{edge_out}"] = combine([r["delay"] for r in chosen], SIDE_RULES[mode])
+                tables[f"{edge_out}_transition"] = combine([r["transition"] for r in chosen], SIDE_RULES[mode])
         result["arcs"].append(dict(pin=arc.pin, output=output, sense=arc.sense, index_1=slews, index_2=loads,
                                    tables=tables, runs=mine))
     result["errors"] = [f"{r['deck']}: {e}" for r in runs for e in r["errors"]]

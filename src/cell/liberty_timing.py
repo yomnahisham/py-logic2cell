@@ -89,7 +89,8 @@ def numbers(text: str) -> list[float]:
 
 
 def read_setup(path: Path = LIBERTY_TT) -> dict:
-    """The library-level attributes of SETUP_KEYS and UNIT_KEYS, from the header before the first cell."""
+    """The library-level attributes of SETUP_KEYS and UNIT_KEYS, and default_arc_mode, from the header before the
+    first cell."""
     text = path.read_text()
     head = text[:text.index("cell (")]
     out = {}
@@ -103,6 +104,11 @@ def read_setup(path: Path = LIBERTY_TT) -> dict:
         if not m:
             raise ValueError(f"{path}: no {key} in the library header")
         out[key] = (m[1] or m[2]).replace('"', "").strip()
+    # check header for default_arc_mode to determine which timing measurement to save in the case of multiple input values. 
+    m = re.search(r'^\s*default_arc_mode\s*:\s*"?([^";]+)"?\s*;', head, re.M)
+    if not m:
+        raise ValueError(f"{path}: no default_arc_mode in the library header")
+    out["default_arc_mode"] = m[1].strip()
     return out
 
 
