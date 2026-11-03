@@ -200,12 +200,43 @@ def same_netlist(stage, short: str) -> bool:
     return False
 
 
+PIN_GRID = 0.01   # um; Magic rounds pin boxes to it (seen in the .ext port boxes: SkyWater's 1.445 becomes 1.440)
+
+
+def snap_pins(layout, cell) -> int:
+    """Round every pin box of the cell inward to PIN_GRID, and return how many moved.
+
+    Magic reads a pin box with an edge off that grid (SkyWater's pins at y = 0.765, 1.105, 1.445 ...) by
+    rounding it, which can push its corner 0.005 um off the li under it; Magic's resistance extraction then
+    starts that net at a point with no wire and fails ("Couldn't find wire", seen on HD a22oi_1, a31oi_1,
+    o211ai_1, a211oi_1). Rounding inward keeps the box on its li. Only pin boxes move, in our copy of the cell;
+    the drawn layers (li, poly, diffusion, contacts) and so the circuit are untouched."""
+    grid = round(PIN_GRID / layout.dbu)
+    moved = 0
+    for layer in PIN_LAYERS:
+        index = layout.find_layer(*layer)
+        if index is None:
+            continue
+        for shape in list(cell.shapes(index).each()):
+            if not shape.is_box():
+                continue
+            b = shape.box
+            inner = kdb.Box(-(-b.left // grid) * grid, -(-b.bottom // grid) * grid, (b.right // grid) * grid,
+                            (b.top // grid) * grid)
+            if inner != b:
+                shape.box = inner
+                moved += 1
+    return moved
+
+
 def hd_reference(work: Path, short: str) -> Path:
-    """The installed cell, alone in a GDS and extracted with our Magic flow."""
+    """The installed cell, alone in a GDS (pin boxes on Magic's grid, see snap_pins) and extracted with our
+    Magic flow."""
     name = PREFIX + short
     work.mkdir(parents=True, exist_ok=True)
     layout = kdb.Layout()
     layout.read(str(HD_GDS))
+    snap_pins(layout, layout.cell(name))
     options = kdb.SaveLayoutOptions()
     options.select_cell(layout.cell(name).cell_index())
     layout.write(str(work / f"{name}.gds"), options)

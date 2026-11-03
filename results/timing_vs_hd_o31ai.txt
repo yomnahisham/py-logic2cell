@@ -1,0 +1,21 @@
+dd2_gc1__o31ai_1 against sky130_fd_sc_hd__o31ai_1
+  A1  cell_rise        at 0.1225 ns / 0.01043 pF: ours 0.3804  HD 0.4340 ns (-12.3%)  [shipped 0.4212]   whole grid: median -9.5%, largest -27.3%
+  A1  rise_transition  at 0.1225 ns / 0.01043 pF: ours 0.4282  HD 0.4232 ns (+1.2%)  [shipped 0.4098]   whole grid: median +2.5%, largest +26.0%
+  A1  cell_fall        at 0.1225 ns / 0.01043 pF: ours 0.1281  HD 0.1388 ns (-7.7%)  [shipped 0.1343]   whole grid: median -12.1%, largest -47.0%
+  A1  fall_transition  at 0.1225 ns / 0.01043 pF: ours 0.0993  HD 0.1081 ns (-8.2%)  [shipped 0.1028]   whole grid: median -8.6%, largest -33.0%
+  A2  cell_rise        at 0.1225 ns / 0.01043 pF: ours 0.4215  HD 0.4208 ns (+0.2%)  [shipped 0.4107]   whole grid: median +0.7%, largest +1.6%
+  A2  rise_transition  at 0.1225 ns / 0.01043 pF: ours 0.4282  HD 0.4233 ns (+1.2%)  [shipped 0.4095]   whole grid: median +2.2%, largest +4.8%
+  A2  cell_fall        at 0.1225 ns / 0.01043 pF: ours 0.1369  HD 0.1329 ns (+3.0%)  [shipped 0.1301]   whole grid: median +3.7%, largest +7.1%
+  A2  fall_transition  at 0.1225 ns / 0.01043 pF: ours 0.1072  HD 0.1014 ns (+5.7%)  [shipped 0.0976]   whole grid: median +5.2%, largest +7.5%
+  A3  cell_rise        at 0.1225 ns / 0.01043 pF: ours 0.4426  HD 0.3867 ns (+14.4%)  [shipped 0.3780]   whole grid: median +11.2%, largest +39.7%
+  A3  rise_transition  at 0.1225 ns / 0.01043 pF: ours 0.4283  HD 0.4233 ns (+1.2%)  [shipped 0.4096]   whole grid: median +0.5%, largest -17.4%
+  A3  cell_fall        at 0.1225 ns / 0.01043 pF: ours 0.1376  HD 0.1219 ns (+12.8%)  [shipped 0.1195]   whole grid: median +20.5%, largest +158.3%
+  A3  fall_transition  at 0.1225 ns / 0.01043 pF: ours 0.1072  HD 0.0900 ns (+19.0%)  [shipped 0.0863]   whole grid: median +14.4%, largest +71.1%
+  B1  cell_rise        at 0.1225 ns / 0.01043 pF: ours 0.1509  HD 0.1495 ns (+0.9%)  [shipped 0.1466]   whole grid: median +1.0%, largest +3.8%
+  B1  rise_transition  at 0.1225 ns / 0.01043 pF: ours 0.1430  HD 0.1385 ns (+3.3%)  [shipped 0.1307]   whole grid: median +3.4%, largest +11.3%
+  B1  cell_fall        at 0.1225 ns / 0.01043 pF: ours 0.1315  HD 0.1327 ns (-0.9%)  [shipped 0.1290]   whole grid: median +0.9%, largest +7.3%
+  B1  fall_transition  at 0.1225 ns / 0.01043 pF: ours 0.1079  HD 0.1082 ns (-0.3%)  [shipped 0.1038]   whole grid: median +0.8%, largest +3.4%
+  A1  capacitance: ours 0.002245  HD 0.002395 pF (-6.3%)  [shipped 0.002304]
+  A2  capacitance: ours 0.002270  HD 0.002531 pF (-10.3%)  [shipped 0.002525]
+  A3  capacitance: ours 0.002299  HD 0.002466 pF (-6.8%)  [shipped 0.002479]
+  B1  capacitance: ours 0.002317  HD 0.002417 pF (-4.1%)  [shipped 0.002330]

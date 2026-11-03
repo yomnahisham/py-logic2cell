@@ -1,6 +1,7 @@
 """Our generated cells against the installed HD cells, in timing (option 1 handout, Table 4 Timing; section 6).
 
-    python -m src.cell.timing_vs_hd [ours:hd ...]       e.g. dd2_gc1__nand2_1:nand2_1  (default: the six of 4.1)
+    python -m src.cell.timing_vs_hd [ours:hd ...] [--out=<stem>]   e.g. dd2_gc1__nand2_1:nand2_1
+                                     (default: the six of 4.1, written to results/timing_vs_hd.*)
 
 Table 4 asks to characterize both cells with our own flow and compare, so the HD side is the installed
 layout characterized by us (build/char/<hd>/..._timing.json, from char_validate or characterize hd); our side
@@ -81,16 +82,18 @@ def compare(ours_name: str, hd_name: str) -> tuple[list[str], list[dict]]:
 
 
 if __name__ == "__main__":
-    pairs = [tuple(a.split(":")) for a in sys.argv[1:]] or PAIRS
+    args = [a for a in sys.argv[1:] if not a.startswith("--out=")]
+    stem = next((a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--out=")), "timing_vs_hd")
+    pairs = [tuple(a.split(":")) for a in args] or PAIRS
     report, rows = [], []
     for ours, hd in pairs:
         lines, r = compare(ours, hd)
         report += lines + [""]
         rows += r
     out = ROOT / "results"
-    with (out / "timing_vs_hd.csv").open("w", newline="") as f:
+    with (out / f"{stem}.csv").open("w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=list(rows[0]))
         w.writeheader()
         w.writerows(rows)
-    (out / "timing_vs_hd.txt").write_text("\n".join(report))
+    (out / f"{stem}.txt").write_text("\n".join(report))
     print("\n".join(report))

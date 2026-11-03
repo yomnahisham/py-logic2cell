@@ -34,6 +34,7 @@ PAIRS = [
     ("mux2_1", "mux2_1", "(A & !C) | (B & C)"),
     ("maj3_1", "maj3_1", "(A & B) | (C & (A | B))"),
     ("xor2_1", "xor2_1", "A ^ B"),
+    ("o31ai_1", "o31ai_1", "!((A1 | A2 | A3) & B1)"),    # our choice (Table 6, last row)
 ]
 
 
