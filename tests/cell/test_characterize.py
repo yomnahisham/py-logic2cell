@@ -1,10 +1,3 @@
-"""DRAFT, written by the assistant: AGENTS.md forbids it to edit tests/. A member reviews this file and,
-if it is right, moves it to tests/cell/test_characterize.py.
-
-The expected values below are copied from sky130_fd_sc_hd__tt_025C_1v80.lib (header and nand2_1) and
-from the handout (section 5: SA = SB = 0.26 um for inv_1). Expected values live only in tests (rule 4).
-"""
-
 import json
 from pathlib import Path
 
