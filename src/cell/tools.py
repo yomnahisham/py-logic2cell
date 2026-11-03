@@ -1,4 +1,4 @@
-"""Run Magic, Netgen and ngspice in the dd2-layout-tools container.
+"""Run Magic, Netgen and ngspice in the dd2-layout-tools container, and Yosys and OpenSTA in theirs.
 
 The repo is mounted at the same path inside the container, and the PDK
 read-only at the path the pdk link points to, so paths mean the same thing
@@ -13,7 +13,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 IMAGE = os.getenv("LAYOUT_IMAGE", "dd2-layout-tools")
-ENTRY = {"magic": "magic", "netgen": "netgen", "ngspice": "ngspice", "sh": "sh"}
+ENTRY = {"magic": "magic", "netgen": "netgen", "ngspice": "ngspice", "sh": "sh", "yosys": "yosys", "sta": "sta"}
+YOSYS_IMAGE = os.getenv("YOSYS_IMAGE", "dd2-yosys")       # Yosys 0.33 (docker/yosys)
+STA_IMAGE = os.getenv("STA_IMAGE", "dd2-opensta")         # OpenSTA (docker/opensta)
 
 # resolved, because only the final target is mounted: pdk may point to another link
 PDK = (ROOT / "pdk").resolve()

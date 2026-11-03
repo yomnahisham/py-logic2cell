@@ -1,0 +1,7 @@
+libs/char_validation.lib: 6 cell groups
+  Yosys (Yosys 0.33 (git sha1 2584903a060)): imported 6 cells, 0 errors, 0 warnings: PASS
+  OpenSTA (3.1.0): read 6 cells, 0 errors, 0 warnings: PASS
+build/sta/hd_tt_ours.lib: 428 cell groups
+  Yosys (Yosys 0.33 (git sha1 2584903a060)): imported 428 cells, 0 errors, 0 warnings: PASS
+  OpenSTA (3.1.0): read 428 cells, 0 errors, 0 warnings: PASS
+Liberty syntax (Table 5): PASS
