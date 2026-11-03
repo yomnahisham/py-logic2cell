@@ -1,0 +1,9 @@
+{
+  "request_id": "T6-and2_1",
+  "name": "dd2_gc1__and2_1",
+  "inputs": ["A", "B"],
+  "output": "Y",
+  "expression": "A & B",
+  "truth_table": "0x8",
+  "sizing": "hd"
+}
