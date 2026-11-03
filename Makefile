@@ -47,9 +47,11 @@ all:              ## the whole flow
 	$(PY) -m src.hd.request_writer --limit 10
 	$(PY) -m src.hd.liberty_writer --limit 10
 	$(PY) -m src.map_library.map_extended
+	$(PY) -m src.map_library.table5
 	$(PY) -m src.hd.classes
 	$(PY) -m src.cell.rules
 	for r in requests/hd/*.json; do $(PY) -m src.cell.build $$r --hd $$(basename $$r .json) || exit 1; done
+	$(PY) -m src.map_library.equivalence
 
 demo:             ## what the interview runs: make demo IN=<request or design>
 	@test -n "$(IN)" || (echo "usage: make demo IN=<request or design>" && exit 1)

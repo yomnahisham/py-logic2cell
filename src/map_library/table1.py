@@ -2,7 +2,7 @@
 
     python -m src.map_library.table1
         -> results/table1.csv
-        -> results/map/<design>_<usable|reduced>_<A|B>.log
+        -> build/map/<design>_<usable|reduced>_<A|B>.log
 """
 
 from __future__ import annotations
@@ -18,7 +18,8 @@ DESIGNS = {"cpu8": "cpu8", "dsp8": "dsp8", "arlet6502": "cpu", "uart_apb": "uart
            "risc8": "cpu", "fir10": "fir10"}
 LIBS = {"usable": "given/hd_usable.lib", "reduced": "given/hd_reduced.lib"}
 OUT = ROOT / "results/table1.csv"
-MAP_OUT = ROOT / "results/map"
+MAP_OUT = ROOT / "build/map"
+NETLIST_OUT = ROOT / "build/netlists"
 SCRIPTS = {"A": "+strash;dch,-f;amap;topo", "B": "+strash;&get,-n;&dch,-f;&nf,-R,1000;&put"}
 
 
@@ -50,13 +51,14 @@ def map_design(
     run(["yosys", "-q", "-p",
          f"read_verilog given/designs/{design}.v; synth -flatten -top {top}; dfflibmap -liberty {library}; "
          f'abc -liberty {library} -script "{SCRIPTS[script]}"; opt_clean -purge; '
-         f"tee -o {log} stat -liberty {library}"])
+         f"write_verilog -noattr {NETLIST_OUT}/{design}_{lib}_{script}.v; tee -o {log} stat -liberty {library}"])
     return check_log(log.read_text(), log.name)
 
 
 def main():
     jobs = [(d, t, lib, s) for d, t in DESIGNS.items() for s in "AB" for lib in LIBS]
     MAP_OUT.mkdir(parents=True, exist_ok=True)
+    NETLIST_OUT.mkdir(parents=True, exist_ok=True)
     with ThreadPoolExecutor(4) as pool:
         results = list(pool.map(lambda j: map_design(*j), jobs))
     OUT.parent.mkdir(parents=True, exist_ok=True)

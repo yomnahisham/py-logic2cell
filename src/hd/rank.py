@@ -42,7 +42,7 @@ from src.map_library.table1 import DESIGNS
 
 REQUIRED = list(DESIGNS)
 RANK_AIG = "abc"
-MAPS = ROOT / "results/map"
+MAPS = ROOT / "build/map"
 SIZES = ROOT / "results/aig_sizes.csv"
 REDUCED = ROOT / "given/hd_reduced.lib"
 OUT = ROOT / "results/hd"

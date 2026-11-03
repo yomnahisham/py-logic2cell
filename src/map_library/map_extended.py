@@ -2,7 +2,7 @@
 
     python -m src.map_library.map_extended
         -> results/table1_extended.csv
-        -> results/map_extended/<design>_extended_<A|B>.log
+        -> build/map_extended/<design>_extended_<A|B>.log
 """
 
 from __future__ import annotations
@@ -16,7 +16,7 @@ from src.map_library.table1 import DESIGNS, map_design
 
 EXTENDED = ROOT / "build/libs/hd_reduced_ext.lib"
 OUT = ROOT / "results/table1_extended.csv"
-MAP_EXTENDED_OUT = ROOT / "results/map_extended"
+MAP_EXTENDED_OUT = ROOT / "build/map_extended"
 
 
 def count_new_cell_instances(text: str) -> int:
