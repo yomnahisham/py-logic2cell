@@ -1,0 +1,15 @@
+{
+  "request_id": "GC1-001F",
+  "name": "dd2_gc1__f001f_1",
+  "inputs": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "output": "Y",
+  "expression": "!(D | (C & (A | B)))",
+  "truth_table": "0x001F",
+  "sizing": "hd",
+  "estimated_area_um2": 7.5072
+}

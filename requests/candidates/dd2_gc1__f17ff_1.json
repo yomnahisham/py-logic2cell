@@ -1,0 +1,15 @@
+{
+  "request_id": "GC1-17FF",
+  "name": "dd2_gc1__f17ff_1",
+  "inputs": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "output": "Y",
+  "expression": "!(D & ((A & B) | (C & (A | B))))",
+  "truth_table": "0x17FF",
+  "sizing": "hd",
+  "estimated_area_um2": 11.2608
+}

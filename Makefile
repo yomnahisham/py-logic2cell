@@ -39,9 +39,17 @@ test:             ## every test, including the broken cases in tests/broken/
 	$(PY) src/frame_check.py
 
 all:              ## the whole flow
-	$(PY) -m src.table1.table1
+	$(PY) -m src.map_library.table1
 	$(PY) -m src.aig.aigs
 	$(PY) -m src.hd.table4
+	$(PY) -m src.cut_enum.write_cuts
+	$(PY) -m src.hd.cut_classes
+	$(PY) -m src.hd.area_model
+	$(PY) -m src.hd.rank
+	$(PY) -m src.hd.request_writer --limit 10
+	$(PY) -m src.hd.liberty_writer --limit 10
+	$(PY) -m src.map_library.map_extended
+	$(PY) -m src.map_library.table5
 	$(PY) -m src.hd.classes
 	$(PY) -m src.cell.rules
 	for r in requests/hd/*.json; do $(PY) -m src.cell.build $$r --hd $$(basename $$r .json) || exit 1; done

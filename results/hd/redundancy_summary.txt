@@ -1,0 +1,29 @@
+candidate classes (ABC AIGs of cpu8, dsp8, arlet6502, uart_apb, risc8, fir10): 315
+
+exists: 26 classes, 65338 occurrences; drop 26
+  c2_1 0x1 (2 inputs) x9772: nor2_1, est 3.7536 um2 vs HD 3.7536 um2 -> drop (HD has it)
+  c2_2 0x2 (2 inputs) x7251: lpflow_isobufsrc_1, est 6.256 um2 vs HD 6.256 um2 -> drop (HD has it)
+  c2_7 0x7 (2 inputs) x4851: nand2_1, est 3.7536 um2 vs HD 3.7536 um2 -> drop (HD has it)
+  c3_02 0x02 (3 inputs) x4304: nor3b_1, est 7.5072 um2 vs HD 7.5072 um2 -> drop (HD has it)
+  c3_0e 0xAB (3 inputs) x3514: o21bai_1, est 7.5072 um2 vs HD 7.5072 um2 -> drop (HD has it)
+exists_inv: 14 classes, 20770 occurrences; drop 3, keep 11
+  c3_0b 0x0B (3 inputs) x4329: a21oi_1, est 7.5072 um2 vs HD 5.0048 um2 -> keep (smaller than the HD cell plus an inverter)
+  c4_00a8 0xABFF (4 inputs) x2794: o211ai_1, est 10.0096 um2 vs HD 7.5072 um2 -> keep (smaller than the HD cell plus an inverter)
+  c4_000b 0x000B (4 inputs) x2563: a211oi_1, est 10.0096 um2 vs HD 7.5072 um2 -> keep (smaller than the HD cell plus an inverter)
+  c4_00fe 0xAAAB (4 inputs) x2016: o31ai_1, est 10.0096 um2 vs HD 7.5072 um2 -> keep (smaller than the HD cell plus an inverter)
+  c4_00bf 0x00BF (4 inputs) x1965: a31oi_1, est 10.0096 um2 vs HD 6.256 um2 -> drop (not smaller than the HD cell plus an inverter)
+contained: 8 classes, 4549 occurrences; drop 1, keep 7
+  c4_07ff 0x07FF (4 inputs) x1256: a32oi_1, est 7.5072 um2 vs HD 8.7584 um2 -> keep (smaller than the HD cell)
+  c4_001f 0x001F (4 inputs) x1184: a221oi_1, est 7.5072 um2 vs HD 8.7584 um2 -> keep (smaller than the HD cell)
+  c3_28 0x28 (3 inputs) x867: mux4_2, est 17.5168 um2 vs HD 22.5216 um2 -> keep (smaller than the HD cell)
+  c3_6f 0x82 (3 inputs) x784: mux4_2, est 17.5168 um2 vs HD 22.5216 um2 -> keep (smaller than the HD cell)
+  c3_2b 0x2B (3 inputs) x445: mux4_2, est 11.2608 um2 vs HD 22.5216 um2 -> keep (smaller than the HD cell)
+new: 267 classes, 55333 occurrences; keep 267
+  c4_000e 0x000E (4 inputs) x3027: -, est 11.2608 um2 vs HD - um2 -> keep (HD lacks it)
+  c4_008a 0x008A (4 inputs) x2818: -, est 11.2608 um2 vs HD - um2 -> keep (HD lacks it)
+  c4_1bff 0x1BFF (4 inputs) x2603: -, est 15.0144 um2 vs HD - um2 -> keep (HD lacks it)
+  c4_00ef 0x00EF (4 inputs) x2215: -, est 11.2608 um2 vs HD - um2 -> keep (HD lacks it)
+  c4_00ac 0xABEF (4 inputs) x1872: -, est 15.0144 um2 vs HD - um2 -> keep (HD lacks it)
+
+kept: 285, of which with a positive estimated saving: 32
+kept but not buildable with Option 1's structure (estimated by a Shannon split): 233, with a positive saving: 8

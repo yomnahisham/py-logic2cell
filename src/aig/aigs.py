@@ -14,7 +14,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 from src.aig import aiger
 from src.common.yosys import ROOT, run
-from src.table1.table1 import DESIGNS
+from src.map_library.table1 import DESIGNS
 
 OUT = ROOT / "build/aigs"
 SIZES = ROOT / "results/aig_sizes.csv"
