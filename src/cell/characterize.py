@@ -39,6 +39,7 @@ from src.cell.liberty_timing import read_cell, read_setup
 from src.cell.stress import stress
 from src.cell.tools import IMAGE, MODELS, run
 from src.common.request import truth_table
+from src.paths import PREFIX
 
 ROOT = Path(__file__).resolve().parents[2]
 TD = 0.1e-9          # s before the input edge; the DC operating point sets the start state
@@ -225,25 +226,61 @@ def characterize_hd(short: str, grid: int | None = None, full_ramp: bool = False
     hd = read_cell(short)
     folder = hd_reference(ROOT / "build/char" / short, short)
     stress(folder, hd.name)
-    grids = {}
-    for a in hd.arcs:
-        t = a.tables["cell_rise"] if "cell_rise" in a.tables else next(iter(a.tables.values()))
-        grids[a.pin] = (pick(t["index_1"], grid), pick(t["index_2"], grid))
+    grids = hd_grids(short, hd.inputs, grid)
     table = truth_table(hd.function, tuple(hd.inputs))
     return characterize(folder, hd.name, f"{hd.name}_sasb.spice", hd.inputs, hd.output, table, grids,
                         read_setup(), full_ramp, image, tag)
 
 
+def hd_grids(short: str, pins: list[str], grid: int | None = None) -> dict:
+    """pin -> (slews, loads) from the cell_rise table of each of the HD cell's arcs."""
+    out = {}
+    for a in read_cell(short).arcs:
+        t = a.tables["cell_rise"] if "cell_rise" in a.tables else next(iter(a.tables.values()))
+        out[a.pin] = (pick(t["index_1"], grid), pick(t["index_2"], grid))
+    if all(p in out for p in pins):
+        return {p: out[p] for p in pins}
+    # different pin names (a test cell's A, B, C against HD's A1, A2, B1): usable only if every arc of the
+    # HD cell has the same grid, so the choice of arc does not matter
+    if len({(tuple(s), tuple(l)) for s, l in out.values()}) == 1:
+        return {p: next(iter(out.values())) for p in pins}
+    raise ValueError(f"HD cell {short}: pins {sorted(out)} differ from {pins} and its arcs have different grids")
+
+
+def characterize_ours(request: Path, grid_from: str, grid: int | None = None, full_ramp: bool = False,
+                      image: str = IMAGE, tag: str = "") -> dict:
+    """Characterize one of our generated cells, as built by src.cell.build in build/cells/<name>/, on the
+    table indexes of the HD cell grid_from (its HD counterpart, or a comparable x1 cell when there is none)."""
+    from src.common.request import read_request
+    req = read_request(request)
+    folder = ROOT / "build/cells" / req.name
+    if not (folder / f"{req.name}_pex.spice").exists():
+        raise FileNotFoundError(f"{folder}: no extracted netlist; run python -m src.cell.build {request} first")
+    stress(folder, req.name)
+    grids = hd_grids(grid_from, list(req.inputs), grid)
+    r = characterize(folder, req.name, f"{req.name}_sasb.spice", list(req.inputs), req.output, req.truth_table,
+                     grids, read_setup(), full_ramp, image, tag)
+    r["grid_from"] = PREFIX + grid_from
+    (folder / f"{req.name}_timing{tag}.json").write_text(json.dumps(r, indent=2) + "\n")
+    return r
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("kind", choices=["hd"])
-    ap.add_argument("cell")
+    ap.add_argument("kind", choices=["hd", "ours"], help="hd: an installed cell; ours: a request we built")
+    ap.add_argument("cell", help="hd: the cell, e.g. nand2_1; ours: the request JSON")
+    ap.add_argument("--grid-from", help="ours: the HD cell whose table indexes to use, e.g. nand2_1")
     ap.add_argument("--grid", type=int, help="points per index, e.g. 5 for the 5x5 subset")
     ap.add_argument("--full-ramp", action="store_true", help="broken case: full ramp = table slew")
     ap.add_argument("--image", default=IMAGE, help="container with the ngspice to use")
     ap.add_argument("--tag", default="", help="suffix for the output files, e.g. _stock")
     args = ap.parse_args()
-    r = characterize_hd(args.cell, args.grid, args.full_ramp, args.image, args.tag)
+    if args.kind == "hd":
+        r = characterize_hd(args.cell, args.grid, args.full_ramp, args.image, args.tag)
+    else:
+        if not args.grid_from:
+            ap.error("ours needs --grid-from <HD cell>")
+        r = characterize_ours(Path(args.cell).resolve(), args.grid_from, args.grid, args.full_ramp, args.image, args.tag)
     print(f"{r['cell']}: ngspice {r['ngspice']['version']} sha256 {r['ngspice']['sha256']}")
     for pin, c in r["pins"].items():
         print(f"  pin {pin}: rise {c['rise_capacitance']:.6f} fall {c['fall_capacitance']:.6f} pF in the slew window; "
