@@ -1,6 +1,6 @@
 """Map designs with the reduced and extended libraries and write Table 5.
 
-    python -m src.map_library.equivalence
+    python -m src.map_library.table5
         -> results/table5.csv
         -> build/equiv/<design>_<library>_<script>.{log,v}
 

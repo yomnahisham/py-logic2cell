@@ -48,7 +48,7 @@ Option 2: map the designs onto the usable and reduced HD libraries (Table 1) →
 | `python -m src.hd.liberty_writer [--limit N]`      | ranked candidates and HD Liberty data     | `libs/new_cells.lib`, `build/libs/hd_reduced_ext.lib`                                   |
 | `python -m src.hd.classes`                         | HD Liberty                                | `results/hd/hd_classes.csv`                                                             |
 | `python -m src.hd.table4`                          | HD Liberty                                | `results/table4.txt`                                                                    |
-| `python -m src.map_library.equivalence`            | designs and reduced/extended Liberty      | `results/table5.csv`, `build/equiv/*.log`                                               |
+| `python -m src.map_library.table5`                | designs and reduced/extended Liberty      | `results/table5.csv`, `build/equiv/*.log`                                               |
 | `scripts/run_checks.sh`                            |                                           | frame, layer and front-end check logs in `results/`                                     |
 
 ## 5. Layout
@@ -96,6 +96,7 @@ Option 2: map the designs onto the usable and reduced HD libraries (Table 1) →
 | simulation                 | one pull-up deleted from the extracted netlist                                                                                          |
 | frame check                | plan with the n-well moved up 0.1 µm                                                                                                    |
 | Table 1, AIG sizes         | compared with the handout's numbers                                                                                                     |
+| Table 5 CEC | tampered mapped netlist must be rejected (`tests/m2/test_table5.py`) |
 | cut enumerator             | corrupted truth table, merge ignoring inverted edges, dominated cuts kept                                                               |
 | cut and Liberty writers    | corrupted cut output, missing request fields, unclosed Liberty cell; Yosys 0.33 import and mapping smoke tests                          |
 | redundancy checker         | every HD cell must come out Exists; Table 4 counts                                                                                      |
