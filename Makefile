@@ -64,6 +64,10 @@ table5:           ## the characterizer validation of Table 5 (option 1 handout, 
 	! $(PY) -m src.cell.char_validate --full-ramp                                      # the broken case must fail
 	$(PY) -m src.cell.liberty_write validation
 	$(PY) -m src.cell.liberty_check libs/char_validation.lib build/sta/hd_tt_ours.lib
+	mkdir -p build && docker run --rm dd2-layout-tools tar -C /opt/dd2 -c stress_test | tar -C build -x
+	for i in dd2-layout-tools dd2-ngspice-stock; do echo "== $$i"; \
+		docker run --rm -v "$(CURDIR)/build/stress_test:/st" $$i sh /st/check_stress.sh; echo "exit $$?"; \
+	done > results/ngspice_builds.txt
 
 clean:            ## removes build/ only; cells/ and results/ are committed outputs
 	rm -rf build

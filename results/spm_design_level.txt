@@ -1,10 +1,10 @@
-SPM design level (Table 5): Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334); OpenSTA in dd2-opensta
-settings from /Users/abdurahmanmahmoud/Desktop/University/tut 4/student (copied to build/spm/src): ABC -D 1250 ps (also the clock period), driving cell sky130_fd_sc_hd__inv_1, output load 33.44 fF
+SPM design level (Table 5): Yosys 0.64 (git sha1 d8dab5b32666564eca8e18f412973853ce006e61, clang++ 17.0.0 -fPIC -O3); OpenSTA in dd2-opensta
+settings from Tutorial 4's files (copied to build/spm/src): ABC -D 1250 ps (also the clock period), driving cell sky130_fd_sc_hd__inv_1, output load 33.44 fF
 ours = build/sta/hd_tt_ours.lib (HD with the six reference cells replaced by our characterization)
 
-hd          worst path 0.7727 ns (+0.00% against hd), worst slack +0.3623 ns, 329 cells, area 2952.832000 um2, _561_ -> _562_
-ours        worst path 0.7734 ns (+0.09% against hd), worst slack +0.3616 ns, 329 cells, area 2952.832000 um2, _561_ -> _562_
-hd_on_ours  worst path 0.7734 ns (+0.09% against hd), worst slack +0.3616 ns, 329 cells, area 2952.832000 um2, _561_ -> _562_
+hd          worst path 0.7728 ns (+0.00% against hd), worst slack +0.3623 ns, 329 cells, area 2952.832000 um2, _561_ -> _562_
+ours        worst path 0.7733 ns (+0.06% against hd), worst slack +0.3618 ns, 329 cells, area 2952.832000 um2, _561_ -> _562_
+hd_on_ours  worst path 0.7733 ns (+0.06% against hd), worst slack +0.3618 ns, 329 cells, area 2952.832000 um2, _561_ -> _562_
 
-change in worst delay, remapped onto our cells (Table 5): +0.7 ps (+0.09%)
-same netlist, our cells' timing only: +0.7 ps (+0.09%)
+change in worst delay, remapped onto our cells (Table 5): +0.5 ps (+0.06%)
+same netlist, our cells' timing only: +0.5 ps (+0.06%)

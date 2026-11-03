@@ -128,7 +128,7 @@ if __name__ == "__main__":
             time_it(hd_net, OURS, "hd_on_ours", settings)]
     base = runs[0]["arrival_ns"]
     lines = [f"SPM design level (Table 5): {version}; OpenSTA in {STA_IMAGE}",
-             f"settings from {sys.argv[1]} (copied to {tut.relative_to(ROOT)}): ABC -D {settings['period_ps']} ps (also the clock period), driving cell "
+             f"settings from Tutorial 4's files (copied to {tut.relative_to(ROOT)}): ABC -D {settings['period_ps']} ps (also the clock period), driving cell "
              f"{settings['driving_cell']}, output load {settings['load_ff']} fF",
              f"ours = {OURS.relative_to(ROOT)} (HD with the six reference cells replaced by our characterization)", ""]
     for r in runs:
