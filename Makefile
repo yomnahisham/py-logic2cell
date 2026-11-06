@@ -3,8 +3,9 @@
 PDK_ROOT ?= $(HOME)/.ciel
 GIVEN    ?= ../DD2_Project1_student_pack/given
 IN       ?=
+TOP      ?=
 
-.PHONY: setup check test all demo clean table5
+.PHONY: setup check test all demo demo2 clean table5
 
 PDK      ?= $(firstword $(wildcard $(PDK_ROOT)/sky130A $(PDK_ROOT)/ciel/sky130/versions/*/sky130A))
 PY       := .venv/bin/python
@@ -50,6 +51,10 @@ all:              ## the whole flow
 	$(PY) -m src.hd.liberty_writer --limit 10
 	$(PY) -m src.map_library.map_extended
 	$(PY) -m src.map_library.table5
+	$(PY) -m src.hd.real_cells
+	$(PY) -m src.hd.sensitivity
+	$(PY) -m src.hd.sta
+	$(PY) -m src.hd.analysis
 	$(PY) -m src.hd.classes
 	$(PY) -m src.cell.rules
 	for r in requests/hd/*.json; do $(PY) -m src.cell.build $$r --hd $$(basename $$r .json) || exit 1; done
@@ -57,6 +62,10 @@ all:              ## the whole flow
 demo:             ## what the interview runs: make demo IN=<request or design>
 	@test -n "$(IN)" || (echo "usage: make demo IN=<request or design>" && exit 1)
 	$(PY) -m src.cell.build $(IN)
+
+demo2:            ## option 2 on one design: make demo2 IN=<design.v> TOP=<top module>
+	@test -n "$(IN)" -a -n "$(TOP)" || (echo "usage: make demo2 IN=<design.v> TOP=<top module>" && exit 1)
+	$(PY) -m src.hd.demo $(IN) $(TOP)
 
 table5:           ## the characterizer validation of Table 5 (option 1 handout, section 5.1)
 	$(PY) -m src.cell.char_validate

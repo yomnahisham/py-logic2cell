@@ -60,7 +60,9 @@ def selected(limit: int = LIMIT, names: list[str] | None = None, ranked=RANKED) 
 
 
 def add_choice_arguments(parser: argparse.ArgumentParser, limit_default: int | None):
-    """--limit, --names and --final-set, of which at most one is given."""
+    """--ranked, and --limit, --names and --final-set, of which at most one is given."""
+    parser.add_argument("--ranked", type=Path, default=RANKED,
+                        help=f"the ranking to take cells from (default {RANKED.relative_to(ROOT)})")
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--limit", type=int, default=limit_default,
                        help="the best N buildable cells with a positive saving")
@@ -86,7 +88,7 @@ def main(argv: list[str]):
     add_choice_arguments(parser, limit_default=None)
     args = parser.parse_args(argv)
     names = chosen_names(args)
-    chosen = selected(args.limit, names) if args.limit or names else candidates()
+    chosen = selected(args.limit, names, args.ranked) if args.limit or names else candidates(args.ranked)
     OUT.mkdir(parents=True, exist_ok=True)
     for old in OUT.glob("*.json"):
         old.unlink()

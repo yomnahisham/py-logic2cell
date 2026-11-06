@@ -120,7 +120,7 @@ def main(argv: list[str]):
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     add_choice_arguments(parser, limit_default=None)
     args = parser.parse_args(argv)
-    cands = selected(args.limit or 10, chosen_names(args))
+    cands = selected(args.limit or 10, chosen_names(args), args.ranked)
     real = [intake(c) for c in cands]
     report(cands, real)
     for r in real:

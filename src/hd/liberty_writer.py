@@ -168,7 +168,7 @@ def main(argv: list[str]):
                         help="use the real cells Option 1 returned (src.hd.real_cells) where they pass the checks")
     args = parser.parse_args(argv)
     library = REDUCED.read_text()
-    cells = selected(args.limit, chosen_names(args))
+    cells = selected(args.limit, chosen_names(args), args.ranked)
     real = {}
     if args.real:
         from src.hd.real_cells import intake
