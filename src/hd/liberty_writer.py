@@ -11,8 +11,10 @@ logical-effort model anchored on HD's inv_1, read from hd_reduced.lib:
   - output transition: inv_1's, times the depth of the last stage's network;
   - timing_sense: from the function (positive, negative or non-unate in that input).
 
-    python -m src.hd.liberty_writer [--limit 10] [--names <cell> ...]
-        -> libs/new_cells.lib (the new cell groups), build/libs/hd_reduced_ext.lib (the whole file)
+    python -m src.hd.liberty_writer [--limit 10 | --names <cell> ... | --final-set [<path>]]
+                                    [--scale <cell>=<factor> ...] [--out <lib>]
+        -> libs/new_cells.lib (the new cell groups), build/libs/hd_reduced_ext.lib (the whole file);
+           with --out, only the whole file, at that path (for the greedy selection's trials)
 """
 
 from __future__ import annotations
@@ -20,11 +22,12 @@ from __future__ import annotations
 import argparse
 import re
 import sys
+from pathlib import Path
 
 from src.common.stage import FULL, widen
 from src.hd.cost import Cost, cost, gated, rises
 from src.hd.liberty import _CELL_GROUP, _PIN_GROUP, _braced_groups
-from src.hd.request_writer import LIMIT, selected
+from src.hd.request_writer import LIMIT, add_choice_arguments, chosen_names, selected
 from src.paths import PREFIX, ROOT
 
 REDUCED = ROOT / "given/hd_reduced.lib"
@@ -119,23 +122,54 @@ def extend(library: str, groups: str) -> str:
     return library[:end] + groups + library[end:]
 
 
+def parse_scale(items: list[str] | None) -> dict[str, float]:
+    """--scale <cell>=<factor> arguments as {cell: factor}."""
+    scale = {}
+    for item in items or []:
+        name, _, factor = item.partition("=")
+        try:
+            value = float(factor)
+        except ValueError:
+            raise SystemExit(f"--scale needs <cell>=<factor>, got {item!r}") from None
+        if not name or value <= 0:
+            raise SystemExit(f"--scale needs a cell name and a positive factor, got {item!r}")
+        scale[name] = value
+    return scale
+
+
+def groups(cells: list[dict], library: str, scale: dict[str, float] | None = None) -> str:
+    """The cell groups of `cells`, with the area of each cell in `scale` multiplied by its factor
+    (section 4, step 12: one cell made 30% smaller is a factor of 0.7)."""
+    scale = scale or {}
+    unknown = set(scale) - {c["name"] for c in cells}
+    if unknown:
+        raise SystemExit(f"--scale names cells that are not in the library: {sorted(unknown)}")
+    ref = reference(library)
+    return "".join(cell_group({**c, "area_um2": round(c["area_um2"] * scale.get(c["name"], 1), 4)}, ref)
+                   for c in cells)
+
+
 def main(argv: list[str]):
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    parser.add_argument("--limit", type=int, default=LIMIT)
-    parser.add_argument("--names", nargs="*")
+    add_choice_arguments(parser, limit_default=LIMIT)
+    parser.add_argument("--scale", nargs="+", metavar="CELL=FACTOR", help="multiply these cells' areas")
+    parser.add_argument("--out", type=Path, help="write only this whole library (libs/new_cells.lib is left alone)")
     args = parser.parse_args(argv)
     library = REDUCED.read_text()
-    ref = reference(library)
-    cells = selected(args.limit, args.names)
-    groups = "".join(cell_group(c, ref) for c in cells)
-    header = ("/* New cells for hd_reduced.lib, written by src/hd/liberty_writer.py from results/hd/ranked.json.\n"
-              "   Areas are estimates from the area model; capacitance and timing are placeholders\n"
-              f"   scaled from {PREFIX}inv_1 at {REF_SLEW} ns and {REF_LOAD} pF. */\n")
-    NEW_CELLS.parent.mkdir(parents=True, exist_ok=True)
-    NEW_CELLS.write_text(header + groups)
-    EXTENDED.parent.mkdir(parents=True, exist_ok=True)
-    EXTENDED.write_text(extend(library, groups))
-    print(f"{len(cells)} new cells -> {NEW_CELLS.relative_to(ROOT)}, {EXTENDED.relative_to(ROOT)}")
+    cells = selected(args.limit, chosen_names(args))
+    text = groups(cells, library, parse_scale(args.scale))
+    out = args.out or EXTENDED
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(extend(library, text))
+    written = [out]
+    if args.out is None:
+        header = ("/* New cells for hd_reduced.lib, written by src/hd/liberty_writer.py from results/hd/ranked.json.\n"
+                  "   Areas are estimates from the area model; capacitance and timing are placeholders\n"
+                  f"   scaled from {PREFIX}inv_1 at {REF_SLEW} ns and {REF_LOAD} pF. */\n")
+        NEW_CELLS.parent.mkdir(parents=True, exist_ok=True)
+        NEW_CELLS.write_text(header + text)
+        written.insert(0, NEW_CELLS)
+    print(f"{len(cells)} new cells -> {', '.join(map(str, written))}")
 
 
 if __name__ == "__main__":
