@@ -1,6 +1,6 @@
 """The whole option 2 flow on one design (option 2 handout, section 9.4: a design given on the day).
 
-    python -m src.hd.demo <design.v> <top> [--limit 10]
+    python -m src.hd.demo <design.v> <top> [--limit 10] [--sv]
         -> build/demo/<design>/: cuts, class summary, ranking, Liberty file, mapping logs and netlists,
            and summary.txt (also printed)
 
@@ -20,6 +20,7 @@ from __future__ import annotations
 import argparse
 import inspect
 import json
+import shutil
 import sys
 from pathlib import Path
 
@@ -34,14 +35,14 @@ from src.paths import ROOT
 WORK = ROOT / "build/demo"
 
 
-def aig(design: str, top: str, path: Path) -> dict:
+def aig(design: str, top: str, path: Path, sv: bool = False) -> dict:
     """Step 1. The AIG export reads given/designs/<design>.v; another file needs its path argument."""
     aigs.OUT.mkdir(parents=True, exist_ok=True)
-    if path.resolve() == (ROOT / f"given/designs/{design}.v").resolve():
+    if not sv and path.resolve() == (ROOT / f"given/designs/{design}.v").resolve():
         return aigs.write(design, top)
     if "path" not in inspect.signature(aigs.write).parameters:
         raise SystemExit(f"{path} is not in given/designs/, and src.aig.aigs.write has no path argument yet")
-    return aigs.write(design, top, path=path)
+    return aigs.write(design, top, path=path, sv=sv)
 
 
 def main(argv: list[str]):
@@ -49,18 +50,25 @@ def main(argv: list[str]):
     parser.add_argument("design", type=Path, help="the design's Verilog file")
     parser.add_argument("top", help="its top module")
     parser.add_argument("--limit", type=int, default=10, help="new cells in the Liberty file")
+    parser.add_argument("--sv", action="store_true", help="read the design as SystemVerilog")
     args = parser.parse_args(argv)
+    if not args.design.is_file():
+        raise SystemExit(f"no such file: {args.design}")
     design = args.design.stem
     work = WORK / design
     maps = work / "map"
     maps.mkdir(parents=True, exist_ok=True)
+    # the tools run in a container that sees only the repository: work on a copy inside it
+    source = Path("build/demo") / design / args.design.name
+    if args.design.resolve() != (ROOT / source).resolve():
+        shutil.copyfile(args.design, ROOT / source)
     lines = [f"demo: {args.design} (top {args.top})"]
 
     def say(text):
         lines.append(text)
         print(text, flush=True)
 
-    sizes = aig(design, args.top, args.design)
+    sizes = aig(design, args.top, source, args.sv)
     say(f"1. AIG: {sizes['raw']['ands']} AND nodes, {sizes['raw']['latches']} latches; "
         f"{sizes['abc']['ands']} AND nodes after ABC")
 
@@ -75,8 +83,8 @@ def main(argv: list[str]):
 
     baseline = {}
     for script in "AB":
-        baseline[script] = check(str(args.design), args.top, LIBS["reduced"], script,
-                                 maps / f"{design}_reduced_{script}")
+        baseline[script] = check(str(source), args.top, LIBS["reduced"], script,
+                                 maps / f"{design}_reduced_{script}", sv=args.sv)
         say(f"4. baseline, script {script}: {baseline[script]['area_um2']:.4f} um2, "
             f"cec {'pass' if baseline[script]['equivalent'] else 'FAIL'}")
 
@@ -99,7 +107,8 @@ def main(argv: list[str]):
     say("7-8. design  script  baseline_um2  new_cells_um2  reduction  new_cell_instances  equivalence")
     extended = {}
     for script in "AB":
-        extended[script] = check(str(args.design), args.top, str(lib), script, maps / f"{design}_extended_{script}")
+        extended[script] = check(str(source), args.top, str(lib), script, maps / f"{design}_extended_{script}",
+                                 sv=args.sv)
         b, e = baseline[script]["area_um2"], extended[script]["area_um2"]
         say(f"     {design}  {script}  {b:.4f}  {e:.4f}  {100 * (b - e) / b:+.2f}%  "
             f"{extended[script]['new_cell_instances']}  {'pass' if extended[script]['equivalent'] else 'FAIL'}")

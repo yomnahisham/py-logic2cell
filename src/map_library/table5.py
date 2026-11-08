@@ -39,10 +39,12 @@ def session(
     script: str,
     stem: Path,
     tamper: str = "",
+    sv: bool = False,
 ) -> str:
-    """Return one Yosys script that maps, records statistics, and runs CEC."""
+    """Return one Yosys script that maps, records statistics, and runs CEC.
+    sv reads the design as SystemVerilog (read_verilog -sv)."""
     return "; ".join([
-        f"read_verilog {design}",
+        f"read_verilog {'-sv ' if sv else ''}{design}",
         f"synth -flatten -top {top}",
         "design -save gold0",
         f"dfflibmap -liberty {library}",
@@ -86,11 +88,12 @@ def check(
     script: str,
     stem: Path,
     tamper: str = "",
+    sv: bool = False,
 ) -> dict:
     """Map one design and return its area, generated-cell count, and CEC result."""
     # print(f"Mapping {design} with {library} using script {script}")
     stem.parent.mkdir(parents=True, exist_ok=True)
-    output = run(["yosys", "-p", session(design, top, library, script, stem, tamper)])
+    output = run(["yosys", "-p", session(design, top, library, script, stem, tamper, sv)])
     log = Path(f"{stem}.log").read_text()
     area, cells = check_log(log, f"{stem.name}.log")
     return {

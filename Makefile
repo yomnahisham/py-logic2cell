@@ -4,6 +4,7 @@ PDK_ROOT ?= $(HOME)/.ciel
 GIVEN    ?= ../DD2_Project1_student_pack/given
 IN       ?=
 TOP      ?=
+SV       ?=
 
 .PHONY: setup check test all demo demo2 clean table5
 
@@ -63,9 +64,9 @@ demo:             ## what the interview runs: make demo IN=<request or design>
 	@test -n "$(IN)" || (echo "usage: make demo IN=<request or design>" && exit 1)
 	$(PY) -m src.cell.build $(IN)
 
-demo2:            ## option 2 on one design: make demo2 IN=<design.v> TOP=<top module>
-	@test -n "$(IN)" -a -n "$(TOP)" || (echo "usage: make demo2 IN=<design.v> TOP=<top module>" && exit 1)
-	$(PY) -m src.hd.demo $(IN) $(TOP)
+demo2:            ## option 2 on one design: make demo2 IN=<design.v> TOP=<top module> [SV=1 for SystemVerilog]
+	@test -n "$(IN)" -a -n "$(TOP)" || (echo "usage: make demo2 IN=<design.v> TOP=<top module> [SV=1]" && exit 1)
+	$(PY) -m src.hd.demo $(IN) $(TOP) $(if $(SV),--sv)
 
 table5:           ## the characterizer validation of Table 5 (option 1 handout, section 5.1)
 	$(PY) -m src.cell.char_validate
