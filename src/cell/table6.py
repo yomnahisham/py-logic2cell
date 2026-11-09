@@ -8,7 +8,8 @@ Delay and slew at the HD table point nearest 100 ps and 10 fF (section 6) come f
 (build/cells/<name>/<name>_timing.json, written by src.cell.deliver on the HD cell's own grid) against the
 shipped HD Liberty at the same entry. Pins are matched by function (deliver.hd_twin), so our A, B, C meet
 HD's A1, A2, B1. Each cell's delay is the slowest cell_rise/cell_fall over its pins, its slew the slowest
-rise/fall_transition; results/table6_timing.csv has every pin and table. The characterizer's own error
+rise/fall_transition; results/table6_timing_pins.csv has every pin and table (src.cell.table6_timing
+measures the same point with its own runs, results/table6_timing.csv). The characterizer's own error
 against the shipped Liberty (results/char_validation.txt) is the uncertainty of these comparisons.
 """
 
@@ -30,7 +31,7 @@ from src.cell.layout import HEIGHT, SITE
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "results/table6_vs_hd.csv"
-TIMING_OUT = ROOT / "results/table6_timing.csv"
+TIMING_OUT = ROOT / "results/table6_timing_pins.csv"   # (results/table6_timing.csv is src.cell.table6_timing's)
 DELAYS, SLEWS = ("cell_rise", "cell_fall"), ("rise_transition", "fall_transition")
 
 # (our cell, installed HD cell, function as in Table 6)

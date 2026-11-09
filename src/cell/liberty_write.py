@@ -1,11 +1,18 @@
 """Write Liberty from the characterizer's timing JSON (option 1 handout, sections 3.3 and 5.1).
 
     python -m src.cell.liberty_write validation [cells ...] [--tag T]
+    python -m src.cell.liberty_write cell <request.json> [...]
 
 `validation` writes the six reference cells as characterized for Table 5 (build/char/<cell>/..._timing.json):
   - libs/char_validation<tag>.lib: a library of only those cells, for the "Liberty syntax" row;
   - build/sta/hd_tt_ours<tag>.lib: a copy of the HD TT Liberty with those six cell groups replaced by ours,
     for the "Design level" row.
+
+`cell` writes the answer to a request (section 3.3, overview Appendix A): cells/<name>/cell.lib, a library
+holding exactly one cell group, with the requested name and pin names, HD's units, the request's expression as
+its function, its layout area from cells/<name>/response.json, and the timing tables of
+build/cells/<name>/<name>_timing.json. The function is checked against the request's truth table before it is
+written. The response then gets files.liberty and ngspice_sha256.
 
 A cell group carries what the characterizer measured: the input capacitances and, per arc, its timing sense
 and the four delay and transition tables on the characterizer's own indexes. Area, function and footprint
@@ -21,6 +28,7 @@ import json
 from pathlib import Path
 
 from src.cell.liberty_timing import TABLES, cell_text, parse, read_cell
+from src.common.request import read_request, truth_table
 from src.paths import LIBERTY_TT, PREFIX
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -143,11 +151,40 @@ def validation(cells: list[str], tag: str = "") -> tuple[Path, Path]:
     return own, copy
 
 
+def cell_lib(request: Path) -> Path:
+    """cells/<name>/cell.lib for one request, and files.liberty and ngspice_sha256 in its response."""
+    req = read_request(request)
+    folder = ROOT / "cells" / req.name
+    response_path = folder / "response.json"
+    response = json.loads(response_path.read_text())
+    if response.get("status") != "pass" or response.get("cell") != req.name:
+        raise ValueError(f"{response_path}: the cell did not pass its build, no Liberty is written")
+    timing = json.loads((ROOT / "build/cells" / req.name / f"{req.name}_timing.json").read_text())
+    if timing["cell"] != req.name or list(timing["inputs"]) != list(req.inputs) or timing["output"] != req.output:
+        raise ValueError(f"{req.name}: the timing run's cell or pins differ from the request")
+    if timing["errors"]:
+        raise ValueError(f"{req.name}: the timing run has errors: {timing['errors']}")
+    if truth_table(req.expression, req.inputs) != req.truth_table:
+        raise ValueError(f"{req.name}: the function {req.expression!r} does not give the request's truth table")
+    out = folder / "cell.lib"
+    out.write_text(library(req.name, [timing], [cell_group(timing, response["area_um2"], req.expression)]))
+    response["files"] = {**response.get("files", {}), "liberty": f"cells/{req.name}/cell.lib"}
+    response["ngspice_sha256"] = timing["ngspice"]["sha256"]
+    response_path.write_text(json.dumps(response, indent=2) + "\n")
+    return out
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("kind", choices=["validation"])
-    ap.add_argument("cells", nargs="*", default=CELLS)
+    ap.add_argument("kind", choices=["validation", "cell"])
+    ap.add_argument("cells", nargs="*", help="validation: HD cells (default the six); cell: request files")
     ap.add_argument("--tag", default="")
     args = ap.parse_args()
-    for path in validation(args.cells, args.tag):
-        print(f"-> {path}")
+    if args.kind == "validation":
+        for path in validation(args.cells or CELLS, args.tag):
+            print(f"-> {path}")
+    else:
+        if not args.cells:
+            ap.error("cell needs at least one request file")
+        for request in args.cells:
+            print(f"-> {cell_lib(Path(request).resolve())}")
