@@ -4,8 +4,8 @@
 
 Run after the cells are built (build/cells/<name>/ must hold their GDS and extraction). The five
 Table 6 functions that are also reference cells (section 4.1) are compared as built with --hd.
-Delay and slew at the HD table point nearest 100 ps and 10 fF need the characterizer (section 5)
-and are not in this table yet.
+Delay and slew at the HD table point nearest 100 ps and 10 fF are in results/table6_timing.csv
+(python -m src.cell.table6_timing, after the characterizer).
 """
 
 from __future__ import annotations
@@ -52,7 +52,7 @@ def rows() -> list[dict]:
             met1_inside="no" if r["wiring"]["ours"]["met1_only_rails"] else "yes",
             breaks_ours=sum(r["gates"]["ours"]["diffusion_breaks"].values()),
             breaks_hd=sum(r["gates"]["hd"]["diffusion_breaks"].values()),
-            delay_slew="needs the characterizer"))
+            delay_slew="results/table6_timing.csv"))
     return out
 
 

@@ -1,10 +1,10 @@
 """Load a Liberty file in Yosys and OpenSTA and report what they say (option 1 handout, Table 5, Liberty syntax).
 
-    python -m src.cell.liberty_check <lib> [<lib> ...]
+    python -m src.cell.liberty_check <lib> [<lib> ...] [--out results/<file>.txt]
 
 Yosys 0.33 reads it with read_liberty -lib, as a mapping would; OpenSTA reads it with read_liberty and lists
 its cells. A file passes when both tools exit 0, print no error, and see every cell group in the file.
-Warnings are reported, not counted as errors. Writes results/liberty_syntax.txt.
+Warnings are reported, not counted as errors. Writes results/liberty_syntax.txt, or the file given by --out.
 """
 
 from __future__ import annotations
@@ -65,13 +65,18 @@ def check(lib: Path) -> tuple[list[str], bool]:
 
 
 if __name__ == "__main__":
+    args = sys.argv[1:]
+    out = ROOT / "results/liberty_syntax.txt"
+    if "--out" in args:
+        i = args.index("--out")
+        out = (Path.cwd() / args[i + 1]).resolve()
+        del args[i:i + 2]
     report, ok = [], True
-    for path in sys.argv[1:]:
+    for path in args:
         lines, good = check(Path(path))
         report += lines
         ok &= good
     report.append(f"Liberty syntax (Table 5): {'PASS' if ok else 'FAIL'}")
-    out = ROOT / "results/liberty_syntax.txt"
     out.write_text("\n".join(report) + "\n")
     print("\n".join(report))
     sys.exit(0 if ok else 1)
