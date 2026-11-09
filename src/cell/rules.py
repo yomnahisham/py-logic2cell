@@ -22,6 +22,8 @@ EXACT = [
     ("gate length", "L", "poly.1a", "poly width"),
     ("poly spacing", "POLY_SPACE", "poly.2", "poly spacing"),
     ("poly past diffusion (endcap)", "ENDCAP", "poly.8", "poly overhang of transistor"),
+    ("diffusion past a gate", "DIFF_PAST_GATE", "poly.7", "N-Diffusion overhang of nFET"),
+    ("poly to diffusion", "POLY_DIFF", "poly.4", "poly spacing to Diffusion"),
     ("contact size", "CUT", "licon.1", "P-diffusion contact width"),
     ("contact to standard cell gate", "CUT_GATE", "licon.11", "standard cell gate"),
     ("diffusion around contact", "CUT_DIFF", "licon.5a", "N-diffusion overlap"),
@@ -81,9 +83,14 @@ def rows() -> list[dict]:
             magic_value("licon.14", "poly contact spacing to diffusion"), ">=")
     derived("poly contact pad to NMOS diffusion", lay.PAD_POLY[0] - lay.N_DIFF[1], "poly.4",
             magic_value("poly.4", "poly spacing to Diffusion"), ">=")
-    derived("input pin li area", (lay.PAD_LI[1] - lay.PAD_LI[0]) * 2 * lay.PAD_HALF, "li.6 (um2)",
-            int(re.search(r"area allli,\*obsli (\d+)", MAGIC.read_text())[1]) / 1e6, ">=")
-    derived("input pin li to NMOS row li", lay.PAD_LI[0] - lay.N_LI[1], "li.3",
+    li_area = int(re.search(r"area allli,\*obsli (\d+)", MAGIC.read_text())[1]) / 1e6
+    derived("input pin li area, narrow pad", (lay.PAD_LI[1] - lay.PAD_LI[0]) * 2 * lay.PAD_HALF, "li.6 (um2)",
+            li_area, ">=")
+    derived("input pin li area, wide pad", (lay.WIDE_PAD_LI[1] - lay.WIDE_PAD_LI[0]) * 2 * lay.PAD_HALF_WIDE,
+            "li.6 (um2)", li_area, ">=")
+    derived("narrow pad li to NMOS row li under it", lay.PAD_LI[0] - lay.N_UNDER_PAD, "li.3",
+            magic_value("li.3", "Local interconnect spacing"), ">=")
+    derived("wide pad li to NMOS row li", lay.WIDE_PAD_LI[0] - lay.N_LI[1], "li.3",
             magic_value("li.3", "Local interconnect spacing"), ">=")
     derived("input pin li to PMOS row li", lay.P_LI[0] - lay.PAD_LI[1], "li.3",
             magic_value("li.3", "Local interconnect spacing"), ">=")
