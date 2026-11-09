@@ -1,0 +1,8 @@
+design,baseline_best_um2,baseline_script,new_best_um2,new_script,reduction_percent,equivalence
+cpu8,4186.5152,A,4186.5152,A,0.00,pass
+dsp8,5928.1856,A,5838.0992,A,1.52,pass
+arlet6502,9701.8048,A,9644.2496,A,0.59,pass
+uart_apb,12948.6688,A,12941.1616,A,0.06,pass
+risc8,27511.3856,B,27403.7824,B,0.39,pass
+fir10,25968.6560,A,25958.6464,A,0.04,pass
+total,86245.2160,,85972.4544,,0.32,pass

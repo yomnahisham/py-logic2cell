@@ -6,7 +6,7 @@ IN       ?=
 TOP      ?=
 SV       ?=
 
-.PHONY: setup check test all demo demo2 clean table5
+.PHONY: setup check test all real full demo demo2 clean table5
 
 PDK      ?= $(firstword $(wildcard $(PDK_ROOT)/sky130A $(PDK_ROOT)/ciel/sky130/versions/*/sky130A))
 PY       := .venv/bin/python
@@ -40,7 +40,8 @@ test:             ## every test, including the broken cases in tests/broken/
 	$(PY) -m pytest -q tests
 	$(PY) src/frame_check.py
 
-all:              ## the whole flow
+
+all:              ## the whole flow with estimated areas (about 20-30 min)
 	$(PY) -m src.map_library.table1
 	$(PY) -m src.aig.aigs
 	$(PY) -m src.hd.table4
@@ -48,17 +49,40 @@ all:              ## the whole flow
 	$(PY) -m src.hd.cut_classes
 	$(PY) -m src.hd.area_model
 	$(PY) -m src.hd.rank
-	$(PY) -m src.hd.request_writer --limit 10
-	$(PY) -m src.hd.liberty_writer --limit 10
+	$(PY) -m src.hd.greedy
+	$(PY) -m src.hd.request_writer --final-set
+	$(PY) -m src.hd.liberty_writer --final-set
 	$(PY) -m src.map_library.map_extended
 	$(PY) -m src.map_library.table5
-	$(PY) -m src.hd.real_cells
+	$(PY) -m src.hd.best_of_both
+	$(PY) -m src.hd.curve
+	$(PY) -m src.hd.real_cells --final-set
 	$(PY) -m src.hd.sensitivity
+	cp results/hd/sensitivity_30.txt results/hd/sensitivity_30_estimated.txt
+	cp results/hd/sensitivity_30.csv results/hd/sensitivity_30_estimated.csv
 	$(PY) -m src.hd.sta
 	$(PY) -m src.hd.analysis
 	$(PY) -m src.hd.classes
 	$(PY) -m src.cell.rules
 	for r in requests/hd/*.json; do $(PY) -m src.cell.build $$r --hd $$(basename $$r .json) || exit 1; done
+
+real:             ## step 11: build the final set with Option 1, take real cells in, remap and measure
+	for n in $$($(PY) -c "import json;print(' '.join(json.load(open('results/hd/final_set.json'))['cells']))"); do \
+		$(PY) -m src.cell.build requests/candidates/$$n.json || true; done
+	$(PY) -m src.hd.real_cells --final-set
+	@if grep -Eq '^[^,]*,[^,]*,real,' results/hd/real_cells.csv; then \
+		$(PY) -m src.hd.liberty_writer --final-set --real && \
+		$(PY) -m src.map_library.table5 --real && \
+		$(PY) -m src.hd.best_of_both --real && \
+		$(PY) -m src.hd.curve --real && \
+		$(PY) -m src.hd.sensitivity --real && \
+		cp results/hd/sensitivity_30.txt results/hd/sensitivity_30_real.txt && \
+		cp results/hd/sensitivity_30.csv results/hd/sensitivity_30_real.csv && \
+		$(PY) -m src.hd.sta --libraries reduced extended real; \
+	else echo "real: no cell has an accepted Liberty file yet; the estimated results stand"; fi
+
+full: all real    ## everything, start to finish
+
 
 demo:             ## what the interview runs: make demo IN=<request or design>
 	@test -n "$(IN)" || (echo "usage: make demo IN=<request or design>" && exit 1)
@@ -67,6 +91,9 @@ demo:             ## what the interview runs: make demo IN=<request or design>
 demo2:            ## option 2 on one design: make demo2 IN=<design.v> TOP=<top module> [SV=1 for SystemVerilog]
 	@test -n "$(IN)" -a -n "$(TOP)" || (echo "usage: make demo2 IN=<design.v> TOP=<top module> [SV=1]" && exit 1)
 	$(PY) -m src.hd.demo $(IN) $(TOP) $(if $(SV),--sv)
+
+greedy:
+	$(PY) -m src.hd.greedy
 
 table5:           ## the characterizer validation of Table 5 (option 1 handout, section 5.1)
 	$(PY) -m src.cell.char_validate

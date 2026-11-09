@@ -1,0 +1,23 @@
+{
+  "request_id": "GC1-17",
+  "status": "pass",
+  "reason": null,
+  "cell": "dd2_gc1__f17_1",
+  "stages": 1,
+  "transistors": 10,
+  "width_sites": 7,
+  "area_um2": 8.7584,
+  "files": {
+    "gds": "cells/dd2_gc1__f17_1/cell.gds",
+    "report": "cells/dd2_gc1__f17_1/report.json"
+  },
+  "checks": {
+    "drc": 0,
+    "lvs": "match",
+    "rc_lvs": "match",
+    "truth_table": "pass",
+    "abutment": 0,
+    "layers": "pass"
+  },
+  "tool_version": "git:07c4459"
+}

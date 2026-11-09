@@ -1,0 +1,7 @@
+{
+  "request_id": "GC1-0017",
+  "status": "fail",
+  "reason": "no Euler order can be drawn: B A | D C A B: no room for the A contact; B A | D C B A: no room for the B contact; B A | A B C D: no room for the B contact",
+  "cell": "dd2_gc1__f0017_1",
+  "tool_version": "git:07c4459"
+}

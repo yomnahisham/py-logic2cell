@@ -1,8 +1,11 @@
 """Map designs with the reduced and extended libraries and write Table 5.
 
-    python -m src.map_library.table5
+    python -m src.map_library.table5 [--real]
         -> results/table5.csv
         -> build/equiv/<design>_<library>_<script>.{log,v}
+
+With --real, the library is build/libs/hd_reduced_real.lib (src.hd.liberty_writer --final-set
+--real: Option 1's real cells in place of the estimated ones) and the table is results/table5_real.csv.
 
 The equivalence result is produced by ABC's ``cec`` script through Yosys.
 The mapped cells are flattened using their Liberty functions before CEC
@@ -11,15 +14,19 @@ compares the two sequential designs.
 
 from __future__ import annotations
 
+import argparse
 import csv
+import sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from src.common.yosys import ROOT, run
+from src.hd.liberty_writer import EXTENDED_REAL
 from src.map_library.map_extended import EXTENDED, count_new_cell_instances
 from src.map_library.table1 import DESIGNS, LIBS, SCRIPTS, check_log
 
 OUT = ROOT / "results/table5.csv"
+OUT_REAL = ROOT / "results/table5_real.csv"
 WORK = ROOT / "build/equiv"
 COLUMNS = [
     "design",
@@ -104,9 +111,9 @@ def check(
     }
 
 
-def libraries() -> dict[str, str]:
-    """Return the baseline and generated libraries used for Table 5."""
-    return {"reduced": LIBS["reduced"], "extended": str(EXTENDED)}
+def libraries(real: bool = False) -> dict[str, str]:
+    """Return the baseline and generated libraries used for Table 5 (the real-cell one if real)."""
+    return {"reduced": LIBS["reduced"], "real" if real else "extended": str(EXTENDED_REAL if real else EXTENDED)}
 
 
 def _job(job: tuple[str, str, str, str, str]) -> tuple[dict, dict]:
@@ -118,15 +125,23 @@ def _job(job: tuple[str, str, str, str, str]) -> tuple[dict, dict]:
     )
 
 
-def main() -> None:
-    if not EXTENDED.is_file():
-        raise FileNotFoundError(f"{EXTENDED}: run `python -m src.hd.liberty_writer` first")
+def main(argv: list[str] | None = None) -> None:
+    parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    parser.add_argument("--real", action="store_true", help="map with the real cells from Option 1")
+    args = parser.parse_args(argv)
+    libs = libraries(args.real)
+    new = "real" if args.real else "extended"
+    out = OUT_REAL if args.real else OUT
+    library_file = EXTENDED_REAL if args.real else EXTENDED
+    if not library_file.is_file():
+        hint = "src.hd.liberty_writer --final-set --real" if args.real else "src.hd.liberty_writer"
+        raise FileNotFoundError(f"{library_file}: run `python -m {hint}` first")
 
     jobs = [
         (design, top, script, name, library)
         for design, top in DESIGNS.items()
         for script in "AB"
-        for name, library in libraries().items()
+        for name, library in libs.items()
     ]
     with ThreadPoolExecutor(4) as pool:
         checked = list(pool.map(_job, jobs))
@@ -140,7 +155,7 @@ def main() -> None:
     for design, top in DESIGNS.items():
         for script in "AB":
             baseline = by_key[(design, script, "reduced")]
-            extended = by_key[(design, script, "extended")]
+            extended = by_key[(design, script, new)]
             reduction = 100.0 * (baseline["area_um2"] - extended["area_um2"]) / baseline["area_um2"]
             equivalent = baseline["equivalent"] and extended["equivalent"]
             rows.append([
@@ -155,15 +170,15 @@ def main() -> None:
             if not equivalent:
                 failures.append((design, script))
 
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    with OUT.open("w", newline="") as output:
+    out.parent.mkdir(parents=True, exist_ok=True)
+    with out.open("w", newline="") as output:
         writer = csv.writer(output)
         writer.writerow(COLUMNS)
         writer.writerows(rows)
-    print(OUT.read_text())
+    print(out.read_text())
     if failures:
         raise SystemExit(f"NOT EQUIVALENT: {failures}")
 
 
 if __name__ == "__main__":
-    main()
+    main(sys.argv[1:])

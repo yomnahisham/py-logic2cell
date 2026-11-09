@@ -1,0 +1,8 @@
+greedy selection: 24 candidates in the pool, 24 trials, 6 cells kept (limit 10)
+baseline 86245.216 um2 -> 85972.4544 um2 (estimated areas, best of both, required designs): +0.32% reduction
+  1. dd2_gc1__f2b_1
+  2. dd2_gc1__f0017_1
+  3. dd2_gc1__f17_1
+  4. dd2_gc1__f001f_1
+  5. dd2_gc1__f0eef_1
+  6. dd2_gc1__f07ff_1

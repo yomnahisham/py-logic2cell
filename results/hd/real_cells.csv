@@ -1,0 +1,7 @@
+cell,buildable,status,estimated_um2,real_um2,area_error_percent,estimated_transistors,real_transistors,estimated_sites,real_sites,reason
+dd2_gc1__f2b_1,True,estimated,11.2608,,,12,12,9,9,the response names no Liberty file (files.liberty)
+dd2_gc1__f0017_1,True,estimated,11.2608,,,12,,9,,status fail: no Euler order can be drawn: B A | D C A B: no room for the A contact; B A | D C B A: no room for the B contact; B A | A B C D: no room for the B contact
+dd2_gc1__f17_1,True,estimated,10.0096,,,10,10,8,7,the response names no Liberty file (files.liberty)
+dd2_gc1__f001f_1,True,estimated,7.5072,,,8,8,6,6,the response names no Liberty file (files.liberty)
+dd2_gc1__f0eef_1,True,estimated,15.0144,,,16,16,12,14,the response names no Liberty file (files.liberty)
+dd2_gc1__f07ff_1,True,estimated,7.5072,,,8,8,6,6,the response names no Liberty file (files.liberty)
