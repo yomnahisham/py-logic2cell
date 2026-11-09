@@ -52,14 +52,14 @@ def yosys_version() -> str:
     return out
 
 
-def synthesize(tut: Path, lib: Path, tag: str, settings: dict) -> Path:
+def synthesize(tut: Path, lib: Path, tag: str, settings: dict, dont_use: str = DONT_USE) -> Path:
     folder = WORK / tag
     folder.mkdir(parents=True, exist_ok=True)
     netlist = folder / f"SPM.{tag}.gl.v"
     script = [f"read_verilog {' '.join(str(tut / s) for s in SOURCES)}", "hierarchy -check -top SPM", "proc", "opt",
               "synth -top SPM", "flatten", "opt",
               f"dfflibmap -liberty {lib}",
-              f"abc -D {settings['period_ps']} -constr {tut / 'abc_constr.txt'} -liberty {lib} {DONT_USE}",
+              f"abc -D {settings['period_ps']} -constr {tut / 'abc_constr.txt'} -liberty {lib} {dont_use}",
               "opt_clean -purge", f"write_verilog -noattr -noexpr {netlist}",
               f"tee -o {folder / 'stat.txt'} stat -liberty {lib}"]
     (folder / "synth.ys").write_text("\n".join(script) + "\n")

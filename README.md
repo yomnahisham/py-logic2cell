@@ -53,6 +53,11 @@ Option 2: map the designs onto the usable and reduced HD libraries (Table 1) →
 | `python -m src.cell.char_validate [--image dd2-ngspice-stock --tag _stock] [--full-ramp]` | installed HD cells | `results/char_validation<tag>.txt`, `_entries.csv`, `_caps.csv` |
 | `python -m src.cell.liberty_write validation` | `build/char/*/..._timing.json` | `libs/char_validation.lib`, `build/sta/hd_tt_ours.lib` (HD with the six cells replaced) |
 | `python -m src.cell.liberty_check <lib> ...` | Liberty files | `results/liberty_syntax.txt` (Yosys and OpenSTA) |
+| `python -m src.cell.deliver <request> [--grid-from <HD cell>] [--grid N]` | a built cell | step 8: characterized on the grid of the HD cell with the same function (inv_1's for a new function); `cells/<name>/cell.lib` (one cell group, ngspice version and sha256 in its header), `cell.v`, and `liberty`, `verilog`, `ngspice_sha256` added to `response.json` |
+| `python -m src.cell.model_check <request>` | a delivered cell | section 4.2 level 3 and the round trip of 3.3: Icarus on `cell.v` and the Liberty function, every input combination; the cell appended to `hd_reduced.lib`, a one-cell design mapped with scripts A and B and checked with ABC cec; `cells/<name>/model_check.json`, `checks.model` and `checks.round_trip` in the response |
+| `python -m src.cell.table6` | built and delivered Table 6 cells | `results/table6_vs_hd.csv` (width, area, slowest delay and slew at the point nearest 100 ps / 10 fF, against HD characterized by our flow and the shipped value), `results/table6_timing.csv` (every pin), `results/nor3_sizings.csv` (the two sizings of nor3) |
+| `python -m src.cell.design_use <Tutorial 4 folder>` | delivered cells, Tutorial 4's SPM and testbench | step 9: SPM mapped onto HD plus our cells (free, and with HD's versions of our functions dont_use), gate-level simulation and OpenSTA; `results/design_use.txt` |
+| `python -m src.cell.build <request> --style tuned` | a request | not required by the handout: searches inner-stage widths and series orders for the best width x delay; writes `cells_tuned/<name>/` |
 
 ## 5. Layout
 

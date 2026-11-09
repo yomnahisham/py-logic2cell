@@ -3,6 +3,8 @@
 PDK_ROOT ?= $(HOME)/.ciel
 GIVEN    ?= ../DD2_Project1_student_pack/given
 IN       ?=
+# Tutorial 4's folder: SPM, its testbench and constraints (step 9, src/cell/design_use.py)
+TUT4     ?= ../../tut4/student
 
 .PHONY: setup check test all demo clean table5
 
@@ -35,6 +37,7 @@ check:            ## tool versions, PDK, and the ngspice stress test for Option 
 	@echo "check: OK"
 
 test:             ## every test, including the broken cases in tests/broken/
+	$(PY) -m src.hd.liberty_writer --limit 10    # the Liberty the mapping test reads, else it skips
 	$(PY) -m pytest -q tests
 	$(PY) src/frame_check.py
 
@@ -53,10 +56,22 @@ all:              ## the whole flow
 	$(PY) -m src.hd.classes
 	$(PY) -m src.cell.rules
 	for r in requests/hd/*.json; do $(PY) -m src.cell.build $$r --hd $$(basename $$r .json) || exit 1; done
+	for r in requests/test/*.json; do $(PY) -m src.cell.build $$r || exit 1; done
+	for r in requests/hd/*.json requests/test/*.json; do \
+		$(PY) -m src.cell.deliver $$r && $(PY) -m src.cell.model_check $$r || exit 1; done
+	for r in requests/candidates/*.json; do \
+		$(PY) -m src.cell.build $$r && $(PY) -m src.cell.deliver $$r && $(PY) -m src.cell.model_check $$r \
+		|| echo "$$r: not delivered, see its response.json"; done
+	for r in requests/sizing/*.json; do $(PY) -m src.cell.build $$r || echo "$$r: refused, see its response.json"; done
+	$(PY) -m src.cell.table6
+	$(PY) -m src.cell.timing_vs_hd
+	$(PY) -m src.cell.design_use $(TUT4)
 
 demo:             ## what the interview runs: make demo IN=<request or design>
 	@test -n "$(IN)" || (echo "usage: make demo IN=<request or design>" && exit 1)
 	$(PY) -m src.cell.build $(IN)
+	$(PY) -m src.cell.deliver $(IN)
+	$(PY) -m src.cell.model_check $(IN)
 
 table5:           ## the characterizer validation of Table 5 (option 1 handout, section 5.1)
 	$(PY) -m src.cell.char_validate

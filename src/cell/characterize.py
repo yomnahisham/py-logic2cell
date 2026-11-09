@@ -232,12 +232,15 @@ def characterize_hd(short: str, grid: int | None = None, full_ramp: bool = False
                         read_setup(), full_ramp, image, tag)
 
 
-def hd_grids(short: str, pins: list[str], grid: int | None = None) -> dict:
-    """pin -> (slews, loads) from the cell_rise table of each of the HD cell's arcs."""
+def hd_grids(short: str, pins: list[str], grid: int | None = None, rename: dict | None = None) -> dict:
+    """pin -> (slews, loads) from the cell_rise table of each of the HD cell's arcs. rename maps our pin
+    to the HD cell's pin of the same role, when the names differ."""
     out = {}
     for a in read_cell(short).arcs:
         t = a.tables["cell_rise"] if "cell_rise" in a.tables else next(iter(a.tables.values()))
         out[a.pin] = (pick(t["index_1"], grid), pick(t["index_2"], grid))
+    if rename and all(rename.get(p) in out for p in pins):
+        return {p: out[rename[p]] for p in pins}
     if all(p in out for p in pins):
         return {p: out[p] for p in pins}
     # different pin names (a test cell's A, B, C against HD's A1, A2, B1): usable only if every arc of the
@@ -248,7 +251,7 @@ def hd_grids(short: str, pins: list[str], grid: int | None = None) -> dict:
 
 
 def characterize_ours(request: Path, grid_from: str, grid: int | None = None, full_ramp: bool = False,
-                      image: str = IMAGE, tag: str = "") -> dict:
+                      image: str = IMAGE, tag: str = "", rename: dict | None = None) -> dict:
     """Characterize one of our generated cells, as built by src.cell.build in build/cells/<name>/, on the
     table indexes of the HD cell grid_from (its HD counterpart, or a comparable x1 cell when there is none)."""
     from src.common.request import read_request
@@ -257,7 +260,7 @@ def characterize_ours(request: Path, grid_from: str, grid: int | None = None, fu
     if not (folder / f"{req.name}_pex.spice").exists():
         raise FileNotFoundError(f"{folder}: no extracted netlist; run python -m src.cell.build {request} first")
     stress(folder, req.name)
-    grids = hd_grids(grid_from, list(req.inputs), grid)
+    grids = hd_grids(grid_from, list(req.inputs), grid, rename)
     r = characterize(folder, req.name, f"{req.name}_sasb.spice", list(req.inputs), req.output, req.truth_table,
                      grids, read_setup(), full_ramp, image, tag)
     r["grid_from"] = PREFIX + grid_from

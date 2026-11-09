@@ -41,17 +41,33 @@ def _region(layout, cell, layer):
 
 
 def gate_owners(layout, cell) -> list[tuple[kdb.Polygon, str]]:
-    """Each poly shape, and the input whose li label reaches a poly contact on it ("?" if none)."""
+    """Each poly shape, and the input whose li label reaches a poly contact on it ("?" if none). The label
+    reaches along li, and across met1 where li pieces are bridged through mcon (a multi-stage cell routes a
+    net on met1 where li cannot, as in mux2_1)."""
+    from src.cell.layout import LAYER
     poly = list(_region(layout, cell, POLY).merged().each())
     li = list(_region(layout, cell, LI).merged().each())
     licon = _region(layout, cell, LICON)
+    mcon = _region(layout, cell, LAYER["mcon"])
+    group = list(range(len(li)))           # li pieces joined through mcon and one met1 shape
+
+    def root(i):
+        while group[i] != i:
+            i = group[i]
+        return i
+    for m in _region(layout, cell, LAYER["met1"]).merged().each():
+        cuts = mcon & kdb.Region(m)
+        touched = [i for i, w in enumerate(li) if not (kdb.Region(w) & cuts).is_empty()]
+        for i in touched[1:]:
+            group[root(i)] = root(touched[0])
     owner = {}
     index = layout.find_layer(*LI_LABEL)
     for s in (cell.shapes(index).each() if index is not None else []):
         if not s.is_text():
             continue
         point = kdb.Point(s.text_pos.x, s.text_pos.y)
-        wires = kdb.Region([w for w in li if w.inside(point)])
+        hit = {root(i) for i, w in enumerate(li) if w.inside(point)}
+        wires = kdb.Region([w for i, w in enumerate(li) if root(i) in hit])
         for i, shape in enumerate(poly):
             if not (kdb.Region(shape) & licon & wires).is_empty():
                 owner[i] = s.text_string
@@ -93,7 +109,23 @@ def fingers(gds: Path, top: str | None = None) -> list[dict]:
     return sorted(out, key=lambda f: (f["kind"], f["x"]))
 
 
-def annotate(netlist: Path, found: list[dict], out: Path) -> list[dict]:
+def ext_devices(ext: Path, found: list[dict]) -> list[tuple]:
+    """(kind, gate, terminal nets, gate centre x in um) of every transistor in Magic's .ext file. Lengths
+    there are in Magic's internal unit, found from a gate length (the layout's L over the .ext's l)."""
+    out = []
+    if not ext.exists():
+        return out
+    for line in ext.read_text().splitlines():
+        m = re.match(r'device msubckt sky130_fd_pr__([np])fet\S* (-?\d+) -?\d+ -?\d+ -?\d+ l=(\d+) w=\d+ "[^"]*" "([^"]+)" '
+                     r'\d+ \d+ "([^"]+)" \d+ \S+ "([^"]+)"', line)
+        if m:
+            kind, x, l, gate, t1, t2 = m.groups()
+            unit = found[0]["l"] / int(l)
+            out.append((kind, gate.rstrip("#"), frozenset(t.rstrip("#") for t in (t1, t2)), round((int(x) + int(l) / 2) * unit, 4)))
+    return out
+
+
+def annotate(netlist: Path, found: list[dict], out: Path, ext: list[tuple] = ()) -> list[dict]:
     """Copy netlist to out with sa= and sb= on every transistor. Returns what each device was given.
 
     SA and SB are written in the same units as that line's w= (Magic may write w in um with a scale
@@ -126,7 +158,13 @@ def annotate(netlist: Path, found: list[dict], out: Path) -> list[dict]:
         if not match:
             raise ValueError(f"{netlist.name}: {tok[0]} ({kind}, gate {gate}, w {w / scale:g} um) has no finger")
         if len({(f["sa"], f["sb"]) for f in match}) > 1:
-            raise ValueError(f"{netlist.name}: {tok[0]} matches fingers with different SA/SB: {match}")
+            # fingers of one input with different SA/SB: tell them apart by where Magic found the device
+            nets = {re.sub(r"\.t\d+$", "", t) for t in (tok[1], tok[3])}
+            at = [x for k, g, terms, x in ext if (k, g, terms) == (kind, gate, frozenset(nets))]
+            if len(set(at)) != 1:
+                raise ValueError(f"{netlist.name}: {tok[0]} matches fingers with different SA/SB: {match}, "
+                                 f"and {len(at)} devices in the .ext with its gate and terminals")
+            match = [min(match, key=lambda f: abs(f["x"] - at[0]))]
         f = match[0]
         kept = [t for t in tok if not re.match(r"(?i)s[ab]=", t)]
         lines[i] = " ".join(kept + [f"sa={f['sa'] * scale:.6g}", f"sb={f['sb'] * scale:.6g}"])
@@ -150,7 +188,15 @@ def probe(folder: Path, name: str) -> str:
 
 def stress(folder: Path, name: str) -> list[dict]:
     found = fingers(folder / f"{name}.gds", name)
-    given = annotate(folder / f"{name}_pex.spice", found, folder / f"{name}_sasb.spice")
+    ext = ext_devices(folder / f"{name}.ext", found)
+    # a gate on a net with no label (an installed HD cell labels only its pins) takes the net Magic found
+    # for the device at the same place
+    for f in found:
+        if f["gate"] == "?":
+            at = {g for k, g, _, x in ext if k == f["kind"] and abs(x - f["x"]) < 1e-3}
+            if len(at) == 1:
+                f["gate"] = at.pop()
+    given = annotate(folder / f"{name}_pex.spice", found, folder / f"{name}_sasb.spice", ext)
     (folder / f"{name}_sasb.json").write_text(json.dumps(dict(fingers=found, devices=given), indent=2) + "\n")
     return given
 
