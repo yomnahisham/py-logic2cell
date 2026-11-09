@@ -152,7 +152,7 @@ def annotate(netlist: Path, found: list[dict], out: Path, ext: list[tuple] = ())
     if netlist_count != count:
         raise ValueError(f"{netlist.name}: transistors per (type, gate) differ: netlist {dict(netlist_count)}, "
                          f"layout {dict(count)}")
-    given = []
+    given, taken = [], {}     # taken: (kind, gate, terminals) -> parallel fingers already paired
     for i, tok, kind, gate, w in devices:
         match = [f for f in found if f["kind"] == kind and f["gate"] == gate and abs(w / scale - f["w"]) < 1e-3]
         if not match:
@@ -160,11 +160,19 @@ def annotate(netlist: Path, found: list[dict], out: Path, ext: list[tuple] = ())
         if len({(f["sa"], f["sb"]) for f in match}) > 1:
             # fingers of one input with different SA/SB: tell them apart by where Magic found the device
             nets = {re.sub(r"\.t\d+$", "", t) for t in (tok[1], tok[3])}
-            at = [x for k, g, terms, x in ext if (k, g, terms) == (kind, gate, frozenset(nets))]
-            if len(set(at)) != 1:
+            key = (kind, gate, frozenset(nets))
+            at = sorted(x for k, g, terms, x in ext if (k, g, terms) == key)
+            if not at:
                 raise ValueError(f"{netlist.name}: {tok[0]} matches fingers with different SA/SB: {match}, "
-                                 f"and {len(at)} devices in the .ext with its gate and terminals")
-            match = [min(match, key=lambda f: abs(f["x"] - at[0]))]
+                                 f"and no device in the .ext with its gate and terminals")
+            # several devices with the same gate between the same two nets are fingers of one folded
+            # transistor, in parallel: any one-to-one pairing gives the same circuit, so the k-th such device
+            # of the netlist takes the k-th of them along the row
+            k = taken.get(key, 0)
+            if k >= len(at):
+                raise ValueError(f"{netlist.name}: more devices like {tok[0]} than the .ext has")
+            taken[key] = k + 1
+            match = [min(match, key=lambda f: abs(f["x"] - at[k]))]
         f = match[0]
         kept = [t for t in tok if not re.match(r"(?i)s[ab]=", t)]
         lines[i] = " ".join(kept + [f"sa={f['sa'] * scale:.6g}", f"sb={f['sb'] * scale:.6g}"])

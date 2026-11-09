@@ -14,8 +14,8 @@ Tools: Python 3.14.8 (gdsfactory 9.51.0, klayout 0.30.12), Magic 8.3.684, Netgen
 
     make setup     # links pdk/ and given/, makes .venv, builds the two containers: ~20 min the first time, seconds after
     make check     # tool versions and the ngspice stress test: ~1 s
-    make all       # the whole flow: ~1 min
-    make test      # every test and broken case: ~40 s
+    make all       # the whole flow: hours (every cell built, characterized and checked); not yet timed end to end
+    make test      # every test and broken case: ~75 s
 
 `make setup` expects the student pack next to this repo (`GIVEN=../DD2_Project1_student_pack/given`) and searches for the PDK under `~/.ciel`; override with `GIVEN=...`, `PDK_ROOT=...`, or `PDK=...`.
 
@@ -55,6 +55,8 @@ Option 2: map the designs onto the usable and reduced HD libraries (Table 1) →
 | `python -m src.cell.liberty_check <lib> ...` | Liberty files | `results/liberty_syntax.txt` (Yosys and OpenSTA) |
 | `python -m src.cell.deliver <request> [--grid-from <HD cell>] [--grid N]` | a built cell | step 8: characterized on the grid of the HD cell with the same function (inv_1's for a new function); `cells/<name>/cell.lib` (one cell group, ngspice version and sha256 in its header), `cell.v`, and `liberty`, `verilog`, `ngspice_sha256` added to `response.json` |
 | `python -m src.cell.model_check <request>` | a delivered cell | section 4.2 level 3 and the round trip of 3.3: Icarus on `cell.v` and the Liberty function, every input combination; the cell appended to `hd_reduced.lib`, a one-cell design mapped with scripts A and B and checked with ABC cec; `cells/<name>/model_check.json`, `checks.model` and `checks.round_trip` in the response |
+| `python -m src.cell.differences` | reference cells' `report.json`, `results/timing_vs_hd.csv` | `results/differences_vs_hd.md` (Table 4) |
+| `python -m src.cell.coverage [--limit N]` | every NPN class of 4-input functions | `results/coverage.csv`: which the generator can draw, layout only |
 | `python -m src.cell.table6` | built and delivered Table 6 cells | `results/table6_vs_hd.csv` (width, area, slowest delay and slew at the point nearest 100 ps / 10 fF, against HD characterized by our flow and the shipped value), `results/table6_timing.csv` (every pin), `results/nor3_sizings.csv` (the two sizings of nor3) |
 | `python -m src.cell.design_use <Tutorial 4 folder>` | delivered cells, Tutorial 4's SPM and testbench | step 9: SPM mapped onto HD plus our cells (free, and with HD's versions of our functions dont_use), gate-level simulation and OpenSTA; `results/design_use.txt` |
 | `python -m src.cell.build <request> --style tuned` | a request | not required by the handout: searches inner-stage widths and series orders for the best width x delay; writes `cells_tuned/<name>/` |
@@ -72,7 +74,12 @@ Option 2: map the designs onto the usable and reduced HD libraries (Table 1) →
 
 ## 6. Results
 
-- `cells/dd2_gc1__inv_1/`, `cells/dd2_gc1__nand2_1/`: both pass DRC (0 errors), LVS, RC-LVS, abutment (15 cases, 0 errors), the layer check and simulation; LVS-match the installed HD cells including W and L; 3 sites wide like HD; frame layers XOR to zero against HD.
+- `cells/dd2_gc1__<name>/`: every reference cell, Table 6 cell and delivered Option 2 candidate, each with GDS, schematic, extracted netlists, `cell.lib`, `cell.v`, `report.json`, `response.json`, `model_check.json` and `build.log`. All pass DRC (0 errors, in a row with tap cells), LVS, RC-LVS, abutment, the layer check, transistor-level simulation, the model check and the round trip.
+- `results/differences_vs_hd.md`: Table 4 for the six reference cells; every "must match" row matches. Widths equal HD's except o21ai_1 (+1 site: HD puts A2 and B1 in a row band, Table 2 wants them in the npc band).
+- `results/table6_vs_hd.csv`, `results/table6_timing.csv`: Table 6 against HD: width, area, and delay and slew at the point nearest 100 ps / 10 fF (HD characterized by our flow, and the shipped value). 10 of 14 as wide as HD.
+- `results/nor3_sizings.csv`: the two sizings of !(A | B | C) (hd 4 sites; stack 10 sites, folded as HD folds) and the cost of the high-Vt PMOS in rising delay.
+- `results/design_use.txt`: step 9, SPM mapped onto HD plus our cells, Tutorial 4's gate-level testbench passing, timed with OpenSTA.
+- `results/cellweaver_comparison.txt`: our widths against the public cellweaver generator on the same functions.
 - `results/design_rules.csv`: the rule behind every number in the layout; gate pitch 0.42 µm = poly.1a + 2 licon.11 + licon.1.
 - `results/frame_check.txt`, `results/layer_check_*.txt`: the HD frame and layer checks.
 - `results/table1.csv`: Table 1 reproduced exactly with Yosys 0.33.
@@ -110,6 +117,10 @@ Option 2: map the designs onto the usable and reduced HD libraries (Table 1) →
 | cut enumerator             | corrupted truth table, merge ignoring inverted edges, dominated cuts kept                                                               |
 | cut and Liberty writers    | corrupted cut output, missing request fields, unclosed Liberty cell; Yosys 0.33 import and mapping smoke tests                          |
 | redundancy checker         | every HD cell must come out Exists; Table 4 counts                                                                                      |
+| model level (Verilog, Liberty) | one wrong truth-table row in `cell.v`, and in the Liberty function (`tests/cell/test_model_check.py`)                              |
+| round trip (section 3.3)   | a Liberty function that is not the request's: no map is our cell alone                                                                  |
+| stage split fallback       | a split whose last stage takes the wrong net must fail the switch-level check (`tests/cell/test_operand_split.py`)                     |
+| stack sizing, unequal folding | rows with an input missing from one row have no common path (`tests/cell/test_stack_sizing.py`)                                    |
 
 ## 8. AI use
 
@@ -117,8 +128,10 @@ AGENTS.md · ai/use_log.md · ai/mistakes_log.md · report/ai_report.pdf
 
 ## 9. Limitations
 
-- Generated cells are not characterized yet and there is no Verilog model, so the model-level simulation of section 4.2 is not run; the generated Liberty extension carries placeholder timing from `inv_1`.
-- Option 2 works with estimated areas; real cells from Option 1 replace them in week 3.
+- Some Option 2 candidates are refused by the one-stage layout (12 transistors in one stage, too dense for one li track between the rows); a split into stages now builds them where it can, see `report/option1.md`.
+- met1 is used inside a cell only where li cannot route: multi-stage cells, and along a row in a folded (stack-sized) cell or a split network. The handout allows met1 inside multi-stage cells only; HD's own folded nor3_4 uses it too.
+- TT corner only; no power or leakage tables, no state-dependent (`when`) arcs, no LEF view or placement test.
+- Option 2 still maps with estimated areas until it reads the delivered cells (`src/hd/real_cells.py` on its branch).
 
 ## 10. Third-party files
 

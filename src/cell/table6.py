@@ -1,6 +1,6 @@
 """Table 6 cells against the installed HD cells (Option 1 handout, section 6): width and area.
 
-    python -m src.cell.table6          -> results/table6_vs_hd.csv
+    python -m src.cell.table6 [--sizings]   -> results/table6_vs_hd.csv (--sizings: only results/nor3_sizings.csv)
 
 Run after the cells are built (build/cells/<name>/ must hold their GDS and extraction). The five
 Table 6 functions that are also reference cells (section 4.1) are compared as built with --hd.
@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import csv
 import json
+import sys
 from pathlib import Path
 
 from src.cell import compare
@@ -195,6 +196,9 @@ if __name__ == "__main__":
         w = csv.DictWriter(f, fieldnames=list(sizings[0]))
         w.writeheader()
         w.writerows(sizings)
+    if "--sizings" in sys.argv:     # the two sizings of nor3 only
+        print(f"-> {SIZINGS_OUT}")
+        sys.exit(0)
     table = rows()
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with OUT.open("w", newline="") as f:

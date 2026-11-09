@@ -62,9 +62,12 @@ all:              ## the whole flow
 	for r in requests/candidates/*.json; do \
 		$(PY) -m src.cell.build $$r && $(PY) -m src.cell.deliver $$r && $(PY) -m src.cell.model_check $$r \
 		|| echo "$$r: not delivered, see its response.json"; done
-	for r in requests/sizing/*.json; do $(PY) -m src.cell.build $$r || echo "$$r: refused, see its response.json"; done
+	for r in requests/sizing/*.json; do $(PY) -m src.cell.build $$r && $(PY) -m src.cell.deliver $$r \
+		|| echo "$$r: not delivered, see its response.json"; done
 	$(PY) -m src.cell.table6
+	$(PY) -m src.cell.char_validate      # the six installed cells, characterized: timing_vs_hd compares with them
 	$(PY) -m src.cell.timing_vs_hd
+	$(PY) -m src.cell.differences
 	$(PY) -m src.cell.design_use $(TUT4)
 
 demo:             ## what the interview runs: make demo IN=<request or design>

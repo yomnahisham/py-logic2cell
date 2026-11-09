@@ -41,39 +41,94 @@ The steps of handout section 4:
 
 ## Ordering
 
-TODO from `results/table6_vs_hd.csv` (`breaks_ours`, `breaks_hd`) and each `cells/<name>/build.log`
-(the Euler orders tried and why each failed): which test functions have no common Euler path, and what the
-breaks cost in width.
+Every single-stage test function has a common Euler path: no Table 6 cell of one stage needed a
+diffusion break (`results/table6_vs_hd.csv`, `breaks_ours`). HD's own a22oi_1 uses two
+(`breaks_hd`), we use none at the same 6 sites. The breaks come from the multi-stage cells, where
+stages share no diffusion node to run on: a21o_1 has 1 (HD 1), mux2_1 2 (HD 0) and xor2_1 2 (HD 1).
+A break is cut only in the row whose net changes; where both rows keep the same net the row runs on
+(network.joined), as in HD's a21o_1.
+
+Cost: at a break the diffusion ends half a contact and licon.5a past the last contact and starts
+again diff/tap.3 later, so two contact centres sit 0.17/2 + 0.04 + 0.27 + 0.04 + 0.17/2 = 0.52 um
+apart where shared diffusion would have one contact (`results/design_rules.csv`: licon.1, licon.5a,
+diff/tap.3), a little over one site (0.46 um) per break. That is xor2_1's second site over HD
+(9 against 7 sites with 2 breaks against 1); mux2_1 absorbs its two breaks and stays at HD's 9 sites.
 
 ## Comparison with HD
 
-TODO from `results/table6_vs_hd.csv`, `results/table6_timing.csv`, `results/timing_vs_hd.txt` and
-`results/differences_vs_hd.md`.
+Widths (`results/table6_vs_hd.csv`): of the 14 Table 6 functions with an HD cell, 10 are as wide as
+HD and 4 wider: o21ai_1 and o22ai_1 by one site, maj3_1 by one, xor2_1 by two. All reference cells
+match HD's transistors including every W and L, its frame, pins and wiring layers (Table 4);
+`results/differences_vs_hd.md` gives each difference and its cause.
+
+- o21ai_1 (5 against 4 sites): HD puts the A2 and B1 inputs in a diffusion row band, outside the npc
+  band where Table 2 requires input pins; with all three pins in the npc band, the B1 contact needs a
+  0.6 um gate pitch where HD has 0.42 to 0.48 (`cells/dd2_gc1__o21ai_1/report.json`, `compare.gates`).
+- xor2_1: one break more than HD (Ordering).
+- o22ai_1 and maj3_1: TODO, not yet compared with HD layer by layer (they were built without `--hd`, so
+  their `report.json` has no `compare`); rebuild with `--hd o22ai_1` / `--hd maj3_1` to find the cause.
+
+Delay and slew at the HD table point nearest 100 ps and 10 fF (`results/table6_vs_hd.csv`), against the
+HD cell characterized by our own flow (the like-for-like comparison; the shipped value is in
+`delay_hd_shipped_ns`). Where we are as wide as HD the slowest delay is within 4.5%, except three
+multi-stage cells that are faster: and2_1 -17.6%, mux2_1 -18.7%, maj3_1 -17.6%. Their inner stages are
+x1 (0.65/1.00 um, handout step 3) where HD's are 0.42/0.42 um (the installed cells' SPICE netlists in the
+PDK against our `cell.spice`), so ours drive their output stage harder, at the price of more input
+capacitance. The wider cells cost delay where the
+extra site lengthens the output: o21ai_1 +2.4%, o22ai_1 +3.6%, xor2_1 +8.9%. Every pin's value is in
+`results/table6_timing.csv`.
+
+For the six reference cells, characterized on their own HD grid (`results/timing_vs_hd.txt`): the
+slowest arc differs from HD's by +0.1% (inv_1), +0.2% (nand2_1), +1.8% (nor2_1), -1.9% (nand3_1),
+-0.9% (a21oi_1) and +2.4% (o21ai_1), all within the characterizer's own error against the shipped
+Liberty (median 3.40%, Characterization), so none of these differences is a measured gain or loss.
+
+Use: in the round trip of section 3.3, ABC picks our cell from the whole reduced library for 19 of the
+25 delivered cells (`cells/<name>/model_check.json`, `chosen_freely`); the six it does not pick are
+those HD covers more cheaply (o21ai_1, o22ai_1, a31oi_1, maj3_1, xor2_1, or_and_maj). Mapped onto HD
+plus our cells, SPM uses 33 of them, 31 of them Option 2's candidate f077f, passes Tutorial 4's
+testbench, and times at 0.9161 ns worst path against 0.7728 ns with HD alone
+(`results/design_use.txt`, `results/spm_design_level.txt`): our cells make SPM slower, which is the
+measurement and not a reason to change it.
 
 ## Sizing
 
-The two sizings of !(A | B | C): `results/nor3_sizings.csv`. TODO numbers.
+The two sizings of !(A | B | C) (`results/nor3_sizings.csv`, `cells/dd2_gc1__nor3_1*/`):
 
-The stack sizing could not be drawn. Folded into three parallel chains, its PMOS row needs 18 transistors
-in 9 gate columns, and the best order (C B A A B C C B A) leaves B in three separate runs of gates, each
-needing its own poly contact in the one-track middle band; with a contact on almost every column, the
-output has no column left to cross between the rows (`cells/dd2_gc1__nor3_1_stack/build.log`: "no room
-for the B contact"; a much larger contact search fails the same way, so it is not the search budget). Its width is therefore given as
-the generator's lower bound, and its delay from the schematic, beside the hd sizing's schematic delay so
-the two compare like for like.
+- hd: every NMOS 0.65 um, every PMOS 1.00 um; 4 sites, 6 transistors.
+- stack: each transistor times the depth of its series stack, folded to fit its row
+  (`build.stacked`): NMOS 1 x 0.65 um each (depth 1), PMOS 3 fingers of 1.00 um each (depth 3, 3 um).
+  The rows then have different finger counts, 3 against 9; the Euler walk gives the PMOS row columns of
+  its own where the NMOS diffusion runs on under the gate, whose poly stops at the middle band. As HD
+  folds its nor3_2 (A A B B C C), each input's fingers sit side by side under one poly contact
+  (C C C B B B A A A), and the PMOS internal node p1, which then repeats along the row, is joined by
+  a met1 line along it: 10 sites, every check passed (`cells/dd2_gc1__nor3_1_stack/build.log`).
 
-What high-Vt PMOS costs in rising delay: the `schematic, standard-Vt PMOS` rows of the same file. TODO.
+TODO per-pin delay of both sizings once nor3_1_stack is characterized (overnight run).
 
-## Candidates from Option 2 that we could not build (overview, section 2, rule 3)
+Which to put in a library: TODO from those numbers.
 
-TODO the final list from `cells/dd2_gc1__f*/response.json`. So far, two single-stage candidates are refused:
-f011f (rank 1, `!((C & D) | ((A | B) & (C | D)))`) and f0017 (rank 5,
-`!(D | ((A | B) & (C | (A & B))))`). Both have 12 transistors in one stage. Over every Euler order of every
-series order (`cells/<name>/build.log`), half fail because the output has contacts on both sides of other
-nets' contacts in both rows and cannot be joined between the rows on li, and the rest because a poly
-contact finds no room in the middle band. Our generator joins the rows on li only and uses met1 just to
-bridge contacts in the middle band, as the handout allows met1 only inside multi-stage cells; a met1 path
-between the rows, or a split of these functions into two stages, would be the fix.
+What high-Vt PMOS costs in rising delay, measured on the hd sizing's schematic with pfet_01v8_hvt and
+again with pfet_01v8 (`results/nor3_sizings.csv`, views `schematic` and `schematic, standard-Vt PMOS`):
+cell_rise is 31.6% (A), 31.8% (B) and 32.6% (C) slower with high Vt, rise_transition 25.7 to 25.8%
+slower, and cell_fall unchanged (within 0.2%), since the NMOS do not change. In nor3 the rising output
+goes through three high-Vt PMOS in series, which is where the high Vt costs most.
+
+## Candidates from Option 2 (overview, section 2, rule 3)
+
+Option 2's candidate requests (`requests/candidates/`, ranks from `results/hd/ranked.json`). Delivered and
+checked so far: f001f, f077f (rank 6) and f17 (rank 9), each with Liberty and Verilog views, model check
+and round trip passed, and chosen freely by ABC (`cells/<name>/model_check.json`); f077f is the cell
+SPM uses 31 times in the design of step 9.
+
+TODO the final list after the overnight rebuild (`cells/dd2_gc1__f*/response.json`). Before the
+decomposition fallback, five were refused: the single-stage f011f (rank 1), f17ff (rank 4) and f0017
+(rank 5), 12 transistors each, and the two-stage f02ab (rank 2) and f2b (rank 3), whose complex stage is
+as dense. Over every Euler order of every series order (`cells/<name>/build.log`) these fail because the
+output has contacts on both sides of other nets' contacts in both rows and cannot cross between the rows
+on li, or because a poly contact finds no room in the one-track middle band. The fallback now splits
+such a stage (`network.operand_splits`, up to three levels), and a split network may join a row's
+contacts on met1; the rebuild says which of them that is enough for.
 
 ## Characterization
 
@@ -92,7 +147,12 @@ path by +0.5 ps (+0.06%) (`results/spm_design_level.txt`).
 
 Every cell is simulated at three levels: switch level (`build.log`, step 3), transistor level on the
 RC-extracted netlist (`report.json`, key `simulation`), and model level (`cells/<name>/model_check.json`).
-TODO: charge sharing found by the transient, from each `report.json`.
+All 25 delivered cells, and nor3_1_stack, pass all three. The transient visits every input
+combination and toggles each input from every state, with the slew and load of the HD table point; Y
+must come within 10% of the right rail before the next edge and never cross VDD/2 when it should hold
+(`src/cell/simulate.py`). No cell failed either test, so the transient found no charge sharing large
+enough to matter at that load, and we changed nothing for it. The deepest stacks (three in series:
+nand3_1, nor3_1, a31oi_1, o31ai_1 and the 4-input cells) are where it would show first.
 
 ## Limits
 
