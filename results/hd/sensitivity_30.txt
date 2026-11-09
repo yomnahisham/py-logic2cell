@@ -1,0 +1,5 @@
+30% experiment: dd2_gc1__f011f_1 area x 0.7 (estimated area), 10 new cells, required designs, best of scripts A and B
+baseline 86245.216 um2
+with the new cells 86045.024 um2 (reduction +0.23%)
+with dd2_gc1__f011f_1 30% smaller 86045.024 um2 (reduction +0.23%)
+dd2_gc1__f011f_1 used 11 times before, 43 times after (all designs, both scripts)

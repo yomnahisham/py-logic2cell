@@ -11,8 +11,12 @@ logical-effort model anchored on HD's inv_1, read from hd_reduced.lib:
   - output transition: inv_1's, times the depth of the last stage's network;
   - timing_sense: from the function (positive, negative or non-unate in that input).
 
-    python -m src.hd.liberty_writer [--limit 10] [--names <cell> ...]
-        -> libs/new_cells.lib (the new cell groups), build/libs/hd_reduced_ext.lib (the whole file)
+    python -m src.hd.liberty_writer [--limit 10 | --names <cell> ... | --final-set [<path>]]
+                                    [--scale <cell>=<factor> ...] [--real] [--out <lib>]
+        -> libs/new_cells.lib (the new cell groups), build/libs/hd_reduced_ext.lib (the whole file);
+           with --real, libs/new_cells_real.lib and build/libs/hd_reduced_real.lib, the real cells
+           from Option 1 in place of their estimated entries (src.hd.real_cells);
+           with --out, only the whole file, at that path (for the greedy selection's trials)
 """
 
 from __future__ import annotations
@@ -20,16 +24,19 @@ from __future__ import annotations
 import argparse
 import re
 import sys
+from pathlib import Path
 
 from src.common.stage import FULL, widen
 from src.hd.cost import Cost, cost, gated, rises
-from src.hd.liberty import _CELL_GROUP, _PIN_GROUP, _braced_groups
-from src.hd.request_writer import LIMIT, selected
+from src.hd.liberty import _AREA, _CELL_GROUP, _PIN_GROUP, _braced_groups
+from src.hd.request_writer import LIMIT, add_choice_arguments, chosen_names, selected
 from src.paths import PREFIX, ROOT
 
 REDUCED = ROOT / "given/hd_reduced.lib"
 NEW_CELLS = ROOT / "libs/new_cells.lib"
 EXTENDED = ROOT / "build/libs/hd_reduced_ext.lib"
+NEW_CELLS_REAL = ROOT / "libs/new_cells_real.lib"
+EXTENDED_REAL = ROOT / "build/libs/hd_reduced_real.lib"
 # Option 1 handout, section 6: HD cells are compared at the table point nearest 100 ps and 10 fF
 # (the library's units are ns and pF)
 REF_SLEW, REF_LOAD = 0.1, 0.01
@@ -119,23 +126,73 @@ def extend(library: str, groups: str) -> str:
     return library[:end] + groups + library[end:]
 
 
+def parse_scale(items: list[str] | None) -> dict[str, float]:
+    """--scale <cell>=<factor> arguments as {cell: factor}."""
+    scale = {}
+    for item in items or []:
+        name, _, factor = item.partition("=")
+        try:
+            value = float(factor)
+        except ValueError:
+            raise SystemExit(f"--scale needs <cell>=<factor>, got {item!r}") from None
+        if not name or value <= 0:
+            raise SystemExit(f"--scale needs a cell name and a positive factor, got {item!r}")
+        scale[name] = value
+    return scale
+
+
+def scale_area(group: str, factor: float) -> str:
+    """A cell group with its area multiplied by factor."""
+    return _AREA.sub(lambda m: f"area : {round(float(m[1]) * factor, 4)};", group, count=1)
+
+
+def groups(cells: list[dict], library: str, scale: dict[str, float] | None = None,
+           real: dict[str, str] | None = None) -> str:
+    """The cell groups of `cells`: the real group where `real` has one (section 4, step 11), the
+    estimated one otherwise; the area of each cell in `scale` multiplied by its factor (step 12:
+    one cell made 30% smaller is a factor of 0.7)."""
+    scale, real = scale or {}, real or {}
+    unknown = set(scale) - {c["name"] for c in cells}
+    if unknown:
+        raise SystemExit(f"--scale names cells that are not in the library: {sorted(unknown)}")
+    ref = reference(library)
+    return "".join(scale_area(real.get(c["name"]) or cell_group(c, ref), scale.get(c["name"], 1)) for c in cells)
+
+
 def main(argv: list[str]):
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    parser.add_argument("--limit", type=int, default=LIMIT)
-    parser.add_argument("--names", nargs="*")
+    add_choice_arguments(parser, limit_default=LIMIT)
+    parser.add_argument("--scale", nargs="+", metavar="CELL=FACTOR", help="multiply these cells' areas")
+    parser.add_argument("--out", type=Path, help="write only this whole library (libs/new_cells.lib is left alone)")
+    parser.add_argument("--real", action="store_true",
+                        help="use the real cells Option 1 returned (src.hd.real_cells) where they pass the checks")
     args = parser.parse_args(argv)
     library = REDUCED.read_text()
-    ref = reference(library)
-    cells = selected(args.limit, args.names)
-    groups = "".join(cell_group(c, ref) for c in cells)
-    header = ("/* New cells for hd_reduced.lib, written by src/hd/liberty_writer.py from results/hd/ranked.json.\n"
-              "   Areas are estimates from the area model; capacitance and timing are placeholders\n"
-              f"   scaled from {PREFIX}inv_1 at {REF_SLEW} ns and {REF_LOAD} pF. */\n")
-    NEW_CELLS.parent.mkdir(parents=True, exist_ok=True)
-    NEW_CELLS.write_text(header + groups)
-    EXTENDED.parent.mkdir(parents=True, exist_ok=True)
-    EXTENDED.write_text(extend(library, groups))
-    print(f"{len(cells)} new cells -> {NEW_CELLS.relative_to(ROOT)}, {EXTENDED.relative_to(ROOT)}")
+    cells = selected(args.limit, chosen_names(args), args.ranked)
+    real = {}
+    if args.real:
+        from src.hd.real_cells import intake
+        for c in cells:
+            r = intake(c)
+            print(f"  {c['name']}: {'real' if r.group else 'estimated'} ({r.reason})")
+            if r.group:
+                real[c["name"]] = r.group
+    text = groups(cells, library, parse_scale(args.scale), real)
+    out = args.out or (EXTENDED_REAL if args.real else EXTENDED)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(extend(library, text))
+    written = [out]
+    if args.out is None:
+        header = ("/* New cells for hd_reduced.lib, written by src/hd/liberty_writer.py from results/hd/ranked.json.\n"
+                  + (f"   Real cells from Option 1: {', '.join(real) or 'none'}; the others are estimates.\n"
+                     if args.real else "")
+                  + "   Estimated areas come from the area model; their capacitance and timing are placeholders\n"
+                  f"   scaled from {PREFIX}inv_1 at {REF_SLEW} ns and {REF_LOAD} pF. */\n")
+        groups_file = NEW_CELLS_REAL if args.real else NEW_CELLS
+        groups_file.parent.mkdir(parents=True, exist_ok=True)
+        groups_file.write_text(header + text)
+        written.insert(0, groups_file)
+    print(f"{len(cells)} new cells -> {', '.join(map(str, written))}")
 
 
 if __name__ == "__main__":

@@ -5,8 +5,10 @@ GIVEN    ?= ../DD2_Project1_student_pack/given
 IN       ?=
 # Tutorial 4's folder: SPM, its testbench and constraints (step 9, src/cell/design_use.py)
 TUT4     ?= ../../tut4/student
+TOP      ?=
+SV       ?=
 
-.PHONY: setup check test all demo clean table5
+.PHONY: setup check test all demo demo2 clean table5
 
 PDK      ?= $(firstword $(wildcard $(PDK_ROOT)/sky130A $(PDK_ROOT)/ciel/sky130/versions/*/sky130A))
 PY       := .venv/bin/python
@@ -64,6 +66,11 @@ all:              ## the whole flow
 		|| echo "$$r: not delivered, see its response.json"; done
 	for r in requests/sizing/*.json; do $(PY) -m src.cell.build $$r && $(PY) -m src.cell.deliver $$r \
 		|| echo "$$r: not delivered, see its response.json"; done
+	# Option 2 with the cells Option 1 delivered (Appendix A responses)
+	$(PY) -m src.hd.real_cells
+	$(PY) -m src.hd.sensitivity
+	$(PY) -m src.hd.sta
+	$(PY) -m src.hd.analysis
 	$(PY) -m src.cell.table6
 	$(PY) -m src.cell.char_validate      # the six installed cells, characterized: timing_vs_hd compares with them
 	$(PY) -m src.cell.timing_vs_hd
@@ -75,6 +82,10 @@ demo:             ## what the interview runs: make demo IN=<request or design>
 	$(PY) -m src.cell.build $(IN)
 	$(PY) -m src.cell.deliver $(IN)
 	$(PY) -m src.cell.model_check $(IN)
+
+demo2:            ## option 2 on one design: make demo2 IN=<design.v> TOP=<top module> [SV=1 for SystemVerilog]
+	@test -n "$(IN)" -a -n "$(TOP)" || (echo "usage: make demo2 IN=<design.v> TOP=<top module> [SV=1]" && exit 1)
+	$(PY) -m src.hd.demo $(IN) $(TOP) $(if $(SV),--sv)
 
 table5:           ## the characterizer validation of Table 5 (option 1 handout, section 5.1)
 	$(PY) -m src.cell.char_validate
