@@ -1,0 +1,25 @@
+Test-cell characterization (section 5), ngspice sha256 8098c56b7b7f4bf03daf3d296e3b8ec9115d74ef90d1ac5f1d1e3428477deea2, image dd2-layout-tools
+
+request         cell                       grid from                  same ngspice minutes  errors
+a21o_1          dd2_gc1__a21o_1            sky130_fd_sc_hd__a21o_1    yes             10.1  0
+a21oi_1         dd2_gc1__a21oi_1           sky130_fd_sc_hd__a21oi_1   yes             kept  0
+a22oi_1         dd2_gc1__a22oi_1           sky130_fd_sc_hd__a22oi_1   yes             14.7  0
+a31oi_1         dd2_gc1__a31oi_1           sky130_fd_sc_hd__a31oi_1   yes             11.9  0
+and2_1          dd2_gc1__and2_1            sky130_fd_sc_hd__and2_1    yes             kept  0
+and_a_or_b_cd   dd2_gc1__and_a_or_b_cd     sky130_fd_sc_hd__a32oi_1   yes             14.1  0
+inv_1           dd2_gc1__inv_1             sky130_fd_sc_hd__inv_1     yes             kept  0
+maj3_1          dd2_gc1__maj3_1            sky130_fd_sc_hd__maj3_1    yes             11.8  0
+mux2_1          dd2_gc1__mux2_1            sky130_fd_sc_hd__mux2_1    yes             13.5  0
+nand2_1         dd2_gc1__nand2_1           sky130_fd_sc_hd__nand2_1   yes             kept  0
+nand3_1         dd2_gc1__nand3_1           sky130_fd_sc_hd__nand3_1   yes             kept  0
+nor2_1          dd2_gc1__nor2_1            sky130_fd_sc_hd__nor2_1    yes             kept  0
+nor3_1          dd2_gc1__nor3_1            sky130_fd_sc_hd__nor3_1    yes              3.4  0
+o21ai_1         dd2_gc1__o21ai_1           sky130_fd_sc_hd__o21ai_1   yes             kept  0
+o22ai_1         dd2_gc1__o22ai_1           sky130_fd_sc_hd__o22ai_1   yes             15.2  0
+o31ai_1         dd2_gc1__o31ai_1           sky130_fd_sc_hd__o31ai_1   yes             kept  0
+or_a_and_b_cd   dd2_gc1__or_a_and_b_cd     sky130_fd_sc_hd__a221oi_1  yes             11.6  0
+or_and_maj      dd2_gc1__or_and_maj        sky130_fd_sc_hd__maj3_1    yes             25.7  0
+or_and_maj_n    dd2_gc1__or_and_maj_n      sky130_fd_sc_hd__a22oi_1   yes             17.8  0
+xor2_1          dd2_gc1__xor2_1            sky130_fd_sc_hd__xor2_1    yes              5.7  0
+
+20 of 20 cells characterized with no error on one ngspice build: PASS

@@ -1,0 +1,52 @@
+Table 6 against HD (section 6): worst arc over all pins at the HD table point nearest 100 ps / 10 fF; HD measured by our flow, [shipped Liberty]
+ngspice sha256 8098c56b7b7f4bf03daf3d296e3b8ec9115d74ef90d1ac5f1d1e3428477deea2
+
+cell                     sites          area um2        delay ps ours/HD    diff [shipped]         slew ps ours/HD    diff [shipped]  max pin cap fF ours/HD    diff [shipped]  HD run
+nand2_1                  3/3     3.7536/3.7536        139.54/139.21        +0.2% [ 135.48]      106.46/106.15        +0.3% [ 101.33]       2.419/2.446         -1.1% [  2.324]  full grid
+nor2_1                   3/3     3.7536/3.7536        179.56/176.34        +1.8% [ 171.44]      150.77/147.30        +2.4% [ 141.89]       2.390/2.437         -1.9% [  2.373]  full grid
+nand3_1                  5/4      6.256/5.0048        154.76/155.82        -0.7% [ 151.34]      121.82/122.98        -0.9% [ 116.62]       2.446/2.451         -0.2% [  2.395]  full grid
+nor3_1                   5/4      6.256/5.0048        380.90/381.06        -0.0% [ 367.14]      384.57/384.90        -0.1% [ 369.35]       2.389/2.500         -4.5% [  2.441]  one point
+a21oi_1                  5/4      6.256/5.0048        224.91/218.58        +2.9% [ 213.01]      179.41/178.06        +0.8% [ 170.18]       2.347/2.428         -3.3% [  2.352]  full grid
+o21ai_1                  5/4      6.256/5.0048        222.86/205.33        +8.5% [ 199.57]      186.97/170.72        +9.5% [ 163.18]       2.332/2.513         -7.2% [  2.459]  full grid
+a22oi_1                  6/6     7.5072/7.5072        259.59/269.81        -3.8% [ 258.12]      211.67/236.19       -10.4% [ 223.46]       2.345/2.401         -2.3% [  2.377]  one point
+o22ai_1                  6/5     7.5072/6.256         345.94/342.77        +0.9% [ 335.71]      366.28/363.17        +0.9% [ 340.73]       2.311/2.457         -5.9% [  2.431]  one point
+and2_1                   5/5      6.256/6.256         159.58/204.89       -22.1% [ 214.19]       99.30/102.60        -3.2% [ 102.14]       2.349/1.502        +56.4% [  1.496]  one point
+a21o_1                   7/6     8.7584/7.5072        242.12/233.23        +3.8% [ 233.54]       95.95/94.21         +1.8% [  92.39]       2.336/2.418         -3.4% [  2.420]  one point
+mux2_1                  10/9     12.512/11.2608       276.49/372.61       -25.8% [ 375.14]      109.02/98.89        +10.2% [  96.80]       5.744/3.494        +64.4% [  3.402]  one point
+maj3_1                   9/8    11.2608/10.0096       310.90/400.47       -22.4% [ 412.12]      101.03/107.59        -6.1% [ 105.11]       4.654/3.004        +54.9% [  3.052]  one point
+xor2_1                  11/7    13.7632/8.7584        262.30/223.32       +17.5% [ 219.91]      210.48/181.59       +15.9% [ 176.91]       5.394/4.519        +19.4% [  4.377]  one point
+o31ai_1                  6/6     7.5072/7.5072        442.63/433.95        +2.0% [ 421.24]      428.25/423.26        +1.2% [ 409.82]       2.317/2.531         -8.5% [  2.525]  full grid
+
+pins (ours->HD), and the worst arcs:
+  dd2_gc1__nand2_1: A->A B->B; delay B cell_rise / HD B cell_rise; slew B rise_transition / HD B rise_transition; largest cap B / HD B
+  dd2_gc1__nor2_1: A->A B->B; delay A cell_rise / HD A cell_rise; slew A rise_transition / HD B rise_transition; largest cap A / HD A
+  dd2_gc1__nand3_1: A->A B->B C->C; delay B cell_rise / HD B cell_rise; slew B rise_transition / HD B rise_transition; largest cap C / HD C
+  dd2_gc1__nor3_1: A->A B->B C->C; delay C cell_rise / HD A cell_rise; slew B rise_transition / HD B rise_transition; largest cap C / HD A
+  dd2_gc1__a21oi_1: A1->A1 A2->A2 B1->B1; delay A2 cell_rise / HD A2 cell_rise; slew A2 rise_transition / HD A2 rise_transition; largest cap B1 / HD B1
+  dd2_gc1__o21ai_1: A1->A1 A2->A2 B1->B1; delay A1 cell_rise / HD A1 cell_rise; slew A1 rise_transition / HD A1 rise_transition; largest cap A1 / HD A2
+  dd2_gc1__a22oi_1: A->A1 B->A2 C->B1 D->B2; delay D cell_rise / HD A2 cell_rise; slew D rise_transition / HD B2 rise_transition; largest cap B / HD A2
+  dd2_gc1__o22ai_1: A->A1 B->A2 C->B1 D->B2; delay D cell_rise / HD A1 cell_rise; slew C rise_transition / HD A1 rise_transition; largest cap D / HD A2
+  dd2_gc1__and2_1: A->A B->B; delay B cell_fall / HD B cell_fall; slew B rise_transition / HD A rise_transition; largest cap A / HD A
+  dd2_gc1__a21o_1: A->A1 B->A2 C->B1; delay B cell_fall / HD A2 cell_fall; slew B rise_transition / HD A1 rise_transition; largest cap B / HD B1
+  dd2_gc1__mux2_1: A->A0 B->A1 C->S; delay B cell_fall / HD S cell_fall; slew B rise_transition / HD A1 rise_transition; largest cap C / HD S
+  dd2_gc1__maj3_1: A->A B->B C->C; delay B cell_fall / HD A cell_fall; slew B rise_transition / HD B rise_transition; largest cap A / HD C
+  dd2_gc1__xor2_1: A->A B->B; delay B cell_rise / HD A cell_rise; slew B rise_transition / HD A rise_transition; largest cap A / HD A
+  dd2_gc1__o31ai_1: A1->A1 A2->A2 A3->A3 B1->B1; delay A3 cell_rise / HD A1 cell_rise; slew A3 rise_transition / HD A3 rise_transition; largest cap B1 / HD A2
+
+input capacitance per pin, fF, ours/HD (largest difference first):
+  nand2_1          B->B 2.42/2.45 (-1%)  A->A 2.34/2.34 (-0%)
+  nor2_1           A->A 2.39/2.44 (-2%)  B->B 2.35/2.38 (-1%)
+  nand3_1          B->B 2.32/2.40 (-3%)  A->A 2.25/2.31 (-2%)  C->C 2.45/2.45 (-0%)
+  nor3_1           A->A 2.24/2.50 (-10%)  B->B 2.28/2.44 (-7%)  C->C 2.39/2.31 (+3%)
+  a21oi_1          A1->A1 2.24/2.37 (-6%)  B1->B1 2.35/2.43 (-3%)  A2->A2 2.32/2.37 (-2%)
+  o21ai_1          A2->A2 2.28/2.51 (-9%)  A1->A1 2.33/2.38 (-2%)  B1->B1 2.07/2.10 (-1%)
+  a22oi_1          A->A1 2.22/2.35 (-5%)  C->B1 2.21/2.30 (-4%)  B->A2 2.34/2.40 (-2%)  D->B2 2.31/2.36 (-2%)
+  o22ai_1          C->B1 2.23/2.43 (-8%)  A->A1 2.18/2.35 (-7%)  B->A2 2.29/2.46 (-7%)  D->B2 2.31/2.26 (+2%)
+  and2_1           B->B 2.32/1.41 (+65%)  A->A 2.35/1.50 (+56%)
+  a21o_1           A->A1 2.25/2.40 (-6%)  C->B1 2.33/2.42 (-4%)  B->A2 2.34/2.40 (-3%)
+  mux2_1           C->S 5.74/3.49 (+64%)  A->A0 2.22/1.65 (+35%)  B->A1 2.24/1.74 (+29%)
+  maj3_1           B->B 4.38/2.41 (+81%)  A->A 4.65/2.82 (+65%)  C->C 2.21/3.00 (-26%)
+  xor2_1           B->B 5.37/4.40 (+22%)  A->A 5.39/4.52 (+19%)
+  o31ai_1          A2->A2 2.27/2.53 (-10%)  A3->A3 2.30/2.47 (-7%)  A1->A1 2.24/2.39 (-6%)  B1->B1 2.32/2.42 (-4%)
+
+14 of 14 Table 6 cells compared: PASS

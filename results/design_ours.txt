@@ -1,0 +1,14 @@
+SPM mapped onto HD plus our generated cells (section 4 step 9): Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334); OpenSTA in dd2-opensta
+settings from /Users/abdurahmanmahmoud/Desktop/University/tut 4/student: ABC -D 1250 ps (also the clock period), driving cell sky130_fd_sc_hd__inv_1, output load 33.44 fF
+library build/sta/hd_plus_ours.lib: sky130_fd_sc_hd__tt_025C_1v80.lib plus 20 cells from cells/*/cell.lib, ngspice sha256 8098c56b7b7f4bf03daf3d296e3b8ec9115d74ef90d1ac5f1d1e3428477deea2
+
+hd            worst path 0.7727 ns, worst slack +0.3623 ns, 329 cells, area 2952.832000 um2, _561_ -> _562_
+hd_plus_ours  worst path 0.7285 ns, worst slack +0.4066 ns, 360 cells, area 3069.193600 um2, _623_ -> _624_
+
+change in worst delay: -44.2 ps (-5.72%); area +116.362 um2
+
+our cells chosen by ABC: 1 instances of 1 cells
+  dd2_gc1__and2_1            1
+  not used: dd2_gc1__a21o_1, dd2_gc1__a21oi_1, dd2_gc1__a22oi_1, dd2_gc1__a31oi_1, dd2_gc1__and_a_or_b_cd, dd2_gc1__inv_1, dd2_gc1__maj3_1, dd2_gc1__mux2_1, dd2_gc1__nand2_1, dd2_gc1__nand3_1, dd2_gc1__nor2_1, dd2_gc1__nor3_1, dd2_gc1__o21ai_1, dd2_gc1__o22ai_1, dd2_gc1__o31ai_1, dd2_gc1__or_a_and_b_cd, dd2_gc1__or_and_maj, dd2_gc1__or_and_maj_n, dd2_gc1__xor2_1
+
+design mapped with at least one generated cell and timed: PASS

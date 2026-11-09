@@ -9,7 +9,8 @@
   "area_um2": 11.2608,
   "files": {
     "gds": "cells/dd2_gc1__or_and_maj_n/cell.gds",
-    "report": "cells/dd2_gc1__or_and_maj_n/report.json"
+    "report": "cells/dd2_gc1__or_and_maj_n/report.json",
+    "liberty": "cells/dd2_gc1__or_and_maj_n/cell.lib"
   },
   "checks": {
     "drc": 0,
@@ -19,5 +20,6 @@
     "abutment": 0,
     "layers": "pass"
   },
-  "tool_version": "git:06785c1"
+  "tool_version": "git:06785c1",
+  "ngspice_sha256": "8098c56b7b7f4bf03daf3d296e3b8ec9115d74ef90d1ac5f1d1e3428477deea2"
 }
