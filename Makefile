@@ -40,6 +40,7 @@ check:            ## tool versions, PDK, and the ngspice stress test for Option 
 
 test:             ## every test, including the broken cases in tests/broken/
 	$(PY) -m src.hd.liberty_writer --limit 10    # the Liberty the mapping test reads, else it skips
+	$(PY) -m src.cell.characterize hd inv_1 --grid 2 --tag _test > /dev/null    # SA/SB of inv_1 for test_characterize, else it skips
 	$(PY) -m pytest -q tests
 	$(PY) src/frame_check.py
 
