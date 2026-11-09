@@ -1,0 +1,1304 @@
+build dd2_gc1__f0017_1.json, style handout, git:6326eba, 2026-11-09 07:40 UTC
+
+== 1. request
+name dd2_gc1__f0017_1, id GC1-0017, inputs A, B, C, D, output Y, truth table 0x0017, sizing hd
+
+== 2. network
+one stage (32 series orders)
+variant 0: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate A: Y - n1
+    nMOS gate B: Y - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate A: n1 - n2
+    nMOS gate B: n2 - VGND
+    pMOS gate D: Y - p1
+    pMOS gate A: p1 - p2
+    pMOS gate B: p2 - VPWR
+    pMOS gate C: p1 - p3
+    pMOS gate A: p3 - VPWR
+    pMOS gate B: p3 - VPWR
+variant 1: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate A: Y - n1
+    nMOS gate B: Y - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate A: n1 - n2
+    nMOS gate B: n2 - VGND
+    pMOS gate D: Y - p1
+    pMOS gate A: p1 - p2
+    pMOS gate B: p2 - VPWR
+    pMOS gate A: p1 - p3
+    pMOS gate B: p1 - p3
+    pMOS gate C: p3 - VPWR
+variant 2: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate A: Y - n1
+    nMOS gate B: Y - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate A: n1 - n2
+    nMOS gate B: n2 - VGND
+    pMOS gate D: Y - p1
+    pMOS gate B: p1 - p2
+    pMOS gate A: p2 - VPWR
+    pMOS gate C: p1 - p3
+    pMOS gate A: p3 - VPWR
+    pMOS gate B: p3 - VPWR
+variant 3: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate A: Y - n1
+    nMOS gate B: Y - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate A: n1 - n2
+    nMOS gate B: n2 - VGND
+    pMOS gate D: Y - p1
+    pMOS gate B: p1 - p2
+    pMOS gate A: p2 - VPWR
+    pMOS gate A: p1 - p3
+    pMOS gate B: p1 - p3
+    pMOS gate C: p3 - VPWR
+variant 4: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate A: Y - n1
+    nMOS gate B: Y - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate A: n1 - n2
+    nMOS gate B: n2 - VGND
+    pMOS gate A: Y - p2
+    pMOS gate B: p2 - p1
+    pMOS gate C: Y - p3
+    pMOS gate A: p3 - p1
+    pMOS gate B: p3 - p1
+    pMOS gate D: p1 - VPWR
+variant 5: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate A: Y - n1
+    nMOS gate B: Y - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate A: n1 - n2
+    nMOS gate B: n2 - VGND
+    pMOS gate A: Y - p2
+    pMOS gate B: p2 - p1
+    pMOS gate A: Y - p3
+    pMOS gate B: Y - p3
+    pMOS gate C: p3 - p1
+    pMOS gate D: p1 - VPWR
+variant 6: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate A: Y - n1
+    nMOS gate B: Y - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate A: n1 - n2
+    nMOS gate B: n2 - VGND
+    pMOS gate B: Y - p2
+    pMOS gate A: p2 - p1
+    pMOS gate C: Y - p3
+    pMOS gate A: p3 - p1
+    pMOS gate B: p3 - p1
+    pMOS gate D: p1 - VPWR
+variant 7: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate A: Y - n1
+    nMOS gate B: Y - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate A: n1 - n2
+    nMOS gate B: n2 - VGND
+    pMOS gate B: Y - p2
+    pMOS gate A: p2 - p1
+    pMOS gate A: Y - p3
+    pMOS gate B: Y - p3
+    pMOS gate C: p3 - p1
+    pMOS gate D: p1 - VPWR
+variant 8: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate A: Y - n1
+    nMOS gate B: Y - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate B: n1 - n2
+    nMOS gate A: n2 - VGND
+    pMOS gate D: Y - p1
+    pMOS gate A: p1 - p2
+    pMOS gate B: p2 - VPWR
+    pMOS gate C: p1 - p3
+    pMOS gate A: p3 - VPWR
+    pMOS gate B: p3 - VPWR
+variant 9: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate A: Y - n1
+    nMOS gate B: Y - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate B: n1 - n2
+    nMOS gate A: n2 - VGND
+    pMOS gate D: Y - p1
+    pMOS gate A: p1 - p2
+    pMOS gate B: p2 - VPWR
+    pMOS gate A: p1 - p3
+    pMOS gate B: p1 - p3
+    pMOS gate C: p3 - VPWR
+variant 10: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate A: Y - n1
+    nMOS gate B: Y - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate B: n1 - n2
+    nMOS gate A: n2 - VGND
+    pMOS gate D: Y - p1
+    pMOS gate B: p1 - p2
+    pMOS gate A: p2 - VPWR
+    pMOS gate C: p1 - p3
+    pMOS gate A: p3 - VPWR
+    pMOS gate B: p3 - VPWR
+variant 11: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate A: Y - n1
+    nMOS gate B: Y - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate B: n1 - n2
+    nMOS gate A: n2 - VGND
+    pMOS gate D: Y - p1
+    pMOS gate B: p1 - p2
+    pMOS gate A: p2 - VPWR
+    pMOS gate A: p1 - p3
+    pMOS gate B: p1 - p3
+    pMOS gate C: p3 - VPWR
+variant 12: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate A: Y - n1
+    nMOS gate B: Y - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate B: n1 - n2
+    nMOS gate A: n2 - VGND
+    pMOS gate A: Y - p2
+    pMOS gate B: p2 - p1
+    pMOS gate C: Y - p3
+    pMOS gate A: p3 - p1
+    pMOS gate B: p3 - p1
+    pMOS gate D: p1 - VPWR
+variant 13: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate A: Y - n1
+    nMOS gate B: Y - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate B: n1 - n2
+    nMOS gate A: n2 - VGND
+    pMOS gate A: Y - p2
+    pMOS gate B: p2 - p1
+    pMOS gate A: Y - p3
+    pMOS gate B: Y - p3
+    pMOS gate C: p3 - p1
+    pMOS gate D: p1 - VPWR
+variant 14: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate A: Y - n1
+    nMOS gate B: Y - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate B: n1 - n2
+    nMOS gate A: n2 - VGND
+    pMOS gate B: Y - p2
+    pMOS gate A: p2 - p1
+    pMOS gate C: Y - p3
+    pMOS gate A: p3 - p1
+    pMOS gate B: p3 - p1
+    pMOS gate D: p1 - VPWR
+variant 15: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate A: Y - n1
+    nMOS gate B: Y - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate B: n1 - n2
+    nMOS gate A: n2 - VGND
+    pMOS gate B: Y - p2
+    pMOS gate A: p2 - p1
+    pMOS gate A: Y - p3
+    pMOS gate B: Y - p3
+    pMOS gate C: p3 - p1
+    pMOS gate D: p1 - VPWR
+variant 16: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate C: Y - n1
+    nMOS gate A: Y - n2
+    nMOS gate B: n2 - n1
+    nMOS gate A: n1 - VGND
+    nMOS gate B: n1 - VGND
+    pMOS gate D: Y - p1
+    pMOS gate A: p1 - p2
+    pMOS gate B: p2 - VPWR
+    pMOS gate C: p1 - p3
+    pMOS gate A: p3 - VPWR
+    pMOS gate B: p3 - VPWR
+variant 17: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate C: Y - n1
+    nMOS gate A: Y - n2
+    nMOS gate B: n2 - n1
+    nMOS gate A: n1 - VGND
+    nMOS gate B: n1 - VGND
+    pMOS gate D: Y - p1
+    pMOS gate A: p1 - p2
+    pMOS gate B: p2 - VPWR
+    pMOS gate A: p1 - p3
+    pMOS gate B: p1 - p3
+    pMOS gate C: p3 - VPWR
+variant 18: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate C: Y - n1
+    nMOS gate A: Y - n2
+    nMOS gate B: n2 - n1
+    nMOS gate A: n1 - VGND
+    nMOS gate B: n1 - VGND
+    pMOS gate D: Y - p1
+    pMOS gate B: p1 - p2
+    pMOS gate A: p2 - VPWR
+    pMOS gate C: p1 - p3
+    pMOS gate A: p3 - VPWR
+    pMOS gate B: p3 - VPWR
+variant 19: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate C: Y - n1
+    nMOS gate A: Y - n2
+    nMOS gate B: n2 - n1
+    nMOS gate A: n1 - VGND
+    nMOS gate B: n1 - VGND
+    pMOS gate D: Y - p1
+    pMOS gate B: p1 - p2
+    pMOS gate A: p2 - VPWR
+    pMOS gate A: p1 - p3
+    pMOS gate B: p1 - p3
+    pMOS gate C: p3 - VPWR
+variant 20: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate C: Y - n1
+    nMOS gate A: Y - n2
+    nMOS gate B: n2 - n1
+    nMOS gate A: n1 - VGND
+    nMOS gate B: n1 - VGND
+    pMOS gate A: Y - p2
+    pMOS gate B: p2 - p1
+    pMOS gate C: Y - p3
+    pMOS gate A: p3 - p1
+    pMOS gate B: p3 - p1
+    pMOS gate D: p1 - VPWR
+variant 21: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate C: Y - n1
+    nMOS gate A: Y - n2
+    nMOS gate B: n2 - n1
+    nMOS gate A: n1 - VGND
+    nMOS gate B: n1 - VGND
+    pMOS gate A: Y - p2
+    pMOS gate B: p2 - p1
+    pMOS gate A: Y - p3
+    pMOS gate B: Y - p3
+    pMOS gate C: p3 - p1
+    pMOS gate D: p1 - VPWR
+variant 22: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate C: Y - n1
+    nMOS gate A: Y - n2
+    nMOS gate B: n2 - n1
+    nMOS gate A: n1 - VGND
+    nMOS gate B: n1 - VGND
+    pMOS gate B: Y - p2
+    pMOS gate A: p2 - p1
+    pMOS gate C: Y - p3
+    pMOS gate A: p3 - p1
+    pMOS gate B: p3 - p1
+    pMOS gate D: p1 - VPWR
+variant 23: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate C: Y - n1
+    nMOS gate A: Y - n2
+    nMOS gate B: n2 - n1
+    nMOS gate A: n1 - VGND
+    nMOS gate B: n1 - VGND
+    pMOS gate B: Y - p2
+    pMOS gate A: p2 - p1
+    pMOS gate A: Y - p3
+    pMOS gate B: Y - p3
+    pMOS gate C: p3 - p1
+    pMOS gate D: p1 - VPWR
+variant 24: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate C: Y - n1
+    nMOS gate B: Y - n2
+    nMOS gate A: n2 - n1
+    nMOS gate A: n1 - VGND
+    nMOS gate B: n1 - VGND
+    pMOS gate D: Y - p1
+    pMOS gate A: p1 - p2
+    pMOS gate B: p2 - VPWR
+    pMOS gate C: p1 - p3
+    pMOS gate A: p3 - VPWR
+    pMOS gate B: p3 - VPWR
+variant 25: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate C: Y - n1
+    nMOS gate B: Y - n2
+    nMOS gate A: n2 - n1
+    nMOS gate A: n1 - VGND
+    nMOS gate B: n1 - VGND
+    pMOS gate D: Y - p1
+    pMOS gate A: p1 - p2
+    pMOS gate B: p2 - VPWR
+    pMOS gate A: p1 - p3
+    pMOS gate B: p1 - p3
+    pMOS gate C: p3 - VPWR
+variant 26: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate C: Y - n1
+    nMOS gate B: Y - n2
+    nMOS gate A: n2 - n1
+    nMOS gate A: n1 - VGND
+    nMOS gate B: n1 - VGND
+    pMOS gate D: Y - p1
+    pMOS gate B: p1 - p2
+    pMOS gate A: p2 - VPWR
+    pMOS gate C: p1 - p3
+    pMOS gate A: p3 - VPWR
+    pMOS gate B: p3 - VPWR
+variant 27: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate C: Y - n1
+    nMOS gate B: Y - n2
+    nMOS gate A: n2 - n1
+    nMOS gate A: n1 - VGND
+    nMOS gate B: n1 - VGND
+    pMOS gate D: Y - p1
+    pMOS gate B: p1 - p2
+    pMOS gate A: p2 - VPWR
+    pMOS gate A: p1 - p3
+    pMOS gate B: p1 - p3
+    pMOS gate C: p3 - VPWR
+variant 28: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate C: Y - n1
+    nMOS gate B: Y - n2
+    nMOS gate A: n2 - n1
+    nMOS gate A: n1 - VGND
+    nMOS gate B: n1 - VGND
+    pMOS gate A: Y - p2
+    pMOS gate B: p2 - p1
+    pMOS gate C: Y - p3
+    pMOS gate A: p3 - p1
+    pMOS gate B: p3 - p1
+    pMOS gate D: p1 - VPWR
+variant 29: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate C: Y - n1
+    nMOS gate B: Y - n2
+    nMOS gate A: n2 - n1
+    nMOS gate A: n1 - VGND
+    nMOS gate B: n1 - VGND
+    pMOS gate A: Y - p2
+    pMOS gate B: p2 - p1
+    pMOS gate A: Y - p3
+    pMOS gate B: Y - p3
+    pMOS gate C: p3 - p1
+    pMOS gate D: p1 - VPWR
+variant 30: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate C: Y - n1
+    nMOS gate B: Y - n2
+    nMOS gate A: n2 - n1
+    nMOS gate A: n1 - VGND
+    nMOS gate B: n1 - VGND
+    pMOS gate B: Y - p2
+    pMOS gate A: p2 - p1
+    pMOS gate C: Y - p3
+    pMOS gate A: p3 - p1
+    pMOS gate B: p3 - p1
+    pMOS gate D: p1 - VPWR
+variant 31: Y = f(A, B, C, D), 12 fets
+    nMOS gate D: Y - VGND
+    nMOS gate C: Y - n1
+    nMOS gate B: Y - n2
+    nMOS gate A: n2 - n1
+    nMOS gate A: n1 - VGND
+    nMOS gate B: n1 - VGND
+    pMOS gate B: Y - p2
+    pMOS gate A: p2 - p1
+    pMOS gate A: Y - p3
+    pMOS gate B: Y - p3
+    pMOS gate C: p3 - p1
+    pMOS gate D: p1 - VPWR
+
+== 3. switch-level check
+variant 0: every input combination gives the truth table
+variant 1: every input combination gives the truth table
+variant 2: every input combination gives the truth table
+variant 3: every input combination gives the truth table
+variant 4: every input combination gives the truth table
+variant 5: every input combination gives the truth table
+variant 6: every input combination gives the truth table
+variant 7: every input combination gives the truth table
+variant 8: every input combination gives the truth table
+variant 9: every input combination gives the truth table
+variant 10: every input combination gives the truth table
+variant 11: every input combination gives the truth table
+variant 12: every input combination gives the truth table
+variant 13: every input combination gives the truth table
+variant 14: every input combination gives the truth table
+variant 15: every input combination gives the truth table
+variant 16: every input combination gives the truth table
+variant 17: every input combination gives the truth table
+variant 18: every input combination gives the truth table
+variant 19: every input combination gives the truth table
+variant 20: every input combination gives the truth table
+variant 21: every input combination gives the truth table
+variant 22: every input combination gives the truth table
+variant 23: every input combination gives the truth table
+variant 24: every input combination gives the truth table
+variant 25: every input combination gives the truth table
+variant 26: every input combination gives the truth table
+variant 27: every input combination gives the truth table
+variant 28: every input combination gives the truth table
+variant 29: every input combination gives the truth table
+variant 30: every input combination gives the truth table
+variant 31: every input combination gives the truth table
+widths: NMOS 0.65 um, PMOS 1.0 um
+
+== 4. Euler orders and placement (first 40 per variant, fewest contacts first)
+704 orders over all variants: the 420 with the narrowest bound are tried, the other 284 (at least 3.68 um) are not
+variant 0 gates B A | A B C D | n VGND n2 n1 n1 Y n1 VGND Y | p VPWR p2 p1 p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 0 gates B A | B A C D | n VGND n2 n1 n1 Y n1 VGND Y | p VPWR p2 p1 p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 0 gates B A B A C | D | n VGND n2 n1 Y n1 VGND VGND Y | p VPWR p3 VPWR p2 p1 p3 Y p1: cannot draw: cannot route Y between the rows on li
+variant 0 gates B A B A C | D | n VGND n2 n1 Y n1 VGND VGND Y | p VPWR p3 VPWR p2 p1 p3 p1 Y: cannot draw: no room for Y to switch edges in the n row
+variant 0 gates B A B A | C D | n VGND n2 n1 Y n1 n1 VGND Y | p VPWR p3 VPWR p2 p1 p3 p1 Y: cannot draw: no room for the D contact
+variant 0 gates B | A B A C D | n VGND n2 n2 n1 Y n1 VGND Y | p VPWR p3 p1 p2 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 0 gates C A B | D A B | n VGND n1 n2 VGND VGND Y n1 Y | p p1 p3 VPWR p3 Y p1 p2 VPWR: cannot draw: cannot route Y between the rows on li
+variant 0 gates C A B A B | D | n VGND n1 Y n1 n2 VGND VGND Y | p p3 p1 p2 VPWR p3 VPWR Y p1: cannot draw: cannot route Y between the rows on li
+variant 0 gates C A B A B | D | n VGND n1 Y n1 n2 VGND VGND Y | p p3 p1 p2 VPWR p3 VPWR p1 Y: cannot draw: the outer lanes of Y and n1 meet in the n row
+variant 0 gates B A C D | B A | n VGND n2 n1 VGND Y Y n1 Y | p p3 VPWR p3 p1 Y VPWR p2 p1: cannot draw: no room for the D contact
+variant 0 gates B A C D | A B | n VGND n2 n1 VGND Y Y n1 Y | p p3 VPWR p3 p1 Y p1 p2 VPWR: cannot draw: no room for the D contact
+variant 0 gates B A C | D A B | n VGND n2 n1 VGND VGND Y n1 Y | p p3 VPWR p3 p1 Y p1 p2 VPWR: cannot draw: cannot route Y between the rows on li
+variant 0 gates B | A B A C D | n VGND n2 n2 n1 Y n1 VGND Y | p p3 VPWR p1 p2 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 0 gates B A D | C A B | n Y n1 Y VGND VGND n1 n2 VGND | p VPWR p2 p1 Y p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 0 gates B A D | B A C | n Y n1 Y VGND VGND n2 n1 VGND | p VPWR p2 p1 Y p3 VPWR p3 p1: cannot draw: cannot route Y between the rows on li
+variant 0 gates B A | D C A B | n Y n1 Y Y VGND n1 n2 VGND | p VPWR p2 p1 Y p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 0 gates D C A B A | B | n Y VGND n1 Y n1 n2 n2 VGND | p Y p1 p3 VPWR p2 p1 VPWR p3: cannot draw: no room for the D contact
+variant 0 gates D C A B A | B | n Y VGND n1 Y n1 n2 n2 VGND | p Y p1 p3 VPWR p2 p1 p3 VPWR: cannot draw: no room for the D contact
+variant 0 gates D C A B | A B | n Y VGND n1 Y n1 n1 n2 VGND | p Y p1 p3 VPWR p3 p1 p2 VPWR: cannot draw: no room for the D contact
+variant 0 gates D C B A | A B | n Y VGND n1 Y n1 n1 n2 VGND | p Y p1 p3 VPWR p3 p1 p2 VPWR: cannot draw: no room for the D contact
+variant 0 gates D C | A B A B | n Y VGND n1 n1 Y n1 n2 VGND | p Y p1 p3 p1 p2 VPWR p3 VPWR: cannot draw: no room for the D contact
+variant 0 gates D | B A B A C | n Y VGND VGND n2 n1 Y n1 VGND | p Y p1 VPWR p3 VPWR p2 p1 p3: cannot draw: no room for the A contact
+variant 0 gates D | C A B A B | n Y VGND VGND n1 Y n1 n2 VGND | p Y p1 p3 p1 p2 VPWR p3 VPWR: cannot draw: no room for the A contact
+variant 0 gates D | B A B A C | n Y VGND VGND n2 n1 Y n1 VGND | p p1 Y VPWR p3 VPWR p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 0 gates D | C A B A B | n Y VGND VGND n1 Y n1 n2 VGND | p p1 Y p3 p1 p2 VPWR p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 0 gates A B | D C A B | n Y n1 Y Y VGND n1 n2 VGND | p p1 p2 VPWR Y p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 0 gates B A | D C A B | n VGND n2 n1 Y VGND n1 Y n1 | p VPWR p2 p1 Y p1 p3 VPWR p3: cannot draw: no room for the D contact
+variant 0 gates B A | D C B A | n VGND n2 n1 Y VGND n1 Y n1 | p VPWR p2 p1 Y p1 p3 VPWR p3: cannot draw: no room for the D contact
+variant 0 gates B A B A C | D | n VGND n2 n1 Y n1 VGND Y VGND | p VPWR p3 VPWR p2 p1 p3 Y p1: cannot draw: no room for Y to switch edges in the n row
+variant 0 gates B A B A C | D | n VGND n2 n1 Y n1 VGND Y VGND | p VPWR p3 VPWR p2 p1 p3 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 0 gates B A B A | D C | n VGND n2 n1 Y n1 Y VGND n1 | p VPWR p3 VPWR p2 p1 Y p1 p3: cannot draw: no room for the D contact
+variant 0 gates D A B | C A B | n VGND Y n1 Y VGND n1 n2 VGND | p Y p1 p2 VPWR p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 0 gates D A B | B A C | n VGND Y n1 Y VGND n2 n1 VGND | p Y p1 p2 VPWR p3 VPWR p3 p1: cannot draw: cannot route Y between the rows on li
+variant 0 gates D A B | C B A | n VGND Y n1 Y n1 VGND n2 n1 | p Y p1 p2 VPWR p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 0 gates D A B | A B C | n VGND Y n1 Y n1 n2 VGND n1 | p Y p1 p2 VPWR p3 VPWR p3 p1: cannot draw: cannot route Y between the rows on li
+variant 0 gates D | B A B A C | n VGND Y VGND n2 n1 Y n1 VGND | p Y p1 VPWR p3 VPWR p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 0 gates D | C A B A B | n VGND Y VGND n1 Y n1 n2 VGND | p Y p1 p3 p1 p2 VPWR p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 0 gates D | B A C B A | n VGND Y n1 Y n1 VGND n2 n1 | p Y p1 VPWR p2 p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 0 gates D | A B C A B | n VGND Y n1 n2 VGND n1 Y n1 | p Y p1 p3 VPWR p3 p1 p2 VPWR: cannot draw: cannot route Y between the rows on li
+variant 0 gates D | B A B A C | n VGND Y VGND n2 n1 Y n1 VGND | p p1 Y VPWR p3 VPWR p2 p1 p3: cannot draw: no room for the A contact
+variant 1 gates D A C B A B | n VGND Y n1 VGND n2 n1 Y | p Y p1 p3 VPWR p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 1 gates D B C B A A | n VGND Y n1 VGND n2 n1 Y | p Y p1 p3 VPWR p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 1 gates C B A A B D | n VGND n1 Y n1 n2 VGND Y | p p3 VPWR p2 p1 p3 p1 Y: cannot draw: no room for the B contact
+variant 1 gates D B A A B C | n Y VGND n2 n1 Y n1 VGND | p Y p1 p3 p1 p2 VPWR p3: cannot draw: no room for the D contact
+variant 1 gates A A B C B D | n Y n1 n2 VGND n1 Y VGND | p p3 p1 p2 VPWR p3 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 1 gates B A B C A D | n Y n1 n2 VGND n1 Y VGND | p p3 p1 p2 VPWR p3 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 2 gates B A A B C | D | n VGND n2 n1 Y n1 VGND VGND Y | p VPWR p3 VPWR p2 p1 p3 Y p1: cannot draw: cannot route Y between the rows on li
+variant 2 gates B A A B C | D | n VGND n2 n1 Y n1 VGND VGND Y | p VPWR p3 VPWR p2 p1 p3 p1 Y: cannot draw: no room for the B contact
+variant 2 gates B A A B | C D | n VGND n2 n1 Y n1 n1 VGND Y | p VPWR p3 VPWR p2 p1 p3 p1 Y: cannot draw: no room for the D contact
+variant 2 gates D B A B C | A | n VGND Y n1 n2 VGND n1 n1 Y | p Y p1 p2 VPWR p3 p1 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates D B A B C | A | n VGND Y n1 n2 VGND n1 n1 Y | p Y p1 p2 VPWR p3 p1 p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates D B A B | C A | n VGND Y n1 n2 VGND VGND n1 Y | p Y p1 p2 VPWR p3 p1 p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | A C B A B | n VGND Y Y n1 VGND n2 n1 Y | p Y p1 VPWR p3 p1 p2 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | B C B A A | n VGND Y Y n1 VGND n2 n1 Y | p Y p1 VPWR p3 p1 p2 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | A A B C B | n VGND Y Y n1 n2 VGND n1 Y | p Y p1 p3 VPWR p2 p1 p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | B A B C A | n VGND Y Y n1 n2 VGND n1 Y | p Y p1 p3 VPWR p2 p1 p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | A C B A B | n VGND Y Y n1 VGND n2 n1 Y | p p1 Y VPWR p3 p1 p2 VPWR p3: cannot draw: no room for the B contact
+variant 2 gates D | B C B A A | n VGND Y Y n1 VGND n2 n1 Y | p p1 Y VPWR p3 p1 p2 VPWR p3: cannot draw: no room for the C contact
+variant 2 gates D | A A B C B | n VGND Y Y n1 n2 VGND n1 Y | p p1 Y p3 VPWR p2 p1 p3 VPWR: cannot draw: no room for the C contact
+variant 2 gates D | B A B C A | n VGND Y Y n1 n2 VGND n1 Y | p p1 Y p3 VPWR p2 p1 p3 VPWR: cannot draw: no room for the A contact
+variant 2 gates C A B | A B D | n VGND n1 Y n1 n1 n2 VGND Y | p p1 p3 VPWR p3 VPWR p2 p1 Y: cannot draw: no room for the D contact
+variant 2 gates C A | D B A B | n VGND n1 Y Y VGND n2 n1 Y | p p1 p3 VPWR Y p1 p2 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates C A | B A B D | n VGND n1 Y Y n1 n2 VGND Y | p p1 p3 VPWR p3 VPWR p2 p1 Y: cannot draw: no room for the D contact
+variant 2 gates C B A | A B D | n VGND n1 Y n1 n1 n2 VGND Y | p p1 p3 VPWR p3 VPWR p2 p1 Y: cannot draw: no room for the D contact
+variant 2 gates C B | D B A A | n VGND n1 Y Y VGND n2 n1 Y | p p1 p3 VPWR Y p1 p2 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates C B | A A B D | n VGND n1 Y Y n1 n2 VGND Y | p p1 p3 VPWR p3 VPWR p2 p1 Y: cannot draw: no room for the D contact
+variant 2 gates C A B | D B A | n VGND n1 n2 VGND VGND Y n1 Y | p p1 p3 VPWR p3 Y p1 p2 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates C | A B A B D | n VGND n1 n1 Y n1 n2 VGND Y | p p1 p3 VPWR p3 VPWR p2 p1 Y: cannot draw: no room for the B contact
+variant 2 gates C | B A A B D | n VGND n1 n1 Y n1 n2 VGND Y | p p1 p3 VPWR p3 VPWR p2 p1 Y: cannot draw: no room for the D contact
+variant 2 gates B A A B | C D | n VGND n2 n1 Y n1 n1 VGND Y | p p1 p2 VPWR p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 2 gates B A A | B C D | n VGND n2 n1 Y Y n1 VGND Y | p p1 p2 VPWR p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 2 gates B A A | D C B | n VGND n2 n1 Y Y VGND n1 Y | p p1 p2 VPWR p3 Y p1 p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates B A B A | C D | n VGND n2 n1 Y n1 n1 VGND Y | p p1 p2 VPWR p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 2 gates B A B | A C D | n VGND n2 n1 Y Y n1 VGND Y | p p1 p2 VPWR p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 2 gates B A B | D C A | n VGND n2 n1 Y Y VGND n1 Y | p p1 p2 VPWR p3 Y p1 p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates B A | A B C D | n VGND n2 n1 n1 Y n1 VGND Y | p p1 p2 VPWR p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 2 gates B A | B A C D | n VGND n2 n1 n1 Y n1 VGND Y | p p1 p2 VPWR p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 2 gates C B A A B | D | n VGND n1 Y n1 n2 VGND VGND Y | p p3 p1 p2 VPWR p3 VPWR Y p1: cannot draw: cannot route Y between the rows on li
+variant 2 gates C B A A B | D | n VGND n1 Y n1 n2 VGND VGND Y | p p3 p1 p2 VPWR p3 VPWR p1 Y: cannot draw: no room for the B contact
+variant 2 gates C | A B A B D | n VGND n1 n1 Y n1 n2 VGND Y | p p3 p1 VPWR p3 VPWR p2 p1 Y: cannot draw: no room for the B contact
+variant 2 gates C | B A A B D | n VGND n1 n1 Y n1 n2 VGND Y | p p3 p1 VPWR p3 VPWR p2 p1 Y: cannot draw: no room for the D contact
+variant 2 gates B A B D | C A | n VGND n2 n1 Y VGND VGND n1 Y | p p3 VPWR p2 p1 Y p1 p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates B A B | A C D | n VGND n2 n1 Y Y n1 VGND Y | p p3 VPWR p2 p1 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 2 gates B A B | D C A | n VGND n2 n1 Y Y VGND n1 Y | p p3 VPWR p2 p1 Y p1 p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates B A C D | A B | n VGND n2 n1 VGND Y Y n1 Y | p p3 VPWR p3 p1 Y VPWR p2 p1: cannot draw: no room for the D contact
+variant 2 gates B A C D | B A | n VGND n2 n1 VGND Y Y n1 Y | p p3 VPWR p3 p1 Y p1 p2 VPWR: cannot draw: no room for the D contact
+variant 3 gates C A B A B D | n VGND n1 Y n1 n2 VGND Y | p p3 VPWR p2 p1 p3 p1 Y: cannot draw: no room for the A contact
+variant 3 gates D B A B A C | n Y VGND n2 n1 Y n1 VGND | p Y p1 p3 p1 p2 VPWR p3: cannot draw: no room for the D contact
+variant 4 gates C A B A B D | n VGND n1 Y n1 n2 VGND Y | p p3 Y p2 p1 p3 p1 VPWR: cannot draw: no room for the A contact
+variant 4 gates D B A B A C | n Y VGND n2 n1 Y n1 VGND | p VPWR p1 p3 p1 p2 Y p3: cannot draw: no room for the B contact
+variant 5 gates D B A B C | A | n VGND Y n1 n2 VGND n1 n1 Y | p VPWR p1 p2 Y p3 p1 Y p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D B A B C | A | n VGND Y n1 n2 VGND n1 n1 Y | p VPWR p1 p2 Y p3 p1 p3 Y: cannot draw: no room for Y to switch edges in the n row
+variant 5 gates D B A B | C A | n VGND Y n1 n2 VGND VGND n1 Y | p VPWR p1 p2 Y p3 p1 p3 Y: cannot draw: no room for the A contact
+variant 5 gates D | A C B A B | n VGND Y Y n1 VGND n2 n1 Y | p VPWR p1 Y p3 p1 p2 Y p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | B C B A A | n VGND Y Y n1 VGND n2 n1 Y | p VPWR p1 Y p3 p1 p2 Y p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | A A B C B | n VGND Y Y n1 n2 VGND n1 Y | p VPWR p1 p3 Y p2 p1 p3 Y: cannot draw: no room for the B contact
+variant 5 gates D | B A B C A | n VGND Y Y n1 n2 VGND n1 Y | p VPWR p1 p3 Y p2 p1 p3 Y: cannot draw: no room for the A contact
+variant 5 gates B A A B C | D | n VGND n2 n1 Y n1 VGND VGND Y | p Y p3 Y p2 p1 p3 VPWR p1: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A A B C | D | n VGND n2 n1 Y n1 VGND VGND Y | p Y p3 Y p2 p1 p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A A B | C D | n VGND n2 n1 Y n1 n1 VGND Y | p Y p3 Y p2 p1 p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | A C B A B | n VGND Y Y n1 VGND n2 n1 Y | p p1 VPWR Y p3 p1 p2 Y p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | B C B A A | n VGND Y Y n1 VGND n2 n1 Y | p p1 VPWR Y p3 p1 p2 Y p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | A A B C B | n VGND Y Y n1 n2 VGND n1 Y | p p1 VPWR p3 Y p2 p1 p3 Y: cannot draw: no room for the B contact
+variant 5 gates D | B A B C A | n VGND Y Y n1 n2 VGND n1 Y | p p1 VPWR p3 Y p2 p1 p3 Y: cannot draw: no room for the A contact
+variant 5 gates C A B | A B D | n VGND n1 Y n1 n1 n2 VGND Y | p p1 p3 Y p3 Y p2 p1 VPWR: cannot draw: no room for the A contact
+variant 5 gates C A | D B A B | n VGND n1 Y Y VGND n2 n1 Y | p p1 p3 Y VPWR p1 p2 Y p3: cannot draw: no room for the A contact
+variant 5 gates C A | B A B D | n VGND n1 Y Y n1 n2 VGND Y | p p1 p3 Y p3 Y p2 p1 VPWR: cannot draw: no room for the A contact
+variant 5 gates C B A | A B D | n VGND n1 Y n1 n1 n2 VGND Y | p p1 p3 Y p3 Y p2 p1 VPWR: cannot draw: no room for the B contact
+variant 5 gates C B | D B A A | n VGND n1 Y Y VGND n2 n1 Y | p p1 p3 Y VPWR p1 p2 Y p3: cannot draw: no room for the B contact
+variant 5 gates C B | A A B D | n VGND n1 Y Y n1 n2 VGND Y | p p1 p3 Y p3 Y p2 p1 VPWR: cannot draw: no room for the B contact
+variant 5 gates C A B | D B A | n VGND n1 n2 VGND VGND Y n1 Y | p p1 p3 Y p3 VPWR p1 p2 Y: cannot draw: no room for the A contact
+variant 5 gates C | A B A B D | n VGND n1 n1 Y n1 n2 VGND Y | p p1 p3 Y p3 Y p2 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 5 gates C | B A A B D | n VGND n1 n1 Y n1 n2 VGND Y | p p1 p3 Y p3 Y p2 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A A B | C D | n VGND n2 n1 Y n1 n1 VGND Y | p p1 p2 Y p3 Y p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A A | D C B | n VGND n2 n1 Y Y VGND n1 Y | p p1 p2 Y p3 VPWR p1 p3 Y: cannot draw: no room for the B contact
+variant 5 gates B A A | B C D | n VGND n2 n1 Y Y n1 VGND Y | p p1 p2 Y p3 Y p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A B A | C D | n VGND n2 n1 Y n1 n1 VGND Y | p p1 p2 Y p3 Y p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A B | D C A | n VGND n2 n1 Y Y VGND n1 Y | p p1 p2 Y p3 VPWR p1 p3 Y: cannot draw: no room for the A contact
+variant 5 gates B A B | A C D | n VGND n2 n1 Y Y n1 VGND Y | p p1 p2 Y p3 Y p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A | A B C D | n VGND n2 n1 n1 Y n1 VGND Y | p p1 p2 Y p3 Y p3 p1 VPWR: cannot draw: no room for the B contact
+variant 5 gates B A | B A C D | n VGND n2 n1 n1 Y n1 VGND Y | p p1 p2 Y p3 Y p3 p1 VPWR: cannot draw: no room for the A contact
+variant 5 gates C B A A B | D | n VGND n1 Y n1 n2 VGND VGND Y | p p3 p1 p2 Y p3 Y VPWR p1: cannot draw: cannot route Y between the rows on li
+variant 5 gates C B A A B | D | n VGND n1 Y n1 n2 VGND VGND Y | p p3 p1 p2 Y p3 Y p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 5 gates C | A B A B D | n VGND n1 n1 Y n1 n2 VGND Y | p p3 p1 Y p3 Y p2 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 5 gates C | B A A B D | n VGND n1 n1 Y n1 n2 VGND Y | p p3 p1 Y p3 Y p2 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A B D | C A | n VGND n2 n1 Y VGND VGND n1 Y | p p3 Y p2 p1 VPWR p1 p3 Y: cannot draw: no room for the A contact
+variant 5 gates B A B | D C A | n VGND n2 n1 Y Y VGND n1 Y | p p3 Y p2 p1 VPWR p1 p3 Y: cannot draw: no room for the A contact
+variant 5 gates B A B | A C D | n VGND n2 n1 Y Y n1 VGND Y | p p3 Y p2 p1 Y p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A C D | A B | n VGND n2 n1 VGND Y Y n1 Y | p p3 Y p3 p1 VPWR Y p2 p1: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A C D | B A | n VGND n2 n1 VGND Y Y n1 Y | p p3 Y p3 p1 VPWR p1 p2 Y: cannot draw: no room for the A contact
+variant 6 gates D A C B A B | n VGND Y n1 VGND n2 n1 Y | p VPWR p1 p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 6 gates D B C B A A | n VGND Y n1 VGND n2 n1 Y | p VPWR p1 p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 6 gates C B A A B D | n VGND n1 Y n1 n2 VGND Y | p p3 Y p2 p1 p3 p1 VPWR: cannot draw: no room for the B contact
+variant 6 gates D B A A B C | n Y VGND n2 n1 Y n1 VGND | p VPWR p1 p3 p1 p2 Y p3: cannot draw: no room for the B contact
+variant 6 gates A A B C B D | n Y n1 n2 VGND n1 Y VGND | p p3 p1 p2 Y p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 6 gates B A B C A D | n Y n1 n2 VGND n1 Y VGND | p p3 p1 p2 Y p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 7 gates B A | A B C D | n VGND n2 n1 n1 Y n1 VGND Y | p Y p2 p1 p3 Y p3 p1 VPWR: cannot draw: no room for the B contact
+variant 7 gates B A | B A C D | n VGND n2 n1 n1 Y n1 VGND Y | p Y p2 p1 p3 Y p3 p1 VPWR: cannot draw: no room for the A contact
+variant 7 gates B A B A C | D | n VGND n2 n1 Y n1 VGND VGND Y | p Y p3 Y p2 p1 p3 VPWR p1: cannot draw: cannot route Y between the rows on li
+variant 7 gates B A B A C | D | n VGND n2 n1 Y n1 VGND VGND Y | p Y p3 Y p2 p1 p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 7 gates B A B A | C D | n VGND n2 n1 Y n1 n1 VGND Y | p Y p3 Y p2 p1 p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 7 gates B | A B A C D | n VGND n2 n2 n1 Y n1 VGND Y | p Y p3 p1 p2 Y p3 p1 VPWR: cannot draw: no room for the B contact
+variant 7 gates C A B | D A B | n VGND n1 n2 VGND VGND Y n1 Y | p p1 p3 Y p3 VPWR p1 p2 Y: cannot draw: no room for the B contact
+variant 7 gates C A B A B | D | n VGND n1 Y n1 n2 VGND VGND Y | p p3 p1 p2 Y p3 Y VPWR p1: cannot draw: cannot route Y between the rows on li
+variant 7 gates C A B A B | D | n VGND n1 Y n1 n2 VGND VGND Y | p p3 p1 p2 Y p3 Y p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 7 gates B A C D | B A | n VGND n2 n1 VGND Y Y n1 Y | p p3 Y p3 p1 VPWR Y p2 p1: cannot draw: cannot route Y between the rows on li
+variant 7 gates B A C D | A B | n VGND n2 n1 VGND Y Y n1 Y | p p3 Y p3 p1 VPWR p1 p2 Y: cannot draw: no room for the B contact
+variant 7 gates B A C | D A B | n VGND n2 n1 VGND VGND Y n1 Y | p p3 Y p3 p1 VPWR p1 p2 Y: cannot draw: no room for the B contact
+variant 7 gates B | A B A C D | n VGND n2 n2 n1 Y n1 VGND Y | p p3 Y p1 p2 Y p3 p1 VPWR: cannot draw: no room for the B contact
+variant 7 gates D C A B A | B | n Y VGND n1 Y n1 n2 n2 VGND | p VPWR p1 p3 Y p2 p1 Y p3: cannot draw: no room for the A contact
+variant 7 gates D C A B A | B | n Y VGND n1 Y n1 n2 n2 VGND | p VPWR p1 p3 Y p2 p1 p3 Y: cannot draw: no room for the A contact
+variant 7 gates D C A B | A B | n Y VGND n1 Y n1 n1 n2 VGND | p VPWR p1 p3 Y p3 p1 p2 Y: cannot draw: no room for the A contact
+variant 7 gates D C B A | A B | n Y VGND n1 Y n1 n1 n2 VGND | p VPWR p1 p3 Y p3 p1 p2 Y: cannot draw: no room for the B contact
+variant 7 gates D C | A B A B | n Y VGND n1 n1 Y n1 n2 VGND | p VPWR p1 p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 7 gates D | B A B A C | n Y VGND VGND n2 n1 Y n1 VGND | p VPWR p1 Y p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 7 gates D | C A B A B | n Y VGND VGND n1 Y n1 n2 VGND | p VPWR p1 p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 7 gates B A D | C A B | n Y n1 Y VGND VGND n1 n2 VGND | p Y p2 p1 VPWR p1 p3 Y p3: cannot draw: no room for the B contact
+variant 7 gates B A D | B A C | n Y n1 Y VGND VGND n2 n1 VGND | p Y p2 p1 VPWR p3 Y p3 p1: cannot draw: no room for the B contact
+variant 7 gates B A | D C A B | n Y n1 Y Y VGND n1 n2 VGND | p Y p2 p1 VPWR p1 p3 Y p3: cannot draw: no room for the B contact
+variant 7 gates D | B A B A C | n Y VGND VGND n2 n1 Y n1 VGND | p p1 VPWR Y p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 7 gates D | C A B A B | n Y VGND VGND n1 Y n1 n2 VGND | p p1 VPWR p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 7 gates A B | D C A B | n Y n1 Y Y VGND n1 n2 VGND | p p1 p2 Y VPWR p1 p3 Y p3: cannot draw: no room for the B contact
+variant 7 gates D A B | C A B | n VGND Y n1 Y VGND n1 n2 VGND | p VPWR p1 p2 Y p1 p3 Y p3: cannot draw: no room for the B contact
+variant 7 gates D A B | B A C | n VGND Y n1 Y VGND n2 n1 VGND | p VPWR p1 p2 Y p3 Y p3 p1: cannot draw: no room for the B contact
+variant 7 gates D A B | C B A | n VGND Y n1 Y n1 VGND n2 n1 | p VPWR p1 p2 Y p1 p3 Y p3: cannot draw: no room for the B contact
+variant 7 gates D A B | A B C | n VGND Y n1 Y n1 n2 VGND n1 | p VPWR p1 p2 Y p3 Y p3 p1: cannot draw: no room for the B contact
+variant 7 gates D | B A B A C | n VGND Y VGND n2 n1 Y n1 VGND | p VPWR p1 Y p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 7 gates D | C A B A B | n VGND Y VGND n1 Y n1 n2 VGND | p VPWR p1 p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 7 gates D | B A C B A | n VGND Y n1 Y n1 VGND n2 n1 | p VPWR p1 Y p2 p1 p3 Y p3: cannot draw: cannot route Y between the rows on li
+variant 7 gates D | A B C A B | n VGND Y n1 n2 VGND n1 Y n1 | p VPWR p1 p3 Y p3 p1 p2 Y: cannot draw: cannot route Y between the rows on li
+variant 7 gates B A | D C A B | n VGND n2 n1 Y VGND n1 Y n1 | p Y p2 p1 VPWR p1 p3 Y p3: cannot draw: no room for the A contact
+variant 7 gates B A | D C B A | n VGND n2 n1 Y VGND n1 Y n1 | p Y p2 p1 VPWR p1 p3 Y p3: cannot draw: no room for the B contact
+variant 7 gates B A B A C | D | n VGND n2 n1 Y n1 VGND Y VGND | p Y p3 Y p2 p1 p3 VPWR p1: cannot draw: cannot route Y between the rows on li
+variant 7 gates B A B A C | D | n VGND n2 n1 Y n1 VGND Y VGND | p Y p3 Y p2 p1 p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 7 gates B A B A | D C | n VGND n2 n1 Y n1 Y VGND n1 | p Y p3 Y p2 p1 VPWR p1 p3: cannot draw: cannot route Y between the rows on li
+variant 7 gates D | B A B A C | n VGND Y VGND n2 n1 Y n1 VGND | p p1 VPWR Y p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 8 gates A B B A C | D | n VGND n2 n1 Y n1 VGND VGND Y | p VPWR p3 VPWR p2 p1 p3 Y p1: cannot draw: cannot route Y between the rows on li
+variant 8 gates A B B A C | D | n VGND n2 n1 Y n1 VGND VGND Y | p VPWR p3 VPWR p2 p1 p3 p1 Y: cannot draw: no room for the A contact
+variant 8 gates A B B A | C D | n VGND n2 n1 Y n1 n1 VGND Y | p VPWR p3 VPWR p2 p1 p3 p1 Y: cannot draw: no room for the D contact
+variant 8 gates D A B A C | B | n VGND Y n1 n2 VGND n1 n1 Y | p Y p1 p2 VPWR p3 p1 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 8 gates D A B A C | B | n VGND Y n1 n2 VGND n1 n1 Y | p Y p1 p2 VPWR p3 p1 p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 8 gates D A B A | C B | n VGND Y n1 n2 VGND VGND n1 Y | p Y p1 p2 VPWR p3 p1 p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 8 gates D | A C A B B | n VGND Y Y n1 VGND n2 n1 Y | p Y p1 VPWR p3 p1 p2 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 8 gates D | B C A B A | n VGND Y Y n1 VGND n2 n1 Y | p Y p1 VPWR p3 p1 p2 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 8 gates D | A B A C B | n VGND Y Y n1 n2 VGND n1 Y | p Y p1 p3 VPWR p2 p1 p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 8 gates D | B B A C A | n VGND Y Y n1 n2 VGND n1 Y | p Y p1 p3 VPWR p2 p1 p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 8 gates D | A C A B B | n VGND Y Y n1 VGND n2 n1 Y | p p1 Y VPWR p3 p1 p2 VPWR p3: cannot draw: no room for the C contact
+variant 8 gates D | B C A B A | n VGND Y Y n1 VGND n2 n1 Y | p p1 Y VPWR p3 p1 p2 VPWR p3: cannot draw: no room for the A contact
+variant 8 gates D | A B A C B | n VGND Y Y n1 n2 VGND n1 Y | p p1 Y p3 VPWR p2 p1 p3 VPWR: cannot draw: no room for the B contact
+variant 8 gates D | B B A C A | n VGND Y Y n1 n2 VGND n1 Y | p p1 Y p3 VPWR p2 p1 p3 VPWR: cannot draw: no room for the C contact
+variant 8 gates C A B | B A D | n VGND n1 Y n1 n1 n2 VGND Y | p p1 p3 VPWR p3 VPWR p2 p1 Y: cannot draw: no room for the D contact
+variant 8 gates C A | D A B B | n VGND n1 Y Y VGND n2 n1 Y | p p1 p3 VPWR Y p1 p2 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 8 gates C A | B B A D | n VGND n1 Y Y n1 n2 VGND Y | p p1 p3 VPWR p3 VPWR p2 p1 Y: cannot draw: no room for the D contact
+variant 8 gates C B A | B A D | n VGND n1 Y n1 n1 n2 VGND Y | p p1 p3 VPWR p3 VPWR p2 p1 Y: cannot draw: no room for the D contact
+variant 8 gates C B | D A B A | n VGND n1 Y Y VGND n2 n1 Y | p p1 p3 VPWR Y p1 p2 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 8 gates C B | A B A D | n VGND n1 Y Y n1 n2 VGND Y | p p1 p3 VPWR p3 VPWR p2 p1 Y: cannot draw: no room for the D contact
+variant 8 gates C B A | D A B | n VGND n1 n2 VGND VGND Y n1 Y | p p1 p3 VPWR p3 Y p1 p2 VPWR: cannot draw: cannot route Y between the rows on li
+variant 8 gates C | A B B A D | n VGND n1 n1 Y n1 n2 VGND Y | p p1 p3 VPWR p3 VPWR p2 p1 Y: cannot draw: no room for the D contact
+variant 8 gates C | B A B A D | n VGND n1 n1 Y n1 n2 VGND Y | p p1 p3 VPWR p3 VPWR p2 p1 Y: cannot draw: no room for the A contact
+variant 8 gates A B A B | C D | n VGND n2 n1 Y n1 n1 VGND Y | p p1 p2 VPWR p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 8 gates A B A | B C D | n VGND n2 n1 Y Y n1 VGND Y | p p1 p2 VPWR p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 8 gates A B A | D C B | n VGND n2 n1 Y Y VGND n1 Y | p p1 p2 VPWR p3 Y p1 p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 8 gates A B B A | C D | n VGND n2 n1 Y n1 n1 VGND Y | p p1 p2 VPWR p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 8 gates A B B | A C D | n VGND n2 n1 Y Y n1 VGND Y | p p1 p2 VPWR p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 8 gates A B B | D C A | n VGND n2 n1 Y Y VGND n1 Y | p p1 p2 VPWR p3 Y p1 p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 8 gates A B | A B C D | n VGND n2 n1 n1 Y n1 VGND Y | p p1 p2 VPWR p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 8 gates A B | B A C D | n VGND n2 n1 n1 Y n1 VGND Y | p p1 p2 VPWR p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 8 gates C A B B A | D | n VGND n1 Y n1 n2 VGND VGND Y | p p3 p1 p2 VPWR p3 VPWR Y p1: cannot draw: cannot route Y between the rows on li
+variant 8 gates C A B B A | D | n VGND n1 Y n1 n2 VGND VGND Y | p p3 p1 p2 VPWR p3 VPWR p1 Y: cannot draw: no room for the A contact
+variant 8 gates C | A B B A D | n VGND n1 n1 Y n1 n2 VGND Y | p p3 p1 VPWR p3 VPWR p2 p1 Y: cannot draw: no room for the D contact
+variant 8 gates C | B A B A D | n VGND n1 n1 Y n1 n2 VGND Y | p p3 p1 VPWR p3 VPWR p2 p1 Y: cannot draw: no room for the A contact
+variant 8 gates A B A D | C B | n VGND n2 n1 Y VGND VGND n1 Y | p p3 VPWR p2 p1 Y p1 p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 8 gates A B A | B C D | n VGND n2 n1 Y Y n1 VGND Y | p p3 VPWR p2 p1 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 8 gates A B A | D C B | n VGND n2 n1 Y Y VGND n1 Y | p p3 VPWR p2 p1 Y p1 p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 8 gates A B C D | B A | n VGND n2 n1 VGND Y Y n1 Y | p p3 VPWR p3 p1 Y VPWR p2 p1: cannot draw: no room for the D contact
+variant 8 gates A B C D | A B | n VGND n2 n1 VGND Y Y n1 Y | p p3 VPWR p3 p1 Y p1 p2 VPWR: cannot draw: no room for the D contact
+variant 9 gates C B A B A D | n VGND n1 Y n1 n2 VGND Y | p p3 VPWR p2 p1 p3 p1 Y: cannot draw: no room for the B contact
+variant 9 gates D A B A B C | n Y VGND n2 n1 Y n1 VGND | p Y p1 p3 p1 p2 VPWR p3: cannot draw: no room for the D contact
+variant 10 gates A B | A B C D | n VGND n2 n1 n1 Y n1 VGND Y | p VPWR p2 p1 p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 10 gates A B | B A C D | n VGND n2 n1 n1 Y n1 VGND Y | p VPWR p2 p1 p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 10 gates A B A B C | D | n VGND n2 n1 Y n1 VGND VGND Y | p VPWR p3 VPWR p2 p1 p3 Y p1: cannot draw: cannot route Y between the rows on li
+variant 10 gates A B A B C | D | n VGND n2 n1 Y n1 VGND VGND Y | p VPWR p3 VPWR p2 p1 p3 p1 Y: cannot draw: no room for Y to switch edges in the n row
+variant 10 gates A B A B | C D | n VGND n2 n1 Y n1 n1 VGND Y | p VPWR p3 VPWR p2 p1 p3 p1 Y: cannot draw: no room for the D contact
+variant 10 gates A | B A B C D | n VGND n2 n2 n1 Y n1 VGND Y | p VPWR p3 p1 p2 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 10 gates C B A | D B A | n VGND n1 n2 VGND VGND Y n1 Y | p p1 p3 VPWR p3 Y p1 p2 VPWR: cannot draw: cannot route Y between the rows on li
+variant 10 gates C B A B A | D | n VGND n1 Y n1 n2 VGND VGND Y | p p3 p1 p2 VPWR p3 VPWR Y p1: cannot draw: cannot route Y between the rows on li
+variant 10 gates C B A B A | D | n VGND n1 Y n1 n2 VGND VGND Y | p p3 p1 p2 VPWR p3 VPWR p1 Y: cannot draw: the outer lanes of Y and n1 meet in the n row
+variant 10 gates A B C D | A B | n VGND n2 n1 VGND Y Y n1 Y | p p3 VPWR p3 p1 Y VPWR p2 p1: cannot draw: no room for the D contact
+variant 10 gates A B C D | B A | n VGND n2 n1 VGND Y Y n1 Y | p p3 VPWR p3 p1 Y p1 p2 VPWR: cannot draw: no room for the D contact
+variant 10 gates A B C | D B A | n VGND n2 n1 VGND VGND Y n1 Y | p p3 VPWR p3 p1 Y p1 p2 VPWR: cannot draw: cannot route Y between the rows on li
+variant 10 gates A | B A B C D | n VGND n2 n2 n1 Y n1 VGND Y | p p3 VPWR p1 p2 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 10 gates A B D | C B A | n Y n1 Y VGND VGND n1 n2 VGND | p VPWR p2 p1 Y p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 10 gates A B D | A B C | n Y n1 Y VGND VGND n2 n1 VGND | p VPWR p2 p1 Y p3 VPWR p3 p1: cannot draw: cannot route Y between the rows on li
+variant 10 gates A B | D C B A | n Y n1 Y Y VGND n1 n2 VGND | p VPWR p2 p1 Y p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 10 gates D C A B | B A | n Y VGND n1 Y n1 n1 n2 VGND | p Y p1 p3 VPWR p3 p1 p2 VPWR: cannot draw: no room for the D contact
+variant 10 gates D C B A B | A | n Y VGND n1 Y n1 n2 n2 VGND | p Y p1 p3 VPWR p2 p1 VPWR p3: cannot draw: no room for the D contact
+variant 10 gates D C B A B | A | n Y VGND n1 Y n1 n2 n2 VGND | p Y p1 p3 VPWR p2 p1 p3 VPWR: cannot draw: no room for the D contact
+variant 10 gates D C B A | B A | n Y VGND n1 Y n1 n1 n2 VGND | p Y p1 p3 VPWR p3 p1 p2 VPWR: cannot draw: no room for the D contact
+variant 10 gates D C | B A B A | n Y VGND n1 n1 Y n1 n2 VGND | p Y p1 p3 p1 p2 VPWR p3 VPWR: cannot draw: no room for the D contact
+variant 10 gates D | A B A B C | n Y VGND VGND n2 n1 Y n1 VGND | p Y p1 VPWR p3 VPWR p2 p1 p3: cannot draw: no room for the B contact
+variant 10 gates D | C B A B A | n Y VGND VGND n1 Y n1 n2 VGND | p Y p1 p3 p1 p2 VPWR p3 VPWR: cannot draw: no room for the B contact
+variant 10 gates D | A B A B C | n Y VGND VGND n2 n1 Y n1 VGND | p p1 Y VPWR p3 VPWR p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 10 gates D | C B A B A | n Y VGND VGND n1 Y n1 n2 VGND | p p1 Y p3 p1 p2 VPWR p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 10 gates B A | D C B A | n Y n1 Y Y VGND n1 n2 VGND | p p1 p2 VPWR Y p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 10 gates A B | D C A B | n VGND n2 n1 Y VGND n1 Y n1 | p VPWR p2 p1 Y p1 p3 VPWR p3: cannot draw: no room for the D contact
+variant 10 gates A B | D C B A | n VGND n2 n1 Y VGND n1 Y n1 | p VPWR p2 p1 Y p1 p3 VPWR p3: cannot draw: no room for the D contact
+variant 10 gates A B A B C | D | n VGND n2 n1 Y n1 VGND Y VGND | p VPWR p3 VPWR p2 p1 p3 Y p1: cannot draw: no room for Y to switch edges in the n row
+variant 10 gates A B A B C | D | n VGND n2 n1 Y n1 VGND Y VGND | p VPWR p3 VPWR p2 p1 p3 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 10 gates A B A B | D C | n VGND n2 n1 Y n1 Y VGND n1 | p VPWR p3 VPWR p2 p1 Y p1 p3: cannot draw: no room for the D contact
+variant 10 gates D B A | C B A | n VGND Y n1 Y VGND n1 n2 VGND | p Y p1 p2 VPWR p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 10 gates D B A | A B C | n VGND Y n1 Y VGND n2 n1 VGND | p Y p1 p2 VPWR p3 VPWR p3 p1: cannot draw: cannot route Y between the rows on li
+variant 10 gates D B A | C A B | n VGND Y n1 Y n1 VGND n2 n1 | p Y p1 p2 VPWR p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 10 gates D B A | B A C | n VGND Y n1 Y n1 n2 VGND n1 | p Y p1 p2 VPWR p3 VPWR p3 p1: cannot draw: cannot route Y between the rows on li
+variant 10 gates D | A B A B C | n VGND Y VGND n2 n1 Y n1 VGND | p Y p1 VPWR p3 VPWR p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 10 gates D | C B A B A | n VGND Y VGND n1 Y n1 n2 VGND | p Y p1 p3 p1 p2 VPWR p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 10 gates D | A B C A B | n VGND Y n1 Y n1 VGND n2 n1 | p Y p1 VPWR p2 p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 10 gates D | B A C B A | n VGND Y n1 n2 VGND n1 Y n1 | p Y p1 p3 VPWR p3 p1 p2 VPWR: cannot draw: cannot route Y between the rows on li
+variant 10 gates D | A B A B C | n VGND Y VGND n2 n1 Y n1 VGND | p p1 Y VPWR p3 VPWR p2 p1 p3: cannot draw: no room for the B contact
+variant 11 gates D A C A B B | n VGND Y n1 VGND n2 n1 Y | p Y p1 p3 VPWR p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 11 gates D B C A B A | n VGND Y n1 VGND n2 n1 Y | p Y p1 p3 VPWR p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 11 gates C A B B A D | n VGND n1 Y n1 n2 VGND Y | p p3 VPWR p2 p1 p3 p1 Y: cannot draw: no room for the A contact
+variant 11 gates D A B B A C | n Y VGND n2 n1 Y n1 VGND | p Y p1 p3 p1 p2 VPWR p3: cannot draw: no room for the D contact
+variant 11 gates A B A C B D | n Y n1 n2 VGND n1 Y VGND | p p3 p1 p2 VPWR p3 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 11 gates B B A C A D | n Y n1 n2 VGND n1 Y VGND | p p3 p1 p2 VPWR p3 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 12 gates D A C A B B | n VGND Y n1 VGND n2 n1 Y | p VPWR p1 p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 12 gates D B C A B A | n VGND Y n1 VGND n2 n1 Y | p VPWR p1 p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 12 gates C A B B A D | n VGND n1 Y n1 n2 VGND Y | p p3 Y p2 p1 p3 p1 VPWR: cannot draw: no room for the A contact
+variant 12 gates D A B B A C | n Y VGND n2 n1 Y n1 VGND | p VPWR p1 p3 p1 p2 Y p3: cannot draw: no room for the A contact
+variant 12 gates A B A C B D | n Y n1 n2 VGND n1 Y VGND | p p3 p1 p2 Y p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 12 gates B B A C A D | n Y n1 n2 VGND n1 Y VGND | p p3 p1 p2 Y p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 13 gates A B | A B C D | n VGND n2 n1 n1 Y n1 VGND Y | p Y p2 p1 p3 Y p3 p1 VPWR: cannot draw: no room for the B contact
+variant 13 gates A B | B A C D | n VGND n2 n1 n1 Y n1 VGND Y | p Y p2 p1 p3 Y p3 p1 VPWR: cannot draw: no room for the A contact
+variant 13 gates A B A B C | D | n VGND n2 n1 Y n1 VGND VGND Y | p Y p3 Y p2 p1 p3 VPWR p1: cannot draw: cannot route Y between the rows on li
+variant 13 gates A B A B C | D | n VGND n2 n1 Y n1 VGND VGND Y | p Y p3 Y p2 p1 p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 13 gates A B A B | C D | n VGND n2 n1 Y n1 n1 VGND Y | p Y p3 Y p2 p1 p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 13 gates A | B A B C D | n VGND n2 n2 n1 Y n1 VGND Y | p Y p3 p1 p2 Y p3 p1 VPWR: cannot draw: no room for the A contact
+variant 13 gates C B A | D B A | n VGND n1 n2 VGND VGND Y n1 Y | p p1 p3 Y p3 VPWR p1 p2 Y: cannot draw: no room for the A contact
+variant 13 gates C B A B A | D | n VGND n1 Y n1 n2 VGND VGND Y | p p3 p1 p2 Y p3 Y VPWR p1: cannot draw: cannot route Y between the rows on li
+variant 13 gates C B A B A | D | n VGND n1 Y n1 n2 VGND VGND Y | p p3 p1 p2 Y p3 Y p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 13 gates A B C D | A B | n VGND n2 n1 VGND Y Y n1 Y | p p3 Y p3 p1 VPWR Y p2 p1: cannot draw: cannot route Y between the rows on li
+variant 13 gates A B C D | B A | n VGND n2 n1 VGND Y Y n1 Y | p p3 Y p3 p1 VPWR p1 p2 Y: cannot draw: no room for the A contact
+variant 13 gates A B C | D B A | n VGND n2 n1 VGND VGND Y n1 Y | p p3 Y p3 p1 VPWR p1 p2 Y: cannot draw: no room for the A contact
+variant 13 gates A | B A B C D | n VGND n2 n2 n1 Y n1 VGND Y | p p3 Y p1 p2 Y p3 p1 VPWR: cannot draw: no room for the A contact
+variant 13 gates D C A B | B A | n Y VGND n1 Y n1 n1 n2 VGND | p VPWR p1 p3 Y p3 p1 p2 Y: cannot draw: no room for the A contact
+variant 13 gates D C B A B | A | n Y VGND n1 Y n1 n2 n2 VGND | p VPWR p1 p3 Y p2 p1 Y p3: cannot draw: no room for the B contact
+variant 13 gates D C B A B | A | n Y VGND n1 Y n1 n2 n2 VGND | p VPWR p1 p3 Y p2 p1 p3 Y: cannot draw: no room for the B contact
+variant 13 gates D C B A | B A | n Y VGND n1 Y n1 n1 n2 VGND | p VPWR p1 p3 Y p3 p1 p2 Y: cannot draw: no room for the B contact
+variant 13 gates D C | B A B A | n Y VGND n1 n1 Y n1 n2 VGND | p VPWR p1 p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 13 gates D | A B A B C | n Y VGND VGND n2 n1 Y n1 VGND | p VPWR p1 Y p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 13 gates D | C B A B A | n Y VGND VGND n1 Y n1 n2 VGND | p VPWR p1 p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 13 gates A B D | C B A | n Y n1 Y VGND VGND n1 n2 VGND | p Y p2 p1 VPWR p1 p3 Y p3: cannot draw: no room for the A contact
+variant 13 gates A B D | A B C | n Y n1 Y VGND VGND n2 n1 VGND | p Y p2 p1 VPWR p3 Y p3 p1: cannot draw: no room for the A contact
+variant 13 gates A B | D C B A | n Y n1 Y Y VGND n1 n2 VGND | p Y p2 p1 VPWR p1 p3 Y p3: cannot draw: no room for the A contact
+variant 13 gates D | A B A B C | n Y VGND VGND n2 n1 Y n1 VGND | p p1 VPWR Y p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 13 gates D | C B A B A | n Y VGND VGND n1 Y n1 n2 VGND | p p1 VPWR p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 13 gates B A | D C B A | n Y n1 Y Y VGND n1 n2 VGND | p p1 p2 Y VPWR p1 p3 Y p3: cannot draw: no room for the A contact
+variant 13 gates D B A | C B A | n VGND Y n1 Y VGND n1 n2 VGND | p VPWR p1 p2 Y p1 p3 Y p3: cannot draw: no room for the A contact
+variant 13 gates D B A | A B C | n VGND Y n1 Y VGND n2 n1 VGND | p VPWR p1 p2 Y p3 Y p3 p1: cannot draw: no room for the A contact
+variant 13 gates D B A | C A B | n VGND Y n1 Y n1 VGND n2 n1 | p VPWR p1 p2 Y p1 p3 Y p3: cannot draw: no room for the A contact
+variant 13 gates D B A | B A C | n VGND Y n1 Y n1 n2 VGND n1 | p VPWR p1 p2 Y p3 Y p3 p1: cannot draw: no room for the A contact
+variant 13 gates D | A B A B C | n VGND Y VGND n2 n1 Y n1 VGND | p VPWR p1 Y p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 13 gates D | C B A B A | n VGND Y VGND n1 Y n1 n2 VGND | p VPWR p1 p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 13 gates D | A B C A B | n VGND Y n1 Y n1 VGND n2 n1 | p VPWR p1 Y p2 p1 p3 Y p3: cannot draw: cannot route Y between the rows on li
+variant 13 gates D | B A C B A | n VGND Y n1 n2 VGND n1 Y n1 | p VPWR p1 p3 Y p3 p1 p2 Y: cannot draw: cannot route Y between the rows on li
+variant 13 gates A B | D C A B | n VGND n2 n1 Y VGND n1 Y n1 | p Y p2 p1 VPWR p1 p3 Y p3: cannot draw: no room for the A contact
+variant 13 gates A B | D C B A | n VGND n2 n1 Y VGND n1 Y n1 | p Y p2 p1 VPWR p1 p3 Y p3: cannot draw: no room for the B contact
+variant 13 gates A B A B C | D | n VGND n2 n1 Y n1 VGND Y VGND | p Y p3 Y p2 p1 p3 VPWR p1: cannot draw: cannot route Y between the rows on li
+variant 13 gates A B A B C | D | n VGND n2 n1 Y n1 VGND Y VGND | p Y p3 Y p2 p1 p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 13 gates A B A B | D C | n VGND n2 n1 Y n1 Y VGND n1 | p Y p3 Y p2 p1 VPWR p1 p3: cannot draw: cannot route Y between the rows on li
+variant 13 gates D | A B A B C | n VGND Y VGND n2 n1 Y n1 VGND | p p1 VPWR Y p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 14 gates C B A B A D | n VGND n1 Y n1 n2 VGND Y | p p3 Y p2 p1 p3 p1 VPWR: cannot draw: no room for the B contact
+variant 14 gates D A B A B C | n Y VGND n2 n1 Y n1 VGND | p VPWR p1 p3 p1 p2 Y p3: cannot draw: no room for the A contact
+variant 15 gates D A B A C | B | n VGND Y n1 n2 VGND n1 n1 Y | p VPWR p1 p2 Y p3 p1 Y p3: cannot draw: cannot route Y between the rows on li
+variant 15 gates D A B A C | B | n VGND Y n1 n2 VGND n1 n1 Y | p VPWR p1 p2 Y p3 p1 p3 Y: cannot draw: no room for Y to switch edges in the n row
+variant 15 gates D A B A | C B | n VGND Y n1 n2 VGND VGND n1 Y | p VPWR p1 p2 Y p3 p1 p3 Y: cannot draw: no room for the B contact
+variant 15 gates D | A C A B B | n VGND Y Y n1 VGND n2 n1 Y | p VPWR p1 Y p3 p1 p2 Y p3: cannot draw: cannot route Y between the rows on li
+variant 15 gates D | B C A B A | n VGND Y Y n1 VGND n2 n1 Y | p VPWR p1 Y p3 p1 p2 Y p3: cannot draw: cannot route Y between the rows on li
+variant 15 gates D | A B A C B | n VGND Y Y n1 n2 VGND n1 Y | p VPWR p1 p3 Y p2 p1 p3 Y: cannot draw: no room for the B contact
+variant 15 gates D | B B A C A | n VGND Y Y n1 n2 VGND n1 Y | p VPWR p1 p3 Y p2 p1 p3 Y: cannot draw: no room for the A contact
+variant 15 gates A B B A C | D | n VGND n2 n1 Y n1 VGND VGND Y | p Y p3 Y p2 p1 p3 VPWR p1: cannot draw: cannot route Y between the rows on li
+variant 15 gates A B B A C | D | n VGND n2 n1 Y n1 VGND VGND Y | p Y p3 Y p2 p1 p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 15 gates A B B A | C D | n VGND n2 n1 Y n1 n1 VGND Y | p Y p3 Y p2 p1 p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 15 gates D | A C A B B | n VGND Y Y n1 VGND n2 n1 Y | p p1 VPWR Y p3 p1 p2 Y p3: cannot draw: cannot route Y between the rows on li
+variant 15 gates D | B C A B A | n VGND Y Y n1 VGND n2 n1 Y | p p1 VPWR Y p3 p1 p2 Y p3: cannot draw: cannot route Y between the rows on li
+variant 15 gates D | A B A C B | n VGND Y Y n1 n2 VGND n1 Y | p p1 VPWR p3 Y p2 p1 p3 Y: cannot draw: no room for the B contact
+variant 15 gates D | B B A C A | n VGND Y Y n1 n2 VGND n1 Y | p p1 VPWR p3 Y p2 p1 p3 Y: cannot draw: no room for the A contact
+variant 15 gates C A B | B A D | n VGND n1 Y n1 n1 n2 VGND Y | p p1 p3 Y p3 Y p2 p1 VPWR: cannot draw: no room for the A contact
+variant 15 gates C A | D A B B | n VGND n1 Y Y VGND n2 n1 Y | p p1 p3 Y VPWR p1 p2 Y p3: cannot draw: no room for the A contact
+variant 15 gates C A | B B A D | n VGND n1 Y Y n1 n2 VGND Y | p p1 p3 Y p3 Y p2 p1 VPWR: cannot draw: no room for the A contact
+variant 15 gates C B A | B A D | n VGND n1 Y n1 n1 n2 VGND Y | p p1 p3 Y p3 Y p2 p1 VPWR: cannot draw: no room for the B contact
+variant 15 gates C B | D A B A | n VGND n1 Y Y VGND n2 n1 Y | p p1 p3 Y VPWR p1 p2 Y p3: cannot draw: no room for the B contact
+variant 15 gates C B | A B A D | n VGND n1 Y Y n1 n2 VGND Y | p p1 p3 Y p3 Y p2 p1 VPWR: cannot draw: no room for the B contact
+variant 15 gates C B A | D A B | n VGND n1 n2 VGND VGND Y n1 Y | p p1 p3 Y p3 VPWR p1 p2 Y: cannot draw: no room for the B contact
+variant 15 gates C | A B B A D | n VGND n1 n1 Y n1 n2 VGND Y | p p1 p3 Y p3 Y p2 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 15 gates C | B A B A D | n VGND n1 n1 Y n1 n2 VGND Y | p p1 p3 Y p3 Y p2 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 15 gates A B A B | C D | n VGND n2 n1 Y n1 n1 VGND Y | p p1 p2 Y p3 Y p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 15 gates A B A | D C B | n VGND n2 n1 Y Y VGND n1 Y | p p1 p2 Y p3 VPWR p1 p3 Y: cannot draw: no room for the B contact
+variant 15 gates A B A | B C D | n VGND n2 n1 Y Y n1 VGND Y | p p1 p2 Y p3 Y p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 15 gates A B B A | C D | n VGND n2 n1 Y n1 n1 VGND Y | p p1 p2 Y p3 Y p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 15 gates A B B | D C A | n VGND n2 n1 Y Y VGND n1 Y | p p1 p2 Y p3 VPWR p1 p3 Y: cannot draw: no room for the A contact
+variant 15 gates A B B | A C D | n VGND n2 n1 Y Y n1 VGND Y | p p1 p2 Y p3 Y p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 15 gates A B | A B C D | n VGND n2 n1 n1 Y n1 VGND Y | p p1 p2 Y p3 Y p3 p1 VPWR: cannot draw: no room for the B contact
+variant 15 gates A B | B A C D | n VGND n2 n1 n1 Y n1 VGND Y | p p1 p2 Y p3 Y p3 p1 VPWR: cannot draw: no room for the A contact
+variant 15 gates C A B B A | D | n VGND n1 Y n1 n2 VGND VGND Y | p p3 p1 p2 Y p3 Y VPWR p1: cannot draw: cannot route Y between the rows on li
+variant 15 gates C A B B A | D | n VGND n1 Y n1 n2 VGND VGND Y | p p3 p1 p2 Y p3 Y p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 15 gates C | A B B A D | n VGND n1 n1 Y n1 n2 VGND Y | p p3 p1 Y p3 Y p2 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 15 gates C | B A B A D | n VGND n1 n1 Y n1 n2 VGND Y | p p3 p1 Y p3 Y p2 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 15 gates A B A D | C B | n VGND n2 n1 Y VGND VGND n1 Y | p p3 Y p2 p1 VPWR p1 p3 Y: cannot draw: no room for the B contact
+variant 15 gates A B A | D C B | n VGND n2 n1 Y Y VGND n1 Y | p p3 Y p2 p1 VPWR p1 p3 Y: cannot draw: no room for the B contact
+variant 15 gates A B A | B C D | n VGND n2 n1 Y Y n1 VGND Y | p p3 Y p2 p1 Y p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 15 gates A B C D | B A | n VGND n2 n1 VGND Y Y n1 Y | p p3 Y p3 p1 VPWR Y p2 p1: cannot draw: cannot route Y between the rows on li
+variant 15 gates A B C D | A B | n VGND n2 n1 VGND Y Y n1 Y | p p3 Y p3 p1 VPWR p1 p2 Y: cannot draw: no room for the B contact
+variant 16 gates A C D | B B A | n VGND n1 Y VGND VGND n1 n2 Y | p VPWR p3 p1 Y p3 VPWR p2 p1: cannot draw: cannot route Y between the rows on li
+variant 16 gates A C A B B | D | n VGND n1 Y n2 n1 VGND VGND Y | p VPWR p3 p1 p2 VPWR p3 Y p1: cannot draw: cannot route Y between the rows on li
+variant 16 gates A C A B B | D | n VGND n1 Y n2 n1 VGND VGND Y | p VPWR p3 p1 p2 VPWR p3 p1 Y: cannot draw: no room for Y to switch edges in the n row
+variant 16 gates B A D | C B A | n VGND n1 VGND Y Y n1 n2 Y | p VPWR p2 p1 Y p1 p3 VPWR p3: cannot draw: no room for the D contact
+variant 16 gates B A D | A B C | n VGND n1 VGND Y Y n2 n1 Y | p VPWR p2 p1 Y p3 VPWR p3 p1: cannot draw: no room for the D contact
+variant 16 gates B A | D C B A | n VGND n1 VGND VGND Y n1 n2 Y | p VPWR p2 p1 Y p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 16 gates B C D | A B A | n VGND n1 Y VGND VGND n1 n2 Y | p VPWR p3 p1 Y p1 p2 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 16 gates B C D | A B A | n VGND n1 Y VGND VGND n1 n2 Y | p VPWR p3 p1 Y p3 VPWR p2 p1: cannot draw: cannot route Y between the rows on li
+variant 16 gates B C A B A | D | n VGND n1 Y n2 n1 VGND VGND Y | p VPWR p3 p1 p2 VPWR p3 Y p1: cannot draw: cannot route Y between the rows on li
+variant 16 gates B C A B A | D | n VGND n1 Y n2 n1 VGND VGND Y | p VPWR p3 p1 p2 VPWR p3 p1 Y: cannot draw: no room for Y to switch edges in the n row
+variant 16 gates B C | D A B A | n VGND n1 Y Y VGND n1 n2 Y | p VPWR p3 p1 Y p1 p2 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 16 gates B C | A B A D | n VGND n1 Y Y n2 n1 VGND Y | p VPWR p3 p1 p3 VPWR p2 p1 Y: cannot draw: no room for the D contact
+variant 16 gates B | C A B A D | n VGND n1 n1 Y n2 n1 VGND Y | p VPWR p3 p1 p3 VPWR p2 p1 Y: cannot draw: no room for the A contact
+variant 16 gates D C A B | B A | n VGND Y n1 VGND n1 n1 n2 Y | p Y p1 p3 VPWR p3 VPWR p2 p1: cannot draw: cannot route Y between the rows on li
+variant 16 gates D C A | B B A | n VGND Y n1 VGND VGND n1 n2 Y | p Y p1 p3 VPWR p3 VPWR p2 p1: cannot draw: cannot route Y between the rows on li
+variant 16 gates D C B A | B A | n VGND Y n1 VGND n1 n1 n2 Y | p Y p1 p3 VPWR p3 VPWR p2 p1: cannot draw: cannot route Y between the rows on li
+variant 16 gates D C B | A B A | n VGND Y n1 VGND VGND n1 n2 Y | p Y p1 p3 VPWR p1 p2 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 16 gates D C B | A B A | n VGND Y n1 VGND VGND n1 n2 Y | p Y p1 p3 VPWR p3 VPWR p2 p1: cannot draw: cannot route Y between the rows on li
+variant 16 gates D C | A B B A | n VGND Y n1 n1 VGND n1 n2 Y | p Y p1 p3 VPWR p3 VPWR p2 p1: cannot draw: cannot route Y between the rows on li
+variant 16 gates D C | B A B A | n VGND Y n1 n1 VGND n1 n2 Y | p Y p1 p3 VPWR p3 VPWR p2 p1: cannot draw: cannot route Y between the rows on li
+variant 16 gates D C | A B B A | n VGND Y n1 n1 VGND n1 n2 Y | p Y p1 p3 p1 p2 VPWR p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 16 gates D A B A B | C | n VGND Y n2 n1 VGND n1 n1 Y | p Y p1 p2 VPWR p3 VPWR p1 p3: cannot draw: cannot route Y between the rows on li
+variant 16 gates D A B A B | C | n VGND Y n2 n1 VGND n1 n1 Y | p Y p1 p2 VPWR p3 VPWR p3 p1: cannot draw: cannot route Y between the rows on li
+variant 16 gates D A B A | B C | n VGND Y n2 n1 VGND VGND n1 Y | p Y p1 p2 VPWR p3 VPWR p3 p1: cannot draw: cannot route Y between the rows on li
+variant 16 gates D A B B A | C | n VGND Y n2 n1 VGND n1 n1 Y | p Y p1 p2 VPWR p3 VPWR p1 p3: cannot draw: cannot route Y between the rows on li
+variant 16 gates D A B B A | C | n VGND Y n2 n1 VGND n1 n1 Y | p Y p1 p2 VPWR p3 VPWR p3 p1: cannot draw: cannot route Y between the rows on li
+variant 16 gates D A B B | A C | n VGND Y n2 n1 VGND VGND n1 Y | p Y p1 p2 VPWR p3 VPWR p3 p1: cannot draw: cannot route Y between the rows on li
+variant 16 gates D A B | A B C | n VGND Y n2 n1 n1 VGND n1 Y | p Y p1 p2 VPWR p3 VPWR p3 p1: cannot draw: cannot route Y between the rows on li
+variant 16 gates D A B | B A C | n VGND Y n2 n1 n1 VGND n1 Y | p Y p1 p2 VPWR p3 VPWR p3 p1: cannot draw: cannot route Y between the rows on li
+variant 16 gates D | A B B A C | n VGND Y Y n2 n1 VGND n1 Y | p Y p1 VPWR p3 VPWR p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 16 gates D | C A B B A | n VGND Y Y n1 VGND n1 n2 Y | p Y p1 p3 p1 p2 VPWR p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 16 gates D | A B B A C | n VGND Y Y n2 n1 VGND n1 Y | p p1 Y VPWR p3 VPWR p2 p1 p3: cannot draw: no room for the A contact
+variant 16 gates D | C A B B A | n VGND Y Y n1 VGND n1 n2 Y | p p1 Y p3 p1 p2 VPWR p3 VPWR: cannot draw: no room for the A contact
+variant 16 gates A B | D C B A | n VGND n1 VGND VGND Y n1 n2 Y | p p1 p2 VPWR Y p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 16 gates A B A D | B C | n VGND n1 n2 Y VGND VGND n1 Y | p p3 VPWR p2 p1 Y VPWR p3 p1: cannot draw: cannot route Y between the rows on li
+variant 16 gates A B A C B | D | n VGND n1 n2 Y n1 VGND VGND Y | p p3 VPWR p2 p1 p3 VPWR Y p1: cannot draw: cannot route Y between the rows on li
+variant 17 gates D A B A B C | n VGND Y n2 n1 VGND n1 Y | p Y p1 p3 p1 p2 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 17 gates C B A B A D | n Y n1 VGND n1 n2 Y VGND | p p3 VPWR p2 p1 p3 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 19 gates D A B B A C | n VGND Y n2 n1 VGND n1 Y | p Y p1 p3 p1 p2 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 19 gates A B A C B D | n VGND n1 n2 Y n1 VGND Y | p p3 p1 p2 VPWR p3 p1 Y: cannot draw: no room for the B contact
+variant 19 gates B B A C A D | n VGND n1 n2 Y n1 VGND Y | p p3 p1 p2 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 19 gates D A C A B B | n Y VGND n1 Y n2 n1 VGND | p Y p1 p3 VPWR p2 p1 p3: cannot draw: no room for the D contact
+variant 19 gates D B C A B A | n Y VGND n1 Y n2 n1 VGND | p Y p1 p3 VPWR p2 p1 p3: cannot draw: no room for the D contact
+variant 19 gates C A B B A D | n Y n1 VGND n1 n2 Y VGND | p p3 VPWR p2 p1 p3 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 20 gates D A B B A C | n VGND Y n2 n1 VGND n1 Y | p VPWR p1 p3 p1 p2 Y p3: cannot draw: cannot route Y between the rows on li
+variant 20 gates A B A C B D | n VGND n1 n2 Y n1 VGND Y | p p3 p1 p2 Y p3 p1 VPWR: cannot draw: no room for the A contact
+variant 20 gates B B A C A D | n VGND n1 n2 Y n1 VGND Y | p p3 p1 p2 Y p3 p1 VPWR: cannot draw: no room for the A contact
+variant 20 gates D A C A B B | n Y VGND n1 Y n2 n1 VGND | p VPWR p1 p3 Y p2 p1 p3: cannot draw: no room for the A contact
+variant 20 gates D B C A B A | n Y VGND n1 Y n2 n1 VGND | p VPWR p1 p3 Y p2 p1 p3: cannot draw: no room for the B contact
+variant 20 gates C A B B A D | n Y n1 VGND n1 n2 Y VGND | p p3 Y p2 p1 p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 22 gates D A B A B C | n VGND Y n2 n1 VGND n1 Y | p VPWR p1 p3 p1 p2 Y p3: cannot draw: cannot route Y between the rows on li
+variant 22 gates C B A B A D | n Y n1 VGND n1 n2 Y VGND | p p3 Y p2 p1 p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 25 gates D B A A B C | n VGND Y n2 n1 VGND n1 Y | p Y p1 p3 p1 p2 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 25 gates A A B C B D | n VGND n1 n2 Y n1 VGND Y | p p3 p1 p2 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 25 gates B A B C A D | n VGND n1 n2 Y n1 VGND Y | p p3 p1 p2 VPWR p3 p1 Y: cannot draw: no room for the A contact
+variant 25 gates D A C B A B | n Y VGND n1 Y n2 n1 VGND | p Y p1 p3 VPWR p2 p1 p3: cannot draw: no room for the D contact
+variant 25 gates D B C B A A | n Y VGND n1 Y n2 n1 VGND | p Y p1 p3 VPWR p2 p1 p3: cannot draw: no room for the D contact
+variant 25 gates C B A A B D | n Y n1 VGND n1 n2 Y VGND | p p3 VPWR p2 p1 p3 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 27 gates D B A B A C | n VGND Y n2 n1 VGND n1 Y | p Y p1 p3 p1 p2 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 27 gates C A B A B D | n Y n1 VGND n1 n2 Y VGND | p p3 VPWR p2 p1 p3 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 28 gates D B A B A C | n VGND Y n2 n1 VGND n1 Y | p VPWR p1 p3 p1 p2 Y p3: cannot draw: cannot route Y between the rows on li
+variant 28 gates C A B A B D | n Y n1 VGND n1 n2 Y VGND | p p3 Y p2 p1 p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 30 gates D B A A B C | n VGND Y n2 n1 VGND n1 Y | p VPWR p1 p3 p1 p2 Y p3: cannot draw: cannot route Y between the rows on li
+variant 30 gates A A B C B D | n VGND n1 n2 Y n1 VGND Y | p p3 p1 p2 Y p3 p1 VPWR: cannot draw: no room for the B contact
+variant 30 gates B A B C A D | n VGND n1 n2 Y n1 VGND Y | p p3 p1 p2 Y p3 p1 VPWR: cannot draw: no room for the B contact
+variant 30 gates D A C B A B | n Y VGND n1 Y n2 n1 VGND | p VPWR p1 p3 Y p2 p1 p3: cannot draw: no room for the A contact
+variant 30 gates D B C B A A | n Y VGND n1 Y n2 n1 VGND | p VPWR p1 p3 Y p2 p1 p3: cannot draw: no room for the B contact
+variant 30 gates C B A A B D | n Y n1 VGND n1 n2 Y VGND | p p3 Y p2 p1 p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+none of those can be drawn: the next ones, up to 200 per variant
+1920 orders over all variants: the 420 with the narrowest bound are tried, the other 1500 (at least 3.68 um) are not
+variant 0 gates D | C A B A B | n VGND Y VGND n1 Y n1 n2 VGND | p p1 Y p3 p1 p2 VPWR p3 VPWR: cannot draw: no room for the B contact
+variant 0 gates D | B A C B A | n VGND Y n1 Y n1 VGND n2 n1 | p p1 Y VPWR p2 p1 p3 VPWR p3: cannot draw: no room for the A contact
+variant 0 gates D | A B C A B | n VGND Y n1 n2 VGND n1 Y n1 | p p1 Y p3 VPWR p3 p1 p2 VPWR: cannot draw: no room for the C contact
+variant 0 gates C A B | B A D | n VGND n1 n2 VGND Y n1 Y VGND | p p1 p3 VPWR p3 VPWR p2 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 0 gates C A B A B | D | n VGND n1 Y n1 n2 VGND Y VGND | p p3 p1 p2 VPWR p3 VPWR Y p1: cannot draw: the outer lanes of Y and n1 meet in the n row
+variant 0 gates C A B A B | D | n VGND n1 Y n1 n2 VGND Y VGND | p p3 p1 p2 VPWR p3 VPWR p1 Y: cannot draw: cannot route Y between the rows on li
+variant 0 gates B A C D | B A | n VGND n2 n1 VGND Y n1 Y n1 | p p3 VPWR p3 p1 Y VPWR p2 p1: cannot draw: no room for n1 to switch edges in the n row
+variant 0 gates B A C D | A B | n VGND n2 n1 VGND Y n1 Y n1 | p p3 VPWR p3 p1 Y p1 p2 VPWR: cannot draw: no room for the D contact
+variant 0 gates B A C | B A D | n VGND n2 n1 VGND Y n1 Y VGND | p p3 VPWR p3 p1 VPWR p2 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 0 gates B A D | C B A | n Y n1 Y VGND n1 VGND n2 n1 | p VPWR p2 p1 Y p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 0 gates B A D | A B C | n Y n1 Y VGND n1 n2 VGND n1 | p VPWR p2 p1 Y p3 VPWR p3 p1: cannot draw: cannot route Y between the rows on li
+variant 0 gates B A | B A C D | n Y n1 Y VGND n2 n1 VGND Y | p VPWR p2 p1 p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 0 gates D C A B | B A | n Y VGND n1 Y n1 VGND n2 n1 | p Y p1 p3 VPWR p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 0 gates D C B A | B A | n Y VGND n1 Y n1 VGND n2 n1 | p Y p1 p3 VPWR p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 0 gates D C A B | B A | n Y VGND n1 n2 VGND Y n1 Y | p Y p1 p3 VPWR p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 0 gates D C A B | A B | n Y VGND n1 n2 VGND Y n1 Y | p Y p1 p3 VPWR p3 p1 p2 VPWR: cannot draw: no room for the D contact
+variant 0 gates D C A B | B A | n Y VGND n1 n2 VGND n1 Y n1 | p Y p1 p3 VPWR p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 0 gates D C A B | A B | n Y VGND n1 n2 VGND n1 Y n1 | p Y p1 p3 VPWR p3 p1 p2 VPWR: cannot draw: no room for the D contact
+variant 0 gates D C | B A B A | n Y VGND n1 VGND n2 n1 Y n1 | p Y p1 p3 VPWR p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 0 gates D | B A C B A | n Y VGND n1 Y n1 VGND n2 n1 | p Y p1 VPWR p2 p1 p3 VPWR p3: cannot draw: no room for the B contact
+variant 0 gates D | A B C A B | n Y VGND n1 n2 VGND n1 Y n1 | p Y p1 p3 VPWR p3 p1 p2 VPWR: cannot draw: no room for the A contact
+variant 0 gates D | B A C B A | n Y VGND n1 Y n1 VGND n2 n1 | p p1 Y VPWR p2 p1 p3 VPWR p3: cannot draw: no room for the A contact
+variant 0 gates D | A B C A B | n Y VGND n1 n2 VGND n1 Y n1 | p p1 Y p3 VPWR p3 p1 p2 VPWR: cannot draw: cannot route Y between the rows on li
+variant 0 gates A B | B A C D | n Y n1 Y VGND n2 n1 VGND Y | p p1 p2 VPWR p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 0 gates B A C B A | D | n n1 Y n1 VGND n2 n1 VGND Y | p VPWR p2 p1 p3 VPWR p3 Y p1: cannot draw: cannot route Y between the rows on li
+variant 0 gates B A C B A | D | n n1 Y n1 VGND n2 n1 VGND Y | p VPWR p2 p1 p3 VPWR p3 p1 Y: cannot draw: no room for Y to switch edges in the n row
+variant 0 gates B A C B A | D | n n1 Y n1 VGND n2 n1 Y VGND | p VPWR p2 p1 p3 VPWR p3 Y p1: cannot draw: no room for Y to switch edges in the n row
+variant 0 gates B A C B A | D | n n1 Y n1 VGND n2 n1 Y VGND | p VPWR p2 p1 p3 VPWR p3 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 0 gates B A | B A C D | n n1 Y n1 VGND n2 n1 VGND Y | p VPWR p2 p1 p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 0 gates B A | D C A B | n n1 Y n1 Y VGND n1 n2 VGND | p VPWR p2 p1 Y p1 p3 VPWR p3: cannot draw: no room for the D contact
+variant 0 gates A B A B | D C | n n1 Y n1 n2 VGND Y VGND n1 | p p1 p2 VPWR p3 VPWR Y p1 p3: cannot draw: no room for the D contact
+variant 0 gates A B A B | C D | n n1 Y n1 n2 VGND n1 VGND Y | p p1 p2 VPWR p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 0 gates A B | B A C D | n n1 Y n1 VGND n2 n1 VGND Y | p p1 p2 VPWR p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 0 gates A B | D C A B | n n1 Y n1 Y VGND n1 n2 VGND | p p1 p2 VPWR Y p1 p3 VPWR p3: cannot draw: no room for the A contact
+variant 0 gates C B A | D A B | n n1 VGND n2 n1 VGND Y n1 Y | p p1 p3 VPWR p3 Y p1 p2 VPWR: cannot draw: cannot route Y between the rows on li
+variant 0 gates C B A | B A D | n n1 VGND n2 n1 Y n1 Y VGND | p p1 p3 VPWR p3 VPWR p2 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 0 gates A B | D C A B | n n1 n2 VGND Y VGND n1 Y n1 | p p1 p2 VPWR Y p1 p3 VPWR p3: cannot draw: no room for the D contact
+variant 0 gates A B | D C B A | n n1 n2 VGND Y VGND n1 Y n1 | p p1 p2 VPWR Y p1 p3 VPWR p3: cannot draw: no room for the D contact
+variant 0 gates A B | A B C D | n n1 n2 VGND n1 Y n1 VGND Y | p p1 p2 VPWR p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 0 gates A B | B A C D | n n1 n2 VGND n1 Y n1 VGND Y | p p1 p2 VPWR p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 0 gates A B C D | B A | n n1 Y n1 VGND Y VGND n2 n1 | p p3 VPWR p3 p1 Y VPWR p2 p1: cannot draw: no room for the D contact
+variant 0 gates A B C D | A B | n n1 Y n1 VGND Y n1 n2 VGND | p p3 VPWR p3 p1 Y p1 p2 VPWR: cannot draw: no room for the D contact
+variant 0 gates B A C D | B A | n n1 Y n1 VGND Y VGND n2 n1 | p p3 VPWR p3 p1 Y VPWR p2 p1: cannot draw: no room for the D contact
+variant 0 gates B A C D | A B | n n1 Y n1 VGND Y n1 n2 VGND | p p3 VPWR p3 p1 Y p1 p2 VPWR: cannot draw: no room for the D contact
+variant 0 gates C D | B A B A | n n1 VGND Y VGND n2 n1 Y n1 | p p3 p1 Y VPWR p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 0 gates C D | A B A B | n n1 VGND Y n1 Y n1 n2 VGND | p p3 p1 Y p1 p2 VPWR p3 VPWR: cannot draw: no room for the D contact
+variant 0 gates A B C A B | D | n n1 n2 VGND n1 Y n1 VGND Y | p p3 VPWR p3 p1 p2 VPWR Y p1: cannot draw: no room for the A contact
+variant 0 gates A B C A B | D | n n1 n2 VGND n1 Y n1 VGND Y | p p3 VPWR p3 p1 p2 VPWR p1 Y: cannot draw: no room for Y to switch edges in the n row
+variant 0 gates A B C A B | D | n n1 n2 VGND n1 Y n1 Y VGND | p p3 VPWR p3 p1 p2 VPWR Y p1: cannot draw: no room for the A contact
+variant 0 gates A B C A B | D | n n1 n2 VGND n1 Y n1 Y VGND | p p3 VPWR p3 p1 p2 VPWR p1 Y: cannot draw: cannot route Y between the rows on li
+variant 0 gates A B C | D A B | n n1 n2 VGND n1 VGND Y n1 Y | p p3 VPWR p3 p1 Y p1 p2 VPWR: cannot draw: cannot route Y between the rows on li
+variant 0 gates A B C | B A D | n n1 n2 VGND n1 Y n1 Y VGND | p p3 VPWR p3 p1 VPWR p2 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 0 gates B | D C A B A | n VGND n2 Y VGND n1 Y n1 n2 | p VPWR p3 Y p1 p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 0 gates D | B C A B A | n VGND Y n2 VGND n1 Y n1 n2 | p Y p1 VPWR p3 p1 p2 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 0 gates D | A B A C B | n VGND Y n2 n1 Y n1 VGND n2 | p Y p1 p3 VPWR p2 p1 p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 0 gates D | B C A B A | n VGND Y n2 VGND n1 Y n1 n2 | p p1 Y VPWR p3 p1 p2 VPWR p3: cannot draw: no room for the A contact
+variant 0 gates D | A B A C B | n VGND Y n2 n1 Y n1 VGND n2 | p p1 Y p3 VPWR p2 p1 p3 VPWR: cannot draw: no room for the B contact
+variant 0 gates B | D C A B A | n VGND n2 Y VGND n1 Y n1 n2 | p p3 VPWR Y p1 p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 0 gates D C A B A | B | n Y VGND n1 Y n1 n2 VGND n2 | p Y p1 p3 VPWR p2 p1 VPWR p3: cannot draw: no room for the D contact
+variant 0 gates D C A B A | B | n Y VGND n1 Y n1 n2 VGND n2 | p Y p1 p3 VPWR p2 p1 p3 VPWR: cannot draw: no room for the D contact
+variant 0 gates D | B C A B A | n Y VGND n2 VGND n1 Y n1 n2 | p Y p1 VPWR p3 p1 p2 VPWR p3: cannot draw: no room for the B contact
+variant 0 gates D | A B A C B | n Y VGND n2 n1 Y n1 VGND n2 | p Y p1 p3 VPWR p2 p1 p3 VPWR: cannot draw: no room for the B contact
+variant 0 gates D | B C A B A | n Y VGND n2 VGND n1 Y n1 n2 | p p1 Y VPWR p3 p1 p2 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 0 gates D | A B A C B | n Y VGND n2 n1 Y n1 VGND n2 | p p1 Y p3 VPWR p2 p1 p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 0 gates B C A B A | D | n n2 VGND n1 Y n1 n2 VGND Y | p VPWR p3 p1 p2 VPWR p3 Y p1: cannot draw: cannot route Y between the rows on li
+variant 0 gates B C A B A | D | n n2 VGND n1 Y n1 n2 VGND Y | p VPWR p3 p1 p2 VPWR p3 p1 Y: cannot draw: no room for Y to switch edges in the n row
+variant 0 gates B C A B A | D | n n2 VGND n1 Y n1 n2 Y VGND | p VPWR p3 p1 p2 VPWR p3 Y p1: cannot draw: no room for n2 to switch edges in the n row
+variant 0 gates B C A B A | D | n n2 VGND n1 Y n1 n2 Y VGND | p VPWR p3 p1 p2 VPWR p3 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 0 gates B | D C A B A | n n2 VGND Y VGND n1 Y n1 n2 | p VPWR p3 Y p1 p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 0 gates B | A B A C D | n n2 VGND n2 n1 Y n1 VGND Y | p VPWR p3 p1 p2 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 0 gates A B A C D | B | n n2 n1 Y n1 VGND Y VGND n2 | p p1 p2 VPWR p3 p1 Y VPWR p3: cannot draw: no room for the D contact
+variant 0 gates A B A C D | B | n n2 n1 Y n1 VGND Y VGND n2 | p p1 p2 VPWR p3 p1 Y p3 VPWR: cannot draw: no room for the D contact
+variant 0 gates A B A C D | B | n n2 n1 Y n1 VGND Y n2 VGND | p p1 p2 VPWR p3 p1 Y VPWR p3: cannot draw: no room for the D contact
+variant 0 gates A B A C D | B | n n2 n1 Y n1 VGND Y n2 VGND | p p1 p2 VPWR p3 p1 Y p3 VPWR: cannot draw: no room for the D contact
+variant 0 gates A B A C B | D | n n2 n1 Y n1 VGND n2 VGND Y | p p3 VPWR p2 p1 p3 VPWR Y p1: cannot draw: cannot route Y between the rows on li
+variant 0 gates A B A C B | D | n n2 n1 Y n1 VGND n2 VGND Y | p p3 VPWR p2 p1 p3 VPWR p1 Y: cannot draw: no room for the C contact
+variant 0 gates A B A C B | D | n n2 n1 Y n1 VGND n2 Y VGND | p p3 VPWR p2 p1 p3 VPWR Y p1: cannot draw: no room for the C contact
+variant 0 gates A B A C B | D | n n2 n1 Y n1 VGND n2 Y VGND | p p3 VPWR p2 p1 p3 VPWR p1 Y: cannot draw: cannot route Y between the rows on li
+variant 0 gates B | D C A B A | n n2 VGND Y VGND n1 Y n1 n2 | p p3 VPWR Y p1 p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 0 gates B | A B A C D | n n2 VGND n2 n1 Y n1 VGND Y | p p3 VPWR p1 p2 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 2 gates B A C | D B A | n VGND n2 n1 VGND VGND Y n1 Y | p p3 VPWR p3 p1 Y p1 p2 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates A B D | C A B | n Y n1 Y VGND VGND n1 n2 VGND | p VPWR p2 p1 Y p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates A B D | B A C | n Y n1 Y VGND VGND n2 n1 VGND | p VPWR p2 p1 Y p3 VPWR p3 p1: cannot draw: cannot route Y between the rows on li
+variant 2 gates A B | D C A B | n Y n1 Y Y VGND n1 n2 VGND | p VPWR p2 p1 Y p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates A C D | B A B | n Y n1 VGND Y Y n1 n2 VGND | p VPWR p3 p1 Y p1 p2 VPWR p3: cannot draw: no room for the D contact
+variant 2 gates A C D | B A B | n Y n1 VGND Y Y n1 n2 VGND | p VPWR p3 p1 Y p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 2 gates A C B A B | D | n Y n1 VGND n2 n1 Y Y VGND | p VPWR p3 p1 p2 VPWR p3 Y p1: cannot draw: cannot route Y between the rows on li
+variant 2 gates A C B A B | D | n Y n1 VGND n2 n1 Y Y VGND | p VPWR p3 p1 p2 VPWR p3 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 2 gates A C | D B A B | n Y n1 VGND VGND Y n1 n2 VGND | p VPWR p3 p1 Y p1 p2 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates A C | B A B D | n Y n1 VGND VGND n2 n1 Y VGND | p VPWR p3 p1 p3 VPWR p2 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 2 gates A | C B A B D | n Y n1 n1 VGND n2 n1 Y VGND | p VPWR p3 p1 p3 VPWR p2 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 2 gates B C D | A A B | n Y n1 VGND Y Y n1 n2 VGND | p VPWR p3 p1 Y p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 2 gates B C B A A | D | n Y n1 VGND n2 n1 Y Y VGND | p VPWR p3 p1 p2 VPWR p3 Y p1: cannot draw: cannot route Y between the rows on li
+variant 2 gates B C B A A | D | n Y n1 VGND n2 n1 Y Y VGND | p VPWR p3 p1 p2 VPWR p3 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 2 gates D C A B | A B | n Y VGND n1 Y n1 n1 n2 VGND | p Y p1 p3 VPWR p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 2 gates D C A | B A B | n Y VGND n1 Y Y n1 n2 VGND | p Y p1 p3 VPWR p1 p2 VPWR p3: cannot draw: no room for the D contact
+variant 2 gates D C A | B A B | n Y VGND n1 Y Y n1 n2 VGND | p Y p1 p3 VPWR p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 2 gates D C B A | A B | n Y VGND n1 Y n1 n1 n2 VGND | p Y p1 p3 VPWR p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 2 gates D C B | A A B | n Y VGND n1 Y Y n1 n2 VGND | p Y p1 p3 VPWR p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 2 gates D C | A B A B | n Y VGND n1 n1 Y n1 n2 VGND | p Y p1 p3 VPWR p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 2 gates D C | B A A B | n Y VGND n1 n1 Y n1 n2 VGND | p Y p1 p3 VPWR p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 2 gates D C | B A A B | n Y VGND n1 n1 Y n1 n2 VGND | p Y p1 p3 p1 p2 VPWR p3 VPWR: cannot draw: no room for the D contact
+variant 2 gates D B A A B | C | n Y VGND n2 n1 Y n1 n1 VGND | p Y p1 p2 VPWR p3 VPWR p1 p3: cannot draw: no room for the D contact
+variant 2 gates D B A A B | C | n Y VGND n2 n1 Y n1 n1 VGND | p Y p1 p2 VPWR p3 VPWR p3 p1: cannot draw: no room for the D contact
+variant 2 gates D B A A | B C | n Y VGND n2 n1 Y Y n1 VGND | p Y p1 p2 VPWR p3 VPWR p3 p1: cannot draw: no room for the D contact
+variant 2 gates D B A B A | C | n Y VGND n2 n1 Y n1 n1 VGND | p Y p1 p2 VPWR p3 VPWR p1 p3: cannot draw: no room for the D contact
+variant 2 gates D B A B A | C | n Y VGND n2 n1 Y n1 n1 VGND | p Y p1 p2 VPWR p3 VPWR p3 p1: cannot draw: no room for the D contact
+variant 2 gates D B A B | A C | n Y VGND n2 n1 Y Y n1 VGND | p Y p1 p2 VPWR p3 VPWR p3 p1: cannot draw: no room for the D contact
+variant 2 gates D B A | A B C | n Y VGND n2 n1 n1 Y n1 VGND | p Y p1 p2 VPWR p3 VPWR p3 p1: cannot draw: no room for the D contact
+variant 2 gates D B A | B A C | n Y VGND n2 n1 n1 Y n1 VGND | p Y p1 p2 VPWR p3 VPWR p3 p1: cannot draw: no room for the D contact
+variant 2 gates D | B A A B C | n Y VGND VGND n2 n1 Y n1 VGND | p Y p1 VPWR p3 VPWR p2 p1 p3: cannot draw: no room for the B contact
+variant 2 gates D | C B A A B | n Y VGND VGND n1 Y n1 n2 VGND | p Y p1 p3 p1 p2 VPWR p3 VPWR: cannot draw: no room for the B contact
+variant 2 gates D | B A A B C | n Y VGND VGND n2 n1 Y n1 VGND | p p1 Y VPWR p3 VPWR p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | C B A A B | n Y VGND VGND n1 Y n1 n2 VGND | p p1 Y p3 p1 p2 VPWR p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates B A | D C A B | n Y n1 Y Y VGND n1 n2 VGND | p p1 p2 VPWR Y p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates A A B D | B C | n Y n1 n2 VGND Y Y n1 VGND | p p3 VPWR p2 p1 Y VPWR p3 p1: cannot draw: no room for the D contact
+variant 2 gates A A B C B | D | n Y n1 n2 VGND n1 Y Y VGND | p p3 VPWR p2 p1 p3 VPWR Y p1: cannot draw: cannot route Y between the rows on li
+variant 2 gates A A B C B | D | n Y n1 n2 VGND n1 Y Y VGND | p p3 VPWR p2 p1 p3 VPWR p1 Y: cannot draw: cannot route Y between the rows on li
+variant 2 gates A | C B A B D | n Y n1 n1 VGND n2 n1 Y VGND | p p3 VPWR p1 p3 VPWR p2 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 2 gates B A B D | A C | n Y n1 n2 VGND Y Y n1 VGND | p p3 VPWR p2 p1 Y VPWR p3 p1: cannot draw: no room for the D contact
+variant 2 gates B A B C A | D | n Y n1 n2 VGND n1 Y Y VGND | p p3 VPWR p2 p1 p3 VPWR Y p1: cannot draw: cannot route Y between the rows on li
+variant 2 gates B A B C A | D | n Y n1 n2 VGND n1 Y Y VGND | p p3 VPWR p2 p1 p3 VPWR p1 Y: cannot draw: cannot route Y between the rows on li
+variant 2 gates B A A B C | D | n VGND n2 n1 Y n1 VGND Y VGND | p VPWR p3 VPWR p2 p1 p3 Y p1: cannot draw: no room for the B contact
+variant 2 gates B A A B C | D | n VGND n2 n1 Y n1 VGND Y VGND | p VPWR p3 VPWR p2 p1 p3 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 2 gates B A A B | D C | n VGND n2 n1 Y n1 Y VGND n1 | p VPWR p3 VPWR p2 p1 Y p1 p3: cannot draw: no room for the D contact
+variant 2 gates D B A | C A B | n VGND Y n1 Y VGND n1 n2 VGND | p Y p1 p2 VPWR p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates D B A | B A C | n VGND Y n1 Y VGND n2 n1 VGND | p Y p1 p2 VPWR p3 VPWR p3 p1: cannot draw: cannot route Y between the rows on li
+variant 2 gates D B A | C B A | n VGND Y n1 Y n1 VGND n2 n1 | p Y p1 p2 VPWR p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates D B A | A B C | n VGND Y n1 Y n1 n2 VGND n1 | p Y p1 p2 VPWR p3 VPWR p3 p1: cannot draw: cannot route Y between the rows on li
+variant 2 gates D B A B C | A | n VGND Y n1 n2 VGND n1 Y n1 | p Y p1 p2 VPWR p3 p1 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates D B A B C | A | n VGND Y n1 n2 VGND n1 Y n1 | p Y p1 p2 VPWR p3 p1 p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates D B A B | A C | n VGND Y n1 n2 VGND Y n1 VGND | p Y p1 p2 VPWR p3 VPWR p3 p1: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | B A A B C | n VGND Y VGND n2 n1 Y n1 VGND | p Y p1 VPWR p3 VPWR p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | C B A A B | n VGND Y VGND n1 Y n1 n2 VGND | p Y p1 p3 p1 p2 VPWR p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | A B C B A | n VGND Y n1 Y n1 VGND n2 n1 | p Y p1 VPWR p2 p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | A B A B C | n VGND Y n1 Y n1 n2 VGND n1 | p Y p1 VPWR p3 VPWR p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | B A A B C | n VGND Y n1 Y n1 n2 VGND n1 | p Y p1 VPWR p3 VPWR p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | A B C A B | n VGND Y n1 n2 VGND n1 Y n1 | p Y p1 VPWR p2 p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | A B C B A | n VGND Y n1 n2 VGND n1 Y n1 | p Y p1 VPWR p2 p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | A B C B A | n VGND Y n1 Y n1 VGND n2 n1 | p Y p1 p3 VPWR p3 p1 p2 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | B A C B A | n VGND Y n1 Y n1 VGND n2 n1 | p Y p1 p3 VPWR p3 p1 p2 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | C B A A B | n VGND Y n1 VGND n2 n1 Y n1 | p Y p1 p3 p1 p2 VPWR p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | C B A B A | n VGND Y n1 VGND n2 n1 Y n1 | p Y p1 p3 p1 p2 VPWR p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | A B C B A | n VGND Y n1 n2 VGND n1 Y n1 | p Y p1 p3 VPWR p3 p1 p2 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | B A A B C | n VGND Y VGND n2 n1 Y n1 VGND | p p1 Y VPWR p3 VPWR p2 p1 p3: cannot draw: no room for the B contact
+variant 2 gates D | C B A A B | n VGND Y VGND n1 Y n1 n2 VGND | p p1 Y p3 p1 p2 VPWR p3 VPWR: cannot draw: gave up after 476 tries, 400 of them drawn
+variant 2 gates D | A B C B A | n VGND Y n1 Y n1 VGND n2 n1 | p p1 Y VPWR p2 p1 p3 VPWR p3: cannot draw: no room for the B contact
+variant 2 gates D | A B A B C | n VGND Y n1 Y n1 n2 VGND n1 | p p1 Y VPWR p3 VPWR p2 p1 p3: cannot draw: no room for the B contact
+variant 2 gates D | B A A B C | n VGND Y n1 Y n1 n2 VGND n1 | p p1 Y VPWR p3 VPWR p2 p1 p3: cannot draw: gave up after 546 tries, 400 of them drawn
+variant 2 gates D | A B C A B | n VGND Y n1 n2 VGND n1 Y n1 | p p1 Y VPWR p2 p1 p3 VPWR p3: cannot draw: no room for the C contact
+variant 2 gates D | A B C B A | n VGND Y n1 n2 VGND n1 Y n1 | p p1 Y VPWR p2 p1 p3 VPWR p3: cannot draw: no room for the C contact
+variant 2 gates D | A B C B A | n VGND Y n1 Y n1 VGND n2 n1 | p p1 Y p3 VPWR p3 p1 p2 VPWR: cannot draw: no room for the B contact
+variant 2 gates D | B A C B A | n VGND Y n1 Y n1 VGND n2 n1 | p p1 Y p3 VPWR p3 p1 p2 VPWR: cannot draw: no room for the C contact
+variant 2 gates D | C B A A B | n VGND Y n1 VGND n2 n1 Y n1 | p p1 Y p3 p1 p2 VPWR p3 VPWR: cannot draw: no room for the B contact
+variant 2 gates D | C B A B A | n VGND Y n1 VGND n2 n1 Y n1 | p p1 Y p3 p1 p2 VPWR p3 VPWR: cannot draw: no room for the B contact
+variant 2 gates D | A B C B A | n VGND Y n1 n2 VGND n1 Y n1 | p p1 Y p3 VPWR p3 p1 p2 VPWR: cannot draw: no room for the C contact
+variant 2 gates C A B | D B A | n VGND n1 Y n1 Y VGND n2 n1 | p p1 p3 VPWR p3 Y p1 p2 VPWR: cannot draw: no room for the B contact
+variant 2 gates C A | D B A B | n VGND n1 Y VGND Y n1 n2 VGND | p p1 p3 VPWR Y p1 p2 VPWR p3: cannot draw: gave up after 908 tries, 418 of them drawn
+variant 2 gates C A | B A B D | n VGND n1 Y VGND n2 n1 Y VGND | p p1 p3 VPWR p3 VPWR p2 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 2 gates C B A | D B A | n VGND n1 Y n1 Y VGND n2 n1 | p p1 p3 VPWR p3 Y p1 p2 VPWR: cannot draw: no room for the D contact
+variant 2 gates C A B | A B D | n VGND n1 n2 VGND Y n1 Y VGND | p p1 p3 VPWR p3 VPWR p2 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 2 gates C | D B A A B | n VGND n1 Y VGND n2 n1 Y n1 | p p1 p3 Y p1 p2 VPWR p3 VPWR: cannot draw: no room for the D contact
+variant 2 gates C | D B A B A | n VGND n1 Y VGND n2 n1 Y n1 | p p1 p3 Y p1 p2 VPWR p3 VPWR: cannot draw: no room for the D contact
+variant 2 gates B A A B | D C | n VGND n2 n1 Y n1 Y VGND n1 | p p1 p2 VPWR p3 VPWR Y p1 p3: cannot draw: no room for the D contact
+variant 2 gates B A B A | D C | n VGND n2 n1 Y n1 Y VGND n1 | p p1 p2 VPWR p3 VPWR Y p1 p3: cannot draw: no room for the D contact
+variant 2 gates B A | D C A B | n VGND n2 n1 Y VGND n1 Y n1 | p p1 p2 VPWR Y p1 p3 VPWR p3: cannot draw: no room for the D contact
+variant 2 gates B A | D C B A | n VGND n2 n1 Y VGND n1 Y n1 | p p1 p2 VPWR Y p1 p3 VPWR p3: cannot draw: no room for the D contact
+variant 2 gates C B A A B | D | n VGND n1 Y n1 n2 VGND Y VGND | p p3 p1 p2 VPWR p3 VPWR Y p1: cannot draw: gave up after 572 tries, 400 of them drawn
+variant 2 gates C B A A B | D | n VGND n1 Y n1 n2 VGND Y VGND | p p3 p1 p2 VPWR p3 VPWR p1 Y: cannot draw: cannot route Y between the rows on li
+variant 2 gates C | D B A A B | n VGND n1 Y VGND n2 n1 Y n1 | p p3 p1 Y p1 p2 VPWR p3 VPWR: cannot draw: no room for the D contact
+variant 2 gates C | D B A B A | n VGND n1 Y VGND n2 n1 Y n1 | p p3 p1 Y p1 p2 VPWR p3 VPWR: cannot draw: no room for the D contact
+variant 2 gates B A B D | A C | n VGND n2 n1 Y VGND Y n1 VGND | p p3 VPWR p2 p1 Y VPWR p3 p1: cannot draw: gave up after 2692 tries, 400 of them drawn
+variant 2 gates B A C D | A B | n VGND n2 n1 VGND Y n1 Y n1 | p p3 VPWR p3 p1 Y VPWR p2 p1: cannot draw: no room for n1 to switch edges in the n row
+variant 2 gates B A C D | B A | n VGND n2 n1 VGND Y n1 Y n1 | p p3 VPWR p3 p1 Y p1 p2 VPWR: cannot draw: no room for the D contact
+variant 2 gates B A C | A B D | n VGND n2 n1 VGND Y n1 Y VGND | p p3 VPWR p3 p1 VPWR p2 p1 Y: cannot draw: cannot route Y between the rows on li
+variant 2 gates A B D | C B A | n Y n1 Y VGND n1 VGND n2 n1 | p VPWR p2 p1 Y p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates A B D | A B C | n Y n1 Y VGND n1 n2 VGND n1 | p VPWR p2 p1 Y p3 VPWR p3 p1: cannot draw: cannot route Y between the rows on li
+variant 2 gates A B | B A C D | n Y n1 Y VGND n2 n1 VGND Y | p VPWR p2 p1 p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 2 gates A C D | B A B | n Y n1 VGND Y VGND n2 n1 Y | p VPWR p3 p1 Y p1 p2 VPWR p3: cannot draw: no room for the D contact
+variant 2 gates A C D | B A B | n Y n1 VGND Y VGND n2 n1 Y | p VPWR p3 p1 Y p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 2 gates A C B A B | D | n Y n1 VGND n2 n1 Y VGND Y | p VPWR p3 p1 p2 VPWR p3 Y p1: cannot draw: cannot route Y between the rows on li
+variant 2 gates A C B A B | D | n Y n1 VGND n2 n1 Y VGND Y | p VPWR p3 p1 p2 VPWR p3 p1 Y: cannot draw: no room for Y to switch edges in the n row
+variant 2 gates A C | D B A B | n Y n1 VGND Y VGND n2 n1 Y | p VPWR p3 p1 Y p1 p2 VPWR p3: cannot draw: no room for the D contact
+variant 2 gates A C | B A B D | n Y n1 VGND Y n1 n2 VGND Y | p VPWR p3 p1 p3 VPWR p2 p1 Y: cannot draw: no room for the D contact
+variant 2 gates A | D B A B C | n Y n1 VGND Y n1 n2 VGND n1 | p VPWR p3 Y p1 p2 VPWR p3 p1: cannot draw: cannot route Y between the rows on li
+variant 2 gates B C D | B A A | n Y n1 VGND Y VGND n2 n1 Y | p VPWR p3 p1 Y p1 p2 VPWR p3: cannot draw: no room for the D contact
+variant 2 gates B C B A A | D | n Y n1 VGND n2 n1 Y VGND Y | p VPWR p3 p1 p2 VPWR p3 Y p1: cannot draw: cannot route Y between the rows on li
+variant 2 gates B C B A A | D | n Y n1 VGND n2 n1 Y VGND Y | p VPWR p3 p1 p2 VPWR p3 p1 Y: cannot draw: no room for Y to switch edges in the n row
+variant 2 gates B C | D B A A | n Y n1 VGND Y VGND n2 n1 Y | p VPWR p3 p1 Y p1 p2 VPWR p3: cannot draw: no room for the D contact
+variant 2 gates B C | A A B D | n Y n1 VGND Y n1 n2 VGND Y | p VPWR p3 p1 p3 VPWR p2 p1 Y: cannot draw: no room for the D contact
+variant 2 gates D C A B | B A | n Y VGND n1 Y n1 VGND n2 n1 | p Y p1 p3 VPWR p3 p1 p2 VPWR: cannot draw: no room for the D contact
+variant 2 gates D C A | B A B | n Y VGND n1 Y VGND n2 n1 Y | p Y p1 p3 VPWR p1 p2 VPWR p3: cannot draw: no room for the D contact
+variant 2 gates D C A | B A B | n Y VGND n1 Y VGND n2 n1 Y | p Y p1 p3 VPWR p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 2 gates D C B A | B A | n Y VGND n1 Y n1 VGND n2 n1 | p Y p1 p3 VPWR p3 p1 p2 VPWR: cannot draw: no room for the D contact
+variant 2 gates D C B | B A A | n Y VGND n1 Y VGND n2 n1 Y | p Y p1 p3 VPWR p1 p2 VPWR p3: cannot draw: no room for the D contact
+variant 2 gates D C A B | A B | n Y VGND n1 n2 VGND Y n1 Y | p Y p1 p3 VPWR p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 2 gates D C A B | B A | n Y VGND n1 n2 VGND Y n1 Y | p Y p1 p3 VPWR p3 p1 p2 VPWR: cannot draw: no room for the D contact
+variant 2 gates D C A B | A B | n Y VGND n1 n2 VGND n1 Y n1 | p Y p1 p3 VPWR p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 2 gates D C A B | B A | n Y VGND n1 n2 VGND n1 Y n1 | p Y p1 p3 VPWR p3 p1 p2 VPWR: cannot draw: no room for the D contact
+variant 2 gates D C | B A A B | n Y VGND n1 VGND n2 n1 Y n1 | p Y p1 p3 VPWR p3 VPWR p2 p1: cannot draw: no room for the D contact
+variant 2 gates D C | B A A B | n Y VGND n1 VGND n2 n1 Y n1 | p Y p1 p3 p1 p2 VPWR p3 VPWR: cannot draw: no room for the D contact
+variant 2 gates D C | B A B A | n Y VGND n1 VGND n2 n1 Y n1 | p Y p1 p3 p1 p2 VPWR p3 VPWR: cannot draw: no room for the D contact
+variant 2 gates D B A A B | C | n Y VGND n2 n1 Y n1 VGND n1 | p Y p1 p2 VPWR p3 VPWR p1 p3: cannot draw: no room for the D contact
+variant 2 gates D B A A B | C | n Y VGND n2 n1 Y n1 VGND n1 | p Y p1 p2 VPWR p3 VPWR p3 p1: cannot draw: no room for the D contact
+variant 2 gates D B A A | C B | n Y VGND n2 n1 Y VGND n1 Y | p Y p1 p2 VPWR p3 p1 p3 VPWR: cannot draw: no room for the D contact
+variant 2 gates D B A B A | C | n Y VGND n2 n1 Y n1 VGND n1 | p Y p1 p2 VPWR p3 VPWR p1 p3: cannot draw: no room for the D contact
+variant 2 gates D B A B A | C | n Y VGND n2 n1 Y n1 VGND n1 | p Y p1 p2 VPWR p3 VPWR p3 p1: cannot draw: no room for the D contact
+variant 2 gates D B A B | C A | n Y VGND n2 n1 Y VGND n1 Y | p Y p1 p2 VPWR p3 p1 p3 VPWR: cannot draw: no room for the D contact
+variant 2 gates D B A | C A B | n Y VGND n2 n1 VGND n1 Y n1 | p Y p1 p2 VPWR p1 p3 VPWR p3: cannot draw: no room for the D contact
+variant 2 gates D B A | C B A | n Y VGND n2 n1 VGND n1 Y n1 | p Y p1 p2 VPWR p1 p3 VPWR p3: cannot draw: no room for the D contact
+variant 2 gates D | A C B A B | n Y VGND Y n1 VGND n2 n1 Y | p Y p1 VPWR p3 p1 p2 VPWR p3: cannot draw: no room for the B contact
+variant 2 gates D | B C B A A | n Y VGND Y n1 VGND n2 n1 Y | p Y p1 VPWR p3 p1 p2 VPWR p3: cannot draw: no room for the C contact
+variant 2 gates D | A A B C B | n Y VGND Y n1 n2 VGND n1 Y | p Y p1 p3 VPWR p2 p1 p3 VPWR: cannot draw: no room for the C contact
+variant 2 gates D | B A B C A | n Y VGND Y n1 n2 VGND n1 Y | p Y p1 p3 VPWR p2 p1 p3 VPWR: cannot draw: no room for the A contact
+variant 2 gates D | A B C B A | n Y VGND n1 Y n1 VGND n2 n1 | p Y p1 VPWR p2 p1 p3 VPWR p3: cannot draw: no room for the C contact
+variant 2 gates D | A B A B C | n Y VGND n1 Y n1 n2 VGND n1 | p Y p1 VPWR p3 VPWR p2 p1 p3: cannot draw: no room for the B contact
+variant 2 gates D | B A A B C | n Y VGND n1 Y n1 n2 VGND n1 | p Y p1 VPWR p3 VPWR p2 p1 p3: cannot draw: gave up after 546 tries, 400 of them drawn
+variant 2 gates D | A B C A B | n Y VGND n1 n2 VGND n1 Y n1 | p Y p1 VPWR p2 p1 p3 VPWR p3: cannot draw: no room for the C contact
+variant 2 gates D | A B C B A | n Y VGND n1 n2 VGND n1 Y n1 | p Y p1 VPWR p2 p1 p3 VPWR p3: cannot draw: no room for the C contact
+variant 2 gates D | A B C B A | n Y VGND n1 Y n1 VGND n2 n1 | p Y p1 p3 VPWR p3 p1 p2 VPWR: cannot draw: no room for the B contact
+variant 2 gates D | B A C B A | n Y VGND n1 Y n1 VGND n2 n1 | p Y p1 p3 VPWR p3 p1 p2 VPWR: cannot draw: no room for the C contact
+variant 2 gates D | C B A A B | n Y VGND n1 VGND n2 n1 Y n1 | p Y p1 p3 p1 p2 VPWR p3 VPWR: cannot draw: no room for the B contact
+variant 2 gates D | C B A B A | n Y VGND n1 VGND n2 n1 Y n1 | p Y p1 p3 p1 p2 VPWR p3 VPWR: cannot draw: no room for the B contact
+variant 2 gates D | A B C B A | n Y VGND n1 n2 VGND n1 Y n1 | p Y p1 p3 VPWR p3 p1 p2 VPWR: cannot draw: no room for the C contact
+variant 2 gates D | A C B A B | n Y VGND Y n1 VGND n2 n1 Y | p p1 Y VPWR p3 p1 p2 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | B C B A A | n Y VGND Y n1 VGND n2 n1 Y | p p1 Y VPWR p3 p1 p2 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | A A B C B | n Y VGND Y n1 n2 VGND n1 Y | p p1 Y p3 VPWR p2 p1 p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | B A B C A | n Y VGND Y n1 n2 VGND n1 Y | p p1 Y p3 VPWR p2 p1 p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | A B C B A | n Y VGND n1 Y n1 VGND n2 n1 | p p1 Y VPWR p2 p1 p3 VPWR p3: cannot draw: no room for the B contact
+variant 2 gates D | A B A B C | n Y VGND n1 Y n1 n2 VGND n1 | p p1 Y VPWR p3 VPWR p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | B A A B C | n Y VGND n1 Y n1 n2 VGND n1 | p p1 Y VPWR p3 VPWR p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | A B C A B | n Y VGND n1 n2 VGND n1 Y n1 | p p1 Y VPWR p2 p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | A B C B A | n Y VGND n1 n2 VGND n1 Y n1 | p p1 Y VPWR p2 p1 p3 VPWR p3: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | A B C B A | n Y VGND n1 Y n1 VGND n2 n1 | p p1 Y p3 VPWR p3 p1 p2 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | B A C B A | n Y VGND n1 Y n1 VGND n2 n1 | p p1 Y p3 VPWR p3 p1 p2 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | C B A A B | n Y VGND n1 VGND n2 n1 Y n1 | p p1 Y p3 p1 p2 VPWR p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | C B A B A | n Y VGND n1 VGND n2 n1 Y n1 | p p1 Y p3 p1 p2 VPWR p3 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates D | A B C B A | n Y VGND n1 n2 VGND n1 Y n1 | p p1 Y p3 VPWR p3 p1 p2 VPWR: cannot draw: cannot route Y between the rows on li
+variant 2 gates B A | B A C D | n Y n1 Y VGND n2 n1 VGND Y | p p1 p2 VPWR p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 2 gates B A B | A C D | n Y n1 n2 VGND Y n1 VGND Y | p p1 p2 VPWR p3 VPWR p3 p1 Y: cannot draw: no room for the D contact
+variant 5 gates B A C | D B A | n VGND n2 n1 VGND VGND Y n1 Y | p p3 Y p3 p1 VPWR p1 p2 Y: cannot draw: no room for the A contact
+variant 5 gates D C A B | A B | n Y VGND n1 Y n1 n1 n2 VGND | p VPWR p1 p3 Y p3 Y p2 p1: cannot draw: no room for the A contact
+variant 5 gates D C A | B A B | n Y VGND n1 Y Y n1 n2 VGND | p VPWR p1 p3 Y p1 p2 Y p3: cannot draw: no room for the A contact
+variant 5 gates D C A | B A B | n Y VGND n1 Y Y n1 n2 VGND | p VPWR p1 p3 Y p3 Y p2 p1: cannot draw: no room for the A contact
+variant 5 gates D C B A | A B | n Y VGND n1 Y n1 n1 n2 VGND | p VPWR p1 p3 Y p3 Y p2 p1: cannot draw: no room for the B contact
+variant 5 gates D C B | A A B | n Y VGND n1 Y Y n1 n2 VGND | p VPWR p1 p3 Y p3 Y p2 p1: cannot draw: no room for the B contact
+variant 5 gates D C | A B A B | n Y VGND n1 n1 Y n1 n2 VGND | p VPWR p1 p3 Y p3 Y p2 p1: cannot draw: cannot route Y between the rows on li
+variant 5 gates D C | B A A B | n Y VGND n1 n1 Y n1 n2 VGND | p VPWR p1 p3 Y p3 Y p2 p1: cannot draw: cannot route Y between the rows on li
+variant 5 gates D C | B A A B | n Y VGND n1 n1 Y n1 n2 VGND | p VPWR p1 p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates D B A A B | C | n Y VGND n2 n1 Y n1 n1 VGND | p VPWR p1 p2 Y p3 Y p1 p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D B A A B | C | n Y VGND n2 n1 Y n1 n1 VGND | p VPWR p1 p2 Y p3 Y p3 p1: cannot draw: cannot route Y between the rows on li
+variant 5 gates D B A A | B C | n Y VGND n2 n1 Y Y n1 VGND | p VPWR p1 p2 Y p3 Y p3 p1: cannot draw: cannot route Y between the rows on li
+variant 5 gates D B A B A | C | n Y VGND n2 n1 Y n1 n1 VGND | p VPWR p1 p2 Y p3 Y p1 p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D B A B A | C | n Y VGND n2 n1 Y n1 n1 VGND | p VPWR p1 p2 Y p3 Y p3 p1: cannot draw: cannot route Y between the rows on li
+variant 5 gates D B A B | A C | n Y VGND n2 n1 Y Y n1 VGND | p VPWR p1 p2 Y p3 Y p3 p1: cannot draw: cannot route Y between the rows on li
+variant 5 gates D B A | A B C | n Y VGND n2 n1 n1 Y n1 VGND | p VPWR p1 p2 Y p3 Y p3 p1: cannot draw: no room for the B contact
+variant 5 gates D B A | B A C | n Y VGND n2 n1 n1 Y n1 VGND | p VPWR p1 p2 Y p3 Y p3 p1: cannot draw: no room for the A contact
+variant 5 gates D | B A A B C | n Y VGND VGND n2 n1 Y n1 VGND | p VPWR p1 Y p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | C B A A B | n Y VGND VGND n1 Y n1 n2 VGND | p VPWR p1 p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates A B D | C A B | n Y n1 Y VGND VGND n1 n2 VGND | p Y p2 p1 VPWR p1 p3 Y p3: cannot draw: no room for the A contact
+variant 5 gates A B D | B A C | n Y n1 Y VGND VGND n2 n1 VGND | p Y p2 p1 VPWR p3 Y p3 p1: cannot draw: no room for the A contact
+variant 5 gates A B | D C A B | n Y n1 Y Y VGND n1 n2 VGND | p Y p2 p1 VPWR p1 p3 Y p3: cannot draw: no room for the A contact
+variant 5 gates A C D | B A B | n Y n1 VGND Y Y n1 n2 VGND | p Y p3 p1 VPWR p1 p2 Y p3: cannot draw: no room for the A contact
+variant 5 gates A C D | B A B | n Y n1 VGND Y Y n1 n2 VGND | p Y p3 p1 VPWR p3 Y p2 p1: cannot draw: no room for the A contact
+variant 5 gates A C B A B | D | n Y n1 VGND n2 n1 Y Y VGND | p Y p3 p1 p2 Y p3 VPWR p1: cannot draw: no room for the A contact
+variant 5 gates A C B A B | D | n Y n1 VGND n2 n1 Y Y VGND | p Y p3 p1 p2 Y p3 p1 VPWR: cannot draw: no room for the A contact
+variant 5 gates A C | D B A B | n Y n1 VGND VGND Y n1 n2 VGND | p Y p3 p1 VPWR p1 p2 Y p3: cannot draw: no room for the A contact
+variant 5 gates A C | B A B D | n Y n1 VGND VGND n2 n1 Y VGND | p Y p3 p1 p3 Y p2 p1 VPWR: cannot draw: no room for the A contact
+variant 5 gates A | C B A B D | n Y n1 n1 VGND n2 n1 Y VGND | p Y p3 p1 p3 Y p2 p1 VPWR: cannot draw: no room for the B contact
+variant 5 gates B C D | A A B | n Y n1 VGND Y Y n1 n2 VGND | p Y p3 p1 VPWR p3 Y p2 p1: cannot draw: no room for the B contact
+variant 5 gates B C B A A | D | n Y n1 VGND n2 n1 Y Y VGND | p Y p3 p1 p2 Y p3 VPWR p1: cannot draw: no room for the B contact
+variant 5 gates B C B A A | D | n Y n1 VGND n2 n1 Y Y VGND | p Y p3 p1 p2 Y p3 p1 VPWR: cannot draw: no room for the B contact
+variant 5 gates D | B A A B C | n Y VGND VGND n2 n1 Y n1 VGND | p p1 VPWR Y p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | C B A A B | n Y VGND VGND n1 Y n1 n2 VGND | p p1 VPWR p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A | D C A B | n Y n1 Y Y VGND n1 n2 VGND | p p1 p2 Y VPWR p1 p3 Y p3: cannot draw: no room for the A contact
+variant 5 gates A A B D | B C | n Y n1 n2 VGND Y Y n1 VGND | p p3 Y p2 p1 VPWR Y p3 p1: cannot draw: cannot route Y between the rows on li
+variant 5 gates A A B C B | D | n Y n1 n2 VGND n1 Y Y VGND | p p3 Y p2 p1 p3 Y VPWR p1: cannot draw: no room for the B contact
+variant 5 gates A A B C B | D | n Y n1 n2 VGND n1 Y Y VGND | p p3 Y p2 p1 p3 Y p1 VPWR: cannot draw: no room for the B contact
+variant 5 gates A | C B A B D | n Y n1 n1 VGND n2 n1 Y VGND | p p3 Y p1 p3 Y p2 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A B D | A C | n Y n1 n2 VGND Y Y n1 VGND | p p3 Y p2 p1 VPWR Y p3 p1: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A B C A | D | n Y n1 n2 VGND n1 Y Y VGND | p p3 Y p2 p1 p3 Y VPWR p1: cannot draw: no room for the A contact
+variant 5 gates B A B C A | D | n Y n1 n2 VGND n1 Y Y VGND | p p3 Y p2 p1 p3 Y p1 VPWR: cannot draw: no room for the A contact
+variant 5 gates D B A | C A B | n VGND Y n1 Y VGND n1 n2 VGND | p VPWR p1 p2 Y p1 p3 Y p3: cannot draw: no room for the A contact
+variant 5 gates D B A | B A C | n VGND Y n1 Y VGND n2 n1 VGND | p VPWR p1 p2 Y p3 Y p3 p1: cannot draw: no room for the A contact
+variant 5 gates D B A | C B A | n VGND Y n1 Y n1 VGND n2 n1 | p VPWR p1 p2 Y p1 p3 Y p3: cannot draw: no room for the A contact
+variant 5 gates D B A | A B C | n VGND Y n1 Y n1 n2 VGND n1 | p VPWR p1 p2 Y p3 Y p3 p1: cannot draw: no room for the A contact
+variant 5 gates D B A B C | A | n VGND Y n1 n2 VGND n1 Y n1 | p VPWR p1 p2 Y p3 p1 Y p3: cannot draw: no room for Y to switch edges in the n row
+variant 5 gates D B A B C | A | n VGND Y n1 n2 VGND n1 Y n1 | p VPWR p1 p2 Y p3 p1 p3 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates D B A B | A C | n VGND Y n1 n2 VGND Y n1 VGND | p VPWR p1 p2 Y p3 Y p3 p1: cannot draw: no room for the A contact
+variant 5 gates D | B A A B C | n VGND Y VGND n2 n1 Y n1 VGND | p VPWR p1 Y p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | C B A A B | n VGND Y VGND n1 Y n1 n2 VGND | p VPWR p1 p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | A B C B A | n VGND Y n1 Y n1 VGND n2 n1 | p VPWR p1 Y p2 p1 p3 Y p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | A B A B C | n VGND Y n1 Y n1 n2 VGND n1 | p VPWR p1 Y p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | B A A B C | n VGND Y n1 Y n1 n2 VGND n1 | p VPWR p1 Y p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | A B C A B | n VGND Y n1 n2 VGND n1 Y n1 | p VPWR p1 Y p2 p1 p3 Y p3: cannot draw: no room for the A contact
+variant 5 gates D | A B C B A | n VGND Y n1 n2 VGND n1 Y n1 | p VPWR p1 Y p2 p1 p3 Y p3: cannot draw: no room for the B contact
+variant 5 gates D | A B C B A | n VGND Y n1 Y n1 VGND n2 n1 | p VPWR p1 p3 Y p3 p1 p2 Y: cannot draw: no room for the B contact
+variant 5 gates D | B A C B A | n VGND Y n1 Y n1 VGND n2 n1 | p VPWR p1 p3 Y p3 p1 p2 Y: cannot draw: no room for the A contact
+variant 5 gates D | C B A A B | n VGND Y n1 VGND n2 n1 Y n1 | p VPWR p1 p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | C B A B A | n VGND Y n1 VGND n2 n1 Y n1 | p VPWR p1 p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | A B C B A | n VGND Y n1 n2 VGND n1 Y n1 | p VPWR p1 p3 Y p3 p1 p2 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A A B C | D | n VGND n2 n1 Y n1 VGND Y VGND | p Y p3 Y p2 p1 p3 VPWR p1: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A A B C | D | n VGND n2 n1 Y n1 VGND Y VGND | p Y p3 Y p2 p1 p3 p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A A B | D C | n VGND n2 n1 Y n1 Y VGND n1 | p Y p3 Y p2 p1 VPWR p1 p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | B A A B C | n VGND Y VGND n2 n1 Y n1 VGND | p p1 VPWR Y p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | C B A A B | n VGND Y VGND n1 Y n1 n2 VGND | p p1 VPWR p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | A B C B A | n VGND Y n1 Y n1 VGND n2 n1 | p p1 VPWR Y p2 p1 p3 Y p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | A B A B C | n VGND Y n1 Y n1 n2 VGND n1 | p p1 VPWR Y p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | B A A B C | n VGND Y n1 Y n1 n2 VGND n1 | p p1 VPWR Y p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | A B C A B | n VGND Y n1 n2 VGND n1 Y n1 | p p1 VPWR Y p2 p1 p3 Y p3: cannot draw: no room for the A contact
+variant 5 gates D | A B C B A | n VGND Y n1 n2 VGND n1 Y n1 | p p1 VPWR Y p2 p1 p3 Y p3: cannot draw: no room for the B contact
+variant 5 gates D | A B C B A | n VGND Y n1 Y n1 VGND n2 n1 | p p1 VPWR p3 Y p3 p1 p2 Y: cannot draw: no room for the B contact
+variant 5 gates D | B A C B A | n VGND Y n1 Y n1 VGND n2 n1 | p p1 VPWR p3 Y p3 p1 p2 Y: cannot draw: no room for the A contact
+variant 5 gates D | C B A A B | n VGND Y n1 VGND n2 n1 Y n1 | p p1 VPWR p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | C B A B A | n VGND Y n1 VGND n2 n1 Y n1 | p p1 VPWR p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | A B C B A | n VGND Y n1 n2 VGND n1 Y n1 | p p1 VPWR p3 Y p3 p1 p2 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates C A B | D B A | n VGND n1 Y n1 Y VGND n2 n1 | p p1 p3 Y p3 VPWR p1 p2 Y: cannot draw: no room for the A contact
+variant 5 gates C A | D B A B | n VGND n1 Y VGND Y n1 n2 VGND | p p1 p3 Y VPWR p1 p2 Y p3: cannot draw: no room for the A contact
+variant 5 gates C A | B A B D | n VGND n1 Y VGND n2 n1 Y VGND | p p1 p3 Y p3 Y p2 p1 VPWR: cannot draw: no room for the A contact
+variant 5 gates C B A | D B A | n VGND n1 Y n1 Y VGND n2 n1 | p p1 p3 Y p3 VPWR p1 p2 Y: cannot draw: no room for the B contact
+variant 5 gates C A B | A B D | n VGND n1 n2 VGND Y n1 Y VGND | p p1 p3 Y p3 Y p2 p1 VPWR: cannot draw: no room for the A contact
+variant 5 gates C | D B A A B | n VGND n1 Y VGND n2 n1 Y n1 | p p1 p3 VPWR p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates C | D B A B A | n VGND n1 Y VGND n2 n1 Y n1 | p p1 p3 VPWR p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A A B | D C | n VGND n2 n1 Y n1 Y VGND n1 | p p1 p2 Y p3 Y VPWR p1 p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A B A | D C | n VGND n2 n1 Y n1 Y VGND n1 | p p1 p2 Y p3 Y VPWR p1 p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A | D C A B | n VGND n2 n1 Y VGND n1 Y n1 | p p1 p2 Y VPWR p1 p3 Y p3: cannot draw: no room for the A contact
+variant 5 gates B A | D C B A | n VGND n2 n1 Y VGND n1 Y n1 | p p1 p2 Y VPWR p1 p3 Y p3: cannot draw: no room for the B contact
+variant 5 gates C B A A B | D | n VGND n1 Y n1 n2 VGND Y VGND | p p3 p1 p2 Y p3 Y VPWR p1: cannot draw: cannot route Y between the rows on li
+variant 5 gates C B A A B | D | n VGND n1 Y n1 n2 VGND Y VGND | p p3 p1 p2 Y p3 Y p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 5 gates C | D B A A B | n VGND n1 Y VGND n2 n1 Y n1 | p p3 p1 VPWR p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates C | D B A B A | n VGND n1 Y VGND n2 n1 Y n1 | p p3 p1 VPWR p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A B D | A C | n VGND n2 n1 Y VGND Y n1 VGND | p p3 Y p2 p1 VPWR Y p3 p1: cannot draw: no room for the A contact
+variant 5 gates B A C D | A B | n VGND n2 n1 VGND Y n1 Y n1 | p p3 Y p3 p1 VPWR Y p2 p1: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A C D | B A | n VGND n2 n1 VGND Y n1 Y n1 | p p3 Y p3 p1 VPWR p1 p2 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A C | A B D | n VGND n2 n1 VGND Y n1 Y VGND | p p3 Y p3 p1 Y p2 p1 VPWR: cannot draw: no room for the A contact
+variant 5 gates D C A B | B A | n Y VGND n1 Y n1 VGND n2 n1 | p VPWR p1 p3 Y p3 p1 p2 Y: cannot draw: no room for the A contact
+variant 5 gates D C A | B A B | n Y VGND n1 Y VGND n2 n1 Y | p VPWR p1 p3 Y p1 p2 Y p3: cannot draw: no room for the A contact
+variant 5 gates D C A | B A B | n Y VGND n1 Y VGND n2 n1 Y | p VPWR p1 p3 Y p3 Y p2 p1: cannot draw: no room for the A contact
+variant 5 gates D C B A | B A | n Y VGND n1 Y n1 VGND n2 n1 | p VPWR p1 p3 Y p3 p1 p2 Y: cannot draw: no room for the B contact
+variant 5 gates D C B | B A A | n Y VGND n1 Y VGND n2 n1 Y | p VPWR p1 p3 Y p1 p2 Y p3: cannot draw: no room for the B contact
+variant 5 gates D C A B | A B | n Y VGND n1 n2 VGND Y n1 Y | p VPWR p1 p3 Y p3 Y p2 p1: cannot draw: no room for the A contact
+variant 5 gates D C A B | B A | n Y VGND n1 n2 VGND Y n1 Y | p VPWR p1 p3 Y p3 p1 p2 Y: cannot draw: no room for the A contact
+variant 5 gates D C A B | A B | n Y VGND n1 n2 VGND n1 Y n1 | p VPWR p1 p3 Y p3 Y p2 p1: cannot draw: cannot route Y between the rows on li
+variant 5 gates D C A B | B A | n Y VGND n1 n2 VGND n1 Y n1 | p VPWR p1 p3 Y p3 p1 p2 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates D C | B A A B | n Y VGND n1 VGND n2 n1 Y n1 | p VPWR p1 p3 Y p3 Y p2 p1: cannot draw: cannot route Y between the rows on li
+variant 5 gates D C | B A A B | n Y VGND n1 VGND n2 n1 Y n1 | p VPWR p1 p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates D C | B A B A | n Y VGND n1 VGND n2 n1 Y n1 | p VPWR p1 p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates D B A A B | C | n Y VGND n2 n1 Y n1 VGND n1 | p VPWR p1 p2 Y p3 Y p1 p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D B A A B | C | n Y VGND n2 n1 Y n1 VGND n1 | p VPWR p1 p2 Y p3 Y p3 p1: cannot draw: cannot route Y between the rows on li
+variant 5 gates D B A A | C B | n Y VGND n2 n1 Y VGND n1 Y | p VPWR p1 p2 Y p3 p1 p3 Y: cannot draw: no room for the B contact
+variant 5 gates D B A B A | C | n Y VGND n2 n1 Y n1 VGND n1 | p VPWR p1 p2 Y p3 Y p1 p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D B A B A | C | n Y VGND n2 n1 Y n1 VGND n1 | p VPWR p1 p2 Y p3 Y p3 p1: cannot draw: cannot route Y between the rows on li
+variant 5 gates D B A B | C A | n Y VGND n2 n1 Y VGND n1 Y | p VPWR p1 p2 Y p3 p1 p3 Y: cannot draw: no room for the A contact
+variant 5 gates D B A | C A B | n Y VGND n2 n1 VGND n1 Y n1 | p VPWR p1 p2 Y p1 p3 Y p3: cannot draw: no room for the A contact
+variant 5 gates D B A | C B A | n Y VGND n2 n1 VGND n1 Y n1 | p VPWR p1 p2 Y p1 p3 Y p3: cannot draw: no room for the B contact
+variant 5 gates D | A C B A B | n Y VGND Y n1 VGND n2 n1 Y | p VPWR p1 Y p3 p1 p2 Y p3: cannot draw: no room for the A contact
+variant 5 gates D | B C B A A | n Y VGND Y n1 VGND n2 n1 Y | p VPWR p1 Y p3 p1 p2 Y p3: cannot draw: no room for the B contact
+variant 5 gates D | A A B C B | n Y VGND Y n1 n2 VGND n1 Y | p VPWR p1 p3 Y p2 p1 p3 Y: cannot draw: no room for the B contact
+variant 5 gates D | B A B C A | n Y VGND Y n1 n2 VGND n1 Y | p VPWR p1 p3 Y p2 p1 p3 Y: cannot draw: no room for the A contact
+variant 5 gates D | A B C B A | n Y VGND n1 Y n1 VGND n2 n1 | p VPWR p1 Y p2 p1 p3 Y p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | A B A B C | n Y VGND n1 Y n1 n2 VGND n1 | p VPWR p1 Y p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | B A A B C | n Y VGND n1 Y n1 n2 VGND n1 | p VPWR p1 Y p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | A B C A B | n Y VGND n1 n2 VGND n1 Y n1 | p VPWR p1 Y p2 p1 p3 Y p3: cannot draw: no room for the A contact
+variant 5 gates D | A B C B A | n Y VGND n1 n2 VGND n1 Y n1 | p VPWR p1 Y p2 p1 p3 Y p3: cannot draw: no room for the B contact
+variant 5 gates D | A B C B A | n Y VGND n1 Y n1 VGND n2 n1 | p VPWR p1 p3 Y p3 p1 p2 Y: cannot draw: no room for the B contact
+variant 5 gates D | B A C B A | n Y VGND n1 Y n1 VGND n2 n1 | p VPWR p1 p3 Y p3 p1 p2 Y: cannot draw: no room for the A contact
+variant 5 gates D | C B A A B | n Y VGND n1 VGND n2 n1 Y n1 | p VPWR p1 p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | C B A B A | n Y VGND n1 VGND n2 n1 Y n1 | p VPWR p1 p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | A B C B A | n Y VGND n1 n2 VGND n1 Y n1 | p VPWR p1 p3 Y p3 p1 p2 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates A B D | C B A | n Y n1 Y VGND n1 VGND n2 n1 | p Y p2 p1 VPWR p1 p3 Y p3: cannot draw: no room for the A contact
+variant 5 gates A B D | A B C | n Y n1 Y VGND n1 n2 VGND n1 | p Y p2 p1 VPWR p3 Y p3 p1: cannot draw: no room for the A contact
+variant 5 gates A B | B A C D | n Y n1 Y VGND n2 n1 VGND Y | p Y p2 p1 p3 Y p3 p1 VPWR: cannot draw: no room for the A contact
+variant 5 gates A C D | B A B | n Y n1 VGND Y VGND n2 n1 Y | p Y p3 p1 VPWR p1 p2 Y p3: cannot draw: no room for the A contact
+variant 5 gates A C D | B A B | n Y n1 VGND Y VGND n2 n1 Y | p Y p3 p1 VPWR p3 Y p2 p1: cannot draw: no room for the A contact
+variant 5 gates A C B A B | D | n Y n1 VGND n2 n1 Y VGND Y | p Y p3 p1 p2 Y p3 VPWR p1: cannot draw: no room for the A contact
+variant 5 gates A C B A B | D | n Y n1 VGND n2 n1 Y VGND Y | p Y p3 p1 p2 Y p3 p1 VPWR: cannot draw: no room for the A contact
+variant 5 gates A C | D B A B | n Y n1 VGND Y VGND n2 n1 Y | p Y p3 p1 VPWR p1 p2 Y p3: cannot draw: no room for the A contact
+variant 5 gates A C | B A B D | n Y n1 VGND Y n1 n2 VGND Y | p Y p3 p1 p3 Y p2 p1 VPWR: cannot draw: no room for the A contact
+variant 5 gates A | D B A B C | n Y n1 VGND Y n1 n2 VGND n1 | p Y p3 VPWR p1 p2 Y p3 p1: cannot draw: no room for the B contact
+variant 5 gates B C D | B A A | n Y n1 VGND Y VGND n2 n1 Y | p Y p3 p1 VPWR p1 p2 Y p3: cannot draw: no room for the B contact
+variant 5 gates B C B A A | D | n Y n1 VGND n2 n1 Y VGND Y | p Y p3 p1 p2 Y p3 VPWR p1: cannot draw: no room for the B contact
+variant 5 gates B C B A A | D | n Y n1 VGND n2 n1 Y VGND Y | p Y p3 p1 p2 Y p3 p1 VPWR: cannot draw: no room for the B contact
+variant 5 gates B C | D B A A | n Y n1 VGND Y VGND n2 n1 Y | p Y p3 p1 VPWR p1 p2 Y p3: cannot draw: no room for the B contact
+variant 5 gates B C | A A B D | n Y n1 VGND Y n1 n2 VGND Y | p Y p3 p1 p3 Y p2 p1 VPWR: cannot draw: no room for the B contact
+variant 5 gates D | A C B A B | n Y VGND Y n1 VGND n2 n1 Y | p p1 VPWR Y p3 p1 p2 Y p3: cannot draw: no room for the A contact
+variant 5 gates D | B C B A A | n Y VGND Y n1 VGND n2 n1 Y | p p1 VPWR Y p3 p1 p2 Y p3: cannot draw: no room for the B contact
+variant 5 gates D | A A B C B | n Y VGND Y n1 n2 VGND n1 Y | p p1 VPWR p3 Y p2 p1 p3 Y: cannot draw: no room for the B contact
+variant 5 gates D | B A B C A | n Y VGND Y n1 n2 VGND n1 Y | p p1 VPWR p3 Y p2 p1 p3 Y: cannot draw: no room for the A contact
+variant 5 gates D | A B C B A | n Y VGND n1 Y n1 VGND n2 n1 | p p1 VPWR Y p2 p1 p3 Y p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | A B A B C | n Y VGND n1 Y n1 n2 VGND n1 | p p1 VPWR Y p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | B A A B C | n Y VGND n1 Y n1 n2 VGND n1 | p p1 VPWR Y p3 Y p2 p1 p3: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | A B C A B | n Y VGND n1 n2 VGND n1 Y n1 | p p1 VPWR Y p2 p1 p3 Y p3: cannot draw: no room for the A contact
+variant 5 gates D | A B C B A | n Y VGND n1 n2 VGND n1 Y n1 | p p1 VPWR Y p2 p1 p3 Y p3: cannot draw: no room for the B contact
+variant 5 gates D | A B C B A | n Y VGND n1 Y n1 VGND n2 n1 | p p1 VPWR p3 Y p3 p1 p2 Y: cannot draw: no room for the B contact
+variant 5 gates D | B A C B A | n Y VGND n1 Y n1 VGND n2 n1 | p p1 VPWR p3 Y p3 p1 p2 Y: cannot draw: no room for the A contact
+variant 5 gates D | C B A A B | n Y VGND n1 VGND n2 n1 Y n1 | p p1 VPWR p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | C B A B A | n Y VGND n1 VGND n2 n1 Y n1 | p p1 VPWR p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates D | A B C B A | n Y VGND n1 n2 VGND n1 Y n1 | p p1 VPWR p3 Y p3 p1 p2 Y: cannot draw: cannot route Y between the rows on li
+variant 5 gates B A | B A C D | n Y n1 Y VGND n2 n1 VGND Y | p p1 p2 Y p3 Y p3 p1 VPWR: cannot draw: no room for the A contact
+variant 5 gates B A B | D C A | n Y n1 n2 VGND Y VGND n1 Y | p p1 p2 Y p3 VPWR p1 p3 Y: cannot draw: no room for the A contact
+variant 7 gates D | C A B A B | n VGND Y VGND n1 Y n1 n2 VGND | p p1 VPWR p3 p1 p2 Y p3 Y: cannot draw: cannot route Y between the rows on li
+variant 7 gates D | B A C B A | n VGND Y n1 Y n1 VGND n2 n1 | p p1 VPWR Y p2 p1 p3 Y p3: cannot draw: cannot route Y between the rows on li
+variant 7 gates D | A B C A B | n VGND Y n1 n2 VGND n1 Y n1 | p p1 VPWR p3 Y p3 p1 p2 Y: cannot draw: cannot route Y between the rows on li
+variant 7 gates C A B | B A D | n VGND n1 n2 VGND Y n1 Y VGND | p p1 p3 Y p3 Y p2 p1 VPWR: cannot draw: no room for the B contact
+variant 7 gates C A B A B | D | n VGND n1 Y n1 n2 VGND Y VGND | p p3 p1 p2 Y p3 Y VPWR p1: cannot draw: cannot route Y between the rows on li
+variant 7 gates C A B A B | D | n VGND n1 Y n1 n2 VGND Y VGND | p p3 p1 p2 Y p3 Y p1 VPWR: cannot draw: cannot route Y between the rows on li
+variant 7 gates B A C D | B A | n VGND n2 n1 VGND Y n1 Y n1 | p p3 Y p3 p1 VPWR Y p2 p1: cannot draw: cannot route Y between the rows on li
+variant 7 gates B A C D | A B | n VGND n2 n1 VGND Y n1 Y n1 | p p3 Y p3 p1 VPWR p1 p2 Y: cannot draw: cannot route Y between the rows on li
+variant 7 gates B A C | B A D | n VGND n2 n1 VGND Y n1 Y VGND | p p3 Y p3 p1 Y p2 p1 VPWR: cannot draw: no room for the B contact
+variant 7 gates D C A B | B A | n Y VGND n1 Y n1 VGND n2 n1 | p VPWR p1 p3 Y p3 Y p2 p1: cannot draw: no room for the A contact
+variant 7 gates D C B A | B A | n Y VGND n1 Y n1 VGND n2 n1 | p VPWR p1 p3 Y p3 Y p2 p1: cannot draw: no room for the B contact
+variant 7 gates D C A B | B A | n Y VGND n1 n2 VGND Y n1 Y | p VPWR p1 p3 Y p3 Y p2 p1: cannot draw: no room for the B contact
+variant 7 gates D C A B | A B | n Y VGND n1 n2 VGND Y n1 Y | p VPWR p1 p3 Y p3 p1 p2 Y: cannot draw: no room for the B contact
+variant 7 gates D C A B | B A | n Y VGND n1 n2 VGND n1 Y n1 | p VPWR p1 p3 Y p3 Y p2 p1: cannot draw: cannot route Y between the rows on li
+variant 7 gates D C A B | A B | n Y VGND n1 n2 VGND n1 Y n1 | p VPWR p1 p3 Y p3 p1 p2 Y: cannot draw: cannot route Y between the rows on li
+variant 7 gates D C | B A B A | n Y VGND n1 VGND n2 n1 Y n1 | p VPWR p1 p3 Y p3 Y p2 p1: cannot draw: cannot route Y between the rows on li
+variant 7 gates D | B A C B A | n Y VGND n1 Y n1 VGND n2 n1 | p VPWR p1 Y p2 p1 p3 Y p3: cannot draw: cannot route Y between the rows on li
+variant 7 gates D | A B C A B | n Y VGND n1 n2 VGND n1 Y n1 | p VPWR p1 p3 Y p3 p1 p2 Y: cannot draw: cannot route Y between the rows on li
+variant 7 gates B A D | C B A | n Y n1 Y VGND n1 VGND n2 n1 | p Y p2 p1 VPWR p1 p3 Y p3: cannot draw: no room for the B contact
+variant 7 gates B A D | A B C | n Y n1 Y VGND n1 n2 VGND n1 | p Y p2 p1 VPWR p3 Y p3 p1: cannot draw: no room for the B contact
+refused: no Euler order can be drawn: B A | A B C D: no room for the D contact; B A | B A C D: no room for the D contact; B A B A C | D: cannot route Y between the rows on li

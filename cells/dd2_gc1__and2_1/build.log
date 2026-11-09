@@ -1,0 +1,71 @@
+build and2_1.json, style handout, git:6326eba, 2026-11-09 06:46 UTC
+
+== 1. request
+name dd2_gc1__and2_1, id T6-and2_1, inputs A, B, output Y, truth table 0x8, sizing hd
+
+== 2. network
+split into stages (2 series orders)
+variant 0: Y_b = f(A, B), 4 fets | Y = f(Y_b), 2 fets
+    nMOS gate A: Y_b - n1
+    nMOS gate B: n1 - VGND
+    pMOS gate A: Y_b - VPWR
+    pMOS gate B: Y_b - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 1: Y_b = f(A, B), 4 fets | Y = f(Y_b), 2 fets
+    nMOS gate B: Y_b - n1
+    nMOS gate A: n1 - VGND
+    pMOS gate A: Y_b - VPWR
+    pMOS gate B: Y_b - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+
+== 3. switch-level check
+variant 0: every input combination gives the truth table
+variant 1: every input combination gives the truth table
+widths: NMOS 0.65 um, PMOS 1.0 um
+
+== 4. Euler orders and placement (first 40 per variant, fewest contacts first)
+variant 0 gates Y_b B A | n Y VGND n1 Y_b | p Y VPWR Y_b VPWR: 2.3 um, met1 inside, 7 contacts on the output stage, 14 in all
+variant 0 gates A B Y_b | n Y_b n1 VGND Y | p VPWR Y_b VPWR Y: 2.3 um, met1 inside, 7 contacts on the output stage, 14 in all
+variant 1 gates Y_b A B | n Y VGND n1 Y_b | p Y VPWR Y_b VPWR: 2.3 um, met1 inside, 7 contacts on the output stage, 14 in all
+variant 1 gates B A Y_b | n Y_b n1 VGND Y | p VPWR Y_b VPWR Y: 2.3 um, met1 inside, 7 contacts on the output stage, 14 in all
+every order needs met1: the 5 narrowest again, up to 60 more widenings each, for li alone
+variant 0 gates Y_b B A: 2.3 um on li alone, 6 contacts on the output stage, 14 in all
+variant 0 gates A B Y_b: 2.3 um on li alone, 6 contacts on the output stage, 14 in all
+variant 1 gates Y_b A B: 2.3 um on li alone, 6 contacts on the output stage, 14 in all
+variant 1 gates B A Y_b: 2.3 um on li alone, 6 contacts on the output stage, 14 in all
+
+== 5. chosen layout
+variant 0, gates Y_b B A: li only beats met1, then the narrowest, then the most contacts on the output stage, then the most contacts, the first found on a tie
+width 2.3 um (5 sites), diffusion 0.275 .. 2.025
+gates   Y_b@0.61  B@1.21  A@1.69
+nMOS columns:
+    Y@0.4 wide contacts y=[0.48]
+    VGND@0.91 narrow contacts y=[0.4]
+    n1@1.45 no contact
+    Y_b@1.9 wide contacts y=[0.4, 0.74]
+    lane Y_b x 0.675 .. 2.065, inner edge, y 0.735 .. 0.905
+    column 0 notched under the lane of Y_b: x 0.505 .. 2.235, li kept below y 0.565
+pMOS columns:
+    Y@0.4 wide contacts y=[1.92, 2.26]
+    VPWR@0.91 narrow contacts y=[2.0, 2.34]
+    Y_b@1.45 wide contacts y=[1.66, 2.0, 2.34]
+    VPWR@1.9 narrow contacts y=[1.66, 2.0, 2.34]
+    lane Y_b x 0.675 .. 1.615, inner edge, y 1.495 .. 1.665
+    column 0 notched under the lane of Y_b: x 0.505 .. 1.785, li kept above y 1.835
+poly contact Y_b@0.74 for gates 0..0, narrow pad
+poly contact B@1.22 for gates 1..1, wide pad
+poly contact A@1.72 for gates 2..2, wide pad
+crossing Y at x 0.4
+crossing Y_b at x 0.76
+
+== 6. checks
+DRC (Magic, in a row with tap cells): 0 errors
+LVS (Netgen): match; RC-LVS: match
+abutment: pass, 0 errors
+layer check: pass
+simulation (ngspice): pass
+
+== 7. response
+pass, 5 sites, 6.256 um2

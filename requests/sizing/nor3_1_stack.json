@@ -1,0 +1,9 @@
+{
+  "request_id": "T6-nor3_1-stack",
+  "name": "dd2_gc1__nor3_1_stack",
+  "inputs": ["A", "B", "C"],
+  "output": "Y",
+  "expression": "!(A | B | C)",
+  "truth_table": "0x01",
+  "sizing": "stack"
+}

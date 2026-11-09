@@ -1,0 +1,97 @@
+build nand3_1.json --hd nand3_1, style handout, git:6326eba, 2026-11-08 21:48 UTC
+
+== 1. request
+name dd2_gc1__nand3_1, id HD-nand3_1, inputs A, B, C, output Y, truth table 0x7f, sizing hd
+
+== 2. network
+one stage (6 series orders)
+variant 0: Y = f(A, B, C), 6 fets
+    nMOS gate A: Y - n1
+    nMOS gate B: n1 - n2
+    nMOS gate C: n2 - VGND
+    pMOS gate A: Y - VPWR
+    pMOS gate B: Y - VPWR
+    pMOS gate C: Y - VPWR
+variant 1: Y = f(A, B, C), 6 fets
+    nMOS gate A: Y - n1
+    nMOS gate C: n1 - n2
+    nMOS gate B: n2 - VGND
+    pMOS gate A: Y - VPWR
+    pMOS gate B: Y - VPWR
+    pMOS gate C: Y - VPWR
+variant 2: Y = f(A, B, C), 6 fets
+    nMOS gate B: Y - n1
+    nMOS gate A: n1 - n2
+    nMOS gate C: n2 - VGND
+    pMOS gate A: Y - VPWR
+    pMOS gate B: Y - VPWR
+    pMOS gate C: Y - VPWR
+variant 3: Y = f(A, B, C), 6 fets
+    nMOS gate B: Y - n1
+    nMOS gate C: n1 - n2
+    nMOS gate A: n2 - VGND
+    pMOS gate A: Y - VPWR
+    pMOS gate B: Y - VPWR
+    pMOS gate C: Y - VPWR
+variant 4: Y = f(A, B, C), 6 fets
+    nMOS gate C: Y - n1
+    nMOS gate A: n1 - n2
+    nMOS gate B: n2 - VGND
+    pMOS gate A: Y - VPWR
+    pMOS gate B: Y - VPWR
+    pMOS gate C: Y - VPWR
+variant 5: Y = f(A, B, C), 6 fets
+    nMOS gate C: Y - n1
+    nMOS gate B: n1 - n2
+    nMOS gate A: n2 - VGND
+    pMOS gate A: Y - VPWR
+    pMOS gate B: Y - VPWR
+    pMOS gate C: Y - VPWR
+
+== 3. switch-level check
+variant 0: every input combination gives the truth table
+variant 1: every input combination gives the truth table
+variant 2: every input combination gives the truth table
+variant 3: every input combination gives the truth table
+variant 4: every input combination gives the truth table
+variant 5: every input combination gives the truth table
+kept 1 of 6 variants that connect like the installed nand3_1 (Table 4: the transistors must match HD's; the others differ only in series order)
+widths: NMOS 0.65 um, PMOS 1.0 um, HD's own per gate: {('p', 'A'): 1.0, ('n', 'B'): 0.65, ('n', 'C'): 0.65, ('n', 'A'): 0.65, ('p', 'C'): 1.0, ('p', 'B'): 1.0}
+every transistor width matches nand3_1's
+
+== 4. Euler orders and placement (first 40 per variant, fewest contacts first)
+variant 0 gates C B A | n VGND n2 n1 Y | p VPWR Y VPWR Y: 1.84 um, 13 contacts on the output stage, 13 in all
+variant 0 gates C B A | n VGND n2 n1 Y | p Y VPWR Y VPWR: 1.84 um, 14 contacts on the output stage, 14 in all
+variant 0 gates A B C | n Y n1 n2 VGND | p VPWR Y VPWR Y: 1.84 um, 14 contacts on the output stage, 14 in all
+variant 0 gates A B C | n Y n1 n2 VGND | p Y VPWR Y VPWR: 1.84 um, 15 contacts on the output stage, 15 in all
+
+== 5. chosen layout
+variant 0, gates A B C: li only beats met1, then the narrowest, then the most contacts on the output stage, then the most contacts, the first found on a tie
+width 1.84 um (4 sites), diffusion 0.19 .. 1.7
+gates   A@0.525  B@0.945  C@1.365
+nMOS columns:
+    Y@0.315 wide contacts y=[0.4, 0.74]
+    n1@0.735 no contact
+    n2@1.155 no contact
+    VGND@1.575 narrow contacts y=[0.4, 0.74]
+pMOS columns:
+    Y@0.315 wide contacts y=[1.66, 2.0, 2.34]
+    VPWR@0.735 narrow contacts y=[2.0, 2.34]
+    Y@1.155 wide contacts y=[1.66, 2.0, 2.34]
+    VPWR@1.575 narrow contacts y=[1.66, 2.0, 2.34]
+    lane Y x 0.15 .. 1.32, inner edge, y 1.495 .. 1.665
+poly contact A@0.245 for gates 0..0, narrow pad
+poly contact B@0.945 for gates 1..1, narrow pad
+poly contact C@1.425 for gates 2..2, wide pad
+crossing Y at x 0.585
+
+== 6. checks
+DRC (Magic, in a row with tap cells): 0 errors
+LVS (Netgen): match; RC-LVS: match
+abutment: pass, 0 errors
+layer check: pass
+simulation (ngspice): pass
+compared with nand3_1: see report.json, key compare
+
+== 7. response
+pass, 4 sites, 5.0048 um2

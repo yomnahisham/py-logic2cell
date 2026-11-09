@@ -1,0 +1,7 @@
+{
+  "request_id": "GC1-17FF",
+  "status": "fail",
+  "reason": "no Euler order can be drawn: B A | A B C D: no room for the D contact; B A | B A C D: no room for the D contact; B A B A C | D: cannot route Y between the rows on li",
+  "cell": "dd2_gc1__f17ff_1",
+  "tool_version": "git:6326eba"
+}

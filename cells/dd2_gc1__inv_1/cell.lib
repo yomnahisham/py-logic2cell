@@ -1,0 +1,248 @@
+/* Characterized by py-logic2cell (src/cell/characterize.py) with ngspice-47, sha256 81a8991415fbee4065e1e54fcdf68ac67183eb9b1d2c4119c252066d370705ad, image dd2-layout-tools */
+library ("dd2_gc1__inv_1") {
+    define(def_sim_opt,library,string);
+    define(default_arc_mode,library,string);
+    define(default_constraint_arc_mode,library,string);
+    define(driver_model,library,string);
+    define(leakage_sim_opt,library,string);
+    define(min_pulse_width_mode,library,string);
+    define(simulator,library,string);
+    define(switching_power_split_model,library,string);
+    define(sim_opt,timing,string);
+    define(violation_delay_degrade_pct,timing,string);
+    technology("cmos");
+    delay_model : "table_lookup";
+    bus_naming_style : "%s[%d]";
+    time_unit : "1ns";
+    voltage_unit : "1V";
+    leakage_power_unit : "1nW";
+    current_unit : "1mA";
+    pulling_resistance_unit : "1kohm";
+    capacitive_load_unit(1.0000000000, "pf");
+    revision : 1.0000000000;
+    default_cell_leakage_power : 0.0000000000;
+    default_fanout_load : 1.0000000000;
+    default_inout_pin_cap : 0.0000000000;
+    default_input_pin_cap : 0.0000000000;
+    default_max_transition : 1.5000000000;
+    default_output_pin_cap : 0.0000000000;
+    default_arc_mode : "worst_edges";
+    default_constraint_arc_mode : "worst";
+    default_leakage_power_density : 0.0000000000;
+    default_operating_conditions : "tt_025C_1v80";
+    operating_conditions ("tt_025C_1v80") {
+        voltage : 1.8000000000;
+        process : 1.0000000000;
+        temperature : 25.000000000;
+        tree_type : "balanced_tree";
+    }
+    /* Wire load tables */
+
+    wire_load("Small") {
+      capacitance : 1.42e-05;
+      resistance : 0.0745;
+      slope : 8.3631;
+      fanout_length( 1, 23.2746);
+      fanout_length( 2, 32.1136);
+      fanout_length( 3, 48.4862);
+      fanout_length( 4, 64.0974);
+      fanout_length( 5, 86.2649);
+      fanout_length( 6, 84.2649);
+    }
+
+    wire_load("Medium") {
+      capacitance : 1.42e-05;
+      resistance : 0.0745;
+      slope : 8.3631;
+      fanout_length( 1, 23.2746);
+      fanout_length( 2, 32.1136);
+      fanout_length( 3, 48.4862);
+      fanout_length( 4, 64.0974);
+      fanout_length( 5, 86.2649);
+      fanout_length( 6, 84.2649);
+    }
+
+    wire_load("Large") {
+      capacitance : 1.42e-05;
+      resistance : 0.0745;
+      slope : 8.3631;
+      fanout_length( 1, 23.2746);
+      fanout_length( 2, 32.1136);
+      fanout_length( 3, 48.4862);
+      fanout_length( 4, 64.0974);
+      fanout_length( 5, 86.2649);
+      fanout_length( 6, 84.2649);
+    }
+
+    wire_load("Huge") {
+      capacitance : 1.42e-05;
+      resistance : 0.0745;
+      slope : 8.3631;
+      fanout_length( 1, 23.2746);
+      fanout_length( 2, 32.1136);
+      fanout_length( 3, 48.4862);
+      fanout_length( 4, 64.0974);
+      fanout_length( 5, 86.2649);
+      fanout_length( 6, 84.2649);
+    }
+
+    default_wire_load : "Small" ;
+    default_wire_load_mode : top;
+
+    power_lut_template ("power_inputs_1") {
+        variable_1 : "input_transition_time";
+        index_1("1, 2, 3, 4, 5, 6, 7");
+    }
+    power_lut_template ("power_outputs_1") {
+        variable_1 : "input_transition_time";
+        variable_2 : "total_output_net_capacitance";
+        index_1("1, 2, 3, 4, 5, 6, 7");
+        index_2("1, 2, 3, 4, 5, 6, 7");
+    }
+    lu_table_template ("constraint_3_0_1") {
+        variable_1 : "related_pin_transition";
+        index_1("1, 2, 3");
+    }
+    lu_table_template ("del_1_7_7") {
+        variable_1 : "input_net_transition";
+        variable_2 : "total_output_net_capacitance";
+        index_1("1, 2, 3, 4, 5, 6, 7");
+        index_2("1, 2, 3, 4, 5, 6, 7");
+    }
+    lu_table_template ("driver_waveform_template") {
+        variable_1 : "input_net_transition";
+        variable_2 : "normalized_voltage";
+        index_1("1, 2");
+        index_2("1, 2");
+    }
+    lu_table_template ("vio_3_3_1") {
+        variable_1 : "related_pin_transition";
+        variable_2 : "constrained_pin_transition";
+        index_1("1, 2, 3");
+        index_2("1, 2, 3");
+    }
+    normalized_driver_waveform ("driver_waveform_template") {
+        index_1("0.0100000000, 0.0230506000, 0.0531329000, 0.1224745000, 0.2823108000, 0.5000000000, 0.6507428000, 1.5000000000");
+        index_2("0.0000000000, 0.5000000000, 1.0000000000");
+        driver_waveform_name : "ramp";
+        values("0.0000000000, 0.0083333333, 0.0166666670", \
+            "0.0000000000, 0.0192088180, 0.0384176350", \
+            "0.0000000000, 0.0442774400, 0.0885548810", \
+            "0.0000000000, 0.1020620700, 0.2041241500", \
+            "0.0000000000, 0.2352590100, 0.4705180100", \
+            "0.0000000000, 0.4166666700, 0.8333333300", \
+            "0.0000000000, 0.5422856800, 1.0845714000", \
+            "0.0000000000, 1.2500000000, 2.5000000000");
+    }
+    library_features("report_delay_calculation");
+    voltage_map("VSS", 0.0000000000);
+    voltage_map("KAPWR", 1.8000000000);
+    voltage_map("LOWLVPWR", 1.8000000000);
+    voltage_map("VGND", 0.0000000000);
+    voltage_map("VNB", 0.0000000000);
+    voltage_map("VPB", 1.8000000000);
+    voltage_map("VPWR", 1.8000000000);
+    voltage_map("VPWRIN", 1.8000000000);
+    driver_model : "ramp";
+    in_place_swap_mode : "match_footprint";
+    input_threshold_pct_fall : 50.000000000;
+    input_threshold_pct_rise : 50.000000000;
+    min_pulse_width_mode : "max";
+    nom_process : 1.0000000000;
+    nom_temperature : 25.000000000;
+    nom_voltage : 1.8000000000;
+    output_threshold_pct_fall : 50.000000000;
+    output_threshold_pct_rise : 50.000000000;
+    simulation : "true";
+    slew_derate_from_library : 1.0000000000;
+    slew_lower_threshold_pct_fall : 20.000000000;
+    slew_lower_threshold_pct_rise : 20.000000000;
+    slew_upper_threshold_pct_fall :  80.00000000;
+    slew_upper_threshold_pct_rise :  80.00000000;
+    switching_power_split_model : "true";
+
+    cell ("dd2_gc1__inv_1") {
+        area : 3.7536000000;
+        pg_pin ("VGND") {
+            pg_type : "primary_ground";
+            voltage_name : "VGND";
+            related_bias_pin : "VNB";
+        }
+        pg_pin ("VNB") {
+            pg_type : "pwell";
+            voltage_name : "VNB";
+        }
+        pg_pin ("VPB") {
+            pg_type : "nwell";
+            voltage_name : "VPB";
+        }
+        pg_pin ("VPWR") {
+            pg_type : "primary_power";
+            voltage_name : "VPWR";
+            related_bias_pin : "VPB";
+        }
+        pin ("A") {
+            direction : "input";
+            capacitance : 0.0023997083;
+            rise_capacitance : 0.0024641944;
+            fall_capacitance : 0.0023352222;
+            related_ground_pin : "VGND";
+            related_power_pin : "VPWR";
+        }
+        pin ("Y") {
+            direction : "output";
+            function : "!A";
+            related_ground_pin : "VGND";
+            related_power_pin : "VPWR";
+            timing () {
+                related_pin : "A";
+                timing_sense : "negative_unate";
+                timing_type : "combinational";
+                cell_rise ("del_1_7_7") {
+                    index_1 ("0.0100000000, 0.0230506000, 0.0531329000, 0.1224740000, 0.2823110000, 0.6507430000, 1.5000000000");
+                    index_2 ("0.0005000000, 0.0013351700, 0.0035653300, 0.0095206200, 0.0254232000, 0.0678883000, 0.1812840000");
+                    values ("0.0217860000, 0.0270100000, 0.0403070000, 0.0746000000, 0.1650120000, 0.4057600000, 1.0483270000", \
+                        "0.0269780000, 0.0321040000, 0.0454220000, 0.0799350000, 0.1705750000, 0.4114510000, 1.0540710000", \
+                        "0.0392950000, 0.0451210000, 0.0582010000, 0.0926710000, 0.1835340000, 0.4246280000, 1.0673630000", \
+                        "0.0581390000, 0.0676470000, 0.0869290000, 0.1231220000, 0.2138450000, 0.4551200000, 1.0980380000", \
+                        "0.0853710000, 0.1006530000, 0.1319050000, 0.1878540000, 0.2848800000, 0.5259050000, 1.1689510000", \
+                        "0.1272660000, 0.1500380000, 0.1984660000, 0.2886040000, 0.4373950000, 0.6907050000, 1.3331350000", \
+                        "0.1955300000, 0.2280000000, 0.2989900000, 0.4371100000, 0.6758800000, 1.0537000000, 1.7135300000");
+                }
+                cell_fall ("del_1_7_7") {
+                    index_1 ("0.0100000000, 0.0230506000, 0.0531329000, 0.1224740000, 0.2823110000, 0.6507430000, 1.5000000000");
+                    index_2 ("0.0005000000, 0.0013351700, 0.0035653300, 0.0095206200, 0.0254232000, 0.0678883000, 0.1812840000");
+                    values ("0.0154140000, 0.0185450000, 0.0264800000, 0.0469880000, 0.1011800000, 0.2455810000, 0.6310480000", \
+                        "0.0200830000, 0.0232100000, 0.0312330000, 0.0518850000, 0.1061760000, 0.2506250000, 0.6361130000", \
+                        "0.0278070000, 0.0326020000, 0.0425100000, 0.0633500000, 0.1177580000, 0.2622860000, 0.6478080000", \
+                        "0.0374700000, 0.0450030000, 0.0604780000, 0.0893090000, 0.1447150000, 0.2892500000, 0.6748020000", \
+                        "0.0474130000, 0.0592880000, 0.0835620000, 0.1287410000, 0.2055330000, 0.3518710000, 0.7372310000", \
+                        "0.0539530000, 0.0719270000, 0.1096140000, 0.1797990000, 0.2998410000, 0.4957750000, 0.8819950000", \
+                        "0.0430400000, 0.0700300000, 0.1272500000, 0.2352600000, 0.4221600000, 0.7279000000, 1.2184400000");
+                }
+                rise_transition ("del_1_7_7") {
+                    index_1 ("0.0100000000, 0.0230506000, 0.0531329000, 0.1224740000, 0.2823110000, 0.6507430000, 1.5000000000");
+                    index_2 ("0.0005000000, 0.0013351700, 0.0035653300, 0.0095206200, 0.0254232000, 0.0678883000, 0.1812840000");
+                    values ("0.0170670000, 0.0237990000, 0.0418180000, 0.0899780000, 0.2185870000, 0.5620120000, 1.4790650000", \
+                        "0.0170810000, 0.0238130000, 0.0418330000, 0.0899830000, 0.2185880000, 0.5620130000, 1.4790630000", \
+                        "0.0226190000, 0.0274310000, 0.0426990000, 0.0899850000, 0.2185910000, 0.5620190000, 1.4790650000", \
+                        "0.0376670000, 0.0435800000, 0.0560310000, 0.0941380000, 0.2186850000, 0.5620460000, 1.4790760000", \
+                        "0.0617760000, 0.0718440000, 0.0912370000, 0.1265460000, 0.2276920000, 0.5620640000, 1.4790900000", \
+                        "0.0986020000, 0.1143600000, 0.1470720000, 0.2040970000, 0.2994600000, 0.5769100000, 1.4791000000", \
+                        "0.1612700000, 0.1845900000, 0.2354600000, 0.3301200000, 0.4817500000, 0.7305000000, 1.4994900000");
+                }
+                fall_transition ("del_1_7_7") {
+                    index_1 ("0.0100000000, 0.0230506000, 0.0531329000, 0.1224740000, 0.2823110000, 0.6507430000, 1.5000000000");
+                    index_2 ("0.0005000000, 0.0013351700, 0.0035653300, 0.0095206200, 0.0254232000, 0.0678883000, 0.1812840000");
+                    values ("0.0093070000, 0.0130740000, 0.0231110000, 0.0499110000, 0.1214630000, 0.3125200000, 0.8227060000", \
+                        "0.0103200000, 0.0135290000, 0.0231300000, 0.0499280000, 0.1214690000, 0.3125230000, 0.8227060000", \
+                        "0.0167660000, 0.0197090000, 0.0267960000, 0.0504290000, 0.1214920000, 0.3125380000, 0.8227020000", \
+                        "0.0288520000, 0.0331420000, 0.0427220000, 0.0615140000, 0.1230010000, 0.3125930000, 0.8227250000", \
+                        "0.0485790000, 0.0565060000, 0.0700850000, 0.0976300000, 0.1499720000, 0.3153030000, 0.8228150000", \
+                        "0.0807000000, 0.0926250000, 0.1154830000, 0.1583910000, 0.2325400000, 0.3701850000, 0.8248700000", \
+                        "0.1426200000, 0.1595100000, 0.1957200000, 0.2625500000, 0.3767500000, 0.5655800000, 0.9338300000");
+                }
+            }
+        }
+    }
+}

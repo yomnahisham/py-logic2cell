@@ -1,0 +1,174 @@
+build a21o_1.json, style handout, git:6326eba, 2026-11-08 21:48 UTC
+
+== 1. request
+name dd2_gc1__a21o_1, id T6-a21o_1, inputs A, B, C, output Y, truth table 0xf8, sizing hd
+
+== 2. network
+split into stages (4 series orders)
+variant 0: Y_b = f(A, B, C), 6 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - VGND
+    nMOS gate A: Y_b - n1
+    nMOS gate B: n1 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 1: Y_b = f(A, B, C), 6 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - VGND
+    nMOS gate A: Y_b - n1
+    nMOS gate B: n1 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate C: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 2: Y_b = f(A, B, C), 6 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - VGND
+    nMOS gate B: Y_b - n1
+    nMOS gate A: n1 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 3: Y_b = f(A, B, C), 6 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - VGND
+    nMOS gate B: Y_b - n1
+    nMOS gate A: n1 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate C: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+
+== 3. switch-level check
+variant 0: every input combination gives the truth table
+variant 1: every input combination gives the truth table
+variant 2: every input combination gives the truth table
+variant 3: every input combination gives the truth table
+widths: NMOS 0.65 um, PMOS 1.0 um
+
+== 4. Euler orders and placement (first 40 per variant, fewest contacts first)
+variant 0 gates C A B | Y_b | n VGND Y_b n1 VGND VGND Y | p Y_b p1 VPWR p1 VPWR Y: 3.22 um, met1 inside, 8 contacts on the output stage, 21 in all
+variant 0 gates C A B | Y_b | n VGND Y_b n1 VGND VGND Y | p Y_b p1 VPWR p1 Y VPWR: 3.22 um, met1 inside, 7 contacts on the output stage, 19 in all
+variant 0 gates C A | B Y_b | n VGND Y_b n1 n1 VGND Y | p Y_b p1 VPWR p1 VPWR Y: 3.22 um, met1 inside, 7 contacts on the output stage, 18 in all
+variant 0 gates C | A B Y_b | n VGND Y_b Y_b n1 VGND Y | p Y_b p1 VPWR p1 VPWR Y: 3.22 um, met1 inside, 7 contacts on the output stage, 17 in all
+variant 0 gates C | A B Y_b | n VGND Y_b Y_b n1 VGND Y | p p1 Y_b VPWR p1 VPWR Y: cannot draw: gave up after 600 tries, 404 of them drawn
+variant 0 gates B A C | Y_b | n VGND n1 Y_b VGND VGND Y | p p1 VPWR p1 Y_b VPWR Y: 3.22 um, 7 contacts on the output stage, 20 in all
+variant 0 gates B A C | Y_b | n VGND n1 Y_b VGND VGND Y | p p1 VPWR p1 Y_b Y VPWR: 3.22 um, met1 inside, 7 contacts on the output stage, 19 in all
+variant 0 gates Y_b | C A B | n Y VGND VGND Y_b n1 VGND | p VPWR Y Y_b p1 VPWR p1: 2.76 um, met1 inside, 6 contacts on the output stage, 18 in all
+variant 0 gates Y_b | B A C | n Y VGND VGND n1 Y_b VGND | p VPWR Y p1 VPWR p1 Y_b: 3.22 um, met1 inside, 7 contacts on the output stage, 17 in all
+variant 0 gates Y_b B A | C | n Y VGND n1 Y_b Y_b VGND | p Y VPWR p1 VPWR Y_b p1: cannot draw: gave up after 720 tries, 460 of them drawn
+variant 0 gates Y_b B A | C | n Y VGND n1 Y_b Y_b VGND | p Y VPWR p1 VPWR p1 Y_b: 3.22 um, met1 inside, 7 contacts on the output stage, 18 in all
+variant 0 gates Y_b B | A C | n Y VGND n1 n1 Y_b VGND | p Y VPWR p1 VPWR p1 Y_b: 3.22 um, met1 inside, 7 contacts on the output stage, 18 in all
+variant 0 gates Y_b | C A B | n Y VGND VGND Y_b n1 VGND | p Y VPWR Y_b p1 VPWR p1: 2.76 um, 7 contacts on the output stage, 20 in all
+variant 0 gates Y_b | B A C | n Y VGND VGND n1 Y_b VGND | p Y VPWR p1 VPWR p1 Y_b: 3.22 um, met1 inside, 10 contacts on the output stage, 21 in all
+variant 0 gates Y_b | C A B | n VGND Y VGND Y_b n1 VGND | p VPWR Y Y_b p1 VPWR p1: 2.76 um, met1 inside, 9 contacts on the output stage, 22 in all
+variant 0 gates Y_b | B A C | n VGND Y VGND n1 Y_b VGND | p VPWR Y p1 VPWR p1 Y_b: 3.22 um, met1 inside, 9 contacts on the output stage, 21 in all
+variant 0 gates Y_b | C B A | n VGND Y Y_b VGND n1 Y_b | p VPWR Y Y_b p1 VPWR p1: 2.76 um, met1 inside, 8 contacts on the output stage, 20 in all
+variant 0 gates Y_b | A B C | n VGND Y Y_b n1 VGND Y_b | p VPWR Y p1 VPWR p1 Y_b: 3.22 um, met1 inside, 8 contacts on the output stage, 18 in all
+variant 0 gates Y_b | C A B | n VGND Y VGND Y_b n1 VGND | p Y VPWR Y_b p1 VPWR p1: 2.76 um, met1 inside, 7 contacts on the output stage, 20 in all
+variant 0 gates Y_b | B A C | n VGND Y VGND n1 Y_b VGND | p Y VPWR p1 VPWR p1 Y_b: 3.22 um, met1 inside, 7 contacts on the output stage, 20 in all
+variant 0 gates Y_b | C B A | n VGND Y Y_b VGND n1 Y_b | p Y VPWR Y_b p1 VPWR p1: 2.76 um, met1 inside, 7 contacts on the output stage, 19 in all
+variant 0 gates Y_b | A B C | n VGND Y Y_b n1 VGND Y_b | p Y VPWR p1 VPWR p1 Y_b: 3.22 um, met1 inside, 7 contacts on the output stage, 18 in all
+variant 0 gates C A B | Y_b | n VGND Y_b n1 VGND Y VGND | p Y_b p1 VPWR p1 VPWR Y: 3.22 um, met1 inside, 8 contacts on the output stage, 21 in all
+variant 0 gates C A B | Y_b | n VGND Y_b n1 VGND Y VGND | p Y_b p1 VPWR p1 Y VPWR: 3.22 um, met1 inside, 9 contacts on the output stage, 21 in all
+variant 0 gates C | Y_b B A | n VGND Y_b Y VGND n1 Y_b | p Y_b p1 Y VPWR p1 VPWR: cannot draw: cannot route Y_b between the rows on li
+variant 0 gates C | Y_b B A | n VGND Y_b Y VGND n1 Y_b | p p1 Y_b Y VPWR p1 VPWR: cannot draw: gave up after 1386 tries, 410 of them drawn
+variant 0 gates B A C | Y_b | n VGND n1 Y_b VGND Y VGND | p p1 VPWR p1 Y_b VPWR Y: 3.22 um, met1 inside, 7 contacts on the output stage, 19 in all
+variant 0 gates B A C | Y_b | n VGND n1 Y_b VGND Y VGND | p p1 VPWR p1 Y_b Y VPWR: 3.22 um, met1 inside, 9 contacts on the output stage, 21 in all
+variant 0 gates Y_b | C B A | n Y VGND Y_b VGND n1 Y_b | p VPWR Y Y_b p1 VPWR p1: 2.76 um, met1 inside, 6 contacts on the output stage, 18 in all
+variant 0 gates Y_b | A B C | n Y VGND Y_b n1 VGND Y_b | p VPWR Y p1 VPWR p1 Y_b: 3.22 um, met1 inside, 7 contacts on the output stage, 18 in all
+variant 0 gates Y_b B A | C | n Y VGND n1 Y_b VGND Y_b | p Y VPWR p1 VPWR Y_b p1: cannot draw: gave up after 600 tries, 406 of them drawn
+variant 0 gates Y_b B A | C | n Y VGND n1 Y_b VGND Y_b | p Y VPWR p1 VPWR p1 Y_b: 3.22 um, met1 inside, 7 contacts on the output stage, 21 in all
+variant 0 gates Y_b | C B A | n Y VGND Y_b VGND n1 Y_b | p Y VPWR Y_b p1 VPWR p1: 2.76 um, 7 contacts on the output stage, 20 in all
+variant 0 gates Y_b | A B C | n Y VGND Y_b n1 VGND Y_b | p Y VPWR p1 VPWR p1 Y_b: 3.22 um, met1 inside, 10 contacts on the output stage, 22 in all
+variant 0 gates A B Y_b | C | n Y_b n1 VGND Y VGND Y_b | p VPWR p1 VPWR Y Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 0 gates A B Y_b | C | n Y_b n1 VGND Y VGND Y_b | p VPWR p1 VPWR Y p1 Y_b: cannot draw: gave up after 1874 tries, 418 of them drawn
+variant 0 gates A B Y_b | C | n Y_b n1 VGND Y Y_b VGND | p VPWR p1 VPWR Y Y_b p1: cannot draw: gave up after 2282 tries, 418 of them drawn
+variant 0 gates A B Y_b | C | n Y_b n1 VGND Y Y_b VGND | p VPWR p1 VPWR Y p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 0 gates C B A | Y_b | n Y_b VGND n1 Y_b VGND Y | p Y_b p1 VPWR p1 VPWR Y: 3.22 um, met1 inside, 10 contacts on the output stage, 22 in all
+variant 0 gates C B A | Y_b | n Y_b VGND n1 Y_b VGND Y | p Y_b p1 VPWR p1 Y VPWR: 3.22 um, met1 inside, 6 contacts on the output stage, 17 in all
+variant 1 gates B A C Y_b | n VGND n1 Y_b VGND Y | p p1 Y_b p1 VPWR Y: 2.76 um, met1 inside, 7 contacts on the output stage, 17 in all
+variant 1 gates Y_b C A B | n Y VGND Y_b n1 VGND | p Y VPWR p1 Y_b p1: 2.76 um, met1 inside, 7 contacts on the output stage, 17 in all
+variant 2 gates C B A | Y_b | n VGND Y_b n1 VGND VGND Y | p Y_b p1 VPWR p1 VPWR Y: 3.22 um, met1 inside, 8 contacts on the output stage, 21 in all
+variant 2 gates C B A | Y_b | n VGND Y_b n1 VGND VGND Y | p Y_b p1 VPWR p1 Y VPWR: 3.22 um, met1 inside, 7 contacts on the output stage, 19 in all
+variant 2 gates C B | A Y_b | n VGND Y_b n1 n1 VGND Y | p Y_b p1 VPWR p1 VPWR Y: 3.22 um, met1 inside, 7 contacts on the output stage, 18 in all
+variant 2 gates C | B A Y_b | n VGND Y_b Y_b n1 VGND Y | p Y_b p1 VPWR p1 VPWR Y: 3.22 um, met1 inside, 7 contacts on the output stage, 17 in all
+variant 2 gates C | B A Y_b | n VGND Y_b Y_b n1 VGND Y | p p1 Y_b VPWR p1 VPWR Y: cannot draw: gave up after 600 tries, 404 of them drawn
+variant 2 gates A B C | Y_b | n VGND n1 Y_b VGND VGND Y | p p1 VPWR p1 Y_b VPWR Y: 3.22 um, 7 contacts on the output stage, 20 in all
+variant 2 gates A B C | Y_b | n VGND n1 Y_b VGND VGND Y | p p1 VPWR p1 Y_b Y VPWR: 3.22 um, met1 inside, 7 contacts on the output stage, 19 in all
+variant 2 gates Y_b | C B A | n Y VGND VGND Y_b n1 VGND | p VPWR Y Y_b p1 VPWR p1: 2.76 um, met1 inside, 6 contacts on the output stage, 18 in all
+variant 2 gates Y_b | A B C | n Y VGND VGND n1 Y_b VGND | p VPWR Y p1 VPWR p1 Y_b: 3.22 um, met1 inside, 7 contacts on the output stage, 17 in all
+variant 2 gates Y_b A B | C | n Y VGND n1 Y_b Y_b VGND | p Y VPWR p1 VPWR Y_b p1: cannot draw: gave up after 720 tries, 460 of them drawn
+variant 2 gates Y_b A B | C | n Y VGND n1 Y_b Y_b VGND | p Y VPWR p1 VPWR p1 Y_b: 3.22 um, met1 inside, 7 contacts on the output stage, 18 in all
+variant 2 gates Y_b A | B C | n Y VGND n1 n1 Y_b VGND | p Y VPWR p1 VPWR p1 Y_b: 3.22 um, met1 inside, 7 contacts on the output stage, 18 in all
+variant 2 gates Y_b | C B A | n Y VGND VGND Y_b n1 VGND | p Y VPWR Y_b p1 VPWR p1: 2.76 um, 7 contacts on the output stage, 20 in all
+variant 2 gates Y_b | A B C | n Y VGND VGND n1 Y_b VGND | p Y VPWR p1 VPWR p1 Y_b: 3.22 um, met1 inside, 10 contacts on the output stage, 21 in all
+variant 2 gates Y_b | C B A | n VGND Y VGND Y_b n1 VGND | p VPWR Y Y_b p1 VPWR p1: 2.76 um, met1 inside, 9 contacts on the output stage, 22 in all
+variant 2 gates Y_b | A B C | n VGND Y VGND n1 Y_b VGND | p VPWR Y p1 VPWR p1 Y_b: 3.22 um, met1 inside, 9 contacts on the output stage, 21 in all
+variant 2 gates Y_b | C A B | n VGND Y Y_b VGND n1 Y_b | p VPWR Y Y_b p1 VPWR p1: 2.76 um, met1 inside, 8 contacts on the output stage, 20 in all
+variant 2 gates Y_b | B A C | n VGND Y Y_b n1 VGND Y_b | p VPWR Y p1 VPWR p1 Y_b: 3.22 um, met1 inside, 8 contacts on the output stage, 18 in all
+variant 2 gates Y_b | C B A | n VGND Y VGND Y_b n1 VGND | p Y VPWR Y_b p1 VPWR p1: 2.76 um, met1 inside, 7 contacts on the output stage, 20 in all
+variant 2 gates Y_b | A B C | n VGND Y VGND n1 Y_b VGND | p Y VPWR p1 VPWR p1 Y_b: 3.22 um, met1 inside, 7 contacts on the output stage, 20 in all
+variant 2 gates Y_b | C A B | n VGND Y Y_b VGND n1 Y_b | p Y VPWR Y_b p1 VPWR p1: 2.76 um, met1 inside, 7 contacts on the output stage, 19 in all
+variant 2 gates Y_b | B A C | n VGND Y Y_b n1 VGND Y_b | p Y VPWR p1 VPWR p1 Y_b: 3.22 um, met1 inside, 7 contacts on the output stage, 18 in all
+variant 2 gates C B A | Y_b | n VGND Y_b n1 VGND Y VGND | p Y_b p1 VPWR p1 VPWR Y: 3.22 um, met1 inside, 8 contacts on the output stage, 21 in all
+variant 2 gates C B A | Y_b | n VGND Y_b n1 VGND Y VGND | p Y_b p1 VPWR p1 Y VPWR: 3.22 um, met1 inside, 9 contacts on the output stage, 21 in all
+variant 2 gates C | Y_b A B | n VGND Y_b Y VGND n1 Y_b | p Y_b p1 Y VPWR p1 VPWR: cannot draw: cannot route Y_b between the rows on li
+variant 2 gates C | Y_b A B | n VGND Y_b Y VGND n1 Y_b | p p1 Y_b Y VPWR p1 VPWR: cannot draw: gave up after 1386 tries, 410 of them drawn
+variant 2 gates A B C | Y_b | n VGND n1 Y_b VGND Y VGND | p p1 VPWR p1 Y_b VPWR Y: 3.22 um, met1 inside, 7 contacts on the output stage, 19 in all
+variant 2 gates A B C | Y_b | n VGND n1 Y_b VGND Y VGND | p p1 VPWR p1 Y_b Y VPWR: 3.22 um, met1 inside, 9 contacts on the output stage, 21 in all
+variant 2 gates Y_b | C A B | n Y VGND Y_b VGND n1 Y_b | p VPWR Y Y_b p1 VPWR p1: 2.76 um, met1 inside, 6 contacts on the output stage, 18 in all
+variant 2 gates Y_b | B A C | n Y VGND Y_b n1 VGND Y_b | p VPWR Y p1 VPWR p1 Y_b: 3.22 um, met1 inside, 7 contacts on the output stage, 18 in all
+variant 2 gates Y_b A B | C | n Y VGND n1 Y_b VGND Y_b | p Y VPWR p1 VPWR Y_b p1: cannot draw: gave up after 600 tries, 406 of them drawn
+variant 2 gates Y_b A B | C | n Y VGND n1 Y_b VGND Y_b | p Y VPWR p1 VPWR p1 Y_b: 3.22 um, met1 inside, 7 contacts on the output stage, 21 in all
+variant 2 gates Y_b | C A B | n Y VGND Y_b VGND n1 Y_b | p Y VPWR Y_b p1 VPWR p1: 2.76 um, 7 contacts on the output stage, 20 in all
+variant 2 gates Y_b | B A C | n Y VGND Y_b n1 VGND Y_b | p Y VPWR p1 VPWR p1 Y_b: 3.22 um, met1 inside, 10 contacts on the output stage, 22 in all
+variant 2 gates B A Y_b | C | n Y_b n1 VGND Y VGND Y_b | p VPWR p1 VPWR Y Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 2 gates B A Y_b | C | n Y_b n1 VGND Y VGND Y_b | p VPWR p1 VPWR Y p1 Y_b: cannot draw: gave up after 1874 tries, 418 of them drawn
+variant 2 gates B A Y_b | C | n Y_b n1 VGND Y Y_b VGND | p VPWR p1 VPWR Y Y_b p1: cannot draw: gave up after 2282 tries, 418 of them drawn
+variant 2 gates B A Y_b | C | n Y_b n1 VGND Y Y_b VGND | p VPWR p1 VPWR Y p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 2 gates C A B | Y_b | n Y_b VGND n1 Y_b VGND Y | p Y_b p1 VPWR p1 VPWR Y: 3.22 um, met1 inside, 10 contacts on the output stage, 22 in all
+variant 2 gates C A B | Y_b | n Y_b VGND n1 Y_b VGND Y | p Y_b p1 VPWR p1 Y VPWR: 3.22 um, met1 inside, 6 contacts on the output stage, 17 in all
+variant 3 gates A B C Y_b | n VGND n1 Y_b VGND Y | p p1 Y_b p1 VPWR Y: 2.76 um, met1 inside, 7 contacts on the output stage, 17 in all
+variant 3 gates Y_b C B A | n Y VGND Y_b n1 VGND | p Y VPWR p1 Y_b p1: 2.76 um, met1 inside, 7 contacts on the output stage, 17 in all
+
+== 5. chosen layout
+variant 0, gates Y_b | C A B: li only beats met1, then the narrowest, then the most contacts on the output stage, then the most contacts, the first found on a tie
+width 2.76 um (6 sites), diffusion 0.155 .. 2.605
+gates   Y_b@0.49  |@0.96  C@1.43  A@1.85  B@2.27
+nMOS columns:
+    Y@0.28 narrow contacts y=[0.74]
+    VGND@0.7 wide contacts y=[0.4]
+    VGND@1.22 no contact
+    Y_b@1.64 wide contacts y=[0.4, 0.74]
+    n1@2.06 no contact
+    VGND@2.48 narrow contacts y=[0.4, 0.74]
+    lane Y_b x 0.875 .. 1.805, inner edge, y 0.655 .. 0.825
+pMOS columns:
+    Y@0.28 wide contacts y=[1.66, 2.0, 2.34]
+    VPWR@0.7 narrow contacts y=[2.0, 2.34]
+    Y_b@1.22 narrow contacts y=[1.66, 2.0]
+    p1@1.64 narrow contacts y=[1.66, 2.0]
+    VPWR@2.06 narrow contacts y=[2.0, 2.34]
+    p1@2.48 wide contacts y=[1.66, 2.0, 2.34]
+    lane Y_b x 0.875 .. 1.305, inner edge, y 1.495 .. 1.665
+    lane p1 x 1.555 .. 2.645, inner edge, y 1.495 .. 1.665
+poly contact Y_b@0.7 for gates 0..0, wide pad
+poly contact C@1.3 for gates 2..2, narrow pad
+poly contact A@1.85 for gates 3..3, wide pad
+poly contact B@2.35 for gates 4..4, wide pad
+crossing Y at x 0.28
+crossing Y_b at x 0.96
+
+== 6. checks
+DRC (Magic, in a row with tap cells): 0 errors
+LVS (Netgen): match; RC-LVS: match
+abutment: pass, 0 errors
+layer check: pass
+simulation (ngspice): pass
+
+== 7. response
+pass, 6 sites, 7.5072 um2

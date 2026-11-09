@@ -1,0 +1,23 @@
+{
+  "request_id": "T6-nor3_1-stack",
+  "status": "pass",
+  "reason": null,
+  "cell": "dd2_gc1__nor3_1_stack",
+  "stages": 1,
+  "transistors": 12,
+  "width_sites": 10,
+  "area_um2": 12.512,
+  "files": {
+    "gds": "cells/dd2_gc1__nor3_1_stack/cell.gds",
+    "report": "cells/dd2_gc1__nor3_1_stack/report.json"
+  },
+  "checks": {
+    "drc": 0,
+    "lvs": "match",
+    "rc_lvs": "match",
+    "truth_table": "pass",
+    "abutment": 0,
+    "layers": "pass"
+  },
+  "tool_version": "git:6326eba"
+}

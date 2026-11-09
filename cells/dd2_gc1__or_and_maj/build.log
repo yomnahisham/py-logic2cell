@@ -1,0 +1,1252 @@
+build or_and_maj.json, style handout, git:6326eba, 2026-11-09 07:15 UTC
+
+== 1. request
+name dd2_gc1__or_and_maj, id T6-or_and_maj, inputs A, B, C, D, output Y, truth table 0xf880, sizing hd
+
+== 2. network
+split into stages (48 series orders)
+variant 0: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate A: Y_b - n2
+    nMOS gate B: n2 - n3
+    nMOS gate C: n3 - VGND
+    nMOS gate D: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate C: p1 - p2
+    pMOS gate D: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 1: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate A: Y_b - n2
+    nMOS gate B: n2 - n3
+    nMOS gate C: n3 - VGND
+    nMOS gate D: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate D: p1 - p2
+    pMOS gate C: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 2: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate A: Y_b - n2
+    nMOS gate B: n2 - n3
+    nMOS gate C: n3 - VGND
+    nMOS gate D: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate C: Y_b - p2
+    pMOS gate D: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 3: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate A: Y_b - n2
+    nMOS gate B: n2 - n3
+    nMOS gate C: n3 - VGND
+    nMOS gate D: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate D: Y_b - p2
+    pMOS gate C: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 4: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate A: Y_b - n2
+    nMOS gate C: n2 - n3
+    nMOS gate D: n2 - n3
+    nMOS gate B: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate C: p1 - p2
+    pMOS gate D: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 5: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate A: Y_b - n2
+    nMOS gate C: n2 - n3
+    nMOS gate D: n2 - n3
+    nMOS gate B: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate D: p1 - p2
+    pMOS gate C: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 6: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate A: Y_b - n2
+    nMOS gate C: n2 - n3
+    nMOS gate D: n2 - n3
+    nMOS gate B: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate C: Y_b - p2
+    pMOS gate D: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 7: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate A: Y_b - n2
+    nMOS gate C: n2 - n3
+    nMOS gate D: n2 - n3
+    nMOS gate B: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate D: Y_b - p2
+    pMOS gate C: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 8: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate B: Y_b - n2
+    nMOS gate A: n2 - n3
+    nMOS gate C: n3 - VGND
+    nMOS gate D: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate C: p1 - p2
+    pMOS gate D: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 9: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate B: Y_b - n2
+    nMOS gate A: n2 - n3
+    nMOS gate C: n3 - VGND
+    nMOS gate D: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate D: p1 - p2
+    pMOS gate C: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 10: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate B: Y_b - n2
+    nMOS gate A: n2 - n3
+    nMOS gate C: n3 - VGND
+    nMOS gate D: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate C: Y_b - p2
+    pMOS gate D: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 11: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate B: Y_b - n2
+    nMOS gate A: n2 - n3
+    nMOS gate C: n3 - VGND
+    nMOS gate D: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate D: Y_b - p2
+    pMOS gate C: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 12: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate B: Y_b - n2
+    nMOS gate C: n2 - n3
+    nMOS gate D: n2 - n3
+    nMOS gate A: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate C: p1 - p2
+    pMOS gate D: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 13: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate B: Y_b - n2
+    nMOS gate C: n2 - n3
+    nMOS gate D: n2 - n3
+    nMOS gate A: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate D: p1 - p2
+    pMOS gate C: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 14: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate B: Y_b - n2
+    nMOS gate C: n2 - n3
+    nMOS gate D: n2 - n3
+    nMOS gate A: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate C: Y_b - p2
+    pMOS gate D: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 15: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate B: Y_b - n2
+    nMOS gate C: n2 - n3
+    nMOS gate D: n2 - n3
+    nMOS gate A: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate D: Y_b - p2
+    pMOS gate C: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 16: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate C: Y_b - n2
+    nMOS gate D: Y_b - n2
+    nMOS gate A: n2 - n3
+    nMOS gate B: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate C: p1 - p2
+    pMOS gate D: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 17: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate C: Y_b - n2
+    nMOS gate D: Y_b - n2
+    nMOS gate A: n2 - n3
+    nMOS gate B: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate D: p1 - p2
+    pMOS gate C: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 18: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate C: Y_b - n2
+    nMOS gate D: Y_b - n2
+    nMOS gate A: n2 - n3
+    nMOS gate B: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate C: Y_b - p2
+    pMOS gate D: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 19: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate C: Y_b - n2
+    nMOS gate D: Y_b - n2
+    nMOS gate A: n2 - n3
+    nMOS gate B: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate D: Y_b - p2
+    pMOS gate C: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 20: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate C: Y_b - n2
+    nMOS gate D: Y_b - n2
+    nMOS gate B: n2 - n3
+    nMOS gate A: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate C: p1 - p2
+    pMOS gate D: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 21: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate C: Y_b - n2
+    nMOS gate D: Y_b - n2
+    nMOS gate B: n2 - n3
+    nMOS gate A: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate D: p1 - p2
+    pMOS gate C: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 22: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate C: Y_b - n2
+    nMOS gate D: Y_b - n2
+    nMOS gate B: n2 - n3
+    nMOS gate A: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate C: Y_b - p2
+    pMOS gate D: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 23: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate C: Y_b - n1
+    nMOS gate D: n1 - VGND
+    nMOS gate C: Y_b - n2
+    nMOS gate D: Y_b - n2
+    nMOS gate B: n2 - n3
+    nMOS gate A: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate D: Y_b - p2
+    pMOS gate C: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 24: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate A: Y_b - n2
+    nMOS gate B: n2 - n3
+    nMOS gate C: n3 - VGND
+    nMOS gate D: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate C: p1 - p2
+    pMOS gate D: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 25: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate A: Y_b - n2
+    nMOS gate B: n2 - n3
+    nMOS gate C: n3 - VGND
+    nMOS gate D: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate D: p1 - p2
+    pMOS gate C: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 26: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate A: Y_b - n2
+    nMOS gate B: n2 - n3
+    nMOS gate C: n3 - VGND
+    nMOS gate D: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate C: Y_b - p2
+    pMOS gate D: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 27: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate A: Y_b - n2
+    nMOS gate B: n2 - n3
+    nMOS gate C: n3 - VGND
+    nMOS gate D: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate D: Y_b - p2
+    pMOS gate C: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 28: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate A: Y_b - n2
+    nMOS gate C: n2 - n3
+    nMOS gate D: n2 - n3
+    nMOS gate B: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate C: p1 - p2
+    pMOS gate D: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 29: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate A: Y_b - n2
+    nMOS gate C: n2 - n3
+    nMOS gate D: n2 - n3
+    nMOS gate B: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate D: p1 - p2
+    pMOS gate C: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 30: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate A: Y_b - n2
+    nMOS gate C: n2 - n3
+    nMOS gate D: n2 - n3
+    nMOS gate B: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate C: Y_b - p2
+    pMOS gate D: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 31: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate A: Y_b - n2
+    nMOS gate C: n2 - n3
+    nMOS gate D: n2 - n3
+    nMOS gate B: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate D: Y_b - p2
+    pMOS gate C: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 32: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate B: Y_b - n2
+    nMOS gate A: n2 - n3
+    nMOS gate C: n3 - VGND
+    nMOS gate D: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate C: p1 - p2
+    pMOS gate D: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 33: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate B: Y_b - n2
+    nMOS gate A: n2 - n3
+    nMOS gate C: n3 - VGND
+    nMOS gate D: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate D: p1 - p2
+    pMOS gate C: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 34: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate B: Y_b - n2
+    nMOS gate A: n2 - n3
+    nMOS gate C: n3 - VGND
+    nMOS gate D: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate C: Y_b - p2
+    pMOS gate D: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 35: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate B: Y_b - n2
+    nMOS gate A: n2 - n3
+    nMOS gate C: n3 - VGND
+    nMOS gate D: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate D: Y_b - p2
+    pMOS gate C: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 36: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate B: Y_b - n2
+    nMOS gate C: n2 - n3
+    nMOS gate D: n2 - n3
+    nMOS gate A: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate C: p1 - p2
+    pMOS gate D: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 37: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate B: Y_b - n2
+    nMOS gate C: n2 - n3
+    nMOS gate D: n2 - n3
+    nMOS gate A: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate D: p1 - p2
+    pMOS gate C: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 38: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate B: Y_b - n2
+    nMOS gate C: n2 - n3
+    nMOS gate D: n2 - n3
+    nMOS gate A: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate C: Y_b - p2
+    pMOS gate D: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 39: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate B: Y_b - n2
+    nMOS gate C: n2 - n3
+    nMOS gate D: n2 - n3
+    nMOS gate A: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate D: Y_b - p2
+    pMOS gate C: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 40: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate C: Y_b - n2
+    nMOS gate D: Y_b - n2
+    nMOS gate A: n2 - n3
+    nMOS gate B: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate C: p1 - p2
+    pMOS gate D: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 41: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate C: Y_b - n2
+    nMOS gate D: Y_b - n2
+    nMOS gate A: n2 - n3
+    nMOS gate B: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate D: p1 - p2
+    pMOS gate C: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 42: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate C: Y_b - n2
+    nMOS gate D: Y_b - n2
+    nMOS gate A: n2 - n3
+    nMOS gate B: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate C: Y_b - p2
+    pMOS gate D: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 43: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate C: Y_b - n2
+    nMOS gate D: Y_b - n2
+    nMOS gate A: n2 - n3
+    nMOS gate B: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate D: Y_b - p2
+    pMOS gate C: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 44: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate C: Y_b - n2
+    nMOS gate D: Y_b - n2
+    nMOS gate B: n2 - n3
+    nMOS gate A: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate C: p1 - p2
+    pMOS gate D: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 45: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate C: Y_b - n2
+    nMOS gate D: Y_b - n2
+    nMOS gate B: n2 - n3
+    nMOS gate A: n3 - VGND
+    pMOS gate C: Y_b - p1
+    pMOS gate D: Y_b - p1
+    pMOS gate A: p1 - VPWR
+    pMOS gate B: p1 - VPWR
+    pMOS gate D: p1 - p2
+    pMOS gate C: p2 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 46: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate C: Y_b - n2
+    nMOS gate D: Y_b - n2
+    nMOS gate B: n2 - n3
+    nMOS gate A: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate C: Y_b - p2
+    pMOS gate D: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+variant 47: Y_b = f(A, B, C, D), 12 fets | Y = f(Y_b), 2 fets
+    nMOS gate D: Y_b - n1
+    nMOS gate C: n1 - VGND
+    nMOS gate C: Y_b - n2
+    nMOS gate D: Y_b - n2
+    nMOS gate B: n2 - n3
+    nMOS gate A: n3 - VGND
+    pMOS gate A: Y_b - p1
+    pMOS gate B: Y_b - p1
+    pMOS gate D: Y_b - p2
+    pMOS gate C: p2 - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate D: p1 - VPWR
+    nMOS gate Y_b: Y - VGND
+    pMOS gate Y_b: Y - VPWR
+
+== 3. switch-level check
+variant 0: every input combination gives the truth table
+variant 1: every input combination gives the truth table
+variant 2: every input combination gives the truth table
+variant 3: every input combination gives the truth table
+variant 4: every input combination gives the truth table
+variant 5: every input combination gives the truth table
+variant 6: every input combination gives the truth table
+variant 7: every input combination gives the truth table
+variant 8: every input combination gives the truth table
+variant 9: every input combination gives the truth table
+variant 10: every input combination gives the truth table
+variant 11: every input combination gives the truth table
+variant 12: every input combination gives the truth table
+variant 13: every input combination gives the truth table
+variant 14: every input combination gives the truth table
+variant 15: every input combination gives the truth table
+variant 16: every input combination gives the truth table
+variant 17: every input combination gives the truth table
+variant 18: every input combination gives the truth table
+variant 19: every input combination gives the truth table
+variant 20: every input combination gives the truth table
+variant 21: every input combination gives the truth table
+variant 22: every input combination gives the truth table
+variant 23: every input combination gives the truth table
+variant 24: every input combination gives the truth table
+variant 25: every input combination gives the truth table
+variant 26: every input combination gives the truth table
+variant 27: every input combination gives the truth table
+variant 28: every input combination gives the truth table
+variant 29: every input combination gives the truth table
+variant 30: every input combination gives the truth table
+variant 31: every input combination gives the truth table
+variant 32: every input combination gives the truth table
+variant 33: every input combination gives the truth table
+variant 34: every input combination gives the truth table
+variant 35: every input combination gives the truth table
+variant 36: every input combination gives the truth table
+variant 37: every input combination gives the truth table
+variant 38: every input combination gives the truth table
+variant 39: every input combination gives the truth table
+variant 40: every input combination gives the truth table
+variant 41: every input combination gives the truth table
+variant 42: every input combination gives the truth table
+variant 43: every input combination gives the truth table
+variant 44: every input combination gives the truth table
+variant 45: every input combination gives the truth table
+variant 46: every input combination gives the truth table
+variant 47: every input combination gives the truth table
+widths: NMOS 0.65 um, PMOS 1.0 um
+
+== 4. Euler orders and placement (first 40 per variant, fewest contacts first)
+1632 orders over all variants: the 420 with the narrowest bound are tried, the other 1212 (at least 4.14 um) are not
+variant 0 gates Y_b D C A B C D | n Y VGND n1 Y_b n2 n3 VGND n3 | p Y VPWR p2 p1 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 0 gates Y_b D C A B D C | n Y VGND n1 Y_b n2 n3 VGND n3 | p Y VPWR p2 p1 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 0 gates Y_b D C D C A B | n Y VGND n3 VGND n1 Y_b n2 n3 | p Y VPWR p2 p1 Y_b p1 VPWR p1: 5.98 um, met1 inside, 10 contacts on the output stage, 27 in all
+variant 0 gates B A C D C D Y_b | n n3 n2 Y_b n1 VGND n3 VGND Y | p p1 VPWR p1 Y_b p1 p2 VPWR Y: cannot draw: no room for the C contact
+variant 0 gates C D B A C D Y_b | n n3 VGND n3 n2 Y_b n1 VGND Y | p p1 Y_b p1 VPWR p1 p2 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 0 gates D C B A C D Y_b | n n3 VGND n3 n2 Y_b n1 VGND Y | p p1 Y_b p1 VPWR p1 p2 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 1 gates Y_b C D D C A B | n Y VGND n3 VGND n1 Y_b n2 n3 | p Y VPWR p2 p1 Y_b p1 VPWR p1: 6.44 um, met1 inside, 10 contacts on the output stage, 27 in all
+variant 1 gates B A C D D C Y_b | n n3 n2 Y_b n1 VGND n3 VGND Y | p p1 VPWR p1 Y_b p1 p2 VPWR Y: cannot draw: no room for the C contact
+variant 2 gates Y_b | C D D C A B | n Y VGND VGND n3 VGND n1 Y_b n2 n3 | p VPWR Y Y_b p2 p1 VPWR p1 Y_b p1: cannot draw: no room for the A contact
+variant 2 gates Y_b | D C A B D C | n Y VGND VGND n1 Y_b n2 n3 VGND n3 | p VPWR Y p1 VPWR p1 Y_b p1 p2 Y_b: cannot draw: no room for the A contact
+variant 2 gates Y_b | C D D C A B | n Y VGND VGND n3 VGND n1 Y_b n2 n3 | p VPWR Y p1 VPWR p1 p2 Y_b p1 Y_b: cannot draw: no room for the C contact
+variant 2 gates Y_b | D C D C A B | n Y VGND VGND n3 VGND n1 Y_b n2 n3 | p VPWR Y p1 VPWR p1 p2 Y_b p1 Y_b: cannot draw: no room for the C contact
+variant 2 gates Y_b D C | A B C D | n Y VGND n1 Y_b Y_b n2 n3 VGND n3 | p Y VPWR p1 VPWR Y_b p1 Y_b p2 p1: cannot draw: no room for the D contact
+variant 2 gates Y_b D C | A B D C | n Y VGND n1 Y_b Y_b n2 n3 VGND n3 | p Y VPWR p1 VPWR p1 Y_b p1 p2 Y_b: cannot draw: no room for the D contact
+variant 2 gates Y_b D | C A B D C | n Y VGND n1 n1 Y_b n2 n3 VGND n3 | p Y VPWR p1 VPWR p1 Y_b p1 p2 Y_b: cannot draw: no room for the D contact
+variant 2 gates Y_b C B A | C D D | n Y VGND n3 n2 Y_b Y_b n1 VGND n3 | p Y VPWR p1 Y_b p1 Y_b p2 p1 VPWR: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 2 gates Y_b C B | A C D D | n Y VGND n3 n2 n2 Y_b n1 VGND n3 | p Y VPWR p1 Y_b p1 Y_b p2 p1 VPWR: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 2 gates Y_b C D | D C A B | n Y VGND n3 VGND VGND n1 Y_b n2 n3 | p Y VPWR p1 VPWR p1 p2 Y_b p1 Y_b: cannot draw: no room for the C contact
+variant 2 gates Y_b C | D D C A B | n Y VGND n3 n3 VGND n1 Y_b n2 n3 | p Y VPWR p1 VPWR p1 p2 Y_b p1 Y_b: cannot draw: no room for the C contact
+variant 2 gates Y_b C | B A C D D | n Y VGND n3 n3 n2 Y_b n1 VGND n3 | p Y VPWR p1 Y_b p1 Y_b p2 p1 VPWR: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 2 gates Y_b D B A C | D C | n Y VGND n3 n2 Y_b n1 n1 VGND n3 | p Y VPWR p1 Y_b p1 VPWR p1 p2 Y_b: cannot draw: no room for the D contact
+variant 2 gates Y_b D B A | C D C | n Y VGND n3 n2 Y_b Y_b n1 VGND n3 | p Y VPWR p1 Y_b p1 VPWR p1 p2 Y_b: cannot draw: no room for the D contact
+variant 2 gates Y_b D B A | C D C | n Y VGND n3 n2 Y_b Y_b n1 VGND n3 | p Y VPWR p1 Y_b p1 Y_b p2 p1 VPWR: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 2 gates Y_b D B | A C D C | n Y VGND n3 n2 n2 Y_b n1 VGND n3 | p Y VPWR p1 Y_b p1 Y_b p2 p1 VPWR: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 2 gates Y_b D C | D C A B | n Y VGND n3 VGND VGND n1 Y_b n2 n3 | p Y VPWR p1 VPWR p1 p2 Y_b p1 Y_b: cannot draw: no room for the D contact
+variant 2 gates Y_b D | C D C A B | n Y VGND n3 n3 VGND n1 Y_b n2 n3 | p Y VPWR p1 VPWR p1 p2 Y_b p1 Y_b: cannot draw: no room for the D contact
+variant 2 gates Y_b D | B A C D C | n Y VGND n3 n3 n2 Y_b n1 VGND n3 | p Y VPWR p1 Y_b p1 Y_b p2 p1 VPWR: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 2 gates Y_b | C D D C A B | n Y VGND VGND n3 VGND n1 Y_b n2 n3 | p Y VPWR Y_b p2 p1 VPWR p1 Y_b p1: cannot draw: no room for the A contact
+variant 2 gates Y_b | D C A B D C | n Y VGND VGND n1 Y_b n2 n3 VGND n3 | p Y VPWR p1 VPWR p1 Y_b p1 p2 Y_b: cannot draw: no room for the A contact
+variant 2 gates Y_b | C D D C A B | n Y VGND VGND n3 VGND n1 Y_b n2 n3 | p Y VPWR p1 VPWR p1 p2 Y_b p1 Y_b: cannot draw: no room for the C contact
+variant 2 gates Y_b | D C D C A B | n Y VGND VGND n3 VGND n1 Y_b n2 n3 | p Y VPWR p1 VPWR p1 p2 Y_b p1 Y_b: cannot draw: no room for the C contact
+variant 2 gates C D C A B | D Y_b | n n3 VGND n1 Y_b n2 n3 n3 VGND Y | p VPWR p1 p2 Y_b p1 Y_b p1 VPWR Y: cannot draw: no room for the C contact
+variant 2 gates C D C A | B D Y_b | n n3 VGND n1 Y_b n2 n2 n3 VGND Y | p VPWR p1 p2 Y_b p1 Y_b p1 VPWR Y: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 2 gates C D C | A B D Y_b | n n3 VGND n1 Y_b Y_b n2 n3 VGND Y | p VPWR p1 p2 Y_b p1 Y_b p1 VPWR Y: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 2 gates D D C A B | C Y_b | n n3 VGND n1 Y_b n2 n3 n3 VGND Y | p VPWR p1 p2 Y_b p1 Y_b p1 VPWR Y: cannot draw: no room for the C contact
+variant 2 gates D D C A | B C Y_b | n n3 VGND n1 Y_b n2 n2 n3 VGND Y | p VPWR p1 p2 Y_b p1 Y_b p1 VPWR Y: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 2 gates D D C | A B C Y_b | n n3 VGND n1 Y_b Y_b n2 n3 VGND Y | p VPWR p1 p2 Y_b p1 Y_b p1 VPWR Y: cannot draw: gave up after 20056 tries, 12 of them drawn
+variant 2 gates B A C D C D | Y_b | n n3 n2 Y_b n1 VGND n3 VGND VGND Y | p Y_b p1 Y_b p2 p1 VPWR p1 VPWR Y: cannot draw: no room for the A contact
+variant 2 gates B A C D C D | Y_b | n n3 n2 Y_b n1 VGND n3 VGND VGND Y | p Y_b p1 Y_b p2 p1 VPWR p1 Y VPWR: cannot draw: no room for the A contact
+variant 2 gates B A C D C | D Y_b | n n3 n2 Y_b n1 VGND n3 n3 VGND Y | p Y_b p1 Y_b p2 p1 VPWR p1 VPWR Y: cannot draw: no room for the A contact
+variant 2 gates B A C D D C | Y_b | n n3 n2 Y_b n1 VGND n3 VGND VGND Y | p Y_b p1 Y_b p2 p1 VPWR p1 VPWR Y: cannot draw: no room for the A contact
+variant 2 gates B A C D D C | Y_b | n n3 n2 Y_b n1 VGND n3 VGND VGND Y | p Y_b p1 Y_b p2 p1 VPWR p1 Y VPWR: cannot draw: no room for the A contact
+variant 2 gates B A C D D | C Y_b | n n3 n2 Y_b n1 VGND n3 n3 VGND Y | p Y_b p1 Y_b p2 p1 VPWR p1 VPWR Y: cannot draw: no room for the A contact
+variant 2 gates B A C D | C D Y_b | n n3 n2 Y_b n1 VGND VGND n3 VGND Y | p Y_b p1 Y_b p2 p1 VPWR p1 VPWR Y: cannot draw: no room for the A contact
+variant 2 gates B A C D | D C Y_b | n n3 n2 Y_b n1 VGND VGND n3 VGND Y | p Y_b p1 Y_b p2 p1 VPWR p1 VPWR Y: cannot draw: no room for the A contact
+variant 2 gates C D C | A B D Y_b | n n3 VGND n1 Y_b Y_b n2 n3 VGND Y | p Y_b p2 p1 VPWR p1 Y_b p1 VPWR Y: cannot draw: no room for the D contact
+variant 2 gates C D | C A B D Y_b | n n3 VGND n1 n1 Y_b n2 n3 VGND Y | p Y_b p2 p1 VPWR p1 Y_b p1 VPWR Y: cannot draw: no room for the D contact
+variant 2 gates C D B A C D | Y_b | n n3 VGND n3 n2 Y_b n1 VGND VGND Y | p Y_b p2 p1 Y_b p1 VPWR p1 VPWR Y: cannot draw: no room for the D contact
+variant 3 gates Y_b | D C A B C D | n Y VGND VGND n1 Y_b n2 n3 VGND n3 | p VPWR Y Y_b p2 p1 Y_b p1 VPWR p1: cannot draw: gave up after 20076 tries, 0 of them drawn
+variant 3 gates Y_b | D C A B D C | n Y VGND VGND n1 Y_b n2 n3 VGND n3 | p VPWR Y Y_b p2 p1 Y_b p1 VPWR p1: cannot draw: gave up after 20076 tries, 0 of them drawn
+variant 3 gates Y_b | D C D C A B | n Y VGND VGND n3 VGND n1 Y_b n2 n3 | p VPWR Y Y_b p2 p1 VPWR p1 Y_b p1: cannot draw: no room for the A contact
+variant 3 gates Y_b | D C A B C D | n Y VGND VGND n1 Y_b n2 n3 VGND n3 | p VPWR Y p1 VPWR p1 Y_b p1 p2 Y_b: cannot draw: no room for the C contact
+variant 3 gates Y_b D C | A B D C | n Y VGND n1 Y_b Y_b n2 n3 VGND n3 | p Y VPWR p1 VPWR Y_b p1 Y_b p2 p1: cannot draw: no room for the D contact
+variant 3 gates Y_b D C | A B C D | n Y VGND n1 Y_b Y_b n2 n3 VGND n3 | p Y VPWR p1 VPWR p1 Y_b p1 p2 Y_b: cannot draw: no room for the D contact
+variant 3 gates Y_b D | C A B C D | n Y VGND n1 n1 Y_b n2 n3 VGND n3 | p Y VPWR p1 VPWR p1 Y_b p1 p2 Y_b: cannot draw: no room for the D contact
+variant 3 gates Y_b C B A C D | D | n Y VGND n3 n2 Y_b n1 VGND VGND n3 | p Y VPWR p1 Y_b p1 p2 Y_b VPWR p1: cannot draw: no room for the C contact
+variant 3 gates Y_b C B A C D | D | n Y VGND n3 n2 Y_b n1 VGND VGND n3 | p Y VPWR p1 Y_b p1 p2 Y_b p1 VPWR: cannot draw: no room for the C contact
+variant 3 gates Y_b C D | D C A B | n Y VGND n3 VGND VGND n1 Y_b n2 n3 | p Y VPWR p1 VPWR Y_b p2 p1 Y_b p1: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 3 gates Y_b D B A C D | C | n Y VGND n3 n2 Y_b n1 VGND VGND n3 | p Y VPWR p1 Y_b p1 p2 Y_b VPWR p1: cannot draw: no room for the D contact
+variant 3 gates Y_b D B A C D | C | n Y VGND n3 n2 Y_b n1 VGND VGND n3 | p Y VPWR p1 Y_b p1 p2 Y_b p1 VPWR: cannot draw: no room for the D contact
+variant 3 gates Y_b D B A C | D C | n Y VGND n3 n2 Y_b n1 n1 VGND n3 | p Y VPWR p1 Y_b p1 VPWR Y_b p2 p1: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 3 gates Y_b D C D | C A B | n Y VGND n3 VGND n1 n1 Y_b n2 n3 | p Y VPWR p1 p2 Y_b VPWR p1 Y_b p1: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 3 gates Y_b D C | D C A B | n Y VGND n3 VGND VGND n1 Y_b n2 n3 | p Y VPWR p1 VPWR Y_b p2 p1 Y_b p1: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 3 gates Y_b | D C A B C D | n Y VGND VGND n1 Y_b n2 n3 VGND n3 | p Y VPWR Y_b p2 p1 Y_b p1 VPWR p1: cannot draw: gave up after 20016 tries, 0 of them drawn
+variant 3 gates Y_b | D C A B D C | n Y VGND VGND n1 Y_b n2 n3 VGND n3 | p Y VPWR Y_b p2 p1 Y_b p1 VPWR p1: cannot draw: gave up after 20016 tries, 0 of them drawn
+variant 3 gates Y_b | D C D C A B | n Y VGND VGND n3 VGND n1 Y_b n2 n3 | p Y VPWR Y_b p2 p1 VPWR p1 Y_b p1: cannot draw: no room for the A contact
+variant 3 gates Y_b | D C A B C D | n Y VGND VGND n1 Y_b n2 n3 VGND n3 | p Y VPWR p1 VPWR p1 Y_b p1 p2 Y_b: cannot draw: no room for the C contact
+variant 3 gates C | D C A B D Y_b | n n3 VGND VGND n1 Y_b n2 n3 VGND Y | p VPWR p1 Y_b p2 p1 Y_b p1 VPWR Y: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 3 gates D | D C A B C Y_b | n n3 VGND VGND n1 Y_b n2 n3 VGND Y | p VPWR p1 Y_b p2 p1 Y_b p1 VPWR Y: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 3 gates D C B A C D | Y_b | n n3 VGND n3 n2 Y_b n1 VGND VGND Y | p Y_b p2 p1 Y_b p1 VPWR p1 VPWR Y: cannot draw: no room for the C contact
+variant 3 gates D C B A C D | Y_b | n n3 VGND n3 n2 Y_b n1 VGND VGND Y | p Y_b p2 p1 Y_b p1 VPWR p1 Y VPWR: cannot draw: no room for the C contact
+variant 3 gates D C B A C | D Y_b | n n3 VGND n3 n2 Y_b n1 n1 VGND Y | p Y_b p2 p1 Y_b p1 VPWR p1 VPWR Y: cannot draw: no room for the C contact
+variant 3 gates D C B A | C D Y_b | n n3 VGND n3 n2 Y_b Y_b n1 VGND Y | p Y_b p2 p1 Y_b p1 VPWR p1 VPWR Y: cannot draw: no room for the D contact
+variant 3 gates B A C D | C D Y_b | n n3 n2 Y_b n1 VGND VGND n3 VGND Y | p p1 Y_b p1 p2 Y_b VPWR p1 VPWR Y: cannot draw: no room for the A contact
+variant 3 gates B A C D | D C Y_b | n n3 n2 Y_b n1 VGND VGND n3 VGND Y | p p1 Y_b p1 p2 Y_b VPWR p1 VPWR Y: cannot draw: no room for the A contact
+variant 3 gates B A C D C D | Y_b | n n3 n2 Y_b n1 VGND n3 VGND VGND Y | p p1 Y_b p1 VPWR p1 p2 Y_b VPWR Y: cannot draw: no room for the A contact
+variant 3 gates B A C D C D | Y_b | n n3 n2 Y_b n1 VGND n3 VGND VGND Y | p p1 Y_b p1 VPWR p1 p2 Y_b Y VPWR: cannot draw: no room for the A contact
+variant 3 gates B A C | D C D Y_b | n n3 n2 Y_b n1 n1 VGND n3 VGND Y | p p1 Y_b p1 VPWR Y_b p2 p1 VPWR Y: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 3 gates C D | C A B D Y_b | n n3 VGND n1 n1 Y_b n2 n3 VGND Y | p p1 p2 Y_b VPWR p1 Y_b p1 VPWR Y: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 3 gates C D B A | C D Y_b | n n3 VGND n3 n2 Y_b Y_b n1 VGND Y | p p1 p2 Y_b p1 Y_b VPWR p1 VPWR Y: cannot draw: no room for the D contact
+variant 3 gates C D B A C D | Y_b | n n3 VGND n3 n2 Y_b n1 VGND VGND Y | p p1 VPWR p1 Y_b p1 p2 Y_b VPWR Y: cannot draw: no room for the D contact
+variant 3 gates C D B A C D | Y_b | n n3 VGND n3 n2 Y_b n1 VGND VGND Y | p p1 VPWR p1 Y_b p1 p2 Y_b Y VPWR: cannot draw: no room for the D contact
+variant 3 gates C | D C A B D Y_b | n n3 VGND VGND n1 Y_b n2 n3 VGND Y | p p1 VPWR Y_b p2 p1 Y_b p1 VPWR Y: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 3 gates D C B A C D | Y_b | n n3 VGND n3 n2 Y_b n1 VGND VGND Y | p p1 VPWR p1 Y_b p1 p2 Y_b VPWR Y: cannot draw: no room for the C contact
+variant 3 gates D C B A C D | Y_b | n n3 VGND n3 n2 Y_b n1 VGND VGND Y | p p1 VPWR p1 Y_b p1 p2 Y_b Y VPWR: cannot draw: no room for the C contact
+variant 3 gates D | D C A B C Y_b | n n3 VGND VGND n1 Y_b n2 n3 VGND Y | p p1 VPWR Y_b p2 p1 Y_b p1 VPWR Y: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 3 gates C B A C D | Y_b D | n VGND n3 n2 Y_b n1 VGND Y VGND n3 | p VPWR p1 Y_b p1 p2 Y_b Y VPWR p1: cannot draw: no room for the B contact
+variant 3 gates C B A C D | D Y_b | n VGND n3 n2 Y_b n1 VGND n3 VGND Y | p VPWR p1 Y_b p1 p2 Y_b p1 VPWR Y: cannot draw: no room for the B contact
+variant 4 gates Y_b | A C D B D C | n VGND Y n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR VPWR p1 Y_b p1 VPWR p2 p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates Y_b | A C D B C D | n VGND Y n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR VPWR p1 p2 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 4 gates Y_b | A C D B D C | n VGND Y n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR VPWR p1 p2 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 4 gates Y_b | B D C A D C | n VGND Y n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR VPWR p1 Y_b p1 VPWR p2 p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates D C A D C | B Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 Y_b p1 VPWR p2 p1 p1 VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates D C A D | C B Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 Y_b p1 VPWR p2 p2 p1 VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates D C A | D C B Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 Y_b p1 VPWR VPWR p2 p1 VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates Y_b D C A | B C D | n Y VGND n1 Y_b n2 VGND n3 n2 n3 | p Y VPWR p2 p1 VPWR VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 4 gates Y_b D C A | B D C | n Y VGND n1 Y_b n2 VGND n3 n2 n3 | p Y VPWR p2 p1 VPWR VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 4 gates Y_b B C D | A C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 p2 VPWR VPWR p1 Y_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates Y_b B C | D A C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 p2 p2 VPWR p1 Y_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates Y_b B | D C A D C | n Y VGND n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR p1 p1 Y_b p1 VPWR p2 p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates Y_b B | C D A C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 p1 p2 VPWR p1 Y_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates Y_b | A C D B D C | n Y VGND n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR VPWR p1 Y_b p1 VPWR p2 p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates Y_b | A C D B C D | n Y VGND n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR VPWR p1 p2 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 4 gates Y_b | A C D B D C | n Y VGND n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR VPWR p1 p2 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 4 gates Y_b | B D C A D C | n Y VGND n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR VPWR p1 Y_b p1 VPWR p2 p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates C D A C D B | Y_b | n n2 n3 n2 Y_b n1 VGND n3 VGND Y | p p1 p2 VPWR p1 Y_b p1 VPWR VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates C D A C D B | Y_b | n n2 n3 n2 Y_b n1 VGND n3 Y VGND | p p1 p2 VPWR p1 Y_b p1 VPWR VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates C D A C D | B Y_b | n n2 n3 n2 Y_b n1 VGND n3 VGND Y | p p1 p2 VPWR p1 Y_b p1 p1 VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates C D B D C A | Y_b | n n3 n2 n3 VGND n1 Y_b n2 VGND Y | p p1 Y_b p1 VPWR p2 p1 VPWR VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 4 gates C D B D C A | Y_b | n n3 n2 n3 VGND n1 Y_b n2 Y VGND | p p1 Y_b p1 VPWR p2 p1 VPWR VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 4 gates C D B | A C D Y_b | n n3 n2 n3 VGND n2 Y_b n1 VGND Y | p p1 Y_b p1 VPWR VPWR p1 p2 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 4 gates C D B D C A | Y_b | n n3 n2 n3 VGND n1 Y_b n2 VGND Y | p p1 p2 VPWR p1 Y_b p1 VPWR VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates C D B D C A | Y_b | n n3 n2 n3 VGND n1 Y_b n2 Y VGND | p p1 p2 VPWR p1 Y_b p1 VPWR VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates D C B D C A | Y_b | n n3 n2 n3 VGND n1 Y_b n2 VGND Y | p p1 Y_b p1 VPWR p2 p1 VPWR VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 4 gates D C B D C A | Y_b | n n3 n2 n3 VGND n1 Y_b n2 Y VGND | p p1 Y_b p1 VPWR p2 p1 VPWR VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 4 gates D C B | A C D Y_b | n n3 n2 n3 VGND n2 Y_b n1 VGND Y | p p1 Y_b p1 VPWR VPWR p1 p2 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 4 gates D C A | Y_b B C D | n VGND n1 Y_b n2 Y VGND n3 n2 n3 | p VPWR p2 p1 VPWR Y VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 4 gates D C A | Y_b B D C | n VGND n1 Y_b n2 Y VGND n3 n2 n3 | p VPWR p2 p1 VPWR Y VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 4 gates D C A | C D B Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p VPWR p2 p1 VPWR p1 Y_b p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 4 gates D C A | D C B Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p VPWR p2 p1 VPWR p1 Y_b p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 4 gates B C D | Y_b D C A | n VGND n3 n2 n3 Y VGND n1 Y_b n2 | p VPWR p1 Y_b p1 Y VPWR p2 p1 VPWR: cannot draw: cannot route Y_b between the rows on li
+variant 4 gates B C D | A C D Y_b | n VGND n3 n2 n3 n2 Y_b n1 VGND Y | p VPWR p1 Y_b p1 VPWR p1 p2 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 4 gates B D C | Y_b D C A | n VGND n3 n2 n3 Y VGND n1 Y_b n2 | p VPWR p1 Y_b p1 Y VPWR p2 p1 VPWR: cannot draw: cannot route Y_b between the rows on li
+variant 4 gates B D C | A C D Y_b | n VGND n3 n2 n3 n2 Y_b n1 VGND Y | p VPWR p1 Y_b p1 VPWR p1 p2 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 4 gates Y_b | A C D B D C | n VGND Y n2 Y_b n1 VGND n3 n2 n3 | p VPWR Y VPWR p1 Y_b p1 VPWR p2 p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates Y_b | A C D B C D | n VGND Y n2 Y_b n1 VGND n3 n2 n3 | p VPWR Y VPWR p1 p2 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 4 gates Y_b | A C D B D C | n VGND Y n2 Y_b n1 VGND n3 n2 n3 | p VPWR Y VPWR p1 p2 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 4 gates Y_b | C D A C D B | n VGND Y n2 n3 n2 Y_b n1 VGND n3 | p VPWR Y p1 p2 VPWR p1 Y_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates Y_b | A C D B C D | n VGND Y n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR VPWR p1 Y_b p1 VPWR p2 p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates Y_b | B D C A C D | n VGND Y n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR VPWR p1 Y_b p1 VPWR p2 p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates Y_b | B D C A C D | n VGND Y n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR VPWR p1 p2 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates Y_b | B D C A D C | n VGND Y n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR VPWR p1 p2 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates D C A C D | B Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 Y_b p1 VPWR p2 p1 p1 VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates D C A C | D B Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 Y_b p1 VPWR p2 p2 p1 VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates D C A | C D B Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 Y_b p1 VPWR VPWR p2 p1 VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates D C A C D | B Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 p2 VPWR p1 Y_b p1 p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates D C A C | D B Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 p2 VPWR p1 Y_b Y_b p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates D C A D C | B Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 p2 VPWR p1 Y_b p1 p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates D C A D | C B Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 p2 VPWR p1 Y_b Y_b p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates D C A | C D B Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 p2 VPWR p1 p1 Y_b p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates D C A | D C B Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 p2 VPWR p1 p1 Y_b p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates Y_b B C D | D C A | n Y VGND n3 n2 n3 VGND n1 Y_b n2 | p Y VPWR p1 Y_b p1 p1 p2 VPWR p1: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates Y_b B C D | A C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 Y_b p1 p1 VPWR p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates Y_b B C | D A C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 Y_b Y_b p1 VPWR p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates Y_b B D C | D C A | n Y VGND n3 n2 n3 VGND n1 Y_b n2 | p Y VPWR p1 Y_b p1 p1 p2 VPWR p1: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates Y_b B D C | A C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 Y_b p1 p1 VPWR p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates Y_b B D | C A C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 Y_b Y_b p1 VPWR p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates Y_b B D C | A C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 p2 VPWR VPWR p1 Y_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates Y_b B D | C A C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 p2 p2 VPWR p1 Y_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates Y_b B | D C A C D | n Y VGND n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR p1 p1 Y_b p1 VPWR p2 p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates Y_b B | D C A C D | n Y VGND n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR p1 p1 p2 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates Y_b B | D C A D C | n Y VGND n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR p1 p1 p2 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates Y_b B | C D A C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 p1 Y_b p1 VPWR p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates Y_b B | D C A C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 p1 Y_b p1 VPWR p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates Y_b B | D C A C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 p1 p2 VPWR p1 Y_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates Y_b | A C D B C D | n Y VGND n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR VPWR p1 Y_b p1 VPWR p2 p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates Y_b | B D C A C D | n Y VGND n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR VPWR p1 Y_b p1 VPWR p2 p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates Y_b | B D C A C D | n Y VGND n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR VPWR p1 p2 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates Y_b | B D C A D C | n Y VGND n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR VPWR p1 p2 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates A C D | C D B Y_b | n n2 Y_b n1 VGND n3 n2 n3 VGND Y | p p1 VPWR p2 p1 p1 Y_b p1 VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates A C D | D C B Y_b | n n2 Y_b n1 VGND n3 n2 n3 VGND Y | p p1 VPWR p2 p1 p1 Y_b p1 VPWR Y: cannot draw: gave up after 17760 tries, 434 of them drawn
+variant 5 gates C D A C D B | Y_b | n n2 n3 n2 Y_b n1 VGND n3 VGND Y | p p1 Y_b p1 VPWR p2 p1 VPWR VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates C D A C D B | Y_b | n n2 n3 n2 Y_b n1 VGND n3 Y VGND | p p1 Y_b p1 VPWR p2 p1 VPWR VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates C D A C D | B Y_b | n n2 n3 n2 Y_b n1 VGND n3 VGND Y | p p1 Y_b p1 VPWR p2 p1 p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates D C A C D B | Y_b | n n2 n3 n2 Y_b n1 VGND n3 VGND Y | p p1 Y_b p1 VPWR p2 p1 VPWR VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates D C A C D B | Y_b | n n2 n3 n2 Y_b n1 VGND n3 Y VGND | p p1 Y_b p1 VPWR p2 p1 VPWR VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates D C A C D | B Y_b | n n2 n3 n2 Y_b n1 VGND n3 VGND Y | p p1 Y_b p1 VPWR p2 p1 p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 5 gates D C A C D B | Y_b | n n2 n3 n2 Y_b n1 VGND n3 VGND Y | p p1 p2 VPWR p1 Y_b p1 VPWR VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 6 gates Y_b | A C D B C D | n VGND Y n2 Y_b n1 VGND n3 n2 n3 | p VPWR Y Y_b p1 VPWR p1 Y_b p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 6 gates Y_b | C D A C D B | n VGND Y n2 n3 n2 Y_b n1 VGND n3 | p VPWR Y p1 VPWR p1 Y_b p2 p1 Y_b: cannot draw: no room for the C contact
+variant 6 gates Y_b | D C A C D B | n VGND Y n2 n3 n2 Y_b n1 VGND n3 | p VPWR Y p1 p2 Y_b p1 VPWR p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 6 gates Y_b | D C A C D B | n VGND Y n2 n3 n2 Y_b n1 VGND n3 | p VPWR Y p1 VPWR p1 Y_b p2 p1 Y_b: cannot draw: no room for the D contact
+variant 6 gates Y_b | B D C A C D | n VGND Y n3 VGND n1 Y_b n2 n3 n2 | p VPWR Y Y_b p1 p2 Y_b p1 VPWR p1: cannot draw: no room for the C contact
+variant 6 gates Y_b | B D C A D C | n VGND Y n3 VGND n1 Y_b n2 n3 n2 | p VPWR Y Y_b p1 p2 Y_b p1 VPWR p1: cannot draw: no room for the C contact
+variant 6 gates Y_b | B D C A C D | n VGND Y n3 VGND n1 Y_b n2 n3 n2 | p VPWR Y Y_b p1 VPWR p1 Y_b p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 6 gates Y_b | D C B D C A | n VGND Y n3 n2 n3 VGND n1 Y_b n2 | p VPWR Y p1 p2 Y_b p1 VPWR p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 6 gates Y_b | A C D B C D | n VGND Y n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR Y_b p1 VPWR p1 Y_b p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 6 gates Y_b | C D A C D B | n VGND Y n2 n3 n2 Y_b n1 VGND n3 | p Y VPWR p1 VPWR p1 Y_b p2 p1 Y_b: cannot draw: no room for the C contact
+variant 6 gates Y_b | D C A C D B | n VGND Y n2 n3 n2 Y_b n1 VGND n3 | p Y VPWR p1 p2 Y_b p1 VPWR p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 6 gates Y_b | D C A C D B | n VGND Y n2 n3 n2 Y_b n1 VGND n3 | p Y VPWR p1 VPWR p1 Y_b p2 p1 Y_b: cannot draw: no room for the D contact
+variant 6 gates Y_b | B D C A C D | n VGND Y n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR Y_b p1 p2 Y_b p1 VPWR p1: cannot draw: no room for the C contact
+variant 6 gates Y_b | B D C A D C | n VGND Y n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR Y_b p1 p2 Y_b p1 VPWR p1: cannot draw: no room for the C contact
+variant 6 gates Y_b | B D C A C D | n VGND Y n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR Y_b p1 VPWR p1 Y_b p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 6 gates Y_b | D C B D C A | n VGND Y n3 n2 n3 VGND n1 Y_b n2 | p Y VPWR p1 p2 Y_b p1 VPWR p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 6 gates Y_b | A C D B C D | n Y VGND n2 Y_b n1 VGND n3 n2 n3 | p VPWR Y Y_b p1 VPWR p1 Y_b p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 6 gates Y_b | C D A C D B | n Y VGND n2 n3 n2 Y_b n1 VGND n3 | p VPWR Y p1 VPWR p1 Y_b p2 p1 Y_b: cannot draw: no room for the C contact
+variant 6 gates Y_b | D C A C D B | n Y VGND n2 n3 n2 Y_b n1 VGND n3 | p VPWR Y p1 p2 Y_b p1 VPWR p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 6 gates Y_b | D C A C D B | n Y VGND n2 n3 n2 Y_b n1 VGND n3 | p VPWR Y p1 VPWR p1 Y_b p2 p1 Y_b: cannot draw: no room for the D contact
+variant 6 gates Y_b | B D C A C D | n Y VGND n3 VGND n1 Y_b n2 n3 n2 | p VPWR Y Y_b p1 p2 Y_b p1 VPWR p1: cannot draw: no room for the C contact
+variant 6 gates Y_b | B D C A D C | n Y VGND n3 VGND n1 Y_b n2 n3 n2 | p VPWR Y Y_b p1 p2 Y_b p1 VPWR p1: cannot draw: no room for the C contact
+variant 6 gates Y_b | B D C A C D | n Y VGND n3 VGND n1 Y_b n2 n3 n2 | p VPWR Y Y_b p1 VPWR p1 Y_b p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 6 gates Y_b | D C B D C A | n Y VGND n3 n2 n3 VGND n1 Y_b n2 | p VPWR Y p1 p2 Y_b p1 VPWR p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 6 gates Y_b | A C D B C D | n Y VGND n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR Y_b p1 VPWR p1 Y_b p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 6 gates Y_b | C D A C D B | n Y VGND n2 n3 n2 Y_b n1 VGND n3 | p Y VPWR p1 VPWR p1 Y_b p2 p1 Y_b: cannot draw: no room for the C contact
+variant 6 gates Y_b | D C A C D B | n Y VGND n2 n3 n2 Y_b n1 VGND n3 | p Y VPWR p1 p2 Y_b p1 VPWR p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 6 gates Y_b | D C A C D B | n Y VGND n2 n3 n2 Y_b n1 VGND n3 | p Y VPWR p1 VPWR p1 Y_b p2 p1 Y_b: cannot draw: no room for the D contact
+variant 6 gates Y_b | B D C A C D | n Y VGND n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR Y_b p1 p2 Y_b p1 VPWR p1: cannot draw: no room for the C contact
+variant 6 gates Y_b | B D C A D C | n Y VGND n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR Y_b p1 p2 Y_b p1 VPWR p1: cannot draw: no room for the C contact
+variant 6 gates Y_b | B D C A C D | n Y VGND n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR Y_b p1 VPWR p1 Y_b p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 6 gates Y_b | D C B D C A | n Y VGND n3 n2 n3 VGND n1 Y_b n2 | p Y VPWR p1 p2 Y_b p1 VPWR p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 6 gates A C D B C D | Y_b | n n2 Y_b n1 VGND n3 n2 n3 VGND Y | p Y_b p1 VPWR p1 Y_b p2 p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 6 gates A C D B C D | Y_b | n n2 Y_b n1 VGND n3 n2 n3 VGND Y | p Y_b p1 VPWR p1 Y_b p2 p1 Y VPWR: cannot draw: cannot route Y_b between the rows on li
+variant 6 gates A C D B C D | Y_b | n n2 Y_b n1 VGND n3 n2 n3 Y VGND | p Y_b p1 VPWR p1 Y_b p2 p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 6 gates A C D B C D | Y_b | n n2 Y_b n1 VGND n3 n2 n3 Y VGND | p Y_b p1 VPWR p1 Y_b p2 p1 Y VPWR: cannot draw: cannot route Y_b between the rows on li
+variant 6 gates C D A C D B | Y_b | n n2 n3 n2 Y_b n1 VGND n3 VGND Y | p p1 VPWR p1 Y_b p2 p1 Y_b VPWR Y: cannot draw: no room for the C contact
+variant 6 gates C D A C D B | Y_b | n n2 n3 n2 Y_b n1 VGND n3 VGND Y | p p1 VPWR p1 Y_b p2 p1 Y_b Y VPWR: cannot draw: no room for the C contact
+variant 6 gates C D A C D B | Y_b | n n2 n3 n2 Y_b n1 VGND n3 Y VGND | p p1 VPWR p1 Y_b p2 p1 Y_b VPWR Y: cannot draw: no room for the C contact
+variant 6 gates C D A C D B | Y_b | n n2 n3 n2 Y_b n1 VGND n3 Y VGND | p p1 VPWR p1 Y_b p2 p1 Y_b Y VPWR: cannot draw: no room for the C contact
+variant 7 gates Y_b | A C D B C D | n VGND Y n2 Y_b n1 VGND n3 n2 n3 | p VPWR Y Y_b p1 p2 Y_b p1 VPWR p1: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | A C D B D C | n VGND Y n2 Y_b n1 VGND n3 n2 n3 | p VPWR Y Y_b p1 p2 Y_b p1 VPWR p1: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | A C D B D C | n VGND Y n2 Y_b n1 VGND n3 n2 n3 | p VPWR Y Y_b p1 VPWR p1 Y_b p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | C D A C D B | n VGND Y n2 n3 n2 Y_b n1 VGND n3 | p VPWR Y p1 p2 Y_b p1 VPWR p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | B D C A D C | n VGND Y n3 VGND n1 Y_b n2 n3 n2 | p VPWR Y Y_b p1 VPWR p1 Y_b p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | C D B D C A | n VGND Y n3 n2 n3 VGND n1 Y_b n2 | p VPWR Y p1 p2 Y_b p1 VPWR p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | C D B D C A | n VGND Y n3 n2 n3 VGND n1 Y_b n2 | p VPWR Y p1 VPWR p1 Y_b p2 p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | D C B D C A | n VGND Y n3 n2 n3 VGND n1 Y_b n2 | p VPWR Y p1 VPWR p1 Y_b p2 p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | A C D B C D | n VGND Y n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR Y_b p1 p2 Y_b p1 VPWR p1: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | A C D B D C | n VGND Y n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR Y_b p1 p2 Y_b p1 VPWR p1: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | A C D B D C | n VGND Y n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR Y_b p1 VPWR p1 Y_b p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | C D A C D B | n VGND Y n2 n3 n2 Y_b n1 VGND n3 | p Y VPWR p1 p2 Y_b p1 VPWR p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | B D C A D C | n VGND Y n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR Y_b p1 VPWR p1 Y_b p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | C D B D C A | n VGND Y n3 n2 n3 VGND n1 Y_b n2 | p Y VPWR p1 p2 Y_b p1 VPWR p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | C D B D C A | n VGND Y n3 n2 n3 VGND n1 Y_b n2 | p Y VPWR p1 VPWR p1 Y_b p2 p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | D C B D C A | n VGND Y n3 n2 n3 VGND n1 Y_b n2 | p Y VPWR p1 VPWR p1 Y_b p2 p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | A C D B C D | n Y VGND n2 Y_b n1 VGND n3 n2 n3 | p VPWR Y Y_b p1 p2 Y_b p1 VPWR p1: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | A C D B D C | n Y VGND n2 Y_b n1 VGND n3 n2 n3 | p VPWR Y Y_b p1 p2 Y_b p1 VPWR p1: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | A C D B D C | n Y VGND n2 Y_b n1 VGND n3 n2 n3 | p VPWR Y Y_b p1 VPWR p1 Y_b p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | C D A C D B | n Y VGND n2 n3 n2 Y_b n1 VGND n3 | p VPWR Y p1 p2 Y_b p1 VPWR p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | B D C A D C | n Y VGND n3 VGND n1 Y_b n2 n3 n2 | p VPWR Y Y_b p1 VPWR p1 Y_b p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | C D B D C A | n Y VGND n3 n2 n3 VGND n1 Y_b n2 | p VPWR Y p1 p2 Y_b p1 VPWR p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | C D B D C A | n Y VGND n3 n2 n3 VGND n1 Y_b n2 | p VPWR Y p1 VPWR p1 Y_b p2 p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | D C B D C A | n Y VGND n3 n2 n3 VGND n1 Y_b n2 | p VPWR Y p1 VPWR p1 Y_b p2 p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | A C D B C D | n Y VGND n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR Y_b p1 p2 Y_b p1 VPWR p1: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | A C D B D C | n Y VGND n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR Y_b p1 p2 Y_b p1 VPWR p1: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | A C D B D C | n Y VGND n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR Y_b p1 VPWR p1 Y_b p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | C D A C D B | n Y VGND n2 n3 n2 Y_b n1 VGND n3 | p Y VPWR p1 p2 Y_b p1 VPWR p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | B D C A D C | n Y VGND n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR Y_b p1 VPWR p1 Y_b p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | C D B D C A | n Y VGND n3 n2 n3 VGND n1 Y_b n2 | p Y VPWR p1 p2 Y_b p1 VPWR p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | C D B D C A | n Y VGND n3 n2 n3 VGND n1 Y_b n2 | p Y VPWR p1 VPWR p1 Y_b p2 p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates Y_b | D C B D C A | n Y VGND n3 n2 n3 VGND n1 Y_b n2 | p Y VPWR p1 VPWR p1 Y_b p2 p1 Y_b: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates A C D B C D | Y_b | n n2 Y_b n1 VGND n3 n2 n3 VGND Y | p Y_b p1 p2 Y_b p1 VPWR p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates A C D B C D | Y_b | n n2 Y_b n1 VGND n3 n2 n3 VGND Y | p Y_b p1 p2 Y_b p1 VPWR p1 Y VPWR: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates A C D B C D | Y_b | n n2 Y_b n1 VGND n3 n2 n3 Y VGND | p Y_b p1 p2 Y_b p1 VPWR p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates A C D B C D | Y_b | n n2 Y_b n1 VGND n3 n2 n3 Y VGND | p Y_b p1 p2 Y_b p1 VPWR p1 Y VPWR: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates A C D B D C | Y_b | n n2 Y_b n1 VGND n3 n2 n3 VGND Y | p Y_b p1 p2 Y_b p1 VPWR p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates A C D B D C | Y_b | n n2 Y_b n1 VGND n3 n2 n3 VGND Y | p Y_b p1 p2 Y_b p1 VPWR p1 Y VPWR: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates A C D B D C | Y_b | n n2 Y_b n1 VGND n3 n2 n3 Y VGND | p Y_b p1 p2 Y_b p1 VPWR p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 7 gates A C D B D C | Y_b | n n2 Y_b n1 VGND n3 n2 n3 Y VGND | p Y_b p1 p2 Y_b p1 VPWR p1 Y VPWR: cannot draw: cannot route Y_b between the rows on li
+variant 8 gates Y_b D C B A C D | n Y VGND n1 Y_b n2 n3 VGND n3 | p Y VPWR p2 p1 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 8 gates Y_b D C B A D C | n Y VGND n1 Y_b n2 n3 VGND n3 | p Y VPWR p2 p1 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 8 gates Y_b D C D C B A | n Y VGND n3 VGND n1 Y_b n2 n3 | p Y VPWR p2 p1 Y_b p1 VPWR p1: 5.98 um, met1 inside, 10 contacts on the output stage, 27 in all
+variant 8 gates A B C D C D Y_b | n n3 n2 Y_b n1 VGND n3 VGND Y | p p1 VPWR p1 Y_b p1 p2 VPWR Y: cannot draw: no room for the C contact
+variant 8 gates C D A B C D Y_b | n n3 VGND n3 n2 Y_b n1 VGND Y | p p1 Y_b p1 VPWR p1 p2 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 8 gates D C A B C D Y_b | n n3 VGND n3 n2 Y_b n1 VGND Y | p p1 Y_b p1 VPWR p1 p2 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 9 gates Y_b C D D C B A | n Y VGND n3 VGND n1 Y_b n2 n3 | p Y VPWR p2 p1 Y_b p1 VPWR p1: 6.44 um, met1 inside, 10 contacts on the output stage, 27 in all
+variant 9 gates A B C D D C Y_b | n n3 n2 Y_b n1 VGND n3 VGND Y | p p1 VPWR p1 Y_b p1 p2 VPWR Y: cannot draw: no room for the C contact
+variant 10 gates Y_b | C D D C B A | n Y VGND VGND n3 VGND n1 Y_b n2 n3 | p VPWR Y Y_b p2 p1 VPWR p1 Y_b p1: cannot draw: no room for the B contact
+variant 10 gates Y_b | D C B A D C | n Y VGND VGND n1 Y_b n2 n3 VGND n3 | p VPWR Y p1 VPWR p1 Y_b p1 p2 Y_b: cannot draw: no room for the B contact
+variant 10 gates Y_b | C D D C B A | n Y VGND VGND n3 VGND n1 Y_b n2 n3 | p VPWR Y p1 VPWR p1 p2 Y_b p1 Y_b: cannot draw: no room for the C contact
+variant 10 gates Y_b | D C D C B A | n Y VGND VGND n3 VGND n1 Y_b n2 n3 | p VPWR Y p1 VPWR p1 p2 Y_b p1 Y_b: cannot draw: no room for the C contact
+variant 10 gates Y_b D C | B A C D | n Y VGND n1 Y_b Y_b n2 n3 VGND n3 | p Y VPWR p1 VPWR Y_b p1 Y_b p2 p1: cannot draw: no room for the D contact
+variant 10 gates Y_b D C | B A D C | n Y VGND n1 Y_b Y_b n2 n3 VGND n3 | p Y VPWR p1 VPWR p1 Y_b p1 p2 Y_b: cannot draw: no room for the D contact
+variant 10 gates Y_b D | C B A D C | n Y VGND n1 n1 Y_b n2 n3 VGND n3 | p Y VPWR p1 VPWR p1 Y_b p1 p2 Y_b: cannot draw: no room for the D contact
+variant 10 gates Y_b C A B | C D D | n Y VGND n3 n2 Y_b Y_b n1 VGND n3 | p Y VPWR p1 Y_b p1 Y_b p2 p1 VPWR: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 10 gates Y_b C A | B C D D | n Y VGND n3 n2 n2 Y_b n1 VGND n3 | p Y VPWR p1 Y_b p1 Y_b p2 p1 VPWR: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 10 gates Y_b C D | D C B A | n Y VGND n3 VGND VGND n1 Y_b n2 n3 | p Y VPWR p1 VPWR p1 p2 Y_b p1 Y_b: cannot draw: no room for the C contact
+variant 10 gates Y_b C | D D C B A | n Y VGND n3 n3 VGND n1 Y_b n2 n3 | p Y VPWR p1 VPWR p1 p2 Y_b p1 Y_b: cannot draw: no room for the C contact
+variant 10 gates Y_b C | A B C D D | n Y VGND n3 n3 n2 Y_b n1 VGND n3 | p Y VPWR p1 Y_b p1 Y_b p2 p1 VPWR: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 10 gates Y_b D A B C | D C | n Y VGND n3 n2 Y_b n1 n1 VGND n3 | p Y VPWR p1 Y_b p1 VPWR p1 p2 Y_b: cannot draw: no room for the D contact
+variant 10 gates Y_b D A B | C D C | n Y VGND n3 n2 Y_b Y_b n1 VGND n3 | p Y VPWR p1 Y_b p1 VPWR p1 p2 Y_b: cannot draw: no room for the D contact
+variant 10 gates Y_b D A B | C D C | n Y VGND n3 n2 Y_b Y_b n1 VGND n3 | p Y VPWR p1 Y_b p1 Y_b p2 p1 VPWR: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 10 gates Y_b D A | B C D C | n Y VGND n3 n2 n2 Y_b n1 VGND n3 | p Y VPWR p1 Y_b p1 Y_b p2 p1 VPWR: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 10 gates Y_b D C | D C B A | n Y VGND n3 VGND VGND n1 Y_b n2 n3 | p Y VPWR p1 VPWR p1 p2 Y_b p1 Y_b: cannot draw: no room for the D contact
+variant 10 gates Y_b D | C D C B A | n Y VGND n3 n3 VGND n1 Y_b n2 n3 | p Y VPWR p1 VPWR p1 p2 Y_b p1 Y_b: cannot draw: no room for the D contact
+variant 10 gates Y_b D | A B C D C | n Y VGND n3 n3 n2 Y_b n1 VGND n3 | p Y VPWR p1 Y_b p1 Y_b p2 p1 VPWR: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 10 gates Y_b | C D D C B A | n Y VGND VGND n3 VGND n1 Y_b n2 n3 | p Y VPWR Y_b p2 p1 VPWR p1 Y_b p1: cannot draw: no room for the B contact
+variant 10 gates Y_b | D C B A D C | n Y VGND VGND n1 Y_b n2 n3 VGND n3 | p Y VPWR p1 VPWR p1 Y_b p1 p2 Y_b: cannot draw: no room for the B contact
+variant 10 gates Y_b | C D D C B A | n Y VGND VGND n3 VGND n1 Y_b n2 n3 | p Y VPWR p1 VPWR p1 p2 Y_b p1 Y_b: cannot draw: no room for the C contact
+variant 10 gates Y_b | D C D C B A | n Y VGND VGND n3 VGND n1 Y_b n2 n3 | p Y VPWR p1 VPWR p1 p2 Y_b p1 Y_b: cannot draw: no room for the C contact
+variant 10 gates C D C B A | D Y_b | n n3 VGND n1 Y_b n2 n3 n3 VGND Y | p VPWR p1 p2 Y_b p1 Y_b p1 VPWR Y: cannot draw: no room for the C contact
+variant 10 gates C D C B | A D Y_b | n n3 VGND n1 Y_b n2 n2 n3 VGND Y | p VPWR p1 p2 Y_b p1 Y_b p1 VPWR Y: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 10 gates C D C | B A D Y_b | n n3 VGND n1 Y_b Y_b n2 n3 VGND Y | p VPWR p1 p2 Y_b p1 Y_b p1 VPWR Y: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 10 gates D D C B A | C Y_b | n n3 VGND n1 Y_b n2 n3 n3 VGND Y | p VPWR p1 p2 Y_b p1 Y_b p1 VPWR Y: cannot draw: no room for the C contact
+variant 10 gates D D C B | A C Y_b | n n3 VGND n1 Y_b n2 n2 n3 VGND Y | p VPWR p1 p2 Y_b p1 Y_b p1 VPWR Y: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 10 gates D D C | B A C Y_b | n n3 VGND n1 Y_b Y_b n2 n3 VGND Y | p VPWR p1 p2 Y_b p1 Y_b p1 VPWR Y: cannot draw: gave up after 20056 tries, 12 of them drawn
+variant 10 gates A B C D C D | Y_b | n n3 n2 Y_b n1 VGND n3 VGND VGND Y | p Y_b p1 Y_b p2 p1 VPWR p1 VPWR Y: cannot draw: no room for the B contact
+variant 10 gates A B C D C D | Y_b | n n3 n2 Y_b n1 VGND n3 VGND VGND Y | p Y_b p1 Y_b p2 p1 VPWR p1 Y VPWR: cannot draw: no room for the B contact
+variant 10 gates A B C D C | D Y_b | n n3 n2 Y_b n1 VGND n3 n3 VGND Y | p Y_b p1 Y_b p2 p1 VPWR p1 VPWR Y: cannot draw: no room for the B contact
+variant 10 gates A B C D D C | Y_b | n n3 n2 Y_b n1 VGND n3 VGND VGND Y | p Y_b p1 Y_b p2 p1 VPWR p1 VPWR Y: cannot draw: no room for the B contact
+variant 10 gates A B C D D C | Y_b | n n3 n2 Y_b n1 VGND n3 VGND VGND Y | p Y_b p1 Y_b p2 p1 VPWR p1 Y VPWR: cannot draw: no room for the B contact
+variant 10 gates A B C D D | C Y_b | n n3 n2 Y_b n1 VGND n3 n3 VGND Y | p Y_b p1 Y_b p2 p1 VPWR p1 VPWR Y: cannot draw: no room for the B contact
+variant 10 gates A B C D | C D Y_b | n n3 n2 Y_b n1 VGND VGND n3 VGND Y | p Y_b p1 Y_b p2 p1 VPWR p1 VPWR Y: cannot draw: no room for the B contact
+variant 10 gates A B C D | D C Y_b | n n3 n2 Y_b n1 VGND VGND n3 VGND Y | p Y_b p1 Y_b p2 p1 VPWR p1 VPWR Y: cannot draw: no room for the B contact
+variant 10 gates C D C | B A D Y_b | n n3 VGND n1 Y_b Y_b n2 n3 VGND Y | p Y_b p2 p1 VPWR p1 Y_b p1 VPWR Y: cannot draw: no room for the D contact
+variant 10 gates C D | C B A D Y_b | n n3 VGND n1 n1 Y_b n2 n3 VGND Y | p Y_b p2 p1 VPWR p1 Y_b p1 VPWR Y: cannot draw: no room for the D contact
+variant 10 gates C D A B C D | Y_b | n n3 VGND n3 n2 Y_b n1 VGND VGND Y | p Y_b p2 p1 Y_b p1 VPWR p1 VPWR Y: cannot draw: no room for the D contact
+variant 11 gates Y_b | D C B A C D | n Y VGND VGND n1 Y_b n2 n3 VGND n3 | p VPWR Y Y_b p2 p1 Y_b p1 VPWR p1: cannot draw: gave up after 20076 tries, 0 of them drawn
+variant 11 gates Y_b | D C B A D C | n Y VGND VGND n1 Y_b n2 n3 VGND n3 | p VPWR Y Y_b p2 p1 Y_b p1 VPWR p1: cannot draw: gave up after 20076 tries, 0 of them drawn
+variant 11 gates Y_b | D C D C B A | n Y VGND VGND n3 VGND n1 Y_b n2 n3 | p VPWR Y Y_b p2 p1 VPWR p1 Y_b p1: cannot draw: no room for the B contact
+variant 11 gates Y_b | D C B A C D | n Y VGND VGND n1 Y_b n2 n3 VGND n3 | p VPWR Y p1 VPWR p1 Y_b p1 p2 Y_b: cannot draw: no room for the C contact
+variant 11 gates Y_b D C | B A D C | n Y VGND n1 Y_b Y_b n2 n3 VGND n3 | p Y VPWR p1 VPWR Y_b p1 Y_b p2 p1: cannot draw: no room for the D contact
+variant 11 gates Y_b D C | B A C D | n Y VGND n1 Y_b Y_b n2 n3 VGND n3 | p Y VPWR p1 VPWR p1 Y_b p1 p2 Y_b: cannot draw: no room for the D contact
+variant 11 gates Y_b D | C B A C D | n Y VGND n1 n1 Y_b n2 n3 VGND n3 | p Y VPWR p1 VPWR p1 Y_b p1 p2 Y_b: cannot draw: no room for the D contact
+variant 11 gates Y_b C A B C D | D | n Y VGND n3 n2 Y_b n1 VGND VGND n3 | p Y VPWR p1 Y_b p1 p2 Y_b VPWR p1: cannot draw: no room for the C contact
+variant 11 gates Y_b C A B C D | D | n Y VGND n3 n2 Y_b n1 VGND VGND n3 | p Y VPWR p1 Y_b p1 p2 Y_b p1 VPWR: cannot draw: no room for the C contact
+variant 11 gates Y_b C D | D C B A | n Y VGND n3 VGND VGND n1 Y_b n2 n3 | p Y VPWR p1 VPWR Y_b p2 p1 Y_b p1: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 11 gates Y_b D A B C D | C | n Y VGND n3 n2 Y_b n1 VGND VGND n3 | p Y VPWR p1 Y_b p1 p2 Y_b VPWR p1: cannot draw: no room for the D contact
+variant 11 gates Y_b D A B C D | C | n Y VGND n3 n2 Y_b n1 VGND VGND n3 | p Y VPWR p1 Y_b p1 p2 Y_b p1 VPWR: cannot draw: no room for the D contact
+variant 11 gates Y_b D A B C | D C | n Y VGND n3 n2 Y_b n1 n1 VGND n3 | p Y VPWR p1 Y_b p1 VPWR Y_b p2 p1: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 11 gates Y_b D C D | C B A | n Y VGND n3 VGND n1 n1 Y_b n2 n3 | p Y VPWR p1 p2 Y_b VPWR p1 Y_b p1: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 11 gates Y_b D C | D C B A | n Y VGND n3 VGND VGND n1 Y_b n2 n3 | p Y VPWR p1 VPWR Y_b p2 p1 Y_b p1: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 11 gates Y_b | D C B A C D | n Y VGND VGND n1 Y_b n2 n3 VGND n3 | p Y VPWR Y_b p2 p1 Y_b p1 VPWR p1: cannot draw: gave up after 20016 tries, 0 of them drawn
+variant 11 gates Y_b | D C B A D C | n Y VGND VGND n1 Y_b n2 n3 VGND n3 | p Y VPWR Y_b p2 p1 Y_b p1 VPWR p1: cannot draw: gave up after 20016 tries, 0 of them drawn
+variant 11 gates Y_b | D C D C B A | n Y VGND VGND n3 VGND n1 Y_b n2 n3 | p Y VPWR Y_b p2 p1 VPWR p1 Y_b p1: cannot draw: no room for the B contact
+variant 11 gates Y_b | D C B A C D | n Y VGND VGND n1 Y_b n2 n3 VGND n3 | p Y VPWR p1 VPWR p1 Y_b p1 p2 Y_b: cannot draw: no room for the C contact
+variant 11 gates C | D C B A D Y_b | n n3 VGND VGND n1 Y_b n2 n3 VGND Y | p VPWR p1 Y_b p2 p1 Y_b p1 VPWR Y: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 11 gates D | D C B A C Y_b | n n3 VGND VGND n1 Y_b n2 n3 VGND Y | p VPWR p1 Y_b p2 p1 Y_b p1 VPWR Y: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 11 gates D C A B C D | Y_b | n n3 VGND n3 n2 Y_b n1 VGND VGND Y | p Y_b p2 p1 Y_b p1 VPWR p1 VPWR Y: cannot draw: no room for the C contact
+variant 11 gates D C A B C D | Y_b | n n3 VGND n3 n2 Y_b n1 VGND VGND Y | p Y_b p2 p1 Y_b p1 VPWR p1 Y VPWR: cannot draw: no room for the C contact
+variant 11 gates D C A B C | D Y_b | n n3 VGND n3 n2 Y_b n1 n1 VGND Y | p Y_b p2 p1 Y_b p1 VPWR p1 VPWR Y: cannot draw: no room for the C contact
+variant 11 gates D C A B | C D Y_b | n n3 VGND n3 n2 Y_b Y_b n1 VGND Y | p Y_b p2 p1 Y_b p1 VPWR p1 VPWR Y: cannot draw: no room for the D contact
+variant 11 gates A B C D | C D Y_b | n n3 n2 Y_b n1 VGND VGND n3 VGND Y | p p1 Y_b p1 p2 Y_b VPWR p1 VPWR Y: cannot draw: no room for the B contact
+variant 11 gates A B C D | D C Y_b | n n3 n2 Y_b n1 VGND VGND n3 VGND Y | p p1 Y_b p1 p2 Y_b VPWR p1 VPWR Y: cannot draw: no room for the B contact
+variant 11 gates A B C D C D | Y_b | n n3 n2 Y_b n1 VGND n3 VGND VGND Y | p p1 Y_b p1 VPWR p1 p2 Y_b VPWR Y: cannot draw: no room for the B contact
+variant 11 gates A B C D C D | Y_b | n n3 n2 Y_b n1 VGND n3 VGND VGND Y | p p1 Y_b p1 VPWR p1 p2 Y_b Y VPWR: cannot draw: no room for the B contact
+variant 11 gates A B C | D C D Y_b | n n3 n2 Y_b n1 n1 VGND n3 VGND Y | p p1 Y_b p1 VPWR Y_b p2 p1 VPWR Y: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 11 gates C D | C B A D Y_b | n n3 VGND n1 n1 Y_b n2 n3 VGND Y | p p1 p2 Y_b VPWR p1 Y_b p1 VPWR Y: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 11 gates C D A B | C D Y_b | n n3 VGND n3 n2 Y_b Y_b n1 VGND Y | p p1 p2 Y_b p1 Y_b VPWR p1 VPWR Y: cannot draw: no room for the D contact
+variant 11 gates C D A B C D | Y_b | n n3 VGND n3 n2 Y_b n1 VGND VGND Y | p p1 VPWR p1 Y_b p1 p2 Y_b VPWR Y: cannot draw: no room for the D contact
+variant 11 gates C D A B C D | Y_b | n n3 VGND n3 n2 Y_b n1 VGND VGND Y | p p1 VPWR p1 Y_b p1 p2 Y_b Y VPWR: cannot draw: no room for the D contact
+variant 11 gates C | D C B A D Y_b | n n3 VGND VGND n1 Y_b n2 n3 VGND Y | p p1 VPWR Y_b p2 p1 Y_b p1 VPWR Y: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 11 gates D C A B C D | Y_b | n n3 VGND n3 n2 Y_b n1 VGND VGND Y | p p1 VPWR p1 Y_b p1 p2 Y_b VPWR Y: cannot draw: no room for the C contact
+variant 11 gates D C A B C D | Y_b | n n3 VGND n3 n2 Y_b n1 VGND VGND Y | p p1 VPWR p1 Y_b p1 p2 Y_b Y VPWR: cannot draw: no room for the C contact
+variant 11 gates D | D C B A C Y_b | n n3 VGND VGND n1 Y_b n2 n3 VGND Y | p p1 VPWR Y_b p2 p1 Y_b p1 VPWR Y: cannot draw: gave up after 20056 tries, 0 of them drawn
+variant 11 gates C A B C D | Y_b D | n VGND n3 n2 Y_b n1 VGND Y VGND n3 | p VPWR p1 Y_b p1 p2 Y_b Y VPWR p1: cannot draw: no room for the A contact
+variant 11 gates C A B C D | D Y_b | n VGND n3 n2 Y_b n1 VGND n3 VGND Y | p VPWR p1 Y_b p1 p2 Y_b p1 VPWR Y: cannot draw: no room for the A contact
+variant 12 gates Y_b | B C D A D C | n VGND Y n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR VPWR p1 Y_b p1 VPWR p2 p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 12 gates Y_b | B C D A C D | n VGND Y n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR VPWR p1 p2 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 12 gates Y_b | B C D A D C | n VGND Y n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR VPWR p1 p2 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 12 gates Y_b | A D C B D C | n VGND Y n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR VPWR p1 Y_b p1 VPWR p2 p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 12 gates D C B D C | A Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 Y_b p1 VPWR p2 p1 p1 VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 12 gates D C B D | C A Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 Y_b p1 VPWR p2 p2 p1 VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 12 gates D C B | D C A Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 Y_b p1 VPWR VPWR p2 p1 VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 12 gates Y_b D C B | A C D | n Y VGND n1 Y_b n2 VGND n3 n2 n3 | p Y VPWR p2 p1 VPWR VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 12 gates Y_b D C B | A D C | n Y VGND n1 Y_b n2 VGND n3 n2 n3 | p Y VPWR p2 p1 VPWR VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 12 gates Y_b A C D | B C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 p2 VPWR VPWR p1 Y_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 12 gates Y_b A C | D B C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 p2 p2 VPWR p1 Y_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 12 gates Y_b A | D C B D C | n Y VGND n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR p1 p1 Y_b p1 VPWR p2 p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 12 gates Y_b A | C D B C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 p1 p2 VPWR p1 Y_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 12 gates Y_b | B C D A D C | n Y VGND n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR VPWR p1 Y_b p1 VPWR p2 p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 12 gates Y_b | B C D A C D | n Y VGND n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR VPWR p1 p2 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 12 gates Y_b | B C D A D C | n Y VGND n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR VPWR p1 p2 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 12 gates Y_b | A D C B D C | n Y VGND n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR VPWR p1 Y_b p1 VPWR p2 p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 12 gates C D B C D A | Y_b | n n2 n3 n2 Y_b n1 VGND n3 VGND Y | p p1 p2 VPWR p1 Y_b p1 VPWR VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 12 gates C D B C D A | Y_b | n n2 n3 n2 Y_b n1 VGND n3 Y VGND | p p1 p2 VPWR p1 Y_b p1 VPWR VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 12 gates C D B C D | A Y_b | n n2 n3 n2 Y_b n1 VGND n3 VGND Y | p p1 p2 VPWR p1 Y_b p1 p1 VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 12 gates C D A D C B | Y_b | n n3 n2 n3 VGND n1 Y_b n2 VGND Y | p p1 Y_b p1 VPWR p2 p1 VPWR VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 12 gates C D A D C B | Y_b | n n3 n2 n3 VGND n1 Y_b n2 Y VGND | p p1 Y_b p1 VPWR p2 p1 VPWR VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 12 gates C D A | B C D Y_b | n n3 n2 n3 VGND n2 Y_b n1 VGND Y | p p1 Y_b p1 VPWR VPWR p1 p2 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 12 gates C D A D C B | Y_b | n n3 n2 n3 VGND n1 Y_b n2 VGND Y | p p1 p2 VPWR p1 Y_b p1 VPWR VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 12 gates C D A D C B | Y_b | n n3 n2 n3 VGND n1 Y_b n2 Y VGND | p p1 p2 VPWR p1 Y_b p1 VPWR VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 12 gates D C A D C B | Y_b | n n3 n2 n3 VGND n1 Y_b n2 VGND Y | p p1 Y_b p1 VPWR p2 p1 VPWR VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 12 gates D C A D C B | Y_b | n n3 n2 n3 VGND n1 Y_b n2 Y VGND | p p1 Y_b p1 VPWR p2 p1 VPWR VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 12 gates D C A | B C D Y_b | n n3 n2 n3 VGND n2 Y_b n1 VGND Y | p p1 Y_b p1 VPWR VPWR p1 p2 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 12 gates D C B | Y_b A C D | n VGND n1 Y_b n2 Y VGND n3 n2 n3 | p VPWR p2 p1 VPWR Y VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 12 gates D C B | Y_b A D C | n VGND n1 Y_b n2 Y VGND n3 n2 n3 | p VPWR p2 p1 VPWR Y VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 12 gates D C B | C D A Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p VPWR p2 p1 VPWR p1 Y_b p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 12 gates D C B | D C A Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p VPWR p2 p1 VPWR p1 Y_b p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 12 gates A C D | Y_b D C B | n VGND n3 n2 n3 Y VGND n1 Y_b n2 | p VPWR p1 Y_b p1 Y VPWR p2 p1 VPWR: cannot draw: cannot route Y_b between the rows on li
+variant 12 gates A C D | B C D Y_b | n VGND n3 n2 n3 n2 Y_b n1 VGND Y | p VPWR p1 Y_b p1 VPWR p1 p2 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 12 gates A D C | Y_b D C B | n VGND n3 n2 n3 Y VGND n1 Y_b n2 | p VPWR p1 Y_b p1 Y VPWR p2 p1 VPWR: cannot draw: cannot route Y_b between the rows on li
+variant 12 gates A D C | B C D Y_b | n VGND n3 n2 n3 n2 Y_b n1 VGND Y | p VPWR p1 Y_b p1 VPWR p1 p2 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 12 gates Y_b | B C D A D C | n VGND Y n2 Y_b n1 VGND n3 n2 n3 | p VPWR Y VPWR p1 Y_b p1 VPWR p2 p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 12 gates Y_b | B C D A C D | n VGND Y n2 Y_b n1 VGND n3 n2 n3 | p VPWR Y VPWR p1 p2 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 12 gates Y_b | B C D A D C | n VGND Y n2 Y_b n1 VGND n3 n2 n3 | p VPWR Y VPWR p1 p2 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 12 gates Y_b | C D B C D A | n VGND Y n2 n3 n2 Y_b n1 VGND n3 | p VPWR Y p1 p2 VPWR p1 Y_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 13 gates Y_b | B C D A C D | n VGND Y n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR VPWR p1 Y_b p1 VPWR p2 p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 13 gates Y_b | A D C B C D | n VGND Y n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR VPWR p1 Y_b p1 VPWR p2 p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 13 gates Y_b | A D C B C D | n VGND Y n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR VPWR p1 p2 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 13 gates Y_b | A D C B D C | n VGND Y n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR VPWR p1 p2 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 13 gates D C B C D | A Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 Y_b p1 VPWR p2 p1 p1 VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 13 gates D C B C | D A Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 Y_b p1 VPWR p2 p2 p1 VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 13 gates D C B | C D A Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 Y_b p1 VPWR VPWR p2 p1 VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 13 gates D C B C D | A Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 p2 VPWR p1 Y_b p1 p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 13 gates D C B C | D A Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 p2 VPWR p1 Y_b Y_b p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 13 gates D C B D C | A Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 p2 VPWR p1 Y_b p1 p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 13 gates D C B D | C A Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 p2 VPWR p1 Y_b Y_b p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 13 gates D C B | C D A Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 p2 VPWR p1 p1 Y_b p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 13 gates D C B | D C A Y_b | n VGND n1 Y_b n2 n3 n2 n3 VGND Y | p p1 p2 VPWR p1 p1 Y_b p1 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 13 gates Y_b A C D | D C B | n Y VGND n3 n2 n3 VGND n1 Y_b n2 | p Y VPWR p1 Y_b p1 p1 p2 VPWR p1: cannot draw: cannot route Y_b between the rows on li
+variant 13 gates Y_b A C D | B C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 Y_b p1 p1 VPWR p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 13 gates Y_b A C | D B C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 Y_b Y_b p1 VPWR p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 13 gates Y_b A D C | D C B | n Y VGND n3 n2 n3 VGND n1 Y_b n2 | p Y VPWR p1 Y_b p1 p1 p2 VPWR p1: cannot draw: cannot route Y_b between the rows on li
+variant 13 gates Y_b A D C | B C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 Y_b p1 p1 VPWR p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 13 gates Y_b A D | C B C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 Y_b Y_b p1 VPWR p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 13 gates Y_b A D C | B C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 p2 VPWR VPWR p1 Y_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 13 gates Y_b A D | C B C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 p2 p2 VPWR p1 Y_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 13 gates Y_b A | D C B C D | n Y VGND n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR p1 p1 Y_b p1 VPWR p2 p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 13 gates Y_b A | D C B C D | n Y VGND n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR p1 p1 p2 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 13 gates Y_b A | D C B D C | n Y VGND n3 VGND n1 Y_b n2 n3 n2 | p Y VPWR p1 p1 p2 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 13 gates Y_b A | C D B C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 p1 Y_b p1 VPWR p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 13 gates Y_b A | D C B C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 p1 Y_b p1 VPWR p2 p1: cannot draw: cannot route Y_b between the rows on li
+variant 13 gates Y_b A | D C B C D | n Y VGND n3 n2 n3 n2 Y_b n1 VGND | p Y VPWR p1 p1 p2 VPWR p1 Y_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 13 gates Y_b | B C D A C D | n Y VGND n2 Y_b n1 VGND n3 n2 n3 | p Y VPWR VPWR p1 Y_b p1 VPWR p2 p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 24 gates Y_b D C C D A B | n Y VGND n3 VGND n1 Y_b n2 n3 | p Y VPWR p2 p1 Y_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 24 gates B A D C C D Y_b | n n3 n2 Y_b n1 VGND n3 VGND Y | p p1 VPWR p1 Y_b p1 p2 VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 25 gates Y_b C D A B C D | n Y VGND n1 Y_b n2 n3 VGND n3 | p Y VPWR p2 p1 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 25 gates Y_b C D A B D C | n Y VGND n1 Y_b n2 n3 VGND n3 | p Y VPWR p2 p1 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 25 gates Y_b C D C D A B | n Y VGND n3 VGND n1 Y_b n2 n3 | p Y VPWR p2 p1 Y_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 25 gates B A D C D C Y_b | n n3 n2 Y_b n1 VGND n3 VGND Y | p p1 VPWR p1 Y_b p1 p2 VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 25 gates C D B A D C Y_b | n n3 VGND n3 n2 Y_b n1 VGND Y | p p1 Y_b p1 VPWR p1 p2 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 25 gates D C B A D C Y_b | n n3 VGND n3 n2 Y_b n1 VGND Y | p p1 Y_b p1 VPWR p1 p2 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 32 gates Y_b D C C D B A | n Y VGND n3 VGND n1 Y_b n2 n3 | p Y VPWR p2 p1 Y_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 32 gates A B D C C D Y_b | n n3 n2 Y_b n1 VGND n3 VGND Y | p p1 VPWR p1 Y_b p1 p2 VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 33 gates Y_b C D B A C D | n Y VGND n1 Y_b n2 n3 VGND n3 | p Y VPWR p2 p1 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 33 gates Y_b C D B A D C | n Y VGND n1 Y_b n2 n3 VGND n3 | p Y VPWR p2 p1 VPWR p1 Y_b p1: cannot draw: cannot route Y_b between the rows on li
+variant 33 gates Y_b C D C D B A | n Y VGND n3 VGND n1 Y_b n2 n3 | p Y VPWR p2 p1 Y_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 33 gates A B D C D C Y_b | n n3 n2 Y_b n1 VGND n3 VGND Y | p p1 VPWR p1 Y_b p1 p2 VPWR Y: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 33 gates C D A B D C Y_b | n n3 VGND n3 n2 Y_b n1 VGND Y | p p1 Y_b p1 VPWR p1 p2 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+variant 33 gates D C A B D C Y_b | n n3 VGND n3 n2 Y_b n1 VGND Y | p p1 Y_b p1 VPWR p1 p2 VPWR Y: cannot draw: cannot route Y_b between the rows on li
+every order needs met1: the 5 narrowest again, up to 60 more widenings each, for li alone
+
+== 5. chosen layout
+variant 0, gates Y_b D C D C A B: li only beats met1, then the narrowest, then the most contacts on the output stage, then the most contacts, the first found on a tie
+width 5.98 um (13 sites), diffusion 0.315 .. 5.665
+gates   Y_b@0.65  D@1.49  C@2.33  D@3.17  C@4.01  A@4.79  B@5.33
+nMOS columns:
+    Y@0.44 wide contacts y=[0.4, 0.74]
+    VGND@1.07 wide contacts y=[0.4, 0.74]
+    n3@1.91 wide contacts y=[0.4, 0.74]
+    VGND@2.75 narrow contacts y=[0.4]
+    n1@3.59 no contact
+    Y_b@4.4 wide contacts y=[0.74]
+    n2@5.06 no contact
+    n3@5.54 wide contacts y=[0.4, 0.74]
+    lane n3 x 1.745 .. 3.175, inner edge, y 0.735 .. 0.905
+    lane n3 x 3.005 .. 5.705, outer edge, y 0.255 .. 0.425
+    jog n3 at x 3.09
+pMOS columns:
+    Y@0.44 wide contacts y=[1.66, 2.0, 2.34]
+    VPWR@1.07 narrow contacts y=[1.66, 2.0, 2.34]
+    p2@1.91 no contact
+    p1@2.75 narrow contacts y=[1.66, 2.0]
+    Y_b@3.59 wide contacts y=[1.66, 2.0]
+    p1@4.4 narrow contacts y=[1.66, 2.0]
+    VPWR@5.06 narrow contacts y=[2.0, 2.34]
+    p1@5.54 wide contacts y=[1.66, 2.0, 2.34]
+    lane p1 x 2.665 .. 4.485, outer edge, y 2.295 .. 2.465
+    lane p1 x 4.315 .. 5.705, inner edge, y 1.495 .. 1.665
+poly contact Y_b@0.78 for gates 0..0, narrow pad
+poly contact D@1.49 for gates 1..1, wide pad
+poly contact D@3.17 for gates 3..3, wide pad
+poly contact C@2.33 for gates 2..2, wide pad
+poly contact C@4.01 for gates 4..4, wide pad
+poly contact A@4.79 for gates 5..5, wide pad
+poly contact B@5.33 for gates 6..6, wide pad
+crossing Y at x 0.44
+crossing Y_b at x 3.59
+met1 bridge C: mcons at [2.33, 4.01], track 3
+met1 bridge D: mcons at [1.49, 3.17], track 1
+met1 bridge Y_b: mcons at [0.78, 3.59], track 2
+
+== 6. checks
+DRC (Magic, in a row with tap cells): 0 errors
+LVS (Netgen): match; RC-LVS: match
+abutment: pass, 0 errors
+layer check: pass
+simulation (ngspice): pass
+
+== 7. response
+pass, 13 sites, 16.2656 um2

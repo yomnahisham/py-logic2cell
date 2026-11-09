@@ -1,0 +1,212 @@
+{
+  "network": {
+    "fets": 10,
+    "switch_check": "pass"
+  },
+  "order": {
+    "name": "dd2_gc1__f17_1",
+    "width": 2.76,
+    "width_sites": 6,
+    "gate_x": [
+      0.48,
+      0.9,
+      1.32,
+      1.74,
+      2.28
+    ],
+    "col_x": [
+      0.27,
+      0.69,
+      1.11,
+      1.5,
+      2.01,
+      2.49
+    ],
+    "pad_x": {
+      "A": 0.48,
+      "B": 0.96,
+      "C": 2.47
+    },
+    "gates": [
+      "A",
+      "B",
+      "B",
+      "A",
+      "C"
+    ],
+    "n_nodes": [
+      "VGND",
+      "n2",
+      "VGND",
+      "n1",
+      "Y",
+      "n2"
+    ],
+    "p_nodes": [
+      "p1",
+      "VPWR",
+      "p1",
+      "p2",
+      "Y",
+      "p1"
+    ],
+    "diff_w": {
+      "n": [
+        0.65,
+        0.65,
+        0.65,
+        0.65,
+        0.65
+      ],
+      "p": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "lanes": {
+      "n": [
+        [
+          "Y",
+          1.925,
+          2.215,
+          "inner"
+        ],
+        [
+          "n2",
+          0.525,
+          1.645,
+          "inner"
+        ],
+        [
+          "n2",
+          1.475,
+          2.575,
+          "outer"
+        ]
+      ],
+      "p": [
+        [
+          "Y",
+          1.925,
+          2.215,
+          "inner"
+        ],
+        [
+          "p1",
+          0.105,
+          1.275,
+          "inner"
+        ],
+        [
+          "p1",
+          0.945,
+          2.575,
+          "outer"
+        ]
+      ]
+    },
+    "inputs": [
+      "A",
+      "B",
+      "C"
+    ],
+    "output": "Y",
+    "orders_tried": 192,
+    "orders_drawable": 30,
+    "style": "handout"
+  },
+  "checks": {
+    "drc": 0,
+    "drc_why": "",
+    "lvs": "match",
+    "rc_r": 51,
+    "rc_c": 67,
+    "rc_lvs": "match"
+  },
+  "abutment": {
+    "cases": {
+      "dd2_gc1__f17_1__tapvpwrvgnd_1__left": 0,
+      "dd2_gc1__f17_1__tapvpwrvgnd_1__right": 0,
+      "dd2_gc1__f17_1__tapvpwrvgnd_1__mirrored": 0,
+      "dd2_gc1__f17_1__tapvpwrvgnd_1__flip_vpwr": 0,
+      "dd2_gc1__f17_1__tapvpwrvgnd_1__flip_vgnd": 0,
+      "dd2_gc1__f17_1__inv_1__left": 0,
+      "dd2_gc1__f17_1__inv_1__right": 0,
+      "dd2_gc1__f17_1__inv_1__mirrored": 0,
+      "dd2_gc1__f17_1__inv_1__flip_vpwr": 0,
+      "dd2_gc1__f17_1__inv_1__flip_vgnd": 0,
+      "dd2_gc1__f17_1__fill_1__left": 0,
+      "dd2_gc1__f17_1__fill_1__right": 0,
+      "dd2_gc1__f17_1__fill_1__mirrored": 0,
+      "dd2_gc1__f17_1__fill_1__flip_vpwr": 0,
+      "dd2_gc1__f17_1__fill_1__flip_vgnd": 0
+    },
+    "errors": 0,
+    "passed": true
+  },
+  "layers": "pass",
+  "simulation": {
+    "dc": [
+      {
+        "inputs": 0,
+        "expected": 1,
+        "y": 1.8,
+        "passed": true
+      },
+      {
+        "inputs": 1,
+        "expected": 1,
+        "y": 1.8,
+        "passed": true
+      },
+      {
+        "inputs": 2,
+        "expected": 1,
+        "y": 1.8,
+        "passed": true
+      },
+      {
+        "inputs": 3,
+        "expected": 0,
+        "y": 0.0,
+        "passed": true
+      },
+      {
+        "inputs": 4,
+        "expected": 1,
+        "y": 1.8,
+        "passed": true
+      },
+      {
+        "inputs": 5,
+        "expected": 0,
+        "y": 0.0,
+        "passed": true
+      },
+      {
+        "inputs": 6,
+        "expected": 0,
+        "y": 0.0,
+        "passed": true
+      },
+      {
+        "inputs": 7,
+        "expected": 0,
+        "y": 0.0,
+        "passed": true
+      }
+    ],
+    "dc_passed": true,
+    "transient": {
+      "slew_ns": 0.122474,
+      "load_pf": 0.00952062,
+      "steps": 48,
+      "errors": [],
+      "passed": true
+    },
+    "passed": true
+  }
+}

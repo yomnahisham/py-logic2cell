@@ -1,0 +1,216 @@
+build a31oi_1.json, style handout, git:6326eba, 2026-11-08 21:49 UTC
+
+== 1. request
+name dd2_gc1__a31oi_1, id T6-a31oi_1, inputs A1, A2, A3, B1, output Y, truth table 0x007f, sizing hd
+
+== 2. network
+one stage (12 series orders)
+variant 0: Y = f(A1, A2, A3, B1), 8 fets
+    nMOS gate B1: Y - VGND
+    nMOS gate A1: Y - n1
+    nMOS gate A2: n1 - n2
+    nMOS gate A3: n2 - VGND
+    pMOS gate B1: Y - p1
+    pMOS gate A1: p1 - VPWR
+    pMOS gate A2: p1 - VPWR
+    pMOS gate A3: p1 - VPWR
+variant 1: Y = f(A1, A2, A3, B1), 8 fets
+    nMOS gate B1: Y - VGND
+    nMOS gate A1: Y - n1
+    nMOS gate A2: n1 - n2
+    nMOS gate A3: n2 - VGND
+    pMOS gate A1: Y - p1
+    pMOS gate A2: Y - p1
+    pMOS gate A3: Y - p1
+    pMOS gate B1: p1 - VPWR
+variant 2: Y = f(A1, A2, A3, B1), 8 fets
+    nMOS gate B1: Y - VGND
+    nMOS gate A1: Y - n1
+    nMOS gate A3: n1 - n2
+    nMOS gate A2: n2 - VGND
+    pMOS gate B1: Y - p1
+    pMOS gate A1: p1 - VPWR
+    pMOS gate A2: p1 - VPWR
+    pMOS gate A3: p1 - VPWR
+variant 3: Y = f(A1, A2, A3, B1), 8 fets
+    nMOS gate B1: Y - VGND
+    nMOS gate A1: Y - n1
+    nMOS gate A3: n1 - n2
+    nMOS gate A2: n2 - VGND
+    pMOS gate A1: Y - p1
+    pMOS gate A2: Y - p1
+    pMOS gate A3: Y - p1
+    pMOS gate B1: p1 - VPWR
+variant 4: Y = f(A1, A2, A3, B1), 8 fets
+    nMOS gate B1: Y - VGND
+    nMOS gate A2: Y - n1
+    nMOS gate A1: n1 - n2
+    nMOS gate A3: n2 - VGND
+    pMOS gate B1: Y - p1
+    pMOS gate A1: p1 - VPWR
+    pMOS gate A2: p1 - VPWR
+    pMOS gate A3: p1 - VPWR
+variant 5: Y = f(A1, A2, A3, B1), 8 fets
+    nMOS gate B1: Y - VGND
+    nMOS gate A2: Y - n1
+    nMOS gate A1: n1 - n2
+    nMOS gate A3: n2 - VGND
+    pMOS gate A1: Y - p1
+    pMOS gate A2: Y - p1
+    pMOS gate A3: Y - p1
+    pMOS gate B1: p1 - VPWR
+variant 6: Y = f(A1, A2, A3, B1), 8 fets
+    nMOS gate B1: Y - VGND
+    nMOS gate A2: Y - n1
+    nMOS gate A3: n1 - n2
+    nMOS gate A1: n2 - VGND
+    pMOS gate B1: Y - p1
+    pMOS gate A1: p1 - VPWR
+    pMOS gate A2: p1 - VPWR
+    pMOS gate A3: p1 - VPWR
+variant 7: Y = f(A1, A2, A3, B1), 8 fets
+    nMOS gate B1: Y - VGND
+    nMOS gate A2: Y - n1
+    nMOS gate A3: n1 - n2
+    nMOS gate A1: n2 - VGND
+    pMOS gate A1: Y - p1
+    pMOS gate A2: Y - p1
+    pMOS gate A3: Y - p1
+    pMOS gate B1: p1 - VPWR
+variant 8: Y = f(A1, A2, A3, B1), 8 fets
+    nMOS gate B1: Y - VGND
+    nMOS gate A3: Y - n1
+    nMOS gate A1: n1 - n2
+    nMOS gate A2: n2 - VGND
+    pMOS gate B1: Y - p1
+    pMOS gate A1: p1 - VPWR
+    pMOS gate A2: p1 - VPWR
+    pMOS gate A3: p1 - VPWR
+variant 9: Y = f(A1, A2, A3, B1), 8 fets
+    nMOS gate B1: Y - VGND
+    nMOS gate A3: Y - n1
+    nMOS gate A1: n1 - n2
+    nMOS gate A2: n2 - VGND
+    pMOS gate A1: Y - p1
+    pMOS gate A2: Y - p1
+    pMOS gate A3: Y - p1
+    pMOS gate B1: p1 - VPWR
+variant 10: Y = f(A1, A2, A3, B1), 8 fets
+    nMOS gate B1: Y - VGND
+    nMOS gate A3: Y - n1
+    nMOS gate A2: n1 - n2
+    nMOS gate A1: n2 - VGND
+    pMOS gate B1: Y - p1
+    pMOS gate A1: p1 - VPWR
+    pMOS gate A2: p1 - VPWR
+    pMOS gate A3: p1 - VPWR
+variant 11: Y = f(A1, A2, A3, B1), 8 fets
+    nMOS gate B1: Y - VGND
+    nMOS gate A3: Y - n1
+    nMOS gate A2: n1 - n2
+    nMOS gate A1: n2 - VGND
+    pMOS gate A1: Y - p1
+    pMOS gate A2: Y - p1
+    pMOS gate A3: Y - p1
+    pMOS gate B1: p1 - VPWR
+
+== 3. switch-level check
+variant 0: every input combination gives the truth table
+variant 1: every input combination gives the truth table
+variant 2: every input combination gives the truth table
+variant 3: every input combination gives the truth table
+variant 4: every input combination gives the truth table
+variant 5: every input combination gives the truth table
+variant 6: every input combination gives the truth table
+variant 7: every input combination gives the truth table
+variant 8: every input combination gives the truth table
+variant 9: every input combination gives the truth table
+variant 10: every input combination gives the truth table
+variant 11: every input combination gives the truth table
+widths: NMOS 0.65 um, PMOS 1.0 um
+
+== 4. Euler orders and placement (first 40 per variant, fewest contacts first)
+variant 0 gates A3 A2 A1 B1 | n VGND n2 n1 Y VGND | p VPWR p1 VPWR p1 Y: 2.76 um, 16 contacts on the output stage, 16 in all
+variant 0 gates B1 A1 A2 A3 | n VGND Y n1 n2 VGND | p Y p1 VPWR p1 VPWR: 2.76 um, 16 contacts on the output stage, 16 in all
+variant 0 gates A1 A2 A3 B1 | n Y n1 n2 VGND Y | p VPWR p1 VPWR p1 Y: 2.76 um, 15 contacts on the output stage, 15 in all
+variant 0 gates B1 A3 A2 A1 | n Y VGND n2 n1 Y | p Y p1 VPWR p1 VPWR: 2.76 um, 15 contacts on the output stage, 15 in all
+variant 1 gates B1 A1 A2 A3 | n VGND Y n1 n2 VGND | p VPWR p1 Y p1 Y: cannot draw: the outer lanes of Y and p1 meet in the p row
+variant 1 gates A3 A2 A1 B1 | n VGND n2 n1 Y VGND | p Y p1 Y p1 VPWR: cannot draw: the outer lanes of Y and p1 meet in the p row
+variant 1 gates B1 A3 A2 A1 | n Y VGND n2 n1 Y | p VPWR p1 Y p1 Y: cannot draw: the outer lanes of Y and p1 meet in the p row
+variant 1 gates A1 A2 A3 B1 | n Y n1 n2 VGND Y | p Y p1 Y p1 VPWR: cannot draw: the outer lanes of Y and p1 meet in the p row
+variant 2 gates A2 A3 A1 B1 | n VGND n2 n1 Y VGND | p VPWR p1 VPWR p1 Y: 2.76 um, 16 contacts on the output stage, 16 in all
+variant 2 gates B1 A1 A3 A2 | n VGND Y n1 n2 VGND | p Y p1 VPWR p1 VPWR: 2.76 um, 16 contacts on the output stage, 16 in all
+variant 2 gates A1 A3 A2 B1 | n Y n1 n2 VGND Y | p VPWR p1 VPWR p1 Y: 2.76 um, 15 contacts on the output stage, 15 in all
+variant 2 gates B1 A2 A3 A1 | n Y VGND n2 n1 Y | p Y p1 VPWR p1 VPWR: 2.76 um, 15 contacts on the output stage, 15 in all
+variant 3 gates B1 A1 A3 A2 | n VGND Y n1 n2 VGND | p VPWR p1 Y p1 Y: cannot draw: the outer lanes of Y and p1 meet in the p row
+variant 3 gates A2 A3 A1 B1 | n VGND n2 n1 Y VGND | p Y p1 Y p1 VPWR: cannot draw: the outer lanes of Y and p1 meet in the p row
+variant 3 gates B1 A2 A3 A1 | n Y VGND n2 n1 Y | p VPWR p1 Y p1 Y: cannot draw: the outer lanes of Y and p1 meet in the p row
+variant 3 gates A1 A3 A2 B1 | n Y n1 n2 VGND Y | p Y p1 Y p1 VPWR: cannot draw: the outer lanes of Y and p1 meet in the p row
+variant 4 gates A3 A1 A2 B1 | n VGND n2 n1 Y VGND | p VPWR p1 VPWR p1 Y: 2.76 um, 16 contacts on the output stage, 16 in all
+variant 4 gates B1 A2 A1 A3 | n VGND Y n1 n2 VGND | p Y p1 VPWR p1 VPWR: 2.76 um, 16 contacts on the output stage, 16 in all
+variant 4 gates A2 A1 A3 B1 | n Y n1 n2 VGND Y | p VPWR p1 VPWR p1 Y: 2.76 um, 15 contacts on the output stage, 15 in all
+variant 4 gates B1 A3 A1 A2 | n Y VGND n2 n1 Y | p Y p1 VPWR p1 VPWR: 2.76 um, 15 contacts on the output stage, 15 in all
+variant 5 gates B1 A2 A1 A3 | n VGND Y n1 n2 VGND | p VPWR p1 Y p1 Y: cannot draw: the outer lanes of Y and p1 meet in the p row
+variant 5 gates A3 A1 A2 B1 | n VGND n2 n1 Y VGND | p Y p1 Y p1 VPWR: cannot draw: the outer lanes of Y and p1 meet in the p row
+variant 5 gates B1 A3 A1 A2 | n Y VGND n2 n1 Y | p VPWR p1 Y p1 Y: cannot draw: the outer lanes of Y and p1 meet in the p row
+variant 5 gates A2 A1 A3 B1 | n Y n1 n2 VGND Y | p Y p1 Y p1 VPWR: cannot draw: the outer lanes of Y and p1 meet in the p row
+variant 6 gates A1 A3 A2 B1 | n VGND n2 n1 Y VGND | p VPWR p1 VPWR p1 Y: 2.76 um, 16 contacts on the output stage, 16 in all
+variant 6 gates B1 A2 A3 A1 | n VGND Y n1 n2 VGND | p Y p1 VPWR p1 VPWR: 2.76 um, 16 contacts on the output stage, 16 in all
+variant 6 gates A2 A3 A1 B1 | n Y n1 n2 VGND Y | p VPWR p1 VPWR p1 Y: 2.76 um, 15 contacts on the output stage, 15 in all
+variant 6 gates B1 A1 A3 A2 | n Y VGND n2 n1 Y | p Y p1 VPWR p1 VPWR: 2.76 um, 15 contacts on the output stage, 15 in all
+variant 7 gates B1 A2 A3 A1 | n VGND Y n1 n2 VGND | p VPWR p1 Y p1 Y: cannot draw: the outer lanes of Y and p1 meet in the p row
+variant 7 gates A1 A3 A2 B1 | n VGND n2 n1 Y VGND | p Y p1 Y p1 VPWR: cannot draw: the outer lanes of Y and p1 meet in the p row
+variant 7 gates B1 A1 A3 A2 | n Y VGND n2 n1 Y | p VPWR p1 Y p1 Y: cannot draw: the outer lanes of Y and p1 meet in the p row
+variant 7 gates A2 A3 A1 B1 | n Y n1 n2 VGND Y | p Y p1 Y p1 VPWR: cannot draw: the outer lanes of Y and p1 meet in the p row
+variant 8 gates A2 A1 A3 B1 | n VGND n2 n1 Y VGND | p VPWR p1 VPWR p1 Y: 2.76 um, 16 contacts on the output stage, 16 in all
+variant 8 gates B1 A3 A1 A2 | n VGND Y n1 n2 VGND | p Y p1 VPWR p1 VPWR: 2.76 um, 16 contacts on the output stage, 16 in all
+variant 8 gates A3 A1 A2 B1 | n Y n1 n2 VGND Y | p VPWR p1 VPWR p1 Y: 2.76 um, 15 contacts on the output stage, 15 in all
+variant 8 gates B1 A2 A1 A3 | n Y VGND n2 n1 Y | p Y p1 VPWR p1 VPWR: 2.76 um, 15 contacts on the output stage, 15 in all
+variant 9 gates B1 A3 A1 A2 | n VGND Y n1 n2 VGND | p VPWR p1 Y p1 Y: cannot draw: the outer lanes of Y and p1 meet in the p row
+variant 9 gates A2 A1 A3 B1 | n VGND n2 n1 Y VGND | p Y p1 Y p1 VPWR: cannot draw: the outer lanes of Y and p1 meet in the p row
+variant 9 gates B1 A2 A1 A3 | n Y VGND n2 n1 Y | p VPWR p1 Y p1 Y: cannot draw: gave up after 1048 tries, 400 of them drawn
+variant 9 gates A3 A1 A2 B1 | n Y n1 n2 VGND Y | p Y p1 Y p1 VPWR: cannot draw: gave up after 1036 tries, 402 of them drawn
+variant 10 gates A1 A2 A3 B1 | n VGND n2 n1 Y VGND | p VPWR p1 VPWR p1 Y: 2.76 um, 16 contacts on the output stage, 16 in all
+variant 10 gates B1 A3 A2 A1 | n VGND Y n1 n2 VGND | p Y p1 VPWR p1 VPWR: 2.76 um, 16 contacts on the output stage, 16 in all
+variant 10 gates A3 A2 A1 B1 | n Y n1 n2 VGND Y | p VPWR p1 VPWR p1 Y: 2.76 um, 15 contacts on the output stage, 15 in all
+variant 10 gates B1 A1 A2 A3 | n Y VGND n2 n1 Y | p Y p1 VPWR p1 VPWR: 2.76 um, 15 contacts on the output stage, 15 in all
+variant 11 gates B1 A3 A2 A1 | n VGND Y n1 n2 VGND | p VPWR p1 Y p1 Y: cannot draw: the outer lanes of Y and p1 meet in the p row
+variant 11 gates A1 A2 A3 B1 | n VGND n2 n1 Y VGND | p Y p1 Y p1 VPWR: cannot draw: the outer lanes of Y and p1 meet in the p row
+variant 11 gates B1 A1 A2 A3 | n Y VGND n2 n1 Y | p VPWR p1 Y p1 Y: cannot draw: gave up after 1048 tries, 400 of them drawn
+variant 11 gates A3 A2 A1 B1 | n Y n1 n2 VGND Y | p Y p1 Y p1 VPWR: cannot draw: gave up after 1036 tries, 402 of them drawn
+
+== 5. chosen layout
+variant 0, gates A3 A2 A1 B1: li only beats met1, then the narrowest, then the most contacts on the output stage, then the most contacts, the first found on a tie
+width 2.76 um (6 sites), diffusion 0.3 .. 2.35
+gates   A3@0.635  A2@1.055  A1@1.535  B1@2.015
+nMOS columns:
+    VGND@0.425 narrow contacts y=[0.4, 0.74]
+    n2@0.845 no contact
+    n1@1.295 no contact
+    Y@1.775 wide contacts y=[0.4, 0.74]
+    VGND@2.225 narrow contacts y=[0.4]
+    lane Y x 1.61 .. 2.1, inner edge, y 0.735 .. 0.905
+pMOS columns:
+    VPWR@0.425 narrow contacts y=[1.66, 2.0, 2.34]
+    p1@0.845 wide contacts y=[1.66, 2.0, 2.34]
+    VPWR@1.295 narrow contacts y=[2.34]
+    p1@1.775 wide contacts y=[1.92, 2.26]
+    Y@2.225 narrow contacts y=[1.66, 2.0]
+    lane Y x 1.93 .. 2.31, inner edge, y 1.495 .. 1.665
+    lane p1 x 0.68 .. 1.76, inner edge, y 1.495 .. 2.005
+    column 3 notched under the lane of Y: x 1.76 .. 2.48, li kept above y 1.835
+poly contact A3@0.635 for gates 0..0, wide pad
+poly contact A2@1.115 for gates 1..1, narrow pad
+poly contact A1@1.595 for gates 2..2, wide pad
+poly contact B1@2.355 for gates 3..3, narrow pad
+crossing Y at x 2.015
+
+== 6. checks
+DRC (Magic, in a row with tap cells): 0 errors
+LVS (Netgen): match; RC-LVS: match
+abutment: pass, 0 errors
+layer check: pass
+simulation (ngspice): pass
+
+== 7. response
+pass, 6 sites, 7.5072 um2

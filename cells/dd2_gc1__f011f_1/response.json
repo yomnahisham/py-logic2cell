@@ -1,0 +1,7 @@
+{
+  "request_id": "GC1-011F",
+  "status": "fail",
+  "reason": "no Euler order can be drawn: D C D C A B: cannot route Y between the rows on li; B A C D C D: cannot route Y between the rows on li; D B A C D C: cannot route Y between the rows on li",
+  "cell": "dd2_gc1__f011f_1",
+  "tool_version": "git:6326eba"
+}

@@ -1,0 +1,57 @@
+build nor2_1.json --hd nor2_1, style handout, git:6326eba, 2026-11-08 21:48 UTC
+
+== 1. request
+name dd2_gc1__nor2_1, id HD-nor2_1, inputs A, B, output Y, truth table 0x1, sizing hd
+
+== 2. network
+one stage (2 series orders)
+variant 0: Y = f(A, B), 4 fets
+    nMOS gate A: Y - VGND
+    nMOS gate B: Y - VGND
+    pMOS gate A: Y - p1
+    pMOS gate B: p1 - VPWR
+variant 1: Y = f(A, B), 4 fets
+    nMOS gate A: Y - VGND
+    nMOS gate B: Y - VGND
+    pMOS gate B: Y - p1
+    pMOS gate A: p1 - VPWR
+
+== 3. switch-level check
+variant 0: every input combination gives the truth table
+variant 1: every input combination gives the truth table
+kept 1 of 2 variants that connect like the installed nor2_1 (Table 4: the transistors must match HD's; the others differ only in series order)
+widths: NMOS 0.65 um, PMOS 1.0 um, HD's own per gate: {('p', 'A'): 1.0, ('n', 'A'): 0.65, ('n', 'B'): 0.65, ('p', 'B'): 1.0}
+every transistor width matches nor2_1's
+
+== 4. Euler orders and placement (first 40 per variant, fewest contacts first)
+variant 0 gates A B | n VGND Y VGND | p VPWR p1 Y: 1.38 um, 12 contacts on the output stage, 12 in all
+variant 0 gates B A | n VGND Y VGND | p Y p1 VPWR: 1.38 um, 12 contacts on the output stage, 12 in all
+variant 0 gates A B | n Y VGND Y | p VPWR p1 Y: 1.38 um, 9 contacts on the output stage, 9 in all
+variant 0 gates B A | n Y VGND Y | p Y p1 VPWR: 1.38 um, 9 contacts on the output stage, 9 in all
+
+== 5. chosen layout
+variant 0, gates A B: li only beats met1, then the narrowest, then the most contacts on the output stage, then the most contacts, the first found on a tie
+width 1.38 um (3 sites), diffusion 0.145 .. 1.235
+gates   A@0.48  B@0.9
+nMOS columns:
+    VGND@0.27 narrow contacts y=[0.4, 0.74]
+    Y@0.69 wide contacts y=[0.4, 0.74]
+    VGND@1.11 narrow contacts y=[0.4, 0.74]
+pMOS columns:
+    VPWR@0.27 narrow contacts y=[1.66, 2.0, 2.34]
+    p1@0.69 no contact
+    Y@1.11 wide contacts y=[1.66, 2.0, 2.34]
+poly contact A@0.27 for gates 0..0, wide pad
+poly contact B@1.11 for gates 1..1, wide pad
+crossing Y at x 0.69
+
+== 6. checks
+DRC (Magic, in a row with tap cells): 0 errors
+LVS (Netgen): match; RC-LVS: match
+abutment: pass, 0 errors
+layer check: pass
+simulation (ngspice): pass
+compared with nor2_1: see report.json, key compare
+
+== 7. response
+pass, 3 sites, 3.7536 um2
