@@ -82,7 +82,7 @@ x1 (0.65/1.00 um, handout step 3) where HD's are 0.42/0.42 um (the installed cel
 PDK against our `cell.spice`), so ours drive their output stage harder, at the price of more input
 capacitance. The wider cells cost delay where the
 extra site lengthens the output: o21ai_1 +2.4%, o22ai_1 +3.6%, xor2_1 +8.9%. Every pin's value is in
-`results/table6_timing.csv`.
+`results/table6_timing_pins.csv`.
 
 For the six reference cells, characterized on their own HD grid (`results/timing_vs_hd.txt`): the
 slowest arc differs from HD's by +0.1% (inv_1), +0.2% (nand2_1), +1.8% (nor2_1), -1.9% (nand3_1),
