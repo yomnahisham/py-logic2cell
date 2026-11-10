@@ -183,10 +183,11 @@ def widths_vs_hd(stage, hd: str, wn: float, wp: float, widths: dict) -> str:
     return f"widths differ from {hd}: ours only {sorted((ours - hd_ws).elements())}, HD only {sorted((hd_ws - ours).elements())}"
 
 
-def make_cell(work: Path, name: str, stage, order, wn: float, wp: float, widths: dict, request) -> dict:
+def make_cell(work: Path, name: str, stage, order, wn: float, wp: float, widths: dict, request,
+              bridges: bool = False) -> dict:
     """Draw one layout in work/, write its GDS, schematic and plan, and run every check on it."""
     work.mkdir(parents=True, exist_ok=True)
-    component, meta = draw(name, stage, order, wn, wp, widths)
+    component, meta = draw(name, stage, order, wn, wp, widths, bridges)
     meta.update(inputs=list(request.inputs), output=request.output)
     component.write_gds(str(work / f"{name}.gds"), with_metadata=False)
     (work / f"{name}.spice").write_text(schematic(stage, name, wn, wp, widths=widths))
@@ -380,6 +381,12 @@ def build(request_path: Path, hd: str | None = None, style: str = "handout", pla
             f"keeps {wn}/{wp} um; widths from the model bins, none under the DRC's {tuned.drc_min_width()} um")
         variants = expanded
     best, tried, unrouted, found = search(variants)
+    if best is None and style == "handout" and not bridges:
+        # handout step 5, met1 only where li1 cannot: the same network, with a net's contacts joined on met1
+        # along a row and across the band where li cannot reach them (layout.finish), before any split
+        log(f"no order can be drawn on li ({'; '.join(unrouted[:2])}); the same orders with met1 where li cannot")
+        bridges = True
+        best, tried, unrouted, found = search(variants)
     if best is None and style == "handout":
         # handout step 2, "otherwise decompose the function": no order of the network can be drawn, so one
         # operand of its largest stage becomes a stage of its own (network.operand_splits); while nothing can
@@ -455,7 +462,7 @@ def build(request_path: Path, hd: str | None = None, style: str = "handout", pla
         f"then the most contacts on the output stage, then the most contacts, the first found on a tie")
     describe(plan, order, log)
     stage = cell.flat
-    built = built or make_cell(work, name, stage, order, wn, wp, widths, request)
+    built = built or make_cell(work, name, stage, order, wn, wp, widths, request, bridges)
     meta, checks, abut, layers, sim = built["meta"], built["checks"], built["abut"], built["layers"], built["sim"]
     meta.update(inputs=list(request.inputs), output=request.output, orders_tried=tried,
                 orders_drawable=tried - len(unrouted), style=style)
