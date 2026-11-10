@@ -1,0 +1,6 @@
+loop: given/designs/cpu8.v (top cpu8), 1 rounds of 2 candidates
+10 buildable candidates with a positive estimated saving
+round 0 (reduced library): {'round': 0, 'tried': '', 'kept': '', 'area_um2': 4186.5152, 'script': 'A', 'cec': 'pass', 'worst_delay_ns': 4.1754, 'power_mw': 0.44217, 'ours_power_mw': 0.0}
+round 1: dd2_gc1__f011f_1 reused, not kept: 4186.5152 um2 (cec pass); dd2_gc1__f0017_1 reused, not kept: 4186.5152 um2 (cec pass)
+round 1 design: {'round': 1, 'tried': 'dd2_gc1__f011f_1 dd2_gc1__f0017_1', 'kept': '', 'area_um2': 4186.5152, 'script': 'A', 'cec': 'pass', 'worst_delay_ns': 4.1754, 'power_mw': 0.44217, 'ours_power_mw': 0.0}
+cpu8: area 4186.5152 -> 4186.5152 um2 (+0.00%), worst delay 4.1754 -> 4.1754 ns, power 0.44217 -> 0.44217 mW, cells kept: none
