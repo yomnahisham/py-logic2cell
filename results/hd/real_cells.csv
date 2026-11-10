@@ -3,5 +3,5 @@ dd2_gc1__f2b_1,True,real,11.2608,10.0096,12.5,12,12,9,8,accepted
 dd2_gc1__f0017_1,True,real,11.2608,10.0096,12.5,12,12,9,8,accepted
 dd2_gc1__f17_1,True,real,10.0096,7.5072,33.33,10,10,8,6,accepted
 dd2_gc1__f001f_1,True,real,7.5072,7.5072,0.0,8,8,6,6,accepted
-dd2_gc1__f0eef_1,True,estimated,15.0144,,,16,16,12,14,the response names no Liberty file (files.liberty)
+dd2_gc1__f0eef_1,True,real,15.0144,18.768,-20.0,16,16,12,15,accepted
 dd2_gc1__f07ff_1,True,real,7.5072,7.5072,0.0,8,8,6,6,accepted
