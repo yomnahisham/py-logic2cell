@@ -6,9 +6,9 @@ X3 n1 B VGND VNB sky130_fd_pr__nfet_01v8 w=0.65 l=0.15
 X4 Y C n2 VNB sky130_fd_pr__nfet_01v8 w=0.65 l=0.15
 X5 n2 A_b VGND VNB sky130_fd_pr__nfet_01v8 w=0.65 l=0.15
 X6 n2 B VGND VNB sky130_fd_pr__nfet_01v8 w=0.65 l=0.15
-X7 Y C p1 VPB sky130_fd_pr__pfet_01v8_hvt w=1 l=0.15
-X8 Y A_b p2 VPB sky130_fd_pr__pfet_01v8_hvt w=1 l=0.15
-X9 p2 B p1 VPB sky130_fd_pr__pfet_01v8_hvt w=1 l=0.15
-X10 p1 A_b VPWR VPB sky130_fd_pr__pfet_01v8_hvt w=1 l=0.15
-X11 p1 B VPWR VPB sky130_fd_pr__pfet_01v8_hvt w=1 l=0.15
+X7 Y A_b p1 VPB sky130_fd_pr__pfet_01v8_hvt w=1 l=0.15
+X8 Y B p1 VPB sky130_fd_pr__pfet_01v8_hvt w=1 l=0.15
+X9 p1 C VPWR VPB sky130_fd_pr__pfet_01v8_hvt w=1 l=0.15
+X10 p1 B p2 VPB sky130_fd_pr__pfet_01v8_hvt w=1 l=0.15
+X11 p2 A_b VPWR VPB sky130_fd_pr__pfet_01v8_hvt w=1 l=0.15
 .ends
