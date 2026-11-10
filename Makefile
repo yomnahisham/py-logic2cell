@@ -8,8 +8,10 @@ TUT4     ?= ../../tut4/student
 TOP      ?=
 SV       ?=
 TUT2     ?=
+ROUNDS   ?= 2
+PER_ROUND ?= 3
 
-.PHONY: setup check test all real full demo demo2 clean table5 gls gls-real
+.PHONY: setup check test all real full demo demo2 loop clean table5 gls gls-real
 
 PDK      ?= $(firstword $(wildcard $(PDK_ROOT)/sky130A $(PDK_ROOT)/ciel/sky130/versions/*/sky130A))
 PY       := .venv/bin/python
@@ -117,6 +119,10 @@ demo2:            ## option 2 on one design: make demo2 IN=<design.v> TOP=<top m
 
 greedy:
 	$(PY) -m src.hd.greedy
+
+loop:             ## option 3 on one design, in rounds: make loop IN=<design.v> TOP=<top> [ROUNDS=2] [PER_ROUND=3] [SV=1]
+	@test -n "$(IN)" -a -n "$(TOP)" || (echo "usage: make loop IN=<design.v> TOP=<top> [ROUNDS=2] [PER_ROUND=3]" && exit 1)
+	$(PY) -m src.hd.loop $(IN) $(TOP) --rounds $(ROUNDS) --per-round $(PER_ROUND) $(if $(SV),--sv)
 
 table5:           ## the characterizer validation of Table 5 (option 1 handout, section 5.1)
 	$(PY) -m src.cell.char_validate
