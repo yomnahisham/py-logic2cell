@@ -9,7 +9,9 @@
   "area_um2": 12.512,
   "files": {
     "gds": "cells/dd2_gc1__nor3_1_stack/cell.gds",
-    "report": "cells/dd2_gc1__nor3_1_stack/report.json"
+    "report": "cells/dd2_gc1__nor3_1_stack/report.json",
+    "liberty": "cells/dd2_gc1__nor3_1_stack/cell.lib",
+    "verilog": "cells/dd2_gc1__nor3_1_stack/cell.v"
   },
   "checks": {
     "drc": 0,
@@ -19,5 +21,7 @@
     "abutment": 0,
     "layers": "pass"
   },
-  "tool_version": "git:6326eba"
+  "tool_version": "git:6326eba",
+  "ngspice_sha256": "81a8991415fbee4065e1e54fcdf68ac67183eb9b1d2c4119c252066d370705ad",
+  "grid_from": "sky130_fd_sc_hd__nor3_1"
 }

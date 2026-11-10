@@ -1,0 +1,19 @@
+sizing,cell,view,sites,area_um2,width_is,reason,transistors,pin,slew_ns,load_pf,capacitance_pf,cell_rise,rise_transition,cell_fall,fall_transition
+hd,dd2_gc1__nor3_1,extracted,4,5.0048,drawn,,6,A,0.122474,0.0110852,0.002295,0.32274,0.37552,0.09769,0.06969
+hd,dd2_gc1__nor3_1,extracted,4,5.0048,drawn,,6,B,0.122474,0.0110852,0.00225,0.35895,0.37556,0.10115,0.0717
+hd,dd2_gc1__nor3_1,extracted,4,5.0048,drawn,,6,C,0.122474,0.0110852,0.002298,0.37199,0.37555,0.10465,0.07505
+hd,dd2_gc1__nor3_1,schematic,4,5.0048,drawn,,6,A,0.122474,0.0110852,0.001914,0.31305,0.35467,0.08259,0.05832
+hd,dd2_gc1__nor3_1,schematic,4,5.0048,drawn,,6,B,0.122474,0.0110852,0.001943,0.34316,0.35467,0.08747,0.05991
+hd,dd2_gc1__nor3_1,schematic,4,5.0048,drawn,,6,C,0.122474,0.0110852,0.001984,0.3558,0.35466,0.08966,0.06195
+hd,dd2_gc1__nor3_1,"schematic, standard-Vt PMOS",4,5.0048,drawn,,6,A,0.122474,0.0110852,0.001902,0.23782,0.28199,0.08245,0.0583
+hd,dd2_gc1__nor3_1,"schematic, standard-Vt PMOS",4,5.0048,drawn,,6,B,0.122474,0.0110852,0.001933,0.26028,0.28205,0.08733,0.06032
+hd,dd2_gc1__nor3_1,"schematic, standard-Vt PMOS",4,5.0048,drawn,,6,C,0.122474,0.0110852,0.001981,0.26833,0.28208,0.0898,0.06255
+stack,dd2_gc1__nor3_1_stack,extracted,10,12.512,drawn,,12,A,0.122474,0.0110852,0.004646,0.18161,0.19647,0.1093,0.07685
+stack,dd2_gc1__nor3_1_stack,extracted,10,12.512,drawn,,12,B,0.122474,0.0110852,0.004666,0.23168,0.20151,0.12268,0.08581
+stack,dd2_gc1__nor3_1_stack,extracted,10,12.512,drawn,,12,C,0.122474,0.0110852,0.004817,0.25025,0.20156,0.13347,0.09736
+stack,dd2_gc1__nor3_1_stack,schematic,10,12.512,drawn,,12,A,0.122474,0.0110852,0.00406,0.14073,0.13144,0.08828,0.05731
+stack,dd2_gc1__nor3_1_stack,schematic,10,12.512,drawn,,12,B,0.122474,0.0110852,0.004127,0.1707,0.13317,0.1025,0.06234
+stack,dd2_gc1__nor3_1_stack,schematic,10,12.512,drawn,,12,C,0.122474,0.0110852,0.004235,0.18333,0.13276,0.10943,0.06905
+stack,dd2_gc1__nor3_1_stack,"schematic, standard-Vt PMOS",10,12.512,drawn,,12,A,0.122474,0.0110852,0.004026,0.10776,0.11127,0.08774,0.05724
+stack,dd2_gc1__nor3_1_stack,"schematic, standard-Vt PMOS",10,12.512,drawn,,12,B,0.122474,0.0110852,0.004093,0.12945,0.11061,0.10198,0.06329
+stack,dd2_gc1__nor3_1_stack,"schematic, standard-Vt PMOS",10,12.512,drawn,,12,C,0.122474,0.0110852,0.004231,0.13757,0.10827,0.10976,0.07083

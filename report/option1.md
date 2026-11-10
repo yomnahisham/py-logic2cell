@@ -65,8 +65,14 @@ match HD's transistors including every W and L, its frame, pins and wiring layer
   band where Table 2 requires input pins; with all three pins in the npc band, the B1 contact needs a
   0.6 um gate pitch where HD has 0.42 to 0.48 (`cells/dd2_gc1__o21ai_1/report.json`, `compare.gates`).
 - xor2_1: one break more than HD (Ordering).
-- o22ai_1 and maj3_1: TODO, not yet compared with HD layer by layer (they were built without `--hd`, so
-  their `report.json` has no `compare`); rebuild with `--hd o22ai_1` / `--hd maj3_1` to find the cause.
+- o22ai_1 (6 against 5 sites): the cause of o21ai_1 again. HD puts three of its four inputs (A2, B1,
+  B2) in a row band and bends its poly, so its PMOS gates sit at 0.375, 0.615 and 0.36 um and its NMOS
+  gates at 0.435, 0.505 and 0.42; ours keep all four inputs in the npc band at 0.42, 0.66 and 0.48 um.
+- maj3_1 (9 against 8 sites): gate pitch. HD's seven gates are 0.36 to 0.42 um apart, mostly the pitch
+  over shared diffusion (0.36 um, poly.1a + poly.2, `results/design_rules.csv`); ours are 0.60 to 0.66 um
+  apart: the placer widens columns beyond 0.42 um until every poly contact and crossing finds room
+  (`layout.place`), and for maj3_1 the narrowest plan it found has every column widened.
+  (Comparison by `src/cell/compare.py`, which Table 6 runs for every pair.)
 
 Delay and slew at the HD table point nearest 100 ps and 10 fF (`results/table6_vs_hd.csv`), against the
 HD cell characterized by our own flow (the like-for-like comparison; the shipped value is in
@@ -104,9 +110,25 @@ The two sizings of !(A | B | C) (`results/nor3_sizings.csv`, `cells/dd2_gc1__nor
   (C C C B B B A A A), and the PMOS internal node p1, which then repeats along the row, is joined by
   a met1 line along it: 10 sites, every check passed (`cells/dd2_gc1__nor3_1_stack/build.log`).
 
-TODO per-pin delay of both sizings once nor3_1_stack is characterized (overnight run).
+Both extracted and characterized on nor3_1's grid, at the point nearest 100 ps and 10 fF
+(`results/nor3_sizings.csv`, view `extracted`), stack against hd:
 
-Which to put in a library: TODO from those numbers.
+| Pin | cell_rise | cell_fall | rise_transition | fall_transition | input capacitance |
+|---|---|---|---|---|---|
+| A | -43.7% | +11.9% | -47.7% | +10.3% | +102.4% |
+| B | -35.5% | +21.3% | -46.3% | +19.7% | +107.4% |
+| C | -32.7% | +27.5% | -46.3% | +29.7% | +109.6% |
+
+The stack sizing triples the PMOS stack's width, so the rise, through three PMOS in series, is a third
+to almost half faster; the NMOS are the same 0.65 um, so the fall gets slower by the extra drain
+capacitance on Y from nine PMOS fingers. It costs 12.512 um2 against 5.0048 (10 sites against 4) and
+doubles every input's capacitance, which slows whatever drives it.
+
+Which to put in a library: the hd sizing, as x1. At the same load the stack cell is a different drive
+strength, two and a half times the area for a rise that is still slower than its fall; a library gets
+that from a larger drive (HD's nor3_2 and nor3_4) and keeps its x1 cell small, as HD does: nor3_1 is
+the hd sizing, transistor for transistor (`results/differences_vs_hd.md` for the reference cells,
+`results/table6_vs_hd.csv`, `lvs_vs_hd` for nor3_1).
 
 What high-Vt PMOS costs in rising delay, measured on the hd sizing's schematic with pfet_01v8_hvt and
 again with pfet_01v8 (`results/nor3_sizings.csv`, views `schematic` and `schematic, standard-Vt PMOS`):
