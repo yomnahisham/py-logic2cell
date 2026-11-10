@@ -17,6 +17,8 @@ Tools: Python 3.14.8 (gdsfactory 9.51.0, klayout 0.30.12), Magic 8.3.684, Netgen
     make all       # the whole flow: hours (every cell built, characterized and checked); not yet timed end to end
     make test      # every test and broken case: ~75 s
 
+The characterizer runs at most `CHAR_JOBS` ngspice containers at once (default 8; each holds a few hundred MB in Docker's VM, so lower it on a machine with less memory).
+
 `make setup` expects the student pack next to this repo (`GIVEN=../DD2_Project1_student_pack/given`) and searches for the PDK under `~/.ciel`; override with `GIVEN=...`, `PDK_ROOT=...`, or `PDK=...`.
 
 ## 3. What the tool does
@@ -133,7 +135,7 @@ AGENTS.md · ai/use_log.md · ai/mistakes_log.md · report/ai_report.pdf
 
 - Some Option 2 candidates cannot be drawn on li alone (12 transistors in one stage, too dense for one li track between the rows); the generator then uses met1 where li cannot route, and as a last resort splits the function into stages. Five of the ten candidates are delivered (`results/hd/real_cells.csv`); the rest are listed with their reasons in `report/option1.md`.
 - met1 is used inside a cell only where li cannot route: multi-stage cells, and along a row in a folded (stack-sized) cell or a split network. The handout allows met1 inside multi-stage cells only; HD's own folded nor3_4 uses it too.
-- TT corner only; no state-dependent (`when`) arcs, no LEF view or placement test. Power is measured (`python -m src.cell.power_validate`) but not written into the cells' Liberty: against HD it is 0.8% off on inv_1, 15 to 19% on the multi-input cells, and leakage 2 to 4x low (`results/power_validation.txt`).
+- TT corner only; no state-dependent (`when`) arcs, no LEF view or placement test. Power is measured and written into the Liberty of every cell characterized since, with a note on its accuracy: against HD it is 0.8% off on inv_1, 15 to 19% on the multi-input cells, and leakage 2 to 4x low (`results/power_validation.txt`).
 - Option 2 still maps with estimated areas until it reads the delivered cells (`src/hd/real_cells.py` on its branch).
 
 ## 10. Third-party files

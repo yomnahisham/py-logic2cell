@@ -186,8 +186,9 @@ Properties of a production cell that none of our checks covers:
   (`results/power_validation.txt`, the six reference cells, 3 x 3 of each grid) the internal energy has
   a median error of 0.79% on inv_1 and 15 to 19% on every multi-input cell, mostly a fixed offset of
   about 0.005 pJ at the smallest loads, and leakage is 2 to 4 times lower than HD's in every state, the
-  pattern of a different release of the device models. The cells' Liberty files therefore carry no
-  power (`liberty_write.WRITE_POWER`): the multi-input offset is not explained;
+  pattern of a different release of the device models. The Liberty files carry this power with a note
+  on its accuracy (a cell without power tables would read as drawing none); the multi-input offset is not
+  explained;
 - corners: TT only (no FF/SS), and no `when` (state-dependent) timing arcs; the side input is always the
   slowest setting;
 - the LEF view, router pin access and a placement test (OpenROAD);

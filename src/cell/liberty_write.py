@@ -64,11 +64,15 @@ def power_table(kind: str, index_1: list[float], index_2: list[float], values: l
             f'{pad}}}')
 
 
-# Power tables are written only when asked: against the shipped HD Liberty the characterizer's internal energy
-# has a median error of 15-19% on the multi-input reference cells (0.8% on inv_1) and its leakage is 2-4x low
-# (results/power_validation.txt), against a 5% bar for timing (Table 5); a cell.lib does not carry numbers
-# that would look as checked as its timing.
-WRITE_POWER = False
+# Power tables are written wherever the characterizer measured power: a cell with none would read as drawing
+# no power at all. They are less exact than the timing: against the shipped HD Liberty the internal energy has a
+# median error of 0.79% on inv_1 and 15-19% on the multi-input reference cells, and leakage is 2-4x low
+# (results/power_validation.txt); POWER_NOTE says so in every library that carries them.
+WRITE_POWER = True
+POWER_NOTE = ("/* Power (leakage_power, internal_power) from src/cell/characterize.py; against the shipped HD "
+              "Liberty its internal energy is 0.79% off on inv_1 and 15-19% (median) on multi-input cells, and "
+              "its leakage 2-4x low: see results/power_validation.txt. Timing is validated to 3.40% "
+              "(results/char_validation.txt). */\n")
 
 
 def cell_group(timing: dict, area: float, function: str, footprint: str | None = None,
@@ -153,7 +157,8 @@ def library(name: str, runs: list[dict], cells: list[str]) -> str:
     head = header()
     first = head.index("{") + 1
     head = f'library ("{name}") {{' + head[first:]
-    return stamp(one_build(runs)) + head + templates(head, runs) + "".join(cells) + "}\n"
+    note = POWER_NOTE if any("internal_power" in c or "leakage_power" in c for c in cells) else ""
+    return stamp(one_build(runs)) + note + head + templates(head, runs) + "".join(cells) + "}\n"
 
 
 def replace(source: Path, groups: dict[str, str], ngspice: dict) -> str:

@@ -132,7 +132,12 @@ def measure(folder: Path, name: str, netlist: str, ports: list[str], output: str
     stem = f"{name}_{pin}_{edge_in}_" + "".join(f"{p}{v}" for p, v in side.items()) + tag
     (folder / f"{stem}.spice").write_text(deck(name, netlist, ports, output, pin, side, edge_in, edge_out,
                                               slews, loads, setup, full_ramp))
-    out = run("ngspice", ["-b", f"{stem}.spice"], folder, folder / f"{stem}.log", timeout=3600, image=image)
+    try:
+        out = run("ngspice", ["-b", f"{stem}.spice"], folder, folder / f"{stem}.log", timeout=3600, image=image)
+    except RuntimeError as error:
+        if "exited with 137" not in str(error):     # killed for memory: the same deck once more, then give up
+            raise
+        out = run("ngspice", ["-b", f"{stem}.spice"], folder, folder / f"{stem}.log", timeout=3600, image=image)
     vdd, derate = setup["nom_voltage"], setup["slew_derate_from_library"]
     delay = [[None] * len(loads) for _ in slews]
     trans = [[None] * len(loads) for _ in slews]
@@ -219,7 +224,9 @@ def characterize(folder: Path, name: str, netlist: str, inputs: list[str], outpu
         for edge_in, edge_out, settings in arc.edges():
             for s in settings:
                 jobs.append((arc, edge_in, edge_out, s, slews, loads))
-    workers = max(1, min(len(jobs), os.cpu_count() or 2))      # ngspice is single-threaded
+    # ngspice is single-threaded, so one run per CPU, but each holds a few hundred MB in Docker's VM: a cap, so
+    # that a machine with less memory, or something else running, does not get runs killed (exit 137)
+    workers = max(1, min(len(jobs), os.cpu_count() or 2, int(os.getenv("CHAR_JOBS", "8"))))
     with ThreadPoolExecutor(workers) as pool:
         runs = list(pool.map(lambda j: measure(folder, name, netlist, ports, output, j[0].pin, j[3].side, j[1],
                                                j[2], j[4], j[5], setup, full_ramp, image, tag), jobs))

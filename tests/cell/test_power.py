@@ -1,4 +1,4 @@
-"""Power in the Liberty writer: left out unless asked for (results/power_validation.txt), written when asked."""
+"""Power in the Liberty writer: written where it was measured, left out where it was not, or when asked."""
 
 from src.cell.liberty_write import cell_group
 
@@ -13,12 +13,17 @@ def timing():
                 leakage_nw={"A": 0.01, "!A": 0.0002})
 
 
-def test_power_left_out_by_default():
-    text = cell_group(timing(), 3.75, "!A")
+def test_power_left_out_where_not_measured():
+    t = timing()
+    del t["leakage_nw"]
+    for arc in t["arcs"]:
+        del arc["power"]
+    text = cell_group(t, 3.75, "!A")
     assert "leakage_power" not in text and "internal_power" not in text and "cell_rise" in text
+    assert "internal_power" not in cell_group(timing(), 3.75, "!A", power=False)
 
 
-def test_power_written_when_asked():
-    text = cell_group(timing(), 3.75, "!A", power=True)
+def test_power_written_where_measured():
+    text = cell_group(timing(), 3.75, "!A")
     assert text.count("leakage_power ()") == 2 and "cell_leakage_power : 0.0051000000" in text
     assert 'rise_power ("power_outputs_1")' in text and 'fall_power ("power_outputs_1")' in text
