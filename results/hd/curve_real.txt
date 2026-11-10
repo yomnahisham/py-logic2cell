@@ -1,0 +1,8 @@
+cell-by-cell curve (5 real cells, the rest estimated), from final_set.json
+   0 (baseline): 86245.216 um2 (+0.000%)
+   1 dd2_gc1__f2b_1: 86245.216 um2 (+0.000%)
+   2 dd2_gc1__f0017_1: 86242.7136 um2 (+0.003%)
+   3 dd2_gc1__f17_1: 86233.9552 um2 (+0.013%)
+   4 dd2_gc1__f001f_1: 86041.2704 um2 (+0.236%)
+   5 dd2_gc1__f0eef_1: 86036.2656 um2 (+0.242%)
+   6 dd2_gc1__f07ff_1: 85971.2032 um2 (+0.318%)
