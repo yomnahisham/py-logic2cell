@@ -138,19 +138,21 @@ goes through three high-Vt PMOS in series, which is where the high Vt costs most
 
 ## Candidates from Option 2 (overview, section 2, rule 3)
 
-Option 2's candidate requests (`requests/candidates/`, ranks from `results/hd/ranked.json`). Delivered and
-checked so far: f001f, f077f (rank 6) and f17 (rank 9), each with Liberty and Verilog views, model check
-and round trip passed, and chosen freely by ABC (`cells/<name>/model_check.json`); f077f is the cell
-SPM uses 31 times in the design of step 9.
+Option 2's candidate requests (`requests/candidates/`, ranks from `results/hd/ranked.json`). Delivered,
+each with its Liberty and Verilog views, model check and round trip passed, chosen freely by ABC, and
+accepted by Option 2's intake (`results/hd/real_cells.csv`): f011f (rank 1), f17ff (rank 4), f077f
+(rank 6), f17 (rank 9) and f001f. f077f is the cell SPM uses 31 times in step 9 (`results/design_use.txt`).
 
-TODO the final list after the overnight rebuild (`cells/dd2_gc1__f*/response.json`). Before the
-decomposition fallback, five were refused: the single-stage f011f (rank 1), f17ff (rank 4) and f0017
-(rank 5), 12 transistors each, and the two-stage f02ab (rank 2) and f2b (rank 3), whose complex stage is
-as dense. Over every Euler order of every series order (`cells/<name>/build.log`) these fail because the
-output has contacts on both sides of other nets' contacts in both rows and cannot cross between the rows
-on li, or because a poly contact finds no room in the one-track middle band. The fallback now splits
-such a stage (`network.operand_splits`, up to three levels), and a split network may join a row's
-contacts on met1; the rebuild says which of them that is enough for.
+f011f and f17ff are one stage of 12 transistors, 8 sites each. On li alone no Euler order of them can be
+drawn: the output has contacts on both sides of other nets' contacts in both rows, so its li cannot
+reach the crossing between the rows, or a poly contact finds no room in the one-track middle band
+(`cells/<name>/build.log`). Handout step 5 allows met1 where li cannot route; the generator then joins
+such a net's contacts with a met1 line along its row, and crosses between the rows on met1 where its li
+cannot (`layout.finish`), only after every order has failed on li, so no cell that draws on li changes.
+
+TODO the remaining candidates (f0017, f2b, f02ab, f002b, f2bff) from the rebuild in progress
+(`cells/dd2_gc1__f*/response.json`). A candidate that still cannot be built is reported with its reason,
+and the group may ask the instructor for it (overview, section 2, rule 3).
 
 ## Characterization
 
