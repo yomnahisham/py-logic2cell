@@ -1,0 +1,6 @@
+gate-level simulation: 12 of 12 netlist/testbench runs PASS; cec proves all 8 mapped netlists equivalent to the RTL
+new cells in the models: dd2_gc1__f2b_1 (truth table), dd2_gc1__f0017_1 (truth table), dd2_gc1__f17_1 (truth table), dd2_gc1__f001f_1 (truth table), dd2_gc1__f0eef_1 (truth table), dd2_gc1__f07ff_1 (truth table)
+extra cell instances by netlist: SPM extended A: 0, SPM extended B: 0, mul extended A: 1, mul extended B: 12
+netlist with a swapped cell: one xor2_1 became or2_1 -> FAIL as it must  [FAIL: 13312/65536 mismatches]
+model of a new cell inverted: dd2_gc1__f17_1 (8 instances in mul, script B); testbenches mul_tb, mul_exhaustive_tb -> FAIL as it must  [FAIL: 65536/65536 mismatches]
+Liberty function of a new cell complemented: dd2_gc1__f17_1 in mul, script B: cec says equivalent (blind to it), 7 instances, testbenches mul_tb, mul_exhaustive_tb -> FAIL as it must  [FAIL: 65536/65536 mismatches]

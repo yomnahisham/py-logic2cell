@@ -11,6 +11,7 @@ from src.hd.cost import cost, expression
 from src.hd.liberty_writer import groups, parse_scale
 from src.hd.rank import cell_name, request_id
 from src.hd.request_writer import final_set, selected
+from src.hd.real_cells import RealCell
 from src.paths import ROOT
 
 LIBRARY = """library ("t") {
@@ -83,6 +84,25 @@ def test_named_cells_keep_the_given_order(tmp_path):
 def test_names_and_final_set_together_are_refused():
     with pytest.raises(SystemExit):
         liberty_writer.main(["--names", "a", "--final-set"])
+
+
+def test_real_mode_drops_failed_cells(tmp_path, monkeypatch):
+    accepted, failed = candidate(0x077F, 4), candidate(0x007F, 4)
+    real = groups([accepted], LIBRARY).replace(f"area : {accepted['area_um2']};",
+                                                "area : 8.7584;", 1)
+
+    def fake_intake(cand):
+        return RealCell(cand["name"], real if cand is accepted else None,
+                        "accepted" if cand is accepted else "status fail", None, None)
+
+    monkeypatch.setattr(liberty_writer, "selected", lambda *args: [accepted, failed])
+    monkeypatch.setattr("src.hd.real_cells.intake", fake_intake)
+    out = tmp_path / "real.lib"
+    liberty_writer.main(["--real", "--out", str(out)])
+
+    text = out.read_text()
+    assert f'cell ("{accepted["name"]}")' in text
+    assert f'cell ("{failed["name"]}")' not in text
 
 
 @pytest.mark.skipif(not (ROOT / "given").exists() or not (ROOT / "results/hd/ranked.json").exists(),

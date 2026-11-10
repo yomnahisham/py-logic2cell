@@ -14,8 +14,8 @@ logical-effort model anchored on HD's inv_1, read from hd_reduced.lib:
     python -m src.hd.liberty_writer [--limit 10 | --names <cell> ... | --final-set [<path>]]
                                     [--scale <cell>=<factor> ...] [--real] [--out <lib>]
         -> libs/new_cells.lib (the new cell groups), build/libs/hd_reduced_ext.lib (the whole file);
-           with --real, libs/new_cells_real.lib and build/libs/hd_reduced_real.lib, the real cells
-           from Option 1 in place of their estimated entries (src.hd.real_cells);
+           with --real, libs/new_cells_real.lib and build/libs/hd_reduced_real.lib, accepted real cells
+           from Option 1 replace their estimates and failed cells are dropped (src.hd.real_cells);
            with --out, only the whole file, at that path (for the greedy selection's trials)
 """
 
@@ -165,7 +165,7 @@ def main(argv: list[str]):
     parser.add_argument("--scale", nargs="+", metavar="CELL=FACTOR", help="multiply these cells' areas")
     parser.add_argument("--out", type=Path, help="write only this whole library (libs/new_cells.lib is left alone)")
     parser.add_argument("--real", action="store_true",
-                        help="use the real cells Option 1 returned (src.hd.real_cells) where they pass the checks")
+                        help="use accepted Option 1 cells and drop failed cells (src.hd.real_cells)")
     args = parser.parse_args(argv)
     library = REDUCED.read_text()
     cells = selected(args.limit, chosen_names(args), args.ranked)
@@ -174,17 +174,18 @@ def main(argv: list[str]):
         from src.hd.real_cells import intake
         for c in cells:
             r = intake(c)
-            print(f"  {c['name']}: {'real' if r.group else 'estimated'} ({r.reason})")
+            print(f"  {c['name']}: {'real' if r.group else 'dropped'} ({r.reason})")
             if r.group:
                 real[c["name"]] = r.group
-    text = groups(cells, library, parse_scale(args.scale), real)
+    output_cells = [c for c in cells if not args.real or c["name"] in real]
+    text = groups(output_cells, library, parse_scale(args.scale), real)
     out = args.out or (EXTENDED_REAL if args.real else EXTENDED)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(extend(library, text))
     written = [out]
     if args.out is None:
         header = ("/* New cells for hd_reduced.lib, written by src/hd/liberty_writer.py from results/hd/ranked.json.\n"
-                  + (f"   Real cells from Option 1: {', '.join(real) or 'none'}; the others are estimates.\n"
+                  + (f"   Real cells from Option 1: {', '.join(real) or 'none'}; failed cells are dropped.\n"
                      if args.real else "")
                   + "   Estimated areas come from the area model; their capacitance and timing are placeholders\n"
                   f"   scaled from {PREFIX}inv_1 at {REF_SLEW} ns and {REF_LOAD} pF. */\n")
@@ -192,7 +193,7 @@ def main(argv: list[str]):
         groups_file.parent.mkdir(parents=True, exist_ok=True)
         groups_file.write_text(header + text)
         written.insert(0, groups_file)
-    print(f"{len(cells)} new cells -> {', '.join(map(str, written))}")
+    print(f"{len(output_cells)} new cells -> {', '.join(map(str, written))}")
 
 
 if __name__ == "__main__":

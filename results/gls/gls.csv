@@ -1,0 +1,13 @@
+design,script,library,testbench,new_cell_instances,result,last_line
+SPM,A,reduced,SPM_tb,0,PASS,PASS: SPM behaves as a signed 32x32 multiplier
+SPM,B,reduced,SPM_tb,0,PASS,PASS: SPM behaves as a signed 32x32 multiplier
+SPM,A,extended,SPM_tb,0,PASS,PASS: SPM behaves as a signed 32x32 multiplier
+SPM,B,extended,SPM_tb,0,PASS,PASS: SPM behaves as a signed 32x32 multiplier
+mul,A,reduced,mul_tb,0,PASS,PASS: 7/7 tests passed
+mul,A,reduced,mul_exhaustive_tb,0,PASS,PASS: all 65536 signed input pairs correct
+mul,B,reduced,mul_tb,0,PASS,PASS: 7/7 tests passed
+mul,B,reduced,mul_exhaustive_tb,0,PASS,PASS: all 65536 signed input pairs correct
+mul,A,extended,mul_tb,1,PASS,PASS: 7/7 tests passed
+mul,A,extended,mul_exhaustive_tb,1,PASS,PASS: all 65536 signed input pairs correct
+mul,B,extended,mul_tb,12,PASS,PASS: 7/7 tests passed
+mul,B,extended,mul_exhaustive_tb,12,PASS,PASS: all 65536 signed input pairs correct

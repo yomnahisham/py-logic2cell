@@ -1,0 +1,23 @@
+{
+  "request_id": "GC1-0EEF",
+  "status": "pass",
+  "reason": null,
+  "cell": "dd2_gc1__f0eef_1",
+  "stages": 3,
+  "transistors": 16,
+  "width_sites": 14,
+  "area_um2": 17.5168,
+  "files": {
+    "gds": "cells/dd2_gc1__f0eef_1/cell.gds",
+    "report": "cells/dd2_gc1__f0eef_1/report.json"
+  },
+  "checks": {
+    "drc": 0,
+    "lvs": "match",
+    "rc_lvs": "match",
+    "truth_table": "pass",
+    "abutment": 0,
+    "layers": "pass"
+  },
+  "tool_version": "git:07c4459"
+}
