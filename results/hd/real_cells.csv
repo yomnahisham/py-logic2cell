@@ -1,0 +1,11 @@
+cell,buildable,status,estimated_um2,real_um2,area_error_percent,estimated_transistors,real_transistors,estimated_sites,real_sites,reason
+dd2_gc1__f011f_1,True,estimated,11.2608,,,12,,9,,status fail: no Euler order can be drawn: D C D C A B: cannot route Y between the rows on li; B A C D C D: cannot route Y between the rows on li; D B A C D C: cannot route Y between the rows on li
+dd2_gc1__f02ab_1,True,estimated,13.7632,,,14,,11,,status fail: no Euler order can be drawn: A C B D A_b A_b D: cannot route Y between the rows on li; D A_b A_b D B C A: cannot route Y between the rows on li; A B C D A_b A_b D: cannot route Y between the rows on li
+dd2_gc1__f2b_1,True,estimated,11.2608,,,12,,9,,no response yet
+dd2_gc1__f17ff_1,True,estimated,11.2608,,,12,,9,,status fail: no Euler order can be drawn: B A | A B C D: no room for the D contact; B A | B A C D: no room for the D contact; B A B A C | D: cannot route Y between the rows on li
+dd2_gc1__f0017_1,True,estimated,11.2608,,,12,,9,,status fail: no Euler order can be drawn: B A | A B C D: no room for the D contact; B A | B A C D: no room for the D contact; B A B A C | D: cannot route Y between the rows on li
+dd2_gc1__f077f_1,True,real,11.2608,10.0096,12.5,12,12,9,8,accepted
+dd2_gc1__f002b_1,True,estimated,13.7632,,,14,,11,,no response yet
+dd2_gc1__f2bff_1,True,estimated,13.7632,,,14,,11,,no response yet
+dd2_gc1__f17_1,True,real,10.0096,7.5072,33.33,10,10,8,6,accepted
+dd2_gc1__f001f_1,True,real,7.5072,7.5072,0.0,8,8,6,6,accepted
