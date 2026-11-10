@@ -60,6 +60,8 @@ Option 2: map the designs onto the usable and reduced HD libraries (Table 1) →
 | `python -m src.cell.char_tests [--only ...] [--redo]` | the reference and Table 6 requests | each cell characterized on its HD cell's grid, kept if the same ngspice made it; `results/char_tests.txt` |
 | `python -m src.cell.table6_timing [--only ...] [--verify <cell>]` | characterized Table 6 cells | `results/table6_timing.csv`, `.txt`, `_arcs.csv`: delay, slew and input capacitance at the point, HD measured by our flow at that point (`--verify` checks a one-point run against the full grid) |
 | `python -m src.cell.design_ours` | delivered cells, Tutorial 4's SPM | `results/design_ours.txt`: SPM mapped onto HD plus our cells and timed |
+| `python -m src.cell.power_validate [cells] [--grid N]` | installed reference cells | `results/power_validation.txt`, `_entries.csv`: leakage and internal energy against the shipped Liberty |
+| `python -m src.hd.ppa [--period 10] [--activity 0.1]` | the required designs, reduced and real libraries | `results/hd/ppa.csv`, `.txt`: area, worst delay and power, before and after the final set |
 | `python -m src.cell.differences` | reference cells' `report.json`, `results/timing_vs_hd.csv` | `results/differences_vs_hd.md` (Table 4) |
 | `python -m src.cell.coverage [--limit N]` | every NPN class of 4-input functions | `results/coverage.csv`: which the generator can draw, layout only |
 | `python -m src.cell.table6` | built and delivered Table 6 cells | `results/table6_vs_hd.csv` (width, area, slowest delay and slew at the point nearest 100 ps / 10 fF, against HD characterized by our flow and the shipped value), `results/table6_timing_pins.csv` (every pin), `results/nor3_sizings.csv` (the two sizings of nor3) |
@@ -101,6 +103,9 @@ Option 2: map the designs onto the usable and reduced HD libraries (Table 1) →
 - `requests/candidates/`: the top-ranked candidate requests; `libs/new_cells.lib` contains the corresponding Liberty groups and `build/libs/hd_reduced_ext.lib` combines them with the reduced HD library.
 - `results/table4.txt`: Table 4 reproduced (24 / 20 / 38 / 3822, 9 one-stage, 6 + 2 read-once), except one row: we find 6 new single-stage functions within 3 in series and 12 transistors, the handout says 5. All 6 are listed.
 - `results/table5.csv`: baseline reduced-library area, extended-library area, area reduction, generated-cell instances, and Yosys CEC equivalence for each design and mapping script.
+- `results/table5_best_real.txt`, `results/hd/real_cells.csv`: Table 5 with Option 1's real cells: all six final-set cells delivered and accepted; 86245.216 -> 85971.2032 um2 (+0.32%) over the required designs, best of both, cec passing on every design. The curve and the 30% experiment with real areas: `results/hd/curve_real.*`, `results/hd/sensitivity_30_real.*`.
+- `results/hd/ppa.txt`: power, performance and area of every required design before and after the final set (OpenSTA): area -0.32%, power -0.18%, worst delay +0.4 to +2.4% on four designs.
+- `results/power_validation.txt`: the characterizer's power against the shipped HD Liberty (0.79% on inv_1, 15-19% on multi-input cells, leakage 2-4x low).
 
 ## 7. Tests
 
@@ -136,7 +141,6 @@ AGENTS.md · ai/use_log.md · ai/mistakes_log.md · report/ai_report.pdf
 - Some Option 2 candidates cannot be drawn on li alone (12 transistors in one stage, too dense for one li track between the rows); the generator then uses met1 where li cannot route, and as a last resort splits the function into stages. Five of the ten candidates are delivered (`results/hd/real_cells.csv`); the rest are listed with their reasons in `report/option1.md`.
 - met1 is used inside a cell only where li cannot route: multi-stage cells, and along a row in a folded (stack-sized) cell or a split network. The handout allows met1 inside multi-stage cells only; HD's own folded nor3_4 uses it too.
 - TT corner only; no state-dependent (`when`) arcs, no LEF view or placement test. Power is measured and written into the Liberty of every cell characterized since, with a note on its accuracy: against HD it is 0.8% off on inv_1, 15 to 19% on the multi-input cells, and leakage 2 to 4x low (`results/power_validation.txt`).
-- Option 2 still maps with estimated areas until it reads the delivered cells (`src/hd/real_cells.py` on its branch).
 
 ## 10. Third-party files
 

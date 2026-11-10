@@ -98,7 +98,8 @@ real:             ## step 11: build the final set with Option 1, take real cells
 		$(PY) -m src.hd.sensitivity --real && \
 		cp results/hd/sensitivity_30.txt results/hd/sensitivity_30_real.txt && \
 		cp results/hd/sensitivity_30.csv results/hd/sensitivity_30_real.csv && \
-		$(PY) -m src.hd.sta --libraries reduced extended real; \
+		$(PY) -m src.hd.sta --libraries reduced extended real && \
+		$(PY) -m src.hd.ppa; \
 	else echo "real: no cell has an accepted Liberty file yet; the estimated results stand"; fi
 
 full: all real    ## everything, start to finish

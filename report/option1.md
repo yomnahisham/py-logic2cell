@@ -2,7 +2,6 @@
 
 Source for the Option 1 sections of `report.pdf` (Option 1 handout, section 8.3). Every number is copied
 from the file named next to it; regenerate that file and copy again, never edit a number by hand.
-Sections marked TODO wait for files the flow has not written yet.
 
 ## Method
 
@@ -150,9 +149,12 @@ reach the crossing between the rows, or a poly contact finds no room in the one-
 such a net's contacts with a met1 line along its row, and crosses between the rows on met1 where its li
 cannot (`layout.finish`), only after every order has failed on li, so no cell that draws on li changes.
 
-TODO the remaining candidates (f0017, f2b, f02ab, f002b, f2bff) from the rebuild in progress
-(`cells/dd2_gc1__f*/response.json`). A candidate that still cannot be built is reported with its reason,
-and the group may ask the instructor for it (overview, section 2, rule 3).
+Option 2's final set (greedy selection, `results/hd/final_set.json`) is f2b, f0017, f17, f001f, f0eef and
+f07ff; all six are delivered, and Option 2's intake takes all six as real cells (`results/hd/real_cells.csv`).
+With them the required designs map to 86245.216 -> 85971.2032 um2 (+0.32%, best of scripts A and B), every
+mapping equivalent by cec (`results/table5_best_real.txt`), and their power drops by 0.18%
+(`results/hd/ppa.txt`). f0eef (15 sites) is the one ABC does not choose over HD's cells. Candidates no
+longer in the final set (f02ab, f002b, f2bff) were not built again.
 
 ## Characterization
 
