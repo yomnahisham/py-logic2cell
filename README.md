@@ -14,8 +14,10 @@ Tools: Python 3.14.8 (gdsfactory 9.51.0, klayout 0.30.12), Magic 8.3.684, Netgen
 
     make setup     # links pdk/ and given/, makes .venv, builds the two containers: ~20 min the first time, seconds after
     make check     # tool versions and the ngspice stress test: ~1 s
-    make all       # the whole flow: ~1 min
-    make test      # every test and broken case: ~40 s
+    make all       # the whole flow: hours (every cell built, characterized and checked); not yet timed end to end
+    make test      # every test and broken case: ~75 s
+
+The characterizer runs at most `CHAR_JOBS` ngspice containers at once (default 8; each holds a few hundred MB in Docker's VM, so lower it on a machine with less memory).
 
 `make setup` expects the student pack next to this repo (`GIVEN=../DD2_Project1_student_pack/given`) and searches for the PDK under `~/.ciel`; override with `GIVEN=...`, `PDK_ROOT=...`, or `PDK=...`.
 
@@ -53,6 +55,18 @@ Option 2: map the designs onto the usable and reduced HD libraries (Table 1) →
 | `python -m src.cell.char_validate [--image dd2-ngspice-stock --tag _stock] [--full-ramp]` | installed HD cells | `results/char_validation<tag>.txt`, `_entries.csv`, `_caps.csv` |
 | `python -m src.cell.liberty_write validation` | `build/char/*/..._timing.json` | `libs/char_validation.lib`, `build/sta/hd_tt_ours.lib` (HD with the six cells replaced) |
 | `python -m src.cell.liberty_check <lib> ...` | Liberty files | `results/liberty_syntax.txt` (Yosys and OpenSTA) |
+| `python -m src.cell.deliver <request> [--grid-from <HD cell>] [--grid N]` | a built cell | step 8: characterized on the grid of the HD cell with the same function (inv_1's for a new function); `cells/<name>/cell.lib` (one cell group, ngspice version and sha256 in its header), `cell.v`, and `liberty`, `verilog`, `ngspice_sha256` added to `response.json` |
+| `python -m src.cell.model_check <request>` | a delivered cell | section 4.2 level 3 and the round trip of 3.3: Icarus on `cell.v` and the Liberty function, every input combination; the cell appended to `hd_reduced.lib`, a one-cell design mapped with scripts A and B and checked with ABC cec; `cells/<name>/model_check.json`, `checks.model` and `checks.round_trip` in the response |
+| `python -m src.cell.char_tests [--only ...] [--redo]` | the reference and Table 6 requests | each cell characterized on its HD cell's grid, kept if the same ngspice made it; `results/char_tests.txt` |
+| `python -m src.cell.table6_timing [--only ...] [--verify <cell>]` | characterized Table 6 cells | `results/table6_timing.csv`, `.txt`, `_arcs.csv`: delay, slew and input capacitance at the point, HD measured by our flow at that point (`--verify` checks a one-point run against the full grid) |
+| `python -m src.cell.design_ours` | delivered cells, Tutorial 4's SPM | `results/design_ours.txt`: SPM mapped onto HD plus our cells and timed |
+| `python -m src.cell.power_validate [cells] [--grid N]` | installed reference cells | `results/power_validation.txt`, `_entries.csv`: leakage and internal energy against the shipped Liberty |
+| `python -m src.hd.ppa [--period 10] [--activity 0.1]` | the required designs, reduced and real libraries | `results/hd/ppa.csv`, `.txt`: area, worst delay and power, before and after the final set |
+| `python -m src.cell.differences` | reference cells' `report.json`, `results/timing_vs_hd.csv` | `results/differences_vs_hd.md` (Table 4) |
+| `python -m src.cell.coverage [--limit N]` | every NPN class of 4-input functions | `results/coverage.csv`: which the generator can draw, layout only |
+| `python -m src.cell.table6` | built and delivered Table 6 cells | `results/table6_vs_hd.csv` (width, area, slowest delay and slew at the point nearest 100 ps / 10 fF, against HD characterized by our flow and the shipped value), `results/table6_timing_pins.csv` (every pin), `results/nor3_sizings.csv` (the two sizings of nor3) |
+| `python -m src.cell.design_use <Tutorial 4 folder>` | delivered cells, Tutorial 4's SPM and testbench | step 9: SPM mapped onto HD plus our cells (free, and with HD's versions of our functions dont_use), gate-level simulation and OpenSTA; `results/design_use.txt` |
+| `python -m src.cell.build <request> --style tuned` | a request | not required by the handout: searches inner-stage widths and series orders for the best width x delay; writes `cells_tuned/<name>/` |
 
 ## 5. Layout
 
@@ -67,7 +81,12 @@ Option 2: map the designs onto the usable and reduced HD libraries (Table 1) →
 
 ## 6. Results
 
-- `cells/dd2_gc1__inv_1/`, `cells/dd2_gc1__nand2_1/`: both pass DRC (0 errors), LVS, RC-LVS, abutment (15 cases, 0 errors), the layer check and simulation; LVS-match the installed HD cells including W and L; 3 sites wide like HD; frame layers XOR to zero against HD.
+- `cells/dd2_gc1__<name>/`: every reference cell, Table 6 cell and delivered Option 2 candidate, each with GDS, schematic, extracted netlists, `cell.lib`, `cell.v`, `report.json`, `response.json`, `model_check.json` and `build.log`. All pass DRC (0 errors, in a row with tap cells), LVS, RC-LVS, abutment, the layer check, transistor-level simulation, the model check and the round trip.
+- `results/differences_vs_hd.md`: Table 4 for the six reference cells; every "must match" row matches. Widths equal HD's except o21ai_1 (+1 site: HD puts A2 and B1 in a row band, Table 2 wants them in the npc band).
+- `results/table6_vs_hd.csv`, `results/table6_timing_pins.csv`: Table 6 against HD: width, area, and delay and slew at the point nearest 100 ps / 10 fF (HD characterized by our flow, and the shipped value). 10 of 14 as wide as HD.
+- `results/nor3_sizings.csv`: the two sizings of !(A | B | C) (hd 4 sites; stack 10 sites, folded as HD folds) and the cost of the high-Vt PMOS in rising delay.
+- `results/design_use.txt`: step 9, SPM mapped onto HD plus our cells, Tutorial 4's gate-level testbench passing, timed with OpenSTA.
+- `results/cellweaver_comparison.txt`: our widths against the public cellweaver generator on the same functions.
 - `results/design_rules.csv`: the rule behind every number in the layout; gate pitch 0.42 µm = poly.1a + 2 licon.11 + licon.1.
 - `results/frame_check.txt`, `results/layer_check_*.txt`: the HD frame and layer checks.
 - `results/table1.csv`: Table 1 reproduced exactly with Yosys 0.33.
@@ -84,6 +103,9 @@ Option 2: map the designs onto the usable and reduced HD libraries (Table 1) →
 - `requests/candidates/`: the top-ranked candidate requests; `libs/new_cells.lib` contains the corresponding Liberty groups and `build/libs/hd_reduced_ext.lib` combines them with the reduced HD library.
 - `results/table4.txt`: Table 4 reproduced (24 / 20 / 38 / 3822, 9 one-stage, 6 + 2 read-once), except one row: we find 6 new single-stage functions within 3 in series and 12 transistors, the handout says 5. All 6 are listed.
 - `results/table5.csv`: baseline reduced-library area, extended-library area, area reduction, generated-cell instances, and Yosys CEC equivalence for each design and mapping script.
+- `results/table5_best_real.txt`, `results/hd/real_cells.csv`: Table 5 with Option 1's real cells: all six final-set cells delivered and accepted; 86245.216 -> 85971.2032 um2 (+0.32%) over the required designs, best of both, cec passing on every design. The curve and the 30% experiment with real areas: `results/hd/curve_real.*`, `results/hd/sensitivity_30_real.*`.
+- `results/hd/ppa.txt`: power, performance and area of every required design before and after the final set (OpenSTA): area -0.32%, power -0.18%, worst delay +0.4 to +2.4% on four designs.
+- `results/power_validation.txt`: the characterizer's power against the shipped HD Liberty (0.79% on inv_1, 15-19% on multi-input cells, leakage 2-4x low).
 
 ## 7. Tests
 
@@ -105,6 +127,10 @@ Option 2: map the designs onto the usable and reduced HD libraries (Table 1) →
 | cut enumerator             | corrupted truth table, merge ignoring inverted edges, dominated cuts kept                                                               |
 | cut and Liberty writers    | corrupted cut output, missing request fields, unclosed Liberty cell; Yosys 0.33 import and mapping smoke tests                          |
 | redundancy checker         | every HD cell must come out Exists; Table 4 counts                                                                                      |
+| model level (Verilog, Liberty) | one wrong truth-table row in `cell.v`, and in the Liberty function (`tests/cell/test_model_check.py`)                              |
+| round trip (section 3.3)   | a Liberty function that is not the request's: no map is our cell alone                                                                  |
+| stage split fallback       | a split whose last stage takes the wrong net must fail the switch-level check (`tests/cell/test_operand_split.py`)                     |
+| stack sizing, unequal folding | rows with an input missing from one row have no common path (`tests/cell/test_stack_sizing.py`)                                    |
 
 ## 8. AI use
 
@@ -112,8 +138,9 @@ AGENTS.md · ai/use_log.md · ai/mistakes_log.md · report/ai_report.pdf
 
 ## 9. Limitations
 
-- Generated cells are not characterized yet and there is no Verilog model, so the model-level simulation of section 4.2 is not run; the generated Liberty extension carries placeholder timing from `inv_1`.
-- Option 2 works with estimated areas; real cells from Option 1 replace them in week 3.
+- Some Option 2 candidates cannot be drawn on li alone (12 transistors in one stage, too dense for one li track between the rows); the generator then uses met1 where li cannot route, and as a last resort splits the function into stages. Five of the ten candidates are delivered (`results/hd/real_cells.csv`); the rest are listed with their reasons in `report/option1.md`.
+- met1 is used inside a cell only where li cannot route: multi-stage cells, and along a row in a folded (stack-sized) cell or a split network. The handout allows met1 inside multi-stage cells only; HD's own folded nor3_4 uses it too.
+- TT corner only; no state-dependent (`when`) arcs, no LEF view or placement test. Power is measured and written into the Liberty of every cell characterized since, with a note on its accuracy: against HD it is 0.8% off on inv_1, 15 to 19% on the multi-input cells, and leakage 2 to 4x low (`results/power_validation.txt`).
 
 ## 10. Third-party files
 

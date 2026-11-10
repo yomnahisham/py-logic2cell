@@ -1,0 +1,8 @@
+cell-by-cell curve (estimated areas), from final_set.json
+   0 (baseline): 86245.216 um2 (+0.000%)
+   1 dd2_gc1__f2b_1: 86240.2112 um2 (+0.006%)
+   2 dd2_gc1__f0017_1: 86238.96 um2 (+0.007%)
+   3 dd2_gc1__f17_1: 86233.9552 um2 (+0.013%)
+   4 dd2_gc1__f001f_1: 86056.2848 um2 (+0.219%)
+   5 dd2_gc1__f0eef_1: 86048.7776 um2 (+0.228%)
+   6 dd2_gc1__f07ff_1: 85972.4544 um2 (+0.316%)

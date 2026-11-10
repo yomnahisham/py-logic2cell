@@ -1,0 +1,144 @@
+build dd2_gc1__f001f_1.json, style handout, git:6326eba, 2026-11-09 13:24 UTC
+
+== 1. request
+name dd2_gc1__f001f_1, id GC1-001F, inputs A, B, C, D, output Y, truth table 0x001f, sizing hd
+
+== 2. network
+one stage (8 series orders)
+variant 0: Y = f(A, B, C, D), 8 fets
+    nMOS gate D: Y - VGND
+    nMOS gate C: Y - n1
+    nMOS gate A: n1 - VGND
+    nMOS gate B: n1 - VGND
+    pMOS gate D: Y - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate A: p1 - p2
+    pMOS gate B: p2 - VPWR
+variant 1: Y = f(A, B, C, D), 8 fets
+    nMOS gate D: Y - VGND
+    nMOS gate C: Y - n1
+    nMOS gate A: n1 - VGND
+    nMOS gate B: n1 - VGND
+    pMOS gate D: Y - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate B: p1 - p2
+    pMOS gate A: p2 - VPWR
+variant 2: Y = f(A, B, C, D), 8 fets
+    nMOS gate D: Y - VGND
+    nMOS gate C: Y - n1
+    nMOS gate A: n1 - VGND
+    nMOS gate B: n1 - VGND
+    pMOS gate C: Y - p1
+    pMOS gate A: Y - p2
+    pMOS gate B: p2 - p1
+    pMOS gate D: p1 - VPWR
+variant 3: Y = f(A, B, C, D), 8 fets
+    nMOS gate D: Y - VGND
+    nMOS gate C: Y - n1
+    nMOS gate A: n1 - VGND
+    nMOS gate B: n1 - VGND
+    pMOS gate C: Y - p1
+    pMOS gate B: Y - p2
+    pMOS gate A: p2 - p1
+    pMOS gate D: p1 - VPWR
+variant 4: Y = f(A, B, C, D), 8 fets
+    nMOS gate D: Y - VGND
+    nMOS gate A: Y - n1
+    nMOS gate B: Y - n1
+    nMOS gate C: n1 - VGND
+    pMOS gate D: Y - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate A: p1 - p2
+    pMOS gate B: p2 - VPWR
+variant 5: Y = f(A, B, C, D), 8 fets
+    nMOS gate D: Y - VGND
+    nMOS gate A: Y - n1
+    nMOS gate B: Y - n1
+    nMOS gate C: n1 - VGND
+    pMOS gate D: Y - p1
+    pMOS gate C: p1 - VPWR
+    pMOS gate B: p1 - p2
+    pMOS gate A: p2 - VPWR
+variant 6: Y = f(A, B, C, D), 8 fets
+    nMOS gate D: Y - VGND
+    nMOS gate A: Y - n1
+    nMOS gate B: Y - n1
+    nMOS gate C: n1 - VGND
+    pMOS gate C: Y - p1
+    pMOS gate A: Y - p2
+    pMOS gate B: p2 - p1
+    pMOS gate D: p1 - VPWR
+variant 7: Y = f(A, B, C, D), 8 fets
+    nMOS gate D: Y - VGND
+    nMOS gate A: Y - n1
+    nMOS gate B: Y - n1
+    nMOS gate C: n1 - VGND
+    pMOS gate C: Y - p1
+    pMOS gate B: Y - p2
+    pMOS gate A: p2 - p1
+    pMOS gate D: p1 - VPWR
+
+== 3. switch-level check
+variant 0: every input combination gives the truth table
+variant 1: every input combination gives the truth table
+variant 2: every input combination gives the truth table
+variant 3: every input combination gives the truth table
+variant 4: every input combination gives the truth table
+variant 5: every input combination gives the truth table
+variant 6: every input combination gives the truth table
+variant 7: every input combination gives the truth table
+widths: NMOS 0.65 um, PMOS 1.0 um
+
+== 4. Euler orders and placement (first 40 per variant, fewest contacts first)
+variant 0 gates D C B A | n VGND Y n1 VGND n1 | p Y p1 VPWR p2 p1: 2.76 um, 13 contacts on the output stage, 13 in all
+variant 0 gates A B C D | n n1 VGND n1 Y VGND | p p1 p2 VPWR p1 Y: 2.76 um, 13 contacts on the output stage, 13 in all
+variant 1 gates D C A B | n VGND Y n1 VGND n1 | p Y p1 VPWR p2 p1: 2.76 um, 13 contacts on the output stage, 13 in all
+variant 1 gates B A C D | n n1 VGND n1 Y VGND | p p1 p2 VPWR p1 Y: 2.76 um, 13 contacts on the output stage, 13 in all
+variant 2 gates D C A B | n VGND Y n1 VGND n1 | p VPWR p1 Y p2 p1: 2.76 um, 17 contacts on the output stage, 17 in all
+variant 2 gates B A C D | n n1 VGND n1 Y VGND | p p1 p2 Y p1 VPWR: 2.76 um, 17 contacts on the output stage, 17 in all
+variant 3 gates D C B A | n VGND Y n1 VGND n1 | p VPWR p1 Y p2 p1: 2.76 um, 17 contacts on the output stage, 17 in all
+variant 3 gates A B C D | n n1 VGND n1 Y VGND | p p1 p2 Y p1 VPWR: 2.76 um, 17 contacts on the output stage, 17 in all
+variant 4 gates D C B A | n Y VGND n1 Y n1 | p Y p1 VPWR p2 p1: cannot draw: no room for Y to switch edges in the n row
+variant 4 gates A B C D | n n1 Y n1 VGND Y | p p1 p2 VPWR p1 Y: cannot draw: no room for Y to switch edges in the n row
+variant 5 gates D C A B | n Y VGND n1 Y n1 | p Y p1 VPWR p2 p1: cannot draw: no room for Y to switch edges in the n row
+variant 5 gates B A C D | n n1 Y n1 VGND Y | p p1 p2 VPWR p1 Y: cannot draw: no room for Y to switch edges in the n row
+variant 6 gates D C A B | n Y VGND n1 Y n1 | p VPWR p1 Y p2 p1: cannot draw: no room for Y to switch edges in the n row
+variant 6 gates B A C D | n n1 Y n1 VGND Y | p p1 p2 Y p1 VPWR: cannot draw: no room for Y to switch edges in the n row
+variant 7 gates D C B A | n Y VGND n1 Y n1 | p VPWR p1 Y p2 p1: cannot draw: no room for Y to switch edges in the n row
+variant 7 gates A B C D | n n1 Y n1 VGND Y | p p1 p2 Y p1 VPWR: cannot draw: no room for Y to switch edges in the n row
+
+== 5. chosen layout
+variant 2, gates D C A B: li only beats met1, then the narrowest, then the most contacts on the output stage, then the most contacts, the first found on a tie
+width 2.76 um (6 sites), diffusion 0.265 .. 2.495
+gates   D@0.6  C@1.02  A@1.68  B@2.16
+nMOS columns:
+    VGND@0.39 narrow contacts y=[0.4, 0.74]
+    Y@0.81 wide contacts y=[0.4, 0.74]
+    n1@1.35 narrow contacts y=[0.66]
+    VGND@1.92 wide contacts y=[0.4]
+    n1@2.37 narrow contacts y=[0.74]
+    lane n1 x 1.265 .. 2.535, inner edge, y 0.655 .. 0.825
+pMOS columns:
+    VPWR@0.39 narrow contacts y=[1.66, 2.0, 2.34]
+    p1@0.81 wide contacts y=[1.92, 2.26]
+    Y@1.35 wide contacts y=[1.66, 2.0]
+    p2@1.92 no contact
+    p1@2.37 wide contacts y=[1.66, 2.0, 2.34]
+    lane Y x 0.815 .. 1.435, inner edge, y 1.495 .. 1.665
+    lane p1 x 0.725 .. 2.535, outer edge, y 2.295 .. 2.465
+    column 1 notched under the lane of Y: x 0.645 .. 1.605, li kept above y 1.835
+poly contact D@0.48 for gates 0..0, wide pad
+poly contact C@1.24 for gates 1..1, narrow pad
+poly contact A@1.72 for gates 2..2, wide pad
+poly contact B@2.22 for gates 3..3, wide pad
+crossing Y at x 0.9
+
+== 6. checks
+DRC (Magic, in a row with tap cells): 0 errors
+LVS (Netgen): match; RC-LVS: match
+abutment: pass, 0 errors
+layer check: pass
+simulation (ngspice): pass
+
+== 7. response
+pass, 6 sites, 7.5072 um2

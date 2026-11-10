@@ -1,0 +1,13 @@
+SPM on HD plus our cells: Yosys 0.64 (git sha1 d8dab5b32666564eca8e18f412973853ce006e61, clang++ 17.0.0 -fPIC -O3); OpenSTA in the dd2-opensta image; Icarus Icarus Verilog version 13.0 (stable) (v13_0)
+library build/design_use/hd_plus_ours.lib: HD and 24 cells of ours: dd2_gc1__a21o_1_hd, dd2_gc1__a21oi_1, dd2_gc1__inv_1, dd2_gc1__mux2_1_hd, dd2_gc1__nand2_1, dd2_gc1__nand3_1, dd2_gc1__nor2_1, dd2_gc1__o21ai_1, dd2_gc1__a21o_1, dd2_gc1__a22oi_1, dd2_gc1__a31oi_1, dd2_gc1__and2_1, dd2_gc1__and_a_or_b_cd, dd2_gc1__maj3_1, dd2_gc1__mux2_1, dd2_gc1__nor3_1, dd2_gc1__o22ai_1, dd2_gc1__o31ai_1, dd2_gc1__or_a_and_b_cd, dd2_gc1__or_and_maj, dd2_gc1__or_and_maj_n, dd2_gc1__xor2_1, dd2_gc1__f001f_1, dd2_gc1__f077f_1
+forced: HD cells dont_use for the functions we deliver: a21o_*, a21oi_*, a22oi_*, a31oi_*, and2_*, inv_*, maj3_*, mux2_*, nand2_*, nand3_*, nor2_*, nor3_*, o21ai_*, o22ai_*, o31ai_*, xor2_*
+Tutorial 4 settings: ABC -D 1250 ps (clock period), driving cell sky130_fd_sc_hd__inv_1, output load 33.44 fF
+
+free: 33 instances of our cells {'dd2_gc1__and2_1': 1, 'dd2_gc1__f077f_1': 31, 'dd2_gc1__nand3_1': 1}
+    gate-level simulation: PASS: SPM behaves as a signed 32x32 multiplier
+    OpenSTA: worst path 0.9161 ns, slack +0.2695 ns (y -> _446_); area 3011.638400 um2
+forced: 191 instances of our cells {'dd2_gc1__a21o_1': 1, 'dd2_gc1__and2_1': 1, 'dd2_gc1__f077f_1': 31, 'dd2_gc1__inv_1': 95, 'dd2_gc1__nand2_1': 31, 'dd2_gc1__nand3_1': 1, 'dd2_gc1__xor2_1': 31}
+    gate-level simulation: PASS: SPM behaves as a signed 32x32 multiplier
+    OpenSTA: worst path 1.2926 ns, slack -0.1073 ns (y -> _480_); area 3031.657600 um2
+
+for the HD-only baseline of the same flow see results/spm_design_level.txt (row hd)

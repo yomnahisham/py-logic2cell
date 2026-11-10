@@ -1,0 +1,11 @@
+Power against the shipped HD Liberty (sky130_fd_sc_hd__tt_025C_1v80.lib), cells inv_1, nand2_1, nor2_1, nand3_1, a21oi_1, o21ai_1
+internal energy error relative to C V^2 / 2 + |HD value| (see the module docstring)
+leakage       34 entries  median |error|  63.42%  largest +402.2% at a21oi_1  A1&A2&B1  
+rise_power   126 entries  median |error|  16.94%  largest +148.8% at nand2_1 A  0.122474 0.0005
+fall_power   126 entries  median |error|  15.30%  largest -193.7% at a21oi_1 B1  0.01 0.0005
+  inv_1    internal median   0.79%   leakage median  70.77%
+  nand2_1  internal median  15.46%   leakage median  63.55%
+  nor2_1   internal median  16.91%   leakage median  75.47%
+  nand3_1  internal median  18.30%   leakage median  66.56%
+  a21oi_1  internal median  16.58%   leakage median  63.10%
+  o21ai_1  internal median  19.36%   leakage median  63.28%

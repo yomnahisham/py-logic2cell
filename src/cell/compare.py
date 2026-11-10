@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 import re
+from dataclasses import replace
 import shutil
 import sys
 from collections import Counter, defaultdict
@@ -183,21 +184,43 @@ def hd_sizes(short: str) -> dict:
     return sizes
 
 
-def same_netlist(stage, short: str) -> bool:
-    """True if the stage's transistors connect as the installed cell's do, up to the internal net names."""
+def renaming(stage, short: str) -> dict | None:
+    """Our net -> the installed cell's net, if the stage's transistors connect as the installed cell's
+    do up to the internal net names (gates included, for a cell of several stages); else None."""
     ports, theirs = hd_fets(short)
     key = lambda kind, gate, a, b: (kind, gate, frozenset((a, b)))
     theirs = Counter(key(k, g, d, s) for k, g, d, s, _ in theirs)
-    inner_ours = sorted({n for f in stage.fets for n in (f.a, f.b)} - set(ports))
-    inner_theirs = sorted({n for k, g, ab in theirs for n in ab} - set(ports))
+    inner_ours = sorted({n for f in stage.fets for n in (f.a, f.b, f.gate)} - set(ports))
+    inner_theirs = sorted({n for k, g, ab in theirs for n in (*ab, g)} - set(ports))
     if len(inner_ours) != len(inner_theirs):
-        return False
+        return None
     for perm in permutations(inner_theirs):
         rename = dict(zip(inner_ours, perm))
-        ours = Counter(key(f.kind, f.gate, rename.get(f.a, f.a), rename.get(f.b, f.b)) for f in stage.fets)
-        if ours == theirs:
-            return True
-    return False
+        r = lambda n: rename.get(n, n)
+        if Counter(key(f.kind, r(f.gate), r(f.a), r(f.b)) for f in stage.fets) == theirs:
+            return rename
+    return None
+
+
+def same_netlist(stage, short: str) -> bool:
+    """True if the stage's transistors connect as the installed cell's do, up to the internal net names."""
+    return renaming(stage, short) is not None
+
+
+def with_hd_widths(stage, short: str):
+    """The stage with each transistor as wide as the one it matches in the installed cell, or None if
+    they do not connect alike."""
+    rename = renaming(stage, short)
+    if rename is None:
+        return None
+    r = lambda n: rename.get(n, n)
+    left = [(k, g, frozenset((d, s)), w) for k, g, d, s, w in hd_fets(short)[1]]
+    fets = []
+    for f in stage.fets:
+        match = next(t for t in left if t[:3] == (f.kind, r(f.gate), frozenset((r(f.a), r(f.b)))))
+        left.remove(match)
+        fets.append(replace(f, w=match[3]))
+    return replace(stage, fets=tuple(fets))
 
 
 PIN_GRID = 0.01   # um; Magic rounds pin boxes to it (seen in the .ext port boxes: SkyWater's 1.445 becomes 1.440)

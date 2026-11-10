@@ -1,0 +1,83 @@
+build o21ai_1.json --hd o21ai_1, style handout, git:6326eba, 2026-11-08 21:48 UTC
+
+== 1. request
+name dd2_gc1__o21ai_1, id HD-o21ai_1, inputs A1, A2, B1, output Y, truth table 0x1f, sizing hd
+
+== 2. network
+one stage (4 series orders)
+variant 0: Y = f(A1, A2, B1), 6 fets
+    nMOS gate B1: Y - n1
+    nMOS gate A1: n1 - VGND
+    nMOS gate A2: n1 - VGND
+    pMOS gate B1: Y - VPWR
+    pMOS gate A1: Y - p1
+    pMOS gate A2: p1 - VPWR
+variant 1: Y = f(A1, A2, B1), 6 fets
+    nMOS gate B1: Y - n1
+    nMOS gate A1: n1 - VGND
+    nMOS gate A2: n1 - VGND
+    pMOS gate B1: Y - VPWR
+    pMOS gate A2: Y - p1
+    pMOS gate A1: p1 - VPWR
+variant 2: Y = f(A1, A2, B1), 6 fets
+    nMOS gate A1: Y - n1
+    nMOS gate A2: Y - n1
+    nMOS gate B1: n1 - VGND
+    pMOS gate B1: Y - VPWR
+    pMOS gate A1: Y - p1
+    pMOS gate A2: p1 - VPWR
+variant 3: Y = f(A1, A2, B1), 6 fets
+    nMOS gate A1: Y - n1
+    nMOS gate A2: Y - n1
+    nMOS gate B1: n1 - VGND
+    pMOS gate B1: Y - VPWR
+    pMOS gate A2: Y - p1
+    pMOS gate A1: p1 - VPWR
+
+== 3. switch-level check
+variant 0: every input combination gives the truth table
+variant 1: every input combination gives the truth table
+variant 2: every input combination gives the truth table
+variant 3: every input combination gives the truth table
+kept 1 of 4 variants that connect like the installed o21ai_1 (Table 4: the transistors must match HD's; the others differ only in series order)
+widths: NMOS 0.65 um, PMOS 1.0 um, HD's own per gate: {('p', 'A2'): 1.0, ('p', 'B1'): 0.7, ('n', 'A1'): 0.65, ('n', 'B1'): 0.65, ('p', 'A1'): 1.0, ('n', 'A2'): 0.65}
+every transistor width matches o21ai_1's
+
+== 4. Euler orders and placement (first 40 per variant, fewest contacts first)
+variant 0 gates B1 A2 A1 | n Y n1 VGND n1 | p VPWR Y p1 VPWR: 2.3 um, 13 contacts on the output stage, 13 in all
+variant 0 gates B1 A1 A2 | n Y n1 VGND n1 | p Y VPWR p1 Y: 2.3 um, 13 contacts on the output stage, 13 in all
+variant 0 gates A1 A2 B1 | n n1 VGND n1 Y | p VPWR p1 Y VPWR: 2.3 um, 13 contacts on the output stage, 13 in all
+variant 0 gates A2 A1 B1 | n n1 VGND n1 Y | p Y p1 VPWR Y: 2.3 um, 13 contacts on the output stage, 13 in all
+
+== 5. chosen layout
+variant 0, gates B1 A2 A1: li only beats met1, then the narrowest, then the most contacts on the output stage, then the most contacts, the first found on a tie
+width 2.3 um (5 sites), diffusion 0.39 .. 2.08
+gates   B1@0.725  A2@1.325  A1@1.745
+nMOS columns:
+    Y@0.515 wide contacts y=[0.4, 0.74]
+    n1@1.025 narrow contacts y=[0.74]
+    VGND@1.535 narrow contacts y=[0.4]
+    n1@1.955 wide contacts y=[0.4, 0.74]
+    lane Y x 0.43 .. 0.75, inner edge, y 0.655 .. 0.825
+    lane n1 x 0.94 .. 2.12, inner edge, y 0.735 .. 0.905
+pMOS columns:
+    VPWR@0.515 narrow contacts y=[2.0, 2.34]
+    Y@1.025 wide contacts y=[1.93, 2.27]
+    p1@1.535 no contact
+    VPWR@1.955 narrow contacts y=[1.66, 2.0, 2.34]
+    lane Y x 0.58 .. 1.19, inner edge, y 1.495 .. 1.665
+poly contact B1@0.325 for gates 0..0, narrow pad
+poly contact A2@1.325 for gates 1..1, wide pad
+poly contact A1@1.825 for gates 2..2, wide pad
+crossing Y at x 0.665
+
+== 6. checks
+DRC (Magic, in a row with tap cells): 0 errors
+LVS (Netgen): match; RC-LVS: match
+abutment: pass, 0 errors
+layer check: pass
+simulation (ngspice): pass
+compared with o21ai_1: see report.json, key compare
+
+== 7. response
+pass, 5 sites, 6.256 um2

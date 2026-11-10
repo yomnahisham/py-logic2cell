@@ -1,0 +1,3 @@
+{"request_id": "GC1-077F", "status": "pass", "reason": null, "cell": "dd2_gc1__f077f_1", "stages": 1,
+ "transistors": 12, "width_sites": 7, "area_um2": 8.7584,
+ "files": {"liberty": "tests/broken/m2_real_cells/wrong_function/dd2_gc1__f077f_1/cell.lib"}}

@@ -1,0 +1,13 @@
+{
+  "cells": [
+    "dd2_gc1__f2b_1",
+    "dd2_gc1__f0017_1",
+    "dd2_gc1__f17_1",
+    "dd2_gc1__f001f_1",
+    "dd2_gc1__f0eef_1",
+    "dd2_gc1__f07ff_1"
+  ],
+  "baseline_um2": 86245.216,
+  "total_um2": 85972.4544,
+  "metric": "sum over the required designs of the smaller of scripts A and B"
+}

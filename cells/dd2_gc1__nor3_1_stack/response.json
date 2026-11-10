@@ -1,0 +1,27 @@
+{
+  "request_id": "T6-nor3_1-stack",
+  "status": "pass",
+  "reason": null,
+  "cell": "dd2_gc1__nor3_1_stack",
+  "stages": 1,
+  "transistors": 12,
+  "width_sites": 10,
+  "area_um2": 12.512,
+  "files": {
+    "gds": "cells/dd2_gc1__nor3_1_stack/cell.gds",
+    "report": "cells/dd2_gc1__nor3_1_stack/report.json",
+    "liberty": "cells/dd2_gc1__nor3_1_stack/cell.lib",
+    "verilog": "cells/dd2_gc1__nor3_1_stack/cell.v"
+  },
+  "checks": {
+    "drc": 0,
+    "lvs": "match",
+    "rc_lvs": "match",
+    "truth_table": "pass",
+    "abutment": 0,
+    "layers": "pass"
+  },
+  "tool_version": "git:6326eba",
+  "ngspice_sha256": "81a8991415fbee4065e1e54fcdf68ac67183eb9b1d2c4119c252066d370705ad",
+  "grid_from": "sky130_fd_sc_hd__nor3_1"
+}

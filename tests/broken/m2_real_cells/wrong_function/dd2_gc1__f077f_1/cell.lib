@@ -1,0 +1,15 @@
+  cell ("dd2_gc1__f077f_1") {
+    area : 8.7584;
+    pin ("A") { direction : "input"; capacitance : 0.0024; }
+    pin ("B") { direction : "input"; capacitance : 0.0024; }
+    pin ("C") { direction : "input"; capacitance : 0.0024; }
+    pin ("D") { direction : "input"; capacitance : 0.0024; }
+    pin ("Y") {
+      direction : "output";
+      function : "(C&D) | (A&B&(C|D))";
+      timing () { related_pin : "A"; cell_rise (scalar) { values ("0.10"); } }
+      timing () { related_pin : "B"; cell_rise (scalar) { values ("0.10"); } }
+      timing () { related_pin : "C"; cell_rise (scalar) { values ("0.10"); } }
+      timing () { related_pin : "D"; cell_rise (scalar) { values ("0.10"); } }
+    }
+  }

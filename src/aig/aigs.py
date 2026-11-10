@@ -11,6 +11,7 @@ from __future__ import annotations
 import csv
 import re
 from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
 
 from src.aig import aiger
 from src.common.yosys import ROOT, run
@@ -25,10 +26,14 @@ def header(path) -> dict:
     return dict(inputs=i, latches=l, outputs=o, ands=a)
 
 
-def write(design: str, top: str) -> dict:
+def write(design: str, top: str, path: str | Path | None = None, sv: bool = False) -> dict:
+    """The design's AIGs. path: its Verilog file (default given/designs/<design>.v); sv: read it
+    as SystemVerilog (read_verilog -sv)."""
+    OUT.mkdir(parents=True, exist_ok=True)
+    source = path or f"given/designs/{design}.v"
     raw, abc = OUT / f"{design}_raw", OUT / f"{design}_abc"
     run(["yosys", "-q", "-p",
-         f"read_verilog given/designs/{design}.v; synth -flatten -top {top}; async2sync; dffunmap; aigmap; "
+         f"read_verilog {'-sv ' if sv else ''}{source}; synth -flatten -top {top}; async2sync; dffunmap; aigmap; "
          f"write_aiger -zinit {raw}.aig; write_aiger -zinit -ascii {raw}.aag"])
     run(["yosys-abc", "-q", f"read {raw}.aig; strash; dch; strash; write_aiger {abc}.aig"])
     aiger.write_aag(aiger.read(f"{abc}.aig"), f"{abc}.aag")

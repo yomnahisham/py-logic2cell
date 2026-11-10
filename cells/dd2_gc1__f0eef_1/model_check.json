@@ -1,0 +1,41 @@
+{
+  "cell": "dd2_gc1__f0eef_1",
+  "truth_table": "0x0eef",
+  "verilog": {
+    "table": "0x0eef",
+    "match": true
+  },
+  "liberty": {
+    "table": "0x0eef",
+    "match": true
+  },
+  "model": "pass",
+  "round_trip": {
+    "free_A": {
+      "equivalent": true,
+      "our_cell_instances": 0,
+      "cells": 3,
+      "area_um2": 16.2656
+    },
+    "free_B": {
+      "equivalent": true,
+      "our_cell_instances": 0,
+      "cells": 3,
+      "area_um2": 13.7632
+    },
+    "forced_A": {
+      "equivalent": true,
+      "our_cell_instances": 0,
+      "cells": 9,
+      "area_um2": 33.7824
+    },
+    "forced_B": {
+      "equivalent": true,
+      "our_cell_instances": 1,
+      "cells": 1,
+      "area_um2": 18.768
+    },
+    "chosen_freely": false,
+    "pass": true
+  }
+}

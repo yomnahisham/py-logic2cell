@@ -1,11 +1,18 @@
 """Write Liberty from the characterizer's timing JSON (option 1 handout, sections 3.3 and 5.1).
 
     python -m src.cell.liberty_write validation [cells ...] [--tag T]
+    python -m src.cell.liberty_write cell <request.json> [...]
 
 `validation` writes the six reference cells as characterized for Table 5 (build/char/<cell>/..._timing.json):
   - libs/char_validation<tag>.lib: a library of only those cells, for the "Liberty syntax" row;
   - build/sta/hd_tt_ours<tag>.lib: a copy of the HD TT Liberty with those six cell groups replaced by ours,
     for the "Design level" row.
+
+`cell` writes the answer to a request (section 3.3, overview Appendix A): cells/<name>/cell.lib, a library
+holding exactly one cell group, with the requested name and pin names, HD's units, the request's expression as
+its function, its layout area from cells/<name>/response.json, and the timing tables of
+build/cells/<name>/<name>_timing.json. The function is checked against the request's truth table before it is
+written. The response then gets files.liberty and ngspice_sha256.
 
 A cell group carries what the characterizer measured: the input capacitances and, per arc, its timing sense
 and the four delay and transition tables on the characterizer's own indexes. Area, function and footprint
@@ -21,6 +28,7 @@ import json
 from pathlib import Path
 
 from src.cell.liberty_timing import TABLES, cell_text, parse, read_cell
+from src.common.request import read_request, truth_table
 from src.paths import LIBERTY_TT, PREFIX
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -44,12 +52,42 @@ def table(kind: str, index_1: list[float], index_2: list[float], values: list[li
             f'{pad}}}\n')
 
 
-def cell_group(timing: dict, area: float, function: str, footprint: str | None = None) -> str:
-    """The Liberty cell group of one characterized cell."""
+def power_table(kind: str, index_1: list[float], index_2: list[float], values: list, pad: str) -> str:
+    """An internal_power table on HD's own template, power_outputs_1 (input slew x output load), energy in pJ."""
+    if any(v is None for row in values for v in row):
+        raise ValueError(f"{kind}: missing entries, a table with holes is not written")
+    rows = ", ".join(f'"{", ".join(num(v) for v in row)}"' for row in values)
+    return (f'{pad}{kind} ("power_outputs_1") {{\n'
+            f'{pad}    index_1 ("{", ".join(num(v) for v in index_1)}");\n'
+            f'{pad}    index_2 ("{", ".join(num(v) for v in index_2)}");\n'
+            f'{pad}    values ({rows});\n'
+            f'{pad}}}')
+
+
+# Power tables are written wherever the characterizer measured power: a cell with none would read as drawing
+# no power at all. They are less exact than the timing: against the shipped HD Liberty the internal energy has a
+# median error of 0.79% on inv_1 and 15-19% on the multi-input reference cells, and leakage is 2-4x low
+# (results/power_validation.txt); POWER_NOTE says so in every library that carries them.
+WRITE_POWER = True
+POWER_NOTE = ("/* Power (leakage_power, internal_power) from src/cell/characterize.py; against the shipped HD "
+              "Liberty its internal energy is 0.79% off on inv_1 and 15-19% (median) on multi-input cells, and "
+              "its leakage 2-4x low: see results/power_validation.txt. Timing is validated to 3.40% "
+              "(results/char_validation.txt). */\n")
+
+
+def cell_group(timing: dict, area: float, function: str, footprint: str | None = None,
+               power: bool = WRITE_POWER) -> str:
+    """The Liberty cell group of one characterized cell; with power, its leakage and internal power too."""
     name, output = timing["cell"], timing["output"]
     out = [f'    cell ("{name}") {{', f"        area : {num(area)};"]
     if footprint:
         out.append(f'        cell_footprint : "{footprint}";')
+    leak = timing.get("leakage_nw") if power else None    # power, where measured and asked for
+    if leak:
+        out.append(f"        cell_leakage_power : {num(sum(leak.values()) / len(leak))};")
+        for when, value in leak.items():
+            out += ["        leakage_power () {", f"            value : {num(value)};", f'            when : "{when}";',
+                    "        }"]
     for pin, kind, bias in POWER:
         out += [f'        pg_pin ("{pin}") {{', f'            pg_type : "{kind}";', f'            voltage_name : "{pin}";']
         out += [f'            related_bias_pin : "{bias}";'] if bias else []
@@ -71,6 +109,14 @@ def cell_group(timing: dict, area: float, function: str, footprint: str | None =
         for kind in TABLES:
             if kind in arc["tables"]:
                 out.append(table(kind, arc["index_1"], arc["index_2"], arc["tables"][kind], " " * 16).rstrip("\n"))
+        out.append("            }")
+    for arc in timing["arcs"] if power else []:
+        if not arc.get("power"):
+            continue
+        out += ["            internal_power () {", f'                related_pin : "{arc["pin"]}";']
+        for kind in ("rise_power", "fall_power"):
+            if kind in arc["power"]:
+                out.append(power_table(kind, arc["index_1"], arc["index_2"], arc["power"][kind], " " * 16))
         out.append("            }")
     out += ["        }", "    }"]
     return "\n".join(out) + "\n"
@@ -111,7 +157,8 @@ def library(name: str, runs: list[dict], cells: list[str]) -> str:
     head = header()
     first = head.index("{") + 1
     head = f'library ("{name}") {{' + head[first:]
-    return stamp(one_build(runs)) + head + templates(head, runs) + "".join(cells) + "}\n"
+    note = POWER_NOTE if any("internal_power" in c or "leakage_power" in c for c in cells) else ""
+    return stamp(one_build(runs)) + note + head + templates(head, runs) + "".join(cells) + "}\n"
 
 
 def replace(source: Path, groups: dict[str, str], ngspice: dict) -> str:
@@ -143,11 +190,40 @@ def validation(cells: list[str], tag: str = "") -> tuple[Path, Path]:
     return own, copy
 
 
+def cell_lib(request: Path) -> Path:
+    """cells/<name>/cell.lib for one request, and files.liberty and ngspice_sha256 in its response."""
+    req = read_request(request)
+    folder = ROOT / "cells" / req.name
+    response_path = folder / "response.json"
+    response = json.loads(response_path.read_text())
+    if response.get("status") != "pass" or response.get("cell") != req.name:
+        raise ValueError(f"{response_path}: the cell did not pass its build, no Liberty is written")
+    timing = json.loads((ROOT / "build/cells" / req.name / f"{req.name}_timing.json").read_text())
+    if timing["cell"] != req.name or list(timing["inputs"]) != list(req.inputs) or timing["output"] != req.output:
+        raise ValueError(f"{req.name}: the timing run's cell or pins differ from the request")
+    if timing["errors"]:
+        raise ValueError(f"{req.name}: the timing run has errors: {timing['errors']}")
+    if truth_table(req.expression, req.inputs) != req.truth_table:
+        raise ValueError(f"{req.name}: the function {req.expression!r} does not give the request's truth table")
+    out = folder / "cell.lib"
+    out.write_text(library(req.name, [timing], [cell_group(timing, response["area_um2"], req.expression)]))
+    response["files"] = {**response.get("files", {}), "liberty": f"cells/{req.name}/cell.lib"}
+    response["ngspice_sha256"] = timing["ngspice"]["sha256"]
+    response_path.write_text(json.dumps(response, indent=2) + "\n")
+    return out
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("kind", choices=["validation"])
-    ap.add_argument("cells", nargs="*", default=CELLS)
+    ap.add_argument("kind", choices=["validation", "cell"])
+    ap.add_argument("cells", nargs="*", help="validation: HD cells (default the six); cell: request files")
     ap.add_argument("--tag", default="")
     args = ap.parse_args()
-    for path in validation(args.cells, args.tag):
-        print(f"-> {path}")
+    if args.kind == "validation":
+        for path in validation(args.cells or CELLS, args.tag):
+            print(f"-> {path}")
+    else:
+        if not args.cells:
+            ap.error("cell needs at least one request file")
+        for request in args.cells:
+            print(f"-> {cell_lib(Path(request).resolve())}")

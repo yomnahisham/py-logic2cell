@@ -1,0 +1,3 @@
+netlist with a swapped cell: one xor2_1 became or2_1 -> FAIL as it must  [FAIL: 13312/65536 mismatches]
+model of a new cell inverted: dd2_gc1__f17_1 (8 instances in mul, script B); testbenches mul_tb, mul_exhaustive_tb -> FAIL as it must  [FAIL: 65536/65536 mismatches]
+Liberty function of a new cell complemented: dd2_gc1__f17_1 in mul, script B: cec says equivalent (blind to it), 7 instances, testbenches mul_tb, mul_exhaustive_tb -> FAIL as it must  [FAIL: 65536/65536 mismatches]

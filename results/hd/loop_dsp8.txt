@@ -1,0 +1,8 @@
+loop: given/designs/dsp8.v (top dsp8), 2 rounds of 2 candidates
+20 buildable candidates with a positive estimated saving
+round 0 (reduced library): {'round': 0, 'tried': '', 'kept': '', 'area_um2': 5928.1856, 'script': 'A', 'cec': 'pass', 'worst_delay_ns': 5.2175, 'power_mw': 0.45193, 'ours_power_mw': 0.0}
+round 1: dd2_gc1__f011f_1 reused, not kept: 5928.1856 um2 (cec pass); dd2_gc1__f001f_1 reused, kept: 5830.592 um2
+round 1 design: {'round': 1, 'tried': 'dd2_gc1__f011f_1 dd2_gc1__f001f_1', 'kept': 'dd2_gc1__f001f_1', 'area_um2': 5830.592, 'script': 'A', 'cec': 'pass', 'worst_delay_ns': 5.3366, 'power_mw': 0.448885, 'ours_power_mw': 0.003259}
+round 2: dd2_gc1__f02ab_1 over 90 min, refused: status fail: no Euler order can be drawn: A C B D A_b A_b D: cannot route Y between the rows on li; D A_b A_b D B C A: cannot route Y between the rows on li; A B C D A_b A_b D: cannot route Y between the rows on li; dd2_gc1__f2b_1 reused, not kept: 5830.592 um2 (cec pass)
+round 2 design: {'round': 2, 'tried': 'dd2_gc1__f02ab_1 dd2_gc1__f2b_1', 'kept': 'dd2_gc1__f001f_1', 'area_um2': 5830.592, 'script': 'A', 'cec': 'pass', 'worst_delay_ns': 5.3366, 'power_mw': 0.448885, 'ours_power_mw': 0.003259}
+dsp8: area 5928.1856 -> 5830.592 um2 (-1.65%), worst delay 5.2175 -> 5.3366 ns, power 0.45193 -> 0.448885 mW, cells kept: dd2_gc1__f001f_1

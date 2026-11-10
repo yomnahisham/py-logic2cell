@@ -1,0 +1,499 @@
+build mux2_1.json --hd mux2_1, style handout, git:6326eba, 2026-11-09 06:47 UTC
+
+== 1. request
+name dd2_gc1__mux2_1_hd, id HD-mux2_1, inputs A0, A1, S, output X, truth table 0xca, sizing hd
+
+== 2. network
+split into stages (8 series orders)
+variant 0: S_b = f(S), 2 fets | X_b = f(A0, A1, S, S_b), 8 fets | X = f(X_b), 2 fets
+    nMOS gate S: S_b - VGND
+    pMOS gate S: S_b - VPWR
+    nMOS gate A0: X_b - n1
+    nMOS gate S_b: n1 - VGND
+    nMOS gate A1: X_b - n2
+    nMOS gate S: n2 - VGND
+    pMOS gate A0: X_b - p1
+    pMOS gate S_b: X_b - p1
+    pMOS gate A1: p1 - VPWR
+    pMOS gate S: p1 - VPWR
+    nMOS gate X_b: X - VGND
+    pMOS gate X_b: X - VPWR
+variant 1: S_b = f(S), 2 fets | X_b = f(A0, A1, S, S_b), 8 fets | X = f(X_b), 2 fets
+    nMOS gate S: S_b - VGND
+    pMOS gate S: S_b - VPWR
+    nMOS gate A0: X_b - n1
+    nMOS gate S_b: n1 - VGND
+    nMOS gate A1: X_b - n2
+    nMOS gate S: n2 - VGND
+    pMOS gate A1: X_b - p1
+    pMOS gate S: X_b - p1
+    pMOS gate A0: p1 - VPWR
+    pMOS gate S_b: p1 - VPWR
+    nMOS gate X_b: X - VGND
+    pMOS gate X_b: X - VPWR
+variant 2: S_b = f(S), 2 fets | X_b = f(A0, A1, S, S_b), 8 fets | X = f(X_b), 2 fets
+    nMOS gate S: S_b - VGND
+    pMOS gate S: S_b - VPWR
+    nMOS gate A0: X_b - n1
+    nMOS gate S_b: n1 - VGND
+    nMOS gate S: X_b - n2
+    nMOS gate A1: n2 - VGND
+    pMOS gate A0: X_b - p1
+    pMOS gate S_b: X_b - p1
+    pMOS gate A1: p1 - VPWR
+    pMOS gate S: p1 - VPWR
+    nMOS gate X_b: X - VGND
+    pMOS gate X_b: X - VPWR
+variant 3: S_b = f(S), 2 fets | X_b = f(A0, A1, S, S_b), 8 fets | X = f(X_b), 2 fets
+    nMOS gate S: S_b - VGND
+    pMOS gate S: S_b - VPWR
+    nMOS gate A0: X_b - n1
+    nMOS gate S_b: n1 - VGND
+    nMOS gate S: X_b - n2
+    nMOS gate A1: n2 - VGND
+    pMOS gate A1: X_b - p1
+    pMOS gate S: X_b - p1
+    pMOS gate A0: p1 - VPWR
+    pMOS gate S_b: p1 - VPWR
+    nMOS gate X_b: X - VGND
+    pMOS gate X_b: X - VPWR
+variant 4: S_b = f(S), 2 fets | X_b = f(A0, A1, S, S_b), 8 fets | X = f(X_b), 2 fets
+    nMOS gate S: S_b - VGND
+    pMOS gate S: S_b - VPWR
+    nMOS gate S_b: X_b - n1
+    nMOS gate A0: n1 - VGND
+    nMOS gate A1: X_b - n2
+    nMOS gate S: n2 - VGND
+    pMOS gate A0: X_b - p1
+    pMOS gate S_b: X_b - p1
+    pMOS gate A1: p1 - VPWR
+    pMOS gate S: p1 - VPWR
+    nMOS gate X_b: X - VGND
+    pMOS gate X_b: X - VPWR
+variant 5: S_b = f(S), 2 fets | X_b = f(A0, A1, S, S_b), 8 fets | X = f(X_b), 2 fets
+    nMOS gate S: S_b - VGND
+    pMOS gate S: S_b - VPWR
+    nMOS gate S_b: X_b - n1
+    nMOS gate A0: n1 - VGND
+    nMOS gate A1: X_b - n2
+    nMOS gate S: n2 - VGND
+    pMOS gate A1: X_b - p1
+    pMOS gate S: X_b - p1
+    pMOS gate A0: p1 - VPWR
+    pMOS gate S_b: p1 - VPWR
+    nMOS gate X_b: X - VGND
+    pMOS gate X_b: X - VPWR
+variant 6: S_b = f(S), 2 fets | X_b = f(A0, A1, S, S_b), 8 fets | X = f(X_b), 2 fets
+    nMOS gate S: S_b - VGND
+    pMOS gate S: S_b - VPWR
+    nMOS gate S_b: X_b - n1
+    nMOS gate A0: n1 - VGND
+    nMOS gate S: X_b - n2
+    nMOS gate A1: n2 - VGND
+    pMOS gate A0: X_b - p1
+    pMOS gate S_b: X_b - p1
+    pMOS gate A1: p1 - VPWR
+    pMOS gate S: p1 - VPWR
+    nMOS gate X_b: X - VGND
+    pMOS gate X_b: X - VPWR
+variant 7: S_b = f(S), 2 fets | X_b = f(A0, A1, S, S_b), 8 fets | X = f(X_b), 2 fets
+    nMOS gate S: S_b - VGND
+    pMOS gate S: S_b - VPWR
+    nMOS gate S_b: X_b - n1
+    nMOS gate A0: n1 - VGND
+    nMOS gate S: X_b - n2
+    nMOS gate A1: n2 - VGND
+    pMOS gate A1: X_b - p1
+    pMOS gate S: X_b - p1
+    pMOS gate A0: p1 - VPWR
+    pMOS gate S_b: p1 - VPWR
+    nMOS gate X_b: X - VGND
+    pMOS gate X_b: X - VPWR
+
+== 3. switch-level check
+variant 0: every input combination gives the truth table
+variant 1: every input combination gives the truth table
+variant 2: every input combination gives the truth table
+variant 3: every input combination gives the truth table
+variant 4: every input combination gives the truth table
+variant 5: every input combination gives the truth table
+variant 6: every input combination gives the truth table
+variant 7: every input combination gives the truth table
+widths: NMOS 0.65 um, PMOS 1.0 um
+widths differ from mux2_1: ours only [('n', 'A0', 0.65), ('n', 'A1', 0.65), ('n', 'S', 0.65), ('n', 'S', 0.65), ('n', 'internal', 0.65), ('p', 'A0', 1.0), ('p', 'A1', 1.0), ('p', 'S', 1.0), ('p', 'S', 1.0), ('p', 'internal', 1.0)], HD only [('n', 'A0', 0.42), ('n', 'A1', 0.42), ('n', 'S', 0.42), ('n', 'S', 0.42), ('n', 'internal', 0.42), ('p', 'A0', 0.42), ('p', 'A1', 0.42), ('p', 'S', 0.42), ('p', 'S', 0.42), ('p', 'internal', 0.42)]
+
+== 4. Euler orders and placement (first 40 per variant, fewest contacts first)
+variant 0 gates S S_b A0 A1 S | X_b | n S_b VGND n1 X_b n2 VGND VGND X | p VPWR p1 X_b p1 VPWR S_b VPWR X: cannot draw: cannot route S_b between the rows on li
+variant 0 gates S S_b A0 A1 S | X_b | n S_b VGND n1 X_b n2 VGND VGND X | p VPWR p1 X_b p1 VPWR S_b X VPWR: cannot draw: cannot route S_b between the rows on li
+variant 0 gates S S_b A0 A1 | S X_b | n S_b VGND n1 X_b n2 n2 VGND X | p VPWR p1 X_b p1 VPWR S_b VPWR X: cannot draw: cannot route S_b between the rows on li
+variant 0 gates S A1 A0 S_b S | X_b | n VGND n2 X_b n1 VGND S_b VGND X | p S_b VPWR p1 X_b p1 VPWR VPWR X: cannot draw: cannot route S_b between the rows on li
+variant 0 gates S A1 A0 S_b S | X_b | n VGND n2 X_b n1 VGND S_b X VGND | p S_b VPWR p1 X_b p1 VPWR VPWR X: cannot draw: cannot route S_b between the rows on li
+variant 0 gates S A1 A0 S_b | S X_b | n VGND n2 X_b n1 VGND S_b VGND X | p S_b VPWR p1 X_b p1 p1 VPWR X: cannot draw: cannot route S_b between the rows on li
+variant 0 gates X_b | S S_b A0 A1 S | n VGND X S_b VGND n1 X_b n2 VGND | p X VPWR VPWR p1 X_b p1 VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 0 gates X_b | S A1 A0 S_b S | n X VGND VGND n2 X_b n1 VGND S_b | p VPWR X S_b VPWR p1 X_b p1 VPWR: cannot draw: cannot route S_b between the rows on li
+variant 0 gates X_b S | S_b A0 A1 S | n X VGND S_b VGND n1 X_b n2 VGND | p X VPWR p1 p1 X_b p1 VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 0 gates X_b S | A1 A0 S_b S | n X VGND n2 n2 X_b n1 VGND S_b | p X VPWR S_b VPWR p1 X_b p1 VPWR: cannot draw: cannot route S_b between the rows on li
+variant 0 gates X_b | S S_b A0 A1 S | n X VGND S_b VGND n1 X_b n2 VGND | p X VPWR VPWR p1 X_b p1 VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 0 gates X_b | S A1 A0 S_b S | n X VGND VGND n2 X_b n1 VGND S_b | p X VPWR S_b VPWR p1 X_b p1 VPWR: cannot draw: cannot route S_b between the rows on li
+variant 0 gates S X_b | S_b A0 A1 S | n S_b VGND X VGND n1 X_b n2 VGND | p S_b VPWR X p1 X_b p1 VPWR p1: cannot draw: no room for the A0 contact
+variant 0 gates S X_b | S A1 A0 S_b | n S_b VGND X VGND n2 X_b n1 VGND | p S_b VPWR X p1 VPWR p1 X_b p1: 4.14 um, met1 inside, 7 contacts on the output stage, 26 in all
+variant 0 gates S X_b | A0 S_b S A1 | n S_b VGND X X_b n1 VGND n2 X_b | p S_b VPWR X p1 X_b p1 VPWR p1: cannot draw: no room for the A0 contact
+variant 0 gates S X_b | A1 S S_b A0 | n S_b VGND X X_b n2 VGND n1 X_b | p S_b VPWR X p1 VPWR p1 X_b p1: cannot draw: no room for the A1 contact
+variant 0 gates S S_b A0 A1 S | X_b | n S_b VGND n1 X_b n2 VGND X VGND | p VPWR p1 X_b p1 VPWR S_b VPWR X: cannot draw: cannot route S_b between the rows on li
+variant 0 gates S S_b A0 A1 S | X_b | n S_b VGND n1 X_b n2 VGND X VGND | p VPWR p1 X_b p1 VPWR S_b X VPWR: cannot draw: cannot route S_b between the rows on li
+variant 0 gates S X_b | S A1 A0 S_b | n S_b VGND X VGND n2 X_b n1 VGND | p p1 VPWR X S_b VPWR p1 X_b p1: cannot draw: cannot route S_b between the rows on li
+variant 0 gates S X_b | S_b A0 A1 S | n S_b VGND X VGND n1 X_b n2 VGND | p p1 VPWR X p1 X_b p1 VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 0 gates S A1 A0 S_b S | X_b | n VGND n2 X_b n1 VGND S_b VGND X | p S_b VPWR p1 X_b p1 VPWR X VPWR: cannot draw: cannot route S_b between the rows on li
+variant 0 gates S A1 A0 S_b S | X_b | n VGND n2 X_b n1 VGND S_b X VGND | p S_b VPWR p1 X_b p1 VPWR X VPWR: cannot draw: cannot route S_b between the rows on li
+variant 0 gates S A1 A0 S_b | X_b S | n VGND n2 X_b n1 VGND X VGND S_b | p S_b VPWR p1 X_b p1 X VPWR p1: cannot draw: cannot route S_b between the rows on li
+variant 0 gates X_b | S S_b A0 A1 S | n VGND X S_b VGND n1 X_b n2 VGND | p VPWR X VPWR p1 X_b p1 VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 0 gates X_b | S A1 A0 S_b S | n VGND X VGND n2 X_b n1 VGND S_b | p VPWR X S_b VPWR p1 X_b p1 VPWR: cannot draw: cannot route S_b between the rows on li
+variant 0 gates X_b | S A1 A0 S_b S | n VGND X VGND n2 X_b n1 VGND S_b | p X VPWR S_b VPWR p1 X_b p1 VPWR: cannot draw: cannot route S_b between the rows on li
+variant 0 gates S_b A0 A1 S | S X_b | n VGND n1 X_b n2 VGND S_b VGND X | p p1 X_b p1 VPWR S_b p1 VPWR X: 5.52 um, met1 inside, 10 contacts on the output stage, 29 in all
+variant 0 gates S_b A0 A1 S | X_b S | n VGND n1 X_b n2 VGND X VGND S_b | p p1 X_b p1 VPWR S_b X VPWR p1: cannot draw: cannot route S_b between the rows on li
+variant 0 gates S_b A0 A1 S | S X_b | n VGND n1 X_b n2 VGND S_b VGND X | p p1 X_b p1 VPWR p1 S_b VPWR X: 4.14 um, met1 inside, 7 contacts on the output stage, 24 in all
+variant 0 gates S_b A0 A1 S | X_b S | n VGND n1 X_b n2 VGND X VGND S_b | p p1 X_b p1 VPWR p1 X VPWR S_b: 4.14 um, met1 inside, 7 contacts on the output stage, 26 in all
+variant 0 gates S A1 A0 S_b | S X_b | n VGND n2 X_b n1 VGND S_b VGND X | p p1 VPWR p1 X_b p1 S_b VPWR X: 4.14 um, met1 inside, 7 contacts on the output stage, 25 in all
+variant 0 gates S A1 A0 S_b | X_b S | n VGND n2 X_b n1 VGND X VGND S_b | p p1 VPWR p1 X_b p1 X VPWR S_b: 4.6 um, met1 inside, 6 contacts on the output stage, 25 in all
+variant 0 gates X_b | S S_b A0 A1 S | n X VGND S_b VGND n1 X_b n2 VGND | p VPWR X VPWR p1 X_b p1 VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 0 gates X_b S | S_b A0 A1 S | n X VGND S_b VGND n1 X_b n2 VGND | p X VPWR S_b p1 X_b p1 VPWR p1: 4.14 um, met1 inside, 7 contacts on the output stage, 25 in all
+variant 0 gates X_b S | S A1 A0 S_b | n X VGND S_b VGND n2 X_b n1 VGND | p X VPWR S_b p1 VPWR p1 X_b p1: 4.14 um, met1 inside, 7 contacts on the output stage, 26 in all
+variant 0 gates X_b S | A0 S_b S A1 | n X VGND S_b X_b n1 VGND n2 X_b | p X VPWR S_b p1 X_b p1 VPWR p1: 6.44 um, met1 inside, 10 contacts on the output stage, 28 in all
+variant 0 gates X_b S | A1 S S_b A0 | n X VGND S_b X_b n2 VGND n1 X_b | p X VPWR S_b p1 VPWR p1 X_b p1: cannot draw: gave up after 20040 tries, 288 of them drawn
+variant 0 gates X_b S | S A1 A0 S_b | n X VGND S_b VGND n2 X_b n1 VGND | p X VPWR p1 S_b VPWR p1 X_b p1: cannot draw: gave up after 20040 tries, 11 of them drawn
+variant 0 gates A0 S_b S A1 | S X_b | n X_b n1 VGND n2 X_b S_b VGND X | p p1 X_b p1 VPWR p1 S_b VPWR X: cannot draw: gave up after 6840 tries, 400 of them drawn
+variant 0 gates A0 S_b S A1 | X_b S | n X_b n1 VGND n2 X_b X VGND S_b | p p1 X_b p1 VPWR p1 X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 1 gates S S_b A0 A1 | S X_b | n S_b VGND n1 X_b n2 n2 VGND X | p X_b p1 VPWR p1 X_b S_b VPWR X: cannot draw: cannot route S_b between the rows on li
+variant 1 gates X_b S | A1 A0 S_b S | n X VGND n2 n2 X_b n1 VGND S_b | p X VPWR S_b X_b p1 VPWR p1 X_b: cannot draw: cannot route S_b between the rows on li
+variant 1 gates S X_b | S_b A0 A1 S | n S_b VGND X VGND n1 X_b n2 VGND | p S_b VPWR X p1 VPWR p1 X_b p1: 4.14 um, met1 inside, 6 contacts on the output stage, 26 in all
+variant 1 gates S X_b | S A1 A0 S_b | n S_b VGND X VGND n2 X_b n1 VGND | p S_b VPWR X p1 X_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 1 gates S X_b | A0 S_b S A1 | n S_b VGND X X_b n1 VGND n2 X_b | p S_b VPWR X p1 VPWR p1 X_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 1 gates S X_b | A1 S S_b A0 | n S_b VGND X X_b n2 VGND n1 X_b | p S_b VPWR X p1 X_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 1 gates S_b A0 A1 S | S X_b | n VGND n1 X_b n2 VGND S_b VGND X | p p1 VPWR p1 X_b p1 S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 1 gates S_b A0 A1 S | X_b S | n VGND n1 X_b n2 VGND X VGND S_b | p p1 VPWR p1 X_b p1 X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 1 gates S A1 A0 S_b | S X_b | n VGND n2 X_b n1 VGND S_b VGND X | p p1 X_b p1 VPWR p1 S_b VPWR X: 4.14 um, met1 inside, 7 contacts on the output stage, 24 in all
+variant 1 gates S A1 A0 S_b | X_b S | n VGND n2 X_b n1 VGND X VGND S_b | p p1 X_b p1 VPWR p1 X VPWR S_b: 4.14 um, met1 inside, 7 contacts on the output stage, 26 in all
+variant 1 gates X_b S | S_b A0 A1 S | n X VGND S_b VGND n1 X_b n2 VGND | p X VPWR S_b p1 VPWR p1 X_b p1: 4.14 um, met1 inside, 7 contacts on the output stage, 24 in all
+variant 1 gates X_b S | S A1 A0 S_b | n X VGND S_b VGND n2 X_b n1 VGND | p X VPWR S_b p1 X_b p1 VPWR p1: 4.14 um, met1 inside, 7 contacts on the output stage, 26 in all
+variant 1 gates X_b S | A0 S_b S A1 | n X VGND S_b X_b n1 VGND n2 X_b | p X VPWR S_b p1 VPWR p1 X_b p1: cannot draw: gave up after 20040 tries, 288 of them drawn
+variant 1 gates X_b S | A1 S S_b A0 | n X VGND S_b X_b n2 VGND n1 X_b | p X VPWR S_b p1 X_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 1 gates A0 S_b S A1 | S X_b | n X_b n1 VGND n2 X_b S_b VGND X | p p1 VPWR p1 X_b p1 S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 1 gates A0 S_b S A1 | X_b S | n X_b n1 VGND n2 X_b X VGND S_b | p p1 VPWR p1 X_b p1 X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 1 gates A1 S S_b A0 | S X_b | n X_b n2 VGND n1 X_b S_b VGND X | p p1 X_b p1 VPWR p1 S_b VPWR X: cannot draw: gave up after 6840 tries, 400 of them drawn
+variant 1 gates A1 S S_b A0 | X_b S | n X_b n2 VGND n1 X_b X VGND S_b | p p1 X_b p1 VPWR p1 X VPWR S_b: 4.14 um, met1 inside, 6 contacts on the output stage, 23 in all
+variant 1 gates S X_b | A0 A1 S S_b | n S_b VGND X n1 X_b n2 VGND n1 | p S_b VPWR X VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 1 gates S X_b | S_b S A1 A0 | n S_b VGND X n1 VGND n2 X_b n1 | p S_b VPWR X VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 1 gates S X_b | A1 A0 S_b S | n S_b VGND X n2 X_b n1 VGND n2 | p S_b VPWR X X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 1 gates S X_b | S S_b A0 A1 | n S_b VGND X n2 VGND n1 X_b n2 | p S_b VPWR X X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 1 gates S S_b A0 A1 | X_b S | n S_b VGND n1 X_b n2 X VGND n2 | p X_b p1 VPWR p1 X_b X VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 1 gates X_b S | A0 A1 S S_b | n X VGND S_b n1 X_b n2 VGND n1 | p X VPWR S_b VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 1 gates X_b S | S_b S A1 A0 | n X VGND S_b n1 VGND n2 X_b n1 | p X VPWR S_b VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 1 gates X_b S | A1 A0 S_b S | n X VGND S_b n2 X_b n1 VGND n2 | p X VPWR S_b X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 1 gates X_b S | S S_b A0 A1 | n X VGND S_b n2 VGND n1 X_b n2 | p X VPWR S_b X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 1 gates X_b S | S S_b A0 A1 | n X VGND n2 S_b VGND n1 X_b n2 | p X VPWR S_b X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 1 gates A0 A1 S S_b | S X_b | n n1 X_b n2 VGND n1 S_b VGND X | p VPWR p1 X_b p1 VPWR S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 1 gates A0 A1 S S_b | X_b S | n n1 X_b n2 VGND n1 X VGND S_b | p VPWR p1 X_b p1 VPWR X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 1 gates S_b S A1 A0 | S X_b | n n1 VGND n2 X_b n1 S_b VGND X | p VPWR p1 X_b p1 VPWR S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 1 gates S_b S A1 A0 | X_b S | n n1 VGND n2 X_b n1 X VGND S_b | p VPWR p1 X_b p1 VPWR X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 1 gates S X_b | S S_b A0 A1 | n n2 VGND X S_b VGND n1 X_b n2 | p S_b VPWR X X_b p1 VPWR p1 X_b: cannot draw: cannot route S_b between the rows on li
+variant 1 gates S X_b | A1 A0 S_b S | n n2 VGND X n2 X_b n1 VGND S_b | p S_b VPWR X X_b p1 VPWR p1 X_b: cannot draw: cannot route S_b between the rows on li
+variant 1 gates A1 A0 S_b S | X_b S | n n2 X_b n1 VGND S_b X VGND n2 | p X_b p1 VPWR p1 X_b X VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 1 gates A1 A0 S_b S | S X_b | n n2 X_b n1 VGND S_b n2 VGND X | p X_b p1 VPWR p1 X_b S_b VPWR X: cannot draw: cannot route X_b between the rows on li
+variant 1 gates A1 A0 S_b S | S X_b | n n2 X_b n1 VGND n2 S_b VGND X | p X_b p1 VPWR p1 X_b S_b VPWR X: cannot draw: cannot route X_b between the rows on li
+variant 1 gates A1 A0 S_b S | X_b S | n n2 X_b n1 VGND n2 X VGND S_b | p X_b p1 VPWR p1 X_b X VPWR S_b: cannot draw: cannot route X_b between the rows on li
+variant 1 gates S S_b A0 A1 | S X_b | n n2 VGND n1 X_b n2 S_b VGND X | p X_b p1 VPWR p1 X_b S_b VPWR X: cannot draw: cannot route X_b between the rows on li
+variant 1 gates S S_b A0 A1 | X_b S | n n2 VGND n1 X_b n2 X VGND S_b | p X_b p1 VPWR p1 X_b X VPWR S_b: cannot draw: cannot route X_b between the rows on li
+variant 2 gates X_b S | A0 S_b A1 S | n X VGND S_b X_b n1 VGND n2 X_b | p X VPWR p1 p1 X_b p1 VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 2 gates S A1 S_b A0 | S X_b | n X_b n2 VGND n1 X_b S_b VGND X | p S_b VPWR p1 X_b p1 p1 VPWR X: cannot draw: cannot route S_b between the rows on li
+variant 2 gates S X_b | S_b A0 S A1 | n S_b VGND X VGND n1 X_b n2 VGND | p S_b VPWR X p1 X_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 2 gates S X_b | A1 S A0 S_b | n S_b VGND X VGND n2 X_b n1 VGND | p S_b VPWR X p1 VPWR p1 X_b p1: 4.14 um, met1 inside, 6 contacts on the output stage, 26 in all
+variant 2 gates S X_b | A0 S_b A1 S | n S_b VGND X X_b n1 VGND n2 X_b | p S_b VPWR X p1 X_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 2 gates S X_b | S A1 S_b A0 | n S_b VGND X X_b n2 VGND n1 X_b | p S_b VPWR X p1 VPWR p1 X_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 2 gates S X_b | S A1 S_b A0 | n S_b VGND X X_b n2 VGND n1 X_b | p p1 VPWR X S_b VPWR p1 X_b p1: cannot draw: cannot route S_b between the rows on li
+variant 2 gates S X_b | A0 S_b A1 S | n S_b VGND X X_b n1 VGND n2 X_b | p p1 VPWR X p1 X_b p1 VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 2 gates S_b A0 S A1 | S X_b | n VGND n1 X_b n2 VGND S_b VGND X | p p1 X_b p1 VPWR p1 S_b VPWR X: 4.14 um, met1 inside, 7 contacts on the output stage, 24 in all
+variant 2 gates S_b A0 S A1 | X_b S | n VGND n1 X_b n2 VGND X VGND S_b | p p1 X_b p1 VPWR p1 X VPWR S_b: 4.14 um, met1 inside, 7 contacts on the output stage, 26 in all
+variant 2 gates A1 S A0 S_b | S X_b | n VGND n2 X_b n1 VGND S_b VGND X | p p1 VPWR p1 X_b p1 S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 2 gates A1 S A0 S_b | X_b S | n VGND n2 X_b n1 VGND X VGND S_b | p p1 VPWR p1 X_b p1 X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 2 gates X_b S | S_b A0 S A1 | n X VGND S_b VGND n1 X_b n2 VGND | p X VPWR S_b p1 X_b p1 VPWR p1: 4.14 um, met1 inside, 7 contacts on the output stage, 25 in all
+variant 2 gates X_b S | A1 S A0 S_b | n X VGND S_b VGND n2 X_b n1 VGND | p X VPWR S_b p1 VPWR p1 X_b p1: 4.14 um, met1 inside, 7 contacts on the output stage, 24 in all
+variant 2 gates X_b S | A0 S_b A1 S | n X VGND S_b X_b n1 VGND n2 X_b | p X VPWR S_b p1 X_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 2 gates X_b S | S A1 S_b A0 | n X VGND S_b X_b n2 VGND n1 X_b | p X VPWR S_b p1 VPWR p1 X_b p1: 4.14 um, met1 inside, 7 contacts on the output stage, 23 in all
+variant 2 gates X_b S | S A1 S_b A0 | n X VGND S_b X_b n2 VGND n1 X_b | p X VPWR p1 S_b VPWR p1 X_b p1: cannot draw: gave up after 6720 tries, 404 of them drawn
+variant 2 gates S A1 S_b A0 | X_b S | n X_b n2 VGND n1 X_b X VGND S_b | p S_b VPWR p1 X_b p1 X VPWR p1: cannot draw: cannot route S_b between the rows on li
+variant 2 gates A0 S_b A1 S | S X_b | n X_b n1 VGND n2 X_b S_b VGND X | p p1 X_b p1 VPWR S_b p1 VPWR X: cannot draw: gave up after 2520 tries, 428 of them drawn
+variant 2 gates A0 S_b A1 S | X_b S | n X_b n1 VGND n2 X_b X VGND S_b | p p1 X_b p1 VPWR S_b X VPWR p1: cannot draw: cannot route S_b between the rows on li
+variant 2 gates A0 S_b A1 S | S X_b | n X_b n1 VGND n2 X_b S_b VGND X | p p1 X_b p1 VPWR p1 S_b VPWR X: 4.14 um, met1 inside, 7 contacts on the output stage, 23 in all
+variant 2 gates A0 S_b A1 S | X_b S | n X_b n1 VGND n2 X_b X VGND S_b | p p1 X_b p1 VPWR p1 X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 2 gates S A1 S_b A0 | S X_b | n X_b n2 VGND n1 X_b S_b VGND X | p p1 VPWR p1 X_b p1 S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 2 gates S A1 S_b A0 | X_b S | n X_b n2 VGND n1 X_b X VGND S_b | p p1 VPWR p1 X_b p1 X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 2 gates S X_b | A0 S A1 S_b | n S_b VGND X n1 X_b n2 VGND n1 | p S_b VPWR X X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 2 gates S X_b | S_b A1 S A0 | n S_b VGND X n1 VGND n2 X_b n1 | p S_b VPWR X X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 2 gates S X_b | S A0 S_b A1 | n S_b VGND X n2 X_b n1 VGND n2 | p S_b VPWR X VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 2 gates S X_b | A1 S_b A0 S | n S_b VGND X n2 VGND n1 X_b n2 | p S_b VPWR X VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 2 gates X_b S | A0 S A1 S_b | n X VGND S_b n1 X_b n2 VGND n1 | p X VPWR S_b X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 2 gates X_b S | S_b A1 S A0 | n X VGND S_b n1 VGND n2 X_b n1 | p X VPWR S_b X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 2 gates X_b S | S A0 S_b A1 | n X VGND S_b n2 X_b n1 VGND n2 | p X VPWR S_b VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 2 gates X_b S | A1 S_b A0 S | n X VGND S_b n2 VGND n1 X_b n2 | p X VPWR S_b VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 2 gates A0 S A1 S_b | S X_b | n n1 X_b n2 VGND n1 S_b VGND X | p X_b p1 VPWR p1 X_b S_b VPWR X: cannot draw: cannot route X_b between the rows on li
+variant 2 gates A0 S A1 S_b | X_b S | n n1 X_b n2 VGND n1 X VGND S_b | p X_b p1 VPWR p1 X_b X VPWR S_b: cannot draw: cannot route X_b between the rows on li
+variant 2 gates S_b A1 S A0 | S X_b | n n1 VGND n2 X_b n1 S_b VGND X | p X_b p1 VPWR p1 X_b S_b VPWR X: cannot draw: cannot route X_b between the rows on li
+variant 2 gates S_b A1 S A0 | X_b S | n n1 VGND n2 X_b n1 X VGND S_b | p X_b p1 VPWR p1 X_b X VPWR S_b: cannot draw: cannot route X_b between the rows on li
+variant 2 gates S A0 S_b A1 | S X_b | n n2 X_b n1 VGND n2 S_b VGND X | p VPWR p1 X_b p1 VPWR S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 2 gates S A0 S_b A1 | X_b S | n n2 X_b n1 VGND n2 X VGND S_b | p VPWR p1 X_b p1 VPWR X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 2 gates A1 S_b A0 S | S X_b | n n2 VGND n1 X_b n2 S_b VGND X | p VPWR p1 X_b p1 VPWR S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 2 gates A1 S_b A0 S | X_b S | n n2 VGND n1 X_b n2 X VGND S_b | p VPWR p1 X_b p1 VPWR X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates S A1 | S A0 S_b X_b | n S_b VGND n2 n2 X_b n1 VGND X | p X_b p1 X_b S_b VPWR p1 VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates S A1 | S A0 S_b X_b | n S_b VGND n2 n2 X_b n1 VGND X | p p1 X_b p1 S_b VPWR p1 VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates X_b S_b A0 S | A1 S | n X VGND n1 X_b n2 n2 VGND S_b | p X VPWR p1 VPWR S_b X_b p1 X_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates X_b S_b A0 S | A1 S | n X VGND n1 X_b n2 n2 VGND S_b | p X VPWR p1 VPWR S_b p1 X_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates S X_b | S_b A0 S A1 | n S_b VGND X VGND n1 X_b n2 VGND | p S_b VPWR X p1 VPWR p1 X_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates S X_b | A1 S A0 S_b | n S_b VGND X VGND n2 X_b n1 VGND | p S_b VPWR X p1 X_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates S X_b | A0 S_b A1 S | n S_b VGND X X_b n1 VGND n2 X_b | p S_b VPWR X p1 VPWR p1 X_b p1: 4.14 um, met1 inside, 6 contacts on the output stage, 24 in all
+variant 3 gates S X_b | S A1 S_b A0 | n S_b VGND X X_b n2 VGND n1 X_b | p S_b VPWR X p1 X_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates S_b A0 S A1 | S X_b | n VGND n1 X_b n2 VGND S_b VGND X | p p1 VPWR p1 X_b p1 S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates S_b A0 S A1 | X_b S | n VGND n1 X_b n2 VGND X VGND S_b | p p1 VPWR p1 X_b p1 X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates A1 S A0 S_b | S X_b | n VGND n2 X_b n1 VGND S_b VGND X | p p1 X_b p1 VPWR p1 S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates A1 S A0 S_b | X_b S | n VGND n2 X_b n1 VGND X VGND S_b | p p1 X_b p1 VPWR p1 X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates X_b S | S_b A0 S A1 | n X VGND S_b VGND n1 X_b n2 VGND | p X VPWR S_b p1 VPWR p1 X_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates X_b S | A1 S A0 S_b | n X VGND S_b VGND n2 X_b n1 VGND | p X VPWR S_b p1 X_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates X_b S | A0 S_b A1 S | n X VGND S_b X_b n1 VGND n2 X_b | p X VPWR S_b p1 VPWR p1 X_b p1: 4.14 um, met1 inside, 7 contacts on the output stage, 24 in all
+variant 3 gates X_b S | S A1 S_b A0 | n X VGND S_b X_b n2 VGND n1 X_b | p X VPWR S_b p1 X_b p1 VPWR p1: 4.14 um, met1 inside, 7 contacts on the output stage, 26 in all
+variant 3 gates A0 S_b A1 S | S X_b | n X_b n1 VGND n2 X_b S_b VGND X | p p1 VPWR p1 X_b p1 S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates A0 S_b A1 S | X_b S | n X_b n1 VGND n2 X_b X VGND S_b | p p1 VPWR p1 X_b p1 X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates S A1 S_b A0 | S X_b | n X_b n2 VGND n1 X_b S_b VGND X | p p1 X_b p1 VPWR p1 S_b VPWR X: cannot draw: gave up after 20040 tries, 7 of them drawn
+variant 3 gates S A1 S_b A0 | X_b S | n X_b n2 VGND n1 X_b X VGND S_b | p p1 X_b p1 VPWR p1 X VPWR S_b: 4.14 um, met1 inside, 6 contacts on the output stage, 24 in all
+variant 3 gates S X_b | A0 S A1 S_b | n S_b VGND X n1 X_b n2 VGND n1 | p S_b VPWR X VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates S X_b | S_b A1 S A0 | n S_b VGND X n1 VGND n2 X_b n1 | p S_b VPWR X VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates S X_b | S A0 S_b A1 | n S_b VGND X n2 X_b n1 VGND n2 | p S_b VPWR X X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 3 gates S X_b | A1 S_b A0 S | n S_b VGND X n2 VGND n1 X_b n2 | p S_b VPWR X X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 3 gates S A1 | X_b S_b A0 S | n S_b VGND n2 X VGND n1 X_b n2 | p X_b p1 X_b X VPWR p1 VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 3 gates S A1 | X_b S_b A0 S | n S_b VGND n2 X VGND n1 X_b n2 | p p1 X_b p1 X VPWR p1 VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 3 gates X_b S | A0 S A1 S_b | n X VGND S_b n1 X_b n2 VGND n1 | p X VPWR S_b VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates X_b S | S_b A1 S A0 | n X VGND S_b n1 VGND n2 X_b n1 | p X VPWR S_b VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates X_b S | S A0 S_b A1 | n X VGND S_b n2 X_b n1 VGND n2 | p X VPWR S_b X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 3 gates X_b S | A1 S_b A0 S | n X VGND S_b n2 VGND n1 X_b n2 | p X VPWR S_b X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 3 gates X_b S_b A0 S | S A1 | n X VGND n1 X_b n2 S_b VGND n2 | p X VPWR p1 VPWR S_b X_b p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 3 gates X_b S_b A0 S | S A1 | n X VGND n1 X_b n2 S_b VGND n2 | p X VPWR p1 VPWR S_b p1 X_b p1: cannot draw: cannot route X_b between the rows on li
+variant 3 gates A0 S A1 S_b | S X_b | n n1 X_b n2 VGND n1 S_b VGND X | p VPWR p1 X_b p1 VPWR S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates A0 S A1 S_b | X_b S | n n1 X_b n2 VGND n1 X VGND S_b | p VPWR p1 X_b p1 VPWR X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates S_b A1 S A0 | S X_b | n n1 VGND n2 X_b n1 S_b VGND X | p VPWR p1 X_b p1 VPWR S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates S_b A1 S A0 | X_b S | n n1 VGND n2 X_b n1 X VGND S_b | p VPWR p1 X_b p1 VPWR X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 3 gates S A0 S_b X_b | S A1 | n n2 X_b n1 VGND X S_b VGND n2 | p S_b VPWR p1 VPWR X X_b p1 X_b: cannot draw: cannot route S_b between the rows on li
+variant 3 gates S A0 S_b X_b | S A1 | n n2 X_b n1 VGND X S_b VGND n2 | p S_b VPWR p1 VPWR X p1 X_b p1: cannot draw: cannot route S_b between the rows on li
+variant 3 gates S A0 S_b X_b | A1 S | n n2 X_b n1 VGND X n2 VGND S_b | p S_b VPWR p1 VPWR X X_b p1 X_b: cannot draw: cannot route S_b between the rows on li
+variant 3 gates S A0 S_b X_b | A1 S | n n2 X_b n1 VGND X n2 VGND S_b | p S_b VPWR p1 VPWR X p1 X_b p1: cannot draw: cannot route S_b between the rows on li
+variant 4 gates S A0 S_b A1 S | X_b | n S_b VGND n1 X_b n2 VGND VGND X | p VPWR p1 X_b p1 VPWR S_b VPWR X: cannot draw: cannot route S_b between the rows on li
+variant 4 gates S A0 S_b A1 S | X_b | n S_b VGND n1 X_b n2 VGND VGND X | p VPWR p1 X_b p1 VPWR S_b X VPWR: cannot draw: cannot route S_b between the rows on li
+variant 4 gates S A0 S_b A1 | S X_b | n S_b VGND n1 X_b n2 n2 VGND X | p VPWR p1 X_b p1 VPWR S_b VPWR X: cannot draw: cannot route S_b between the rows on li
+variant 4 gates S A1 S_b A0 S | X_b | n VGND n2 X_b n1 VGND S_b VGND X | p S_b VPWR p1 X_b p1 VPWR VPWR X: cannot draw: cannot route S_b between the rows on li
+variant 4 gates S A1 S_b A0 S | X_b | n VGND n2 X_b n1 VGND S_b X VGND | p S_b VPWR p1 X_b p1 VPWR VPWR X: cannot draw: cannot route S_b between the rows on li
+variant 4 gates S A1 S_b A0 | S X_b | n VGND n2 X_b n1 VGND S_b VGND X | p S_b VPWR p1 X_b p1 p1 VPWR X: cannot draw: cannot route S_b between the rows on li
+variant 4 gates X_b | S A0 S_b A1 S | n VGND X S_b VGND n1 X_b n2 VGND | p X VPWR VPWR p1 X_b p1 VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 4 gates X_b | S A1 S_b A0 S | n X VGND VGND n2 X_b n1 VGND S_b | p VPWR X S_b VPWR p1 X_b p1 VPWR: cannot draw: cannot route S_b between the rows on li
+variant 4 gates X_b S | A0 S_b A1 S | n X VGND S_b VGND n1 X_b n2 VGND | p X VPWR p1 p1 X_b p1 VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 4 gates X_b S | A1 S_b A0 S | n X VGND n2 n2 X_b n1 VGND S_b | p X VPWR S_b VPWR p1 X_b p1 VPWR: cannot draw: cannot route S_b between the rows on li
+variant 4 gates X_b | S A0 S_b A1 S | n X VGND S_b VGND n1 X_b n2 VGND | p X VPWR VPWR p1 X_b p1 VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 4 gates X_b | S A1 S_b A0 S | n X VGND VGND n2 X_b n1 VGND S_b | p X VPWR S_b VPWR p1 X_b p1 VPWR: cannot draw: cannot route S_b between the rows on li
+variant 4 gates S X_b | A0 S_b A1 S | n S_b VGND X VGND n1 X_b n2 VGND | p S_b VPWR X p1 X_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates S X_b | S A1 S_b A0 | n S_b VGND X VGND n2 X_b n1 VGND | p S_b VPWR X p1 VPWR p1 X_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates S X_b | S_b A0 S A1 | n S_b VGND X X_b n1 VGND n2 X_b | p S_b VPWR X p1 X_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates S X_b | A1 S A0 S_b | n S_b VGND X X_b n2 VGND n1 X_b | p S_b VPWR X p1 VPWR p1 X_b p1: 4.14 um, met1 inside, 6 contacts on the output stage, 24 in all
+variant 4 gates S A0 S_b A1 S | X_b | n S_b VGND n1 X_b n2 VGND X VGND | p VPWR p1 X_b p1 VPWR S_b VPWR X: cannot draw: cannot route S_b between the rows on li
+variant 4 gates S A0 S_b A1 S | X_b | n S_b VGND n1 X_b n2 VGND X VGND | p VPWR p1 X_b p1 VPWR S_b X VPWR: cannot draw: cannot route S_b between the rows on li
+variant 4 gates S X_b | S A1 S_b A0 | n S_b VGND X VGND n2 X_b n1 VGND | p p1 VPWR X S_b VPWR p1 X_b p1: cannot draw: cannot route S_b between the rows on li
+variant 4 gates S X_b | A0 S_b A1 S | n S_b VGND X VGND n1 X_b n2 VGND | p p1 VPWR X p1 X_b p1 VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 4 gates S A1 S_b A0 S | X_b | n VGND n2 X_b n1 VGND S_b VGND X | p S_b VPWR p1 X_b p1 VPWR X VPWR: cannot draw: cannot route S_b between the rows on li
+variant 4 gates S A1 S_b A0 S | X_b | n VGND n2 X_b n1 VGND S_b X VGND | p S_b VPWR p1 X_b p1 VPWR X VPWR: cannot draw: cannot route S_b between the rows on li
+variant 4 gates S A1 S_b A0 | X_b S | n VGND n2 X_b n1 VGND X VGND S_b | p S_b VPWR p1 X_b p1 X VPWR p1: cannot draw: cannot route S_b between the rows on li
+variant 4 gates X_b | S A0 S_b A1 S | n VGND X S_b VGND n1 X_b n2 VGND | p VPWR X VPWR p1 X_b p1 VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 4 gates X_b | S A1 S_b A0 S | n VGND X VGND n2 X_b n1 VGND S_b | p VPWR X S_b VPWR p1 X_b p1 VPWR: cannot draw: cannot route S_b between the rows on li
+variant 4 gates X_b | S A1 S_b A0 S | n VGND X VGND n2 X_b n1 VGND S_b | p X VPWR S_b VPWR p1 X_b p1 VPWR: cannot draw: cannot route S_b between the rows on li
+variant 4 gates A0 S_b A1 S | S X_b | n VGND n1 X_b n2 VGND S_b VGND X | p p1 X_b p1 VPWR S_b p1 VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates A0 S_b A1 S | X_b S | n VGND n1 X_b n2 VGND X VGND S_b | p p1 X_b p1 VPWR S_b X VPWR p1: cannot draw: cannot route S_b between the rows on li
+variant 4 gates A0 S_b A1 S | S X_b | n VGND n1 X_b n2 VGND S_b VGND X | p p1 X_b p1 VPWR p1 S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates A0 S_b A1 S | X_b S | n VGND n1 X_b n2 VGND X VGND S_b | p p1 X_b p1 VPWR p1 X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates S A1 S_b A0 | S X_b | n VGND n2 X_b n1 VGND S_b VGND X | p p1 VPWR p1 X_b p1 S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates S A1 S_b A0 | X_b S | n VGND n2 X_b n1 VGND X VGND S_b | p p1 VPWR p1 X_b p1 X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates X_b | S A0 S_b A1 S | n X VGND S_b VGND n1 X_b n2 VGND | p VPWR X VPWR p1 X_b p1 VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 4 gates X_b S | A0 S_b A1 S | n X VGND S_b VGND n1 X_b n2 VGND | p X VPWR S_b p1 X_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates X_b S | S A1 S_b A0 | n X VGND S_b VGND n2 X_b n1 VGND | p X VPWR S_b p1 VPWR p1 X_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates X_b S | S_b A0 S A1 | n X VGND S_b X_b n1 VGND n2 X_b | p X VPWR S_b p1 X_b p1 VPWR p1: cannot draw: gave up after 14280 tries, 402 of them drawn
+variant 4 gates X_b S | A1 S A0 S_b | n X VGND S_b X_b n2 VGND n1 X_b | p X VPWR S_b p1 VPWR p1 X_b p1: 4.14 um, met1 inside, 7 contacts on the output stage, 25 in all
+variant 4 gates X_b S | S A1 S_b A0 | n X VGND S_b VGND n2 X_b n1 VGND | p X VPWR p1 S_b VPWR p1 X_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 4 gates S_b A0 S A1 | S X_b | n X_b n1 VGND n2 X_b S_b VGND X | p p1 X_b p1 VPWR p1 S_b VPWR X: cannot draw: gave up after 20040 tries, 7 of them drawn
+variant 4 gates S_b A0 S A1 | X_b S | n X_b n1 VGND n2 X_b X VGND S_b | p p1 X_b p1 VPWR p1 X VPWR S_b: 4.14 um, met1 inside, 6 contacts on the output stage, 24 in all
+variant 5 gates S A0 S_b A1 | S X_b | n S_b VGND n1 X_b n2 n2 VGND X | p X_b p1 VPWR p1 X_b S_b VPWR X: cannot draw: cannot route S_b between the rows on li
+variant 5 gates X_b S | A1 S_b A0 S | n X VGND n2 n2 X_b n1 VGND S_b | p X VPWR S_b X_b p1 VPWR p1 X_b: cannot draw: cannot route S_b between the rows on li
+variant 5 gates S X_b | A0 S_b A1 S | n S_b VGND X VGND n1 X_b n2 VGND | p S_b VPWR X p1 VPWR p1 X_b p1: 4.14 um, met1 inside, 6 contacts on the output stage, 26 in all
+variant 5 gates S X_b | S A1 S_b A0 | n S_b VGND X VGND n2 X_b n1 VGND | p S_b VPWR X p1 X_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates S X_b | S_b A0 S A1 | n S_b VGND X X_b n1 VGND n2 X_b | p S_b VPWR X p1 VPWR p1 X_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates S X_b | A1 S A0 S_b | n S_b VGND X X_b n2 VGND n1 X_b | p S_b VPWR X p1 X_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates A0 S_b A1 S | S X_b | n VGND n1 X_b n2 VGND S_b VGND X | p p1 VPWR p1 X_b p1 S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates A0 S_b A1 S | X_b S | n VGND n1 X_b n2 VGND X VGND S_b | p p1 VPWR p1 X_b p1 X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates S A1 S_b A0 | S X_b | n VGND n2 X_b n1 VGND S_b VGND X | p p1 X_b p1 VPWR p1 S_b VPWR X: 4.14 um, met1 inside, 7 contacts on the output stage, 24 in all
+variant 5 gates S A1 S_b A0 | X_b S | n VGND n2 X_b n1 VGND X VGND S_b | p p1 X_b p1 VPWR p1 X VPWR S_b: 4.14 um, met1 inside, 7 contacts on the output stage, 26 in all
+variant 5 gates X_b S | A0 S_b A1 S | n X VGND S_b VGND n1 X_b n2 VGND | p X VPWR S_b p1 VPWR p1 X_b p1: 4.14 um, met1 inside, 7 contacts on the output stage, 24 in all
+variant 5 gates X_b S | S A1 S_b A0 | n X VGND S_b VGND n2 X_b n1 VGND | p X VPWR S_b p1 X_b p1 VPWR p1: 4.14 um, met1 inside, 7 contacts on the output stage, 26 in all
+variant 5 gates X_b S | S_b A0 S A1 | n X VGND S_b X_b n1 VGND n2 X_b | p X VPWR S_b p1 VPWR p1 X_b p1: cannot draw: gave up after 20040 tries, 265 of them drawn
+variant 5 gates X_b S | A1 S A0 S_b | n X VGND S_b X_b n2 VGND n1 X_b | p X VPWR S_b p1 X_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates S_b A0 S A1 | S X_b | n X_b n1 VGND n2 X_b S_b VGND X | p p1 VPWR p1 X_b p1 S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates S_b A0 S A1 | X_b S | n X_b n1 VGND n2 X_b X VGND S_b | p p1 VPWR p1 X_b p1 X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates A1 S A0 S_b | S X_b | n X_b n2 VGND n1 X_b S_b VGND X | p p1 X_b p1 VPWR p1 S_b VPWR X: cannot draw: gave up after 6840 tries, 400 of them drawn
+variant 5 gates A1 S A0 S_b | X_b S | n X_b n2 VGND n1 X_b X VGND S_b | p p1 X_b p1 VPWR p1 X VPWR S_b: 4.14 um, met1 inside, 6 contacts on the output stage, 23 in all
+variant 5 gates S X_b | S_b A1 S A0 | n S_b VGND X n1 X_b n2 VGND n1 | p S_b VPWR X VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates S X_b | A0 S A1 S_b | n S_b VGND X n1 VGND n2 X_b n1 | p S_b VPWR X VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates S X_b | A1 S_b A0 S | n S_b VGND X n2 X_b n1 VGND n2 | p S_b VPWR X X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 5 gates S X_b | S A0 S_b A1 | n S_b VGND X n2 VGND n1 X_b n2 | p S_b VPWR X X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 5 gates S A0 S_b A1 | X_b S | n S_b VGND n1 X_b n2 X VGND n2 | p X_b p1 VPWR p1 X_b X VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 5 gates X_b S | S_b A1 S A0 | n X VGND S_b n1 X_b n2 VGND n1 | p X VPWR S_b VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates X_b S | A0 S A1 S_b | n X VGND S_b n1 VGND n2 X_b n1 | p X VPWR S_b VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates X_b S | A1 S_b A0 S | n X VGND S_b n2 X_b n1 VGND n2 | p X VPWR S_b X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 5 gates X_b S | S A0 S_b A1 | n X VGND S_b n2 VGND n1 X_b n2 | p X VPWR S_b X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 5 gates X_b S | S A0 S_b A1 | n X VGND n2 S_b VGND n1 X_b n2 | p X VPWR S_b X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 5 gates S_b A1 S A0 | S X_b | n n1 X_b n2 VGND n1 S_b VGND X | p VPWR p1 X_b p1 VPWR S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates S_b A1 S A0 | X_b S | n n1 X_b n2 VGND n1 X VGND S_b | p VPWR p1 X_b p1 VPWR X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates A0 S A1 S_b | S X_b | n n1 VGND n2 X_b n1 S_b VGND X | p VPWR p1 X_b p1 VPWR S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates A0 S A1 S_b | X_b S | n n1 VGND n2 X_b n1 X VGND S_b | p VPWR p1 X_b p1 VPWR X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 5 gates S X_b | S A0 S_b A1 | n n2 VGND X S_b VGND n1 X_b n2 | p S_b VPWR X X_b p1 VPWR p1 X_b: cannot draw: cannot route S_b between the rows on li
+variant 5 gates S X_b | A1 S_b A0 S | n n2 VGND X n2 X_b n1 VGND S_b | p S_b VPWR X X_b p1 VPWR p1 X_b: cannot draw: cannot route S_b between the rows on li
+variant 5 gates A1 S_b A0 S | X_b S | n n2 X_b n1 VGND S_b X VGND n2 | p X_b p1 VPWR p1 X_b X VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 5 gates A1 S_b A0 S | S X_b | n n2 X_b n1 VGND S_b n2 VGND X | p X_b p1 VPWR p1 X_b S_b VPWR X: cannot draw: cannot route X_b between the rows on li
+variant 5 gates A1 S_b A0 S | S X_b | n n2 X_b n1 VGND n2 S_b VGND X | p X_b p1 VPWR p1 X_b S_b VPWR X: cannot draw: cannot route X_b between the rows on li
+variant 5 gates A1 S_b A0 S | X_b S | n n2 X_b n1 VGND n2 X VGND S_b | p X_b p1 VPWR p1 X_b X VPWR S_b: cannot draw: cannot route X_b between the rows on li
+variant 5 gates S A0 S_b A1 | S X_b | n n2 VGND n1 X_b n2 S_b VGND X | p X_b p1 VPWR p1 X_b S_b VPWR X: cannot draw: cannot route X_b between the rows on li
+variant 5 gates S A0 S_b A1 | X_b S | n n2 VGND n1 X_b n2 X VGND S_b | p X_b p1 VPWR p1 X_b X VPWR S_b: cannot draw: cannot route X_b between the rows on li
+variant 6 gates X_b S | S_b A0 A1 S | n X VGND S_b X_b n1 VGND n2 X_b | p X VPWR p1 p1 X_b p1 VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 6 gates S A1 A0 S_b | S X_b | n X_b n2 VGND n1 X_b S_b VGND X | p S_b VPWR p1 X_b p1 p1 VPWR X: cannot draw: cannot route S_b between the rows on li
+variant 6 gates S X_b | A0 S_b S A1 | n S_b VGND X VGND n1 X_b n2 VGND | p S_b VPWR X p1 X_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 6 gates S X_b | A1 S S_b A0 | n S_b VGND X VGND n2 X_b n1 VGND | p S_b VPWR X p1 VPWR p1 X_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 6 gates S X_b | S_b A0 A1 S | n S_b VGND X X_b n1 VGND n2 X_b | p S_b VPWR X p1 X_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 6 gates S X_b | S A1 A0 S_b | n S_b VGND X X_b n2 VGND n1 X_b | p S_b VPWR X p1 VPWR p1 X_b p1: cannot draw: gave up after 20040 tries, 1 of them drawn
+variant 6 gates S X_b | S A1 A0 S_b | n S_b VGND X X_b n2 VGND n1 X_b | p p1 VPWR X S_b VPWR p1 X_b p1: cannot draw: cannot route S_b between the rows on li
+variant 6 gates S X_b | S_b A0 A1 S | n S_b VGND X X_b n1 VGND n2 X_b | p p1 VPWR X p1 X_b p1 VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 6 gates A0 S_b S A1 | S X_b | n VGND n1 X_b n2 VGND S_b VGND X | p p1 X_b p1 VPWR p1 S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 6 gates A0 S_b S A1 | X_b S | n VGND n1 X_b n2 VGND X VGND S_b | p p1 X_b p1 VPWR p1 X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 6 gates A1 S S_b A0 | S X_b | n VGND n2 X_b n1 VGND S_b VGND X | p p1 VPWR p1 X_b p1 S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 6 gates A1 S S_b A0 | X_b S | n VGND n2 X_b n1 VGND X VGND S_b | p p1 VPWR p1 X_b p1 X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 6 gates X_b S | A0 S_b S A1 | n X VGND S_b VGND n1 X_b n2 VGND | p X VPWR S_b p1 X_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 6 gates X_b S | A1 S S_b A0 | n X VGND S_b VGND n2 X_b n1 VGND | p X VPWR S_b p1 VPWR p1 X_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 6 gates X_b S | S_b A0 A1 S | n X VGND S_b X_b n1 VGND n2 X_b | p X VPWR S_b p1 X_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 344 of them drawn
+variant 6 gates X_b S | S A1 A0 S_b | n X VGND S_b X_b n2 VGND n1 X_b | p X VPWR S_b p1 VPWR p1 X_b p1: 4.14 um, met1 inside, 7 contacts on the output stage, 24 in all
+variant 6 gates X_b S | S A1 A0 S_b | n X VGND S_b X_b n2 VGND n1 X_b | p X VPWR p1 S_b VPWR p1 X_b p1: cannot draw: gave up after 20040 tries, 127 of them drawn
+variant 6 gates S A1 A0 S_b | X_b S | n X_b n2 VGND n1 X_b X VGND S_b | p S_b VPWR p1 X_b p1 X VPWR p1: cannot draw: cannot route S_b between the rows on li
+variant 6 gates S_b A0 A1 S | S X_b | n X_b n1 VGND n2 X_b S_b VGND X | p p1 X_b p1 VPWR S_b p1 VPWR X: cannot draw: gave up after 20040 tries, 297 of them drawn
+variant 6 gates S_b A0 A1 S | X_b S | n X_b n1 VGND n2 X_b X VGND S_b | p p1 X_b p1 VPWR S_b X VPWR p1: cannot draw: cannot route S_b between the rows on li
+variant 6 gates S_b A0 A1 S | S X_b | n X_b n1 VGND n2 X_b S_b VGND X | p p1 X_b p1 VPWR p1 S_b VPWR X: 4.14 um, met1 inside, 7 contacts on the output stage, 24 in all
+variant 6 gates S_b A0 A1 S | X_b S | n X_b n1 VGND n2 X_b X VGND S_b | p p1 X_b p1 VPWR p1 X VPWR S_b: 4.14 um, met1 inside, 6 contacts on the output stage, 24 in all
+variant 6 gates S A1 A0 S_b | S X_b | n X_b n2 VGND n1 X_b S_b VGND X | p p1 VPWR p1 X_b p1 S_b VPWR X: cannot draw: gave up after 20040 tries, 316 of them drawn
+variant 6 gates S A1 A0 S_b | X_b S | n X_b n2 VGND n1 X_b X VGND S_b | p p1 VPWR p1 X_b p1 X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 6 gates S X_b | S_b S A1 A0 | n S_b VGND X n1 X_b n2 VGND n1 | p S_b VPWR X X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 6 gates S X_b | A0 A1 S S_b | n S_b VGND X n1 VGND n2 X_b n1 | p S_b VPWR X X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 6 gates S X_b | S S_b A0 A1 | n S_b VGND X n2 X_b n1 VGND n2 | p S_b VPWR X VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 6 gates S X_b | A1 A0 S_b S | n S_b VGND X n2 VGND n1 X_b n2 | p S_b VPWR X VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 6 gates X_b S | S_b S A1 A0 | n X VGND S_b n1 X_b n2 VGND n1 | p X VPWR S_b X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 6 gates X_b S | A0 A1 S S_b | n X VGND S_b n1 VGND n2 X_b n1 | p X VPWR S_b X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 6 gates X_b S | S S_b A0 A1 | n X VGND S_b n2 X_b n1 VGND n2 | p X VPWR S_b VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 6 gates X_b S | A1 A0 S_b S | n X VGND S_b n2 VGND n1 X_b n2 | p X VPWR S_b VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 6 gates S_b S A1 A0 | S X_b | n n1 X_b n2 VGND n1 S_b VGND X | p X_b p1 VPWR p1 X_b S_b VPWR X: cannot draw: cannot route X_b between the rows on li
+variant 6 gates S_b S A1 A0 | X_b S | n n1 X_b n2 VGND n1 X VGND S_b | p X_b p1 VPWR p1 X_b X VPWR S_b: cannot draw: cannot route X_b between the rows on li
+variant 6 gates A0 A1 S S_b | S X_b | n n1 VGND n2 X_b n1 S_b VGND X | p X_b p1 VPWR p1 X_b S_b VPWR X: cannot draw: cannot route X_b between the rows on li
+variant 6 gates A0 A1 S S_b | X_b S | n n1 VGND n2 X_b n1 X VGND S_b | p X_b p1 VPWR p1 X_b X VPWR S_b: cannot draw: cannot route X_b between the rows on li
+variant 6 gates S S_b A0 A1 | S X_b | n n2 X_b n1 VGND n2 S_b VGND X | p VPWR p1 X_b p1 VPWR S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 6 gates S S_b A0 A1 | X_b S | n n2 X_b n1 VGND n2 X VGND S_b | p VPWR p1 X_b p1 VPWR X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 6 gates A1 A0 S_b S | S X_b | n n2 VGND n1 X_b n2 S_b VGND X | p VPWR p1 X_b p1 VPWR S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 6 gates A1 A0 S_b S | X_b S | n n2 VGND n1 X_b n2 X VGND S_b | p VPWR p1 X_b p1 VPWR X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates S A1 | S S_b A0 X_b | n S_b VGND n2 n2 X_b n1 VGND X | p X_b p1 X_b S_b VPWR p1 VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates S A1 | S S_b A0 X_b | n S_b VGND n2 n2 X_b n1 VGND X | p p1 X_b p1 S_b VPWR p1 VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates X_b A0 S_b S | A1 S | n X VGND n1 X_b n2 n2 VGND S_b | p X VPWR p1 VPWR S_b X_b p1 X_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates X_b A0 S_b S | A1 S | n X VGND n1 X_b n2 n2 VGND S_b | p X VPWR p1 VPWR S_b p1 X_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates S X_b | A0 S_b S A1 | n S_b VGND X VGND n1 X_b n2 VGND | p S_b VPWR X p1 VPWR p1 X_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates S X_b | A1 S S_b A0 | n S_b VGND X VGND n2 X_b n1 VGND | p S_b VPWR X p1 X_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates S X_b | S_b A0 A1 S | n S_b VGND X X_b n1 VGND n2 X_b | p S_b VPWR X p1 VPWR p1 X_b p1: 4.14 um, met1 inside, 6 contacts on the output stage, 24 in all
+variant 7 gates S X_b | S A1 A0 S_b | n S_b VGND X X_b n2 VGND n1 X_b | p S_b VPWR X p1 X_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates A0 S_b S A1 | S X_b | n VGND n1 X_b n2 VGND S_b VGND X | p p1 VPWR p1 X_b p1 S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates A0 S_b S A1 | X_b S | n VGND n1 X_b n2 VGND X VGND S_b | p p1 VPWR p1 X_b p1 X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates A1 S S_b A0 | S X_b | n VGND n2 X_b n1 VGND S_b VGND X | p p1 X_b p1 VPWR p1 S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates A1 S S_b A0 | X_b S | n VGND n2 X_b n1 VGND X VGND S_b | p p1 X_b p1 VPWR p1 X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates X_b S | A0 S_b S A1 | n X VGND S_b VGND n1 X_b n2 VGND | p X VPWR S_b p1 VPWR p1 X_b p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates X_b S | A1 S S_b A0 | n X VGND S_b VGND n2 X_b n1 VGND | p X VPWR S_b p1 X_b p1 VPWR p1: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates X_b S | S_b A0 A1 S | n X VGND S_b X_b n1 VGND n2 X_b | p X VPWR S_b p1 VPWR p1 X_b p1: 4.14 um, met1 inside, 7 contacts on the output stage, 24 in all
+variant 7 gates X_b S | S A1 A0 S_b | n X VGND S_b X_b n2 VGND n1 X_b | p X VPWR S_b p1 X_b p1 VPWR p1: 4.14 um, met1 inside, 7 contacts on the output stage, 26 in all
+variant 7 gates S_b A0 A1 S | S X_b | n X_b n1 VGND n2 X_b S_b VGND X | p p1 VPWR p1 X_b p1 S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates S_b A0 A1 S | X_b S | n X_b n1 VGND n2 X_b X VGND S_b | p p1 VPWR p1 X_b p1 X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates S A1 A0 S_b | S X_b | n X_b n2 VGND n1 X_b S_b VGND X | p p1 X_b p1 VPWR p1 S_b VPWR X: 4.14 um, met1 inside, 7 contacts on the output stage, 23 in all
+variant 7 gates S A1 A0 S_b | X_b S | n X_b n2 VGND n1 X_b X VGND S_b | p p1 X_b p1 VPWR p1 X VPWR S_b: 4.14 um, met1 inside, 6 contacts on the output stage, 24 in all
+variant 7 gates S X_b | S_b S A1 A0 | n S_b VGND X n1 X_b n2 VGND n1 | p S_b VPWR X VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates S X_b | A0 A1 S S_b | n S_b VGND X n1 VGND n2 X_b n1 | p S_b VPWR X VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates S X_b | S S_b A0 A1 | n S_b VGND X n2 X_b n1 VGND n2 | p S_b VPWR X X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 7 gates S X_b | A1 A0 S_b S | n S_b VGND X n2 VGND n1 X_b n2 | p S_b VPWR X X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 7 gates S A1 | X_b A0 S_b S | n S_b VGND n2 X VGND n1 X_b n2 | p X_b p1 X_b X VPWR p1 VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 7 gates S A1 | X_b A0 S_b S | n S_b VGND n2 X VGND n1 X_b n2 | p p1 X_b p1 X VPWR p1 VPWR S_b: cannot draw: cannot route S_b between the rows on li
+variant 7 gates X_b S | S_b S A1 A0 | n X VGND S_b n1 X_b n2 VGND n1 | p X VPWR S_b VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates X_b S | A0 A1 S S_b | n X VGND S_b n1 VGND n2 X_b n1 | p X VPWR S_b VPWR p1 X_b p1 VPWR: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates X_b S | S S_b A0 A1 | n X VGND S_b n2 X_b n1 VGND n2 | p X VPWR S_b X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 7 gates X_b S | A1 A0 S_b S | n X VGND S_b n2 VGND n1 X_b n2 | p X VPWR S_b X_b p1 VPWR p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 7 gates X_b A0 S_b S | S A1 | n X VGND n1 X_b n2 S_b VGND n2 | p X VPWR p1 VPWR S_b X_b p1 X_b: cannot draw: cannot route X_b between the rows on li
+variant 7 gates X_b A0 S_b S | S A1 | n X VGND n1 X_b n2 S_b VGND n2 | p X VPWR p1 VPWR S_b p1 X_b p1: cannot draw: cannot route X_b between the rows on li
+variant 7 gates S_b S A1 A0 | S X_b | n n1 X_b n2 VGND n1 S_b VGND X | p VPWR p1 X_b p1 VPWR S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates S_b S A1 A0 | X_b S | n n1 X_b n2 VGND n1 X VGND S_b | p VPWR p1 X_b p1 VPWR X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates A0 A1 S S_b | S X_b | n n1 VGND n2 X_b n1 S_b VGND X | p VPWR p1 X_b p1 VPWR S_b VPWR X: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates A0 A1 S S_b | X_b S | n n1 VGND n2 X_b n1 X VGND S_b | p VPWR p1 X_b p1 VPWR X VPWR S_b: cannot draw: gave up after 20040 tries, 0 of them drawn
+variant 7 gates S S_b A0 X_b | S A1 | n n2 X_b n1 VGND X S_b VGND n2 | p S_b VPWR p1 VPWR X X_b p1 X_b: cannot draw: cannot route S_b between the rows on li
+variant 7 gates S S_b A0 X_b | S A1 | n n2 X_b n1 VGND X S_b VGND n2 | p S_b VPWR p1 VPWR X p1 X_b p1: cannot draw: cannot route S_b between the rows on li
+variant 7 gates S S_b A0 X_b | A1 S | n n2 X_b n1 VGND X n2 VGND S_b | p S_b VPWR p1 VPWR X X_b p1 X_b: cannot draw: cannot route S_b between the rows on li
+variant 7 gates S S_b A0 X_b | A1 S | n n2 X_b n1 VGND X n2 VGND S_b | p S_b VPWR p1 VPWR X p1 X_b p1: cannot draw: cannot route S_b between the rows on li
+every order needs met1: the 5 narrowest again, up to 60 more widenings each, for li alone
+
+== 5. chosen layout
+variant 0, gates S X_b | S A1 A0 S_b: li only beats met1, then the narrowest, then the most contacts on the output stage, then the most contacts, the first found on a tie
+width 4.14 um (9 sites), diffusion 0.385 .. 3.915
+gates   S@0.72  X_b@1.14  |@1.61  S@2.08  A1@2.56  A0@3.1  S_b@3.58
+nMOS columns:
+    S_b@0.51 wide contacts y=[0.4, 0.74]
+    VGND@0.93 narrow contacts y=[0.4]
+    X@1.35 wide contacts y=[0.4, 0.74]
+    VGND@1.87 narrow contacts y=[0.4]
+    n2@2.32 no contact
+    X_b@2.83 wide contacts y=[0.4, 0.74]
+    n1@3.34 no contact
+    VGND@3.79 narrow contacts y=[0.4, 0.74]
+    lane S_b x 0.345 .. 0.835, inner edge, y 0.735 .. 0.905
+    lane X x 1.185 .. 1.695, inner edge, y 0.735 .. 0.905
+pMOS columns:
+    S_b@0.51 wide contacts y=[1.66, 2.0, 2.34]
+    VPWR@0.93 narrow contacts y=[2.0, 2.34]
+    X@1.35 narrow contacts y=[1.66, 2.0]
+    p1@1.87 wide contacts y=[1.92, 2.26]
+    VPWR@2.32 narrow contacts y=[2.34]
+    p1@2.83 narrow contacts y=[1.66, 2.0]
+    X_b@3.34 wide contacts y=[1.66, 2.0]
+    p1@3.79 narrow contacts y=[1.66, 2.0]
+    lane S_b x 0.345 .. 0.835, inner edge, y 1.495 .. 1.665
+    lane X x 1.265 .. 1.695, inner edge, y 1.495 .. 1.665
+    lane p1 x 1.865 .. 2.915, inner edge, y 1.495 .. 2.005
+    lane p1 x 2.745 .. 3.875, outer edge, y 2.295 .. 2.465
+    column 3 notched under the lane of X: x 1.095 .. 1.865, li kept above y 1.835
+poly contact S@0.33 for gates 0..0, wide pad
+poly contact S@2.03 for gates 3..3, wide pad
+poly contact X_b@1.17 for gates 1..1, wide pad
+poly contact A1@2.51 for gates 4..4, narrow pad
+poly contact A0@3.0 for gates 5..5, narrow pad
+poly contact S_b@3.76 for gates 6..6, wide pad
+crossing S_b at x 0.75
+crossing X at x 1.61
+crossing X_b at x 3.34
+met1 bridge S: mcons at [0.33, 2.03], track 3
+met1 bridge S_b: mcons at [0.75, 3.76], track 2
+met1 bridge X_b: mcons at [1.17, 3.34], track 1
+
+== 6. checks
+DRC (Magic, in a row with tap cells): 0 errors
+LVS (Netgen): match; RC-LVS: match
+abutment: pass, 0 errors
+layer check: pass
+simulation (ngspice): pass
+compared with mux2_1: see report.json, key compare
+
+== 7. response
+pass, 9 sites, 11.2608 um2

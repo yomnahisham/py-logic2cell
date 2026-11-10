@@ -15,9 +15,9 @@ Every class Table 3 keeps is ranked; a candidate Option 1's structure cannot bui
 buildable: false (overview, section 2, rule 3: the group may ask the instructor for it).
 The ranking is a guess: cuts overlap and share logic (handout, section 4, step 7).
 
-    python -m src.hd.rank [cut files]
+    python -m src.hd.rank [cut files] [--maps <folder>] [--designs <design> ...] [--out <folder>]
         -> results/hd/candidates.csv, results/hd/redundancy_summary.txt,
-           results/hd/a_node.csv, results/hd/ranked.json
+           results/hd/a_node.csv, results/hd/ranked.json (or in --out)
 """
 
 from __future__ import annotations
@@ -102,25 +102,35 @@ def decide(table3: str, est_area: float | None, hd_area: float, inv_area: float)
     return "keep", "HD lacks it"
 
 
-def main(argv: list[str]):
-    parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    parser.add_argument("cuts", nargs="*", help="cut files (default: results/cuts/*.csv)")
-    parser.add_argument("--maps", default=MAPS, help="folder of the baseline stat logs <design>_reduced_A.log")
-    args = parser.parse_args(argv)
-    aigs = read(cut_files(args.cuts))
+def aig_ands(designs: list[str]) -> dict[str, int]:
+    """AND nodes of each design's ABC AIG: from results/aig_sizes.csv, or from the header of the
+    AIG file the AIG export wrote (for a design that is not in that table, such as the demo's)."""
+    ands = {}
+    if SIZES.exists():
+        with SIZES.open() as f:
+            ands = {r["design"]: int(r[f"ands_{RANK_AIG}"]) for r in csv.DictReader(f)}
+    for d in designs:
+        if d not in ands:
+            from src.aig.aigs import OUT as AIGS, header
+            ands[d] = header(AIGS / f"{d}_{RANK_AIG}.aag")["ands"]
+    return ands
+
+
+def rank_rows(aigs: dict, designs: list[str], maps=MAPS) -> tuple[list[dict], dict, object]:
+    """One row per class found in the designs' ABC AIGs: cost, Table 3 decision, estimated area
+    and saving per design. Also returns each design's a_node and the area model."""
     full = cell_areas(open(os.environ["HD_LIB_FULL"]).read())
     reduced = cell_areas(REDUCED.read_text())
     inv_area = full[PREFIX + "inv_1"][0]
     model = fit()
-    with SIZES.open() as f:
-        ands = {r["design"]: int(r[f"ands_{RANK_AIG}"]) for r in csv.DictReader(f)}
-    nodes = {d: a_node(d, reduced, ands, args.maps) for d in REQUIRED}
-    others = sorted(d for d, aig in aigs if aig == RANK_AIG and d not in REQUIRED)
+    ands = aig_ands(designs)
+    nodes = {d: a_node(d, reduced, ands, maps) for d in designs}
+    others = sorted(d for d, aig in aigs if aig == RANK_AIG and d not in designs)
 
-    keys = sorted({k for d in REQUIRED for k in aigs[(d, RANK_AIG)].classes})
+    keys = sorted({k for d in designs for k in aigs[(d, RANK_AIG)].classes})
     rows = []
     for n, key in keys:
-        occ = {d: aigs[(d, RANK_AIG)].classes.get((n, key), Occurrences()) for d in REQUIRED}
+        occ = {d: aigs[(d, RANK_AIG)].classes.get((n, key), Occurrences()) for d in designs}
         table, e = choose_polarity(n, key, list(occ.values()))
         table3, hd_cell, note = classify(widen(table, n))
         hd_area = full[hd_cell][0] if hd_cell else None
@@ -136,28 +146,44 @@ def main(argv: list[str]):
             decision=decision, why=why, saving_um2=round(sum(saving.values()), 4),
             _table=table, _estimate=e, _occ=occ, _saving=saving,
             _other={d: aigs[(d, RANK_AIG)].classes.get((n, key), Occurrences()).count for d in others}))
+    return rows, nodes, model
 
-    OUT.mkdir(parents=True, exist_ok=True)
+
+def ranked(rows: list[dict]) -> list[dict]:
+    """The rows Table 3 keeps, best estimated saving first."""
+    return sorted((r for r in rows if r["decision"] == "keep"), key=lambda r: (-r["saving_um2"], r["class_id"]))
+
+
+def main(argv: list[str]):
+    parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    parser.add_argument("cuts", nargs="*", help="cut files (default: results/cuts/*.csv)")
+    parser.add_argument("--maps", default=MAPS, help="folder of the baseline stat logs <design>_reduced_A.log")
+    parser.add_argument("--designs", nargs="+", default=REQUIRED, help="designs to rank for (default: the required)")
+    parser.add_argument("--out", type=Path, default=OUT, help="output folder (default: results/hd)")
+    args = parser.parse_args(argv)
+    rows, nodes, model = rank_rows(read(cut_files(args.cuts)), args.designs, args.maps)
+    out_dir = args.out
+
+    out_dir.mkdir(parents=True, exist_ok=True)
     public = [k for k in rows[0] if not k.startswith("_")]
-    with (OUT / "candidates.csv").open("w", newline="") as f:
+    with (out_dir / "candidates.csv").open("w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=public, extrasaction="ignore")
         w.writeheader()
         w.writerows(sorted(rows, key=lambda r: (-r["occurrences"], r["class_id"])))
-    with (OUT / "a_node.csv").open("w", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=list(nodes[REQUIRED[0]]))
+    with (out_dir / "a_node.csv").open("w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=list(nodes[args.designs[0]]))
         w.writeheader()
         w.writerows(nodes.values())
-    (OUT / "redundancy_summary.txt").write_text(redundancy_summary(rows))
+    (out_dir / "redundancy_summary.txt").write_text(redundancy_summary(rows, args.designs))
 
-    ranked = sorted((r for r in rows if r["decision"] == "keep"), key=lambda r: (-r["saving_um2"], r["class_id"]))
     out = dict(
-        aig=RANK_AIG, designs=REQUIRED,
+        aig=RANK_AIG, designs=args.designs,
         saving="sum over designs of cone_nodes x a_node - occurrences x area",
-        a_node_um2={d: nodes[d]["a_node_um2"] for d in REQUIRED},
+        a_node_um2={d: nodes[d]["a_node_um2"] for d in args.designs},
         model=dict(a=model.a, b=model.b, site_um=[model.site_w, model.site_h]),
-        candidates=[candidate(i + 1, r) for i, r in enumerate(ranked)])
-    (OUT / "ranked.json").write_text(json.dumps(out, indent=2) + "\n")
-    print(open(OUT / "redundancy_summary.txt").read())
+        candidates=[candidate(i + 1, r) for i, r in enumerate(ranked(rows))])
+    (out_dir / "ranked.json").write_text(json.dumps(out, indent=2) + "\n")
+    print((out_dir / "redundancy_summary.txt").read_text())
     for c in out["candidates"][:10]:
         print(c["rank"], c["name"], c["expression"], c["cost"]["transistors"], "T",
               c["area_um2"], "um2", "saving", c["saving_um2"]["total"])
@@ -178,9 +204,9 @@ def candidate(rank: int, r: dict) -> dict:
         other_designs=r["_other"])
 
 
-def redundancy_summary(rows: list[dict]) -> str:
+def redundancy_summary(rows: list[dict], designs: list[str] = REQUIRED) -> str:
     """How many candidate classes each class of Table 3 removed, with examples."""
-    lines = [f"candidate classes (ABC AIGs of {', '.join(REQUIRED)}): {len(rows)}", ""]
+    lines = [f"candidate classes (ABC AIGs of {', '.join(designs)}): {len(rows)}", ""]
     for t3 in ("exists", "exists_inv", "contained", "new"):
         group = sorted((r for r in rows if r["table3"] == t3), key=lambda r: (-r["occurrences"], r["class_id"]))
         decisions = defaultdict(int)

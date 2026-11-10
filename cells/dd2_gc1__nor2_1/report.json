@@ -54,7 +54,8 @@
     ],
     "output": "Y",
     "orders_tried": 4,
-    "orders_drawable": 4
+    "orders_drawable": 4,
+    "style": "handout"
   },
   "checks": {
     "drc": 0,
@@ -463,18 +464,18 @@
     "parasitics": {
       "ours": {
         "cap_fF": {
-          "Y": 0.4487,
-          "VPWR": 0.4794,
-          "B": 0.1674,
-          "A": 0.1708,
           "VPB": 0.4818,
+          "Y": 0.4481,
           "VGND": 0.4971,
-          "VNB": 1.0829
+          "B": 0.167,
+          "VPWR": 0.4783,
+          "A": 0.1705,
+          "VNB": 1.0828
         },
         "res_ohm": {
           "VGND": 341.02,
-          "Y": 423.21,
-          "VPWR": 267.63,
+          "Y": 423.96,
+          "VPWR": 266.88,
           "B": 548.67,
           "A": 548.67,
           "VPB": 449.85,

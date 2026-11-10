@@ -1,0 +1,41 @@
+{
+  "cell": "dd2_gc1__nand2_1",
+  "truth_table": "0x7",
+  "verilog": {
+    "table": "0x7",
+    "match": true
+  },
+  "liberty": {
+    "table": "0x7",
+    "match": true
+  },
+  "model": "pass",
+  "round_trip": {
+    "free_A": {
+      "equivalent": true,
+      "our_cell_instances": 0,
+      "cells": 1,
+      "area_um2": 3.7536
+    },
+    "free_B": {
+      "equivalent": true,
+      "our_cell_instances": 1,
+      "cells": 1,
+      "area_um2": 3.7536
+    },
+    "forced_A": {
+      "equivalent": true,
+      "our_cell_instances": 0,
+      "cells": 1,
+      "area_um2": 3.7536
+    },
+    "forced_B": {
+      "equivalent": true,
+      "our_cell_instances": 1,
+      "cells": 1,
+      "area_um2": 3.7536
+    },
+    "chosen_freely": true,
+    "pass": true
+  }
+}

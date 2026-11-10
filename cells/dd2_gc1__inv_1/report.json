@@ -45,7 +45,8 @@
     ],
     "output": "Y",
     "orders_tried": 4,
-    "orders_drawable": 4
+    "orders_drawable": 4,
+    "style": "handout"
   },
   "checks": {
     "drc": 0,
@@ -415,16 +416,16 @@
       "ours": {
         "cap_fF": {
           "VGND": 0.3703,
-          "A": 0.1531,
-          "Y": 0.3508,
+          "VPWR": 0.4669,
+          "Y": 0.3507,
           "VPB": 0.4825,
-          "VPWR": 0.4679,
-          "VNB": 1.0173
+          "A": 0.1528,
+          "VNB": 1.0172
         },
         "res_ohm": {
           "VGND": 174.16,
-          "Y": 420.27,
-          "VPWR": 271.09,
+          "Y": 421.02,
+          "VPWR": 270.33,
           "A": 548.67,
           "VPB": 348.15,
           "VNB": 1600.0

@@ -1,15 +1,15 @@
-function,cell,hd,sites_ours,sites_hd,extra_sites,area_ours_um2,area_hd_um2,frame,lvs_vs_hd,met1_inside,breaks_ours,breaks_hd,delay_slew
-!(A & B),dd2_gc1__nand2_1,sky130_fd_sc_hd__nand2_1,3,3,0,3.7536,3.7536,match,match,no,0,0,needs the characterizer
-!(A | B),dd2_gc1__nor2_1,sky130_fd_sc_hd__nor2_1,3,3,0,3.7536,3.7536,match,match,no,0,0,needs the characterizer
-!(A & B & C),dd2_gc1__nand3_1,sky130_fd_sc_hd__nand3_1,5,4,1,6.256,5.0048,match,match,no,0,0,needs the characterizer
-!(A | B | C),dd2_gc1__nor3_1,sky130_fd_sc_hd__nor3_1,5,4,1,6.256,5.0048,match,match,no,0,0,needs the characterizer
-!((A & B) | C),dd2_gc1__a21oi_1,sky130_fd_sc_hd__a21oi_1,5,4,1,6.256,5.0048,match,match,no,0,0,needs the characterizer
-!((A | B) & C),dd2_gc1__o21ai_1,sky130_fd_sc_hd__o21ai_1,5,4,1,6.256,5.0048,match,match,no,0,0,needs the characterizer
-!((A & B) | (C & D)),dd2_gc1__a22oi_1,sky130_fd_sc_hd__a22oi_1,6,6,0,7.5072,7.5072,match,match,no,0,2,needs the characterizer
-!((A | B) & (C | D)),dd2_gc1__o22ai_1,sky130_fd_sc_hd__o22ai_1,6,5,1,7.5072,6.256,match,match,no,0,0,needs the characterizer
-A & B,dd2_gc1__and2_1,sky130_fd_sc_hd__and2_1,5,5,0,6.256,6.256,match,fail,no,0,0,needs the characterizer
-(A & B) | C,dd2_gc1__a21o_1,sky130_fd_sc_hd__a21o_1,7,6,1,8.7584,7.5072,match,match,no,2,1,needs the characterizer
-(A & !C) | (B & C),dd2_gc1__mux2_1,sky130_fd_sc_hd__mux2_1,10,9,1,12.512,11.2608,match,fail,yes,2,0,needs the characterizer
-(A & B) | (C & (A | B)),dd2_gc1__maj3_1,sky130_fd_sc_hd__maj3_1,9,8,1,11.2608,10.0096,match,fail,yes,0,0,needs the characterizer
-A ^ B,dd2_gc1__xor2_1,sky130_fd_sc_hd__xor2_1,11,7,4,13.7632,8.7584,match,fail,yes,2,1,needs the characterizer
-!((A1 | A2 | A3) & B1),dd2_gc1__o31ai_1,sky130_fd_sc_hd__o31ai_1,6,6,0,7.5072,7.5072,match,match,no,0,0,needs the characterizer
+function,cell,hd,sites_ours,sites_hd,extra_sites,area_ours_um2,area_hd_um2,frame,lvs_vs_hd,met1_inside,breaks_ours,breaks_hd,delay_ours_ns,delay_hd_ns,delay_diff_pct,delay_hd_shipped_ns,slew_ours_ns,slew_hd_ns,slew_diff_pct,slew_hd_shipped_ns,point
+!(A & B),dd2_gc1__nand2_1,sky130_fd_sc_hd__nand2_1,3,3,0,3.7536,3.7536,match,match,no,0,0,0.13951,0.13921,0.2,0.1354751,0.10644,0.10615,0.3,0.1013268,0.122474 ns / 0.00912787 pF
+!(A | B),dd2_gc1__nor2_1,sky130_fd_sc_hd__nor2_1,3,3,0,3.7536,3.7536,match,match,no,0,0,0.17953,0.17634,1.8,0.1714398,0.15073,0.1473,2.3,0.1418888,0.122474 ns / 0.00656009 pF
+!(A & B & C),dd2_gc1__nand3_1,sky130_fd_sc_hd__nand3_1,4,4,0,5.0048,5.0048,match,match,no,0,0,0.1529,0.15582,-1.9,0.1513446,0.11982,0.12298,-2.6,0.1166232,0.122474 ns / 0.00855846 pF
+!(A | B | C),dd2_gc1__nor3_1,sky130_fd_sc_hd__nor3_1,4,4,0,5.0048,5.0048,match,match,no,0,0,0.37199,0.38106,-2.4,0.367141,0.37556,0.3849,-2.4,0.3693518,0.122474 ns / 0.0110852 pF
+!((A & B) | C),dd2_gc1__a21oi_1,sky130_fd_sc_hd__a21oi_1,4,4,0,5.0048,5.0048,match,match,no,0,0,0.21652,0.21858,-0.9,0.2130083,0.17585,0.17806,-1.2,0.1701841,0.122474 ns / 0.00608965 pF
+!((A | B) & C),dd2_gc1__o21ai_1,sky130_fd_sc_hd__o21ai_1,5,4,1,6.256,5.0048,match,match,no,0,0,0.21033,0.20533,2.4,0.1995652,0.17482,0.17072,2.4,0.1631798,0.122474 ns / 0.0063473 pF
+!((A & B) | (C & D)),dd2_gc1__a22oi_1,sky130_fd_sc_hd__a22oi_1,6,6,0,7.5072,7.5072,match,match,no,0,2,0.25777,0.26981,-4.5,0.2581187,0.21001,0.23619,-11.1,0.2234619,0.122474 ns / 0.00666394 pF
+!((A | B) & (C | D)),dd2_gc1__o22ai_1,sky130_fd_sc_hd__o22ai_1,6,5,1,7.5072,6.256,match,match,no,0,0,0.35499,0.34277,3.6,0.3357115,0.37806,0.36317,4.1,0.3407279,0.122474 ns / 0.0138954 pF
+A & B,dd2_gc1__and2_1,sky130_fd_sc_hd__and2_1,5,5,0,6.256,6.256,match,fail,yes,0,0,0.16876,0.20489,-17.6,0.2141875,0.10071,0.1026,-1.8,0.1021433,0.122474 ns / 0.00889933 pF
+(A & B) | C,dd2_gc1__a21o_1,sky130_fd_sc_hd__a21o_1,6,6,0,7.5072,7.5072,match,match,no,1,1,0.24287,0.23323,4.1,0.2335375,0.09422,0.09421,0.0,0.0923928,0.122474 ns / 0.00942396 pF
+(A & !C) | (B & C),dd2_gc1__mux2_1,sky130_fd_sc_hd__mux2_1,9,9,0,11.2608,11.2608,match,fail,yes,2,0,0.30277,0.37261,-18.7,0.3764614,0.10706,0.09889,8.3,0.0967964,0.122474 ns / 0.00930174 pF
+(A & B) | (C & (A | B)),dd2_gc1__maj3_1,sky130_fd_sc_hd__maj3_1,9,8,1,11.2608,10.0096,match,fail,yes,0,0,0.32997,0.40047,-17.6,0.4121163,0.10329,0.10759,-4.0,0.1051089,0.122474 ns / 0.00882184 pF
+A ^ B,dd2_gc1__xor2_1,sky130_fd_sc_hd__xor2_1,9,7,2,11.2608,8.7584,match,fail,yes,2,1,0.24315,0.22332,8.9,0.2199123,0.2006,0.18159,10.5,0.1769053,0.122474 ns / 0.00620138 pF
+!((A1 | A2 | A3) & B1),dd2_gc1__o31ai_1,sky130_fd_sc_hd__o31ai_1,6,6,0,7.5072,7.5072,match,match,no,0,0,0.4186,0.43395,-3.5,0.4212364,0.40392,0.42326,-4.6,0.4098168,0.122474 ns / 0.0104272 pF

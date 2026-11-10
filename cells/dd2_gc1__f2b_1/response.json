@@ -1,0 +1,30 @@
+{
+  "request_id": "GC1-2B",
+  "status": "pass",
+  "reason": null,
+  "cell": "dd2_gc1__f2b_1",
+  "stages": 2,
+  "transistors": 12,
+  "width_sites": 8,
+  "area_um2": 10.0096,
+  "files": {
+    "gds": "cells/dd2_gc1__f2b_1/cell.gds",
+    "report": "cells/dd2_gc1__f2b_1/report.json",
+    "liberty": "cells/dd2_gc1__f2b_1/cell.lib",
+    "verilog": "cells/dd2_gc1__f2b_1/cell.v",
+    "model_check": "cells/dd2_gc1__f2b_1/model_check.json"
+  },
+  "checks": {
+    "drc": 0,
+    "lvs": "match",
+    "rc_lvs": "match",
+    "truth_table": "pass",
+    "abutment": 0,
+    "layers": "pass",
+    "model": "pass",
+    "round_trip": "pass"
+  },
+  "tool_version": "git:d4a898a",
+  "ngspice_sha256": "81a8991415fbee4065e1e54fcdf68ac67183eb9b1d2c4119c252066d370705ad",
+  "grid_from": "sky130_fd_sc_hd__inv_1"
+}

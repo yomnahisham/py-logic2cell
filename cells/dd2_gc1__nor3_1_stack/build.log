@@ -1,0 +1,354 @@
+build nor3_1_stack.json, style handout, git:6326eba, 2026-11-09 20:27 UTC
+
+== 1. request
+name dd2_gc1__nor3_1_stack, id T6-nor3_1-stack, inputs A, B, C, output Y, truth table 0x01, sizing stack
+
+== 2. network
+one stage (6 series orders)
+variant 0: Y = f(A, B, C), 6 fets
+    nMOS gate A: Y - VGND
+    nMOS gate B: Y - VGND
+    nMOS gate C: Y - VGND
+    pMOS gate A: Y - p1
+    pMOS gate B: p1 - p2
+    pMOS gate C: p2 - VPWR
+variant 1: Y = f(A, B, C), 6 fets
+    nMOS gate A: Y - VGND
+    nMOS gate B: Y - VGND
+    nMOS gate C: Y - VGND
+    pMOS gate A: Y - p1
+    pMOS gate C: p1 - p2
+    pMOS gate B: p2 - VPWR
+variant 2: Y = f(A, B, C), 6 fets
+    nMOS gate A: Y - VGND
+    nMOS gate B: Y - VGND
+    nMOS gate C: Y - VGND
+    pMOS gate B: Y - p1
+    pMOS gate A: p1 - p2
+    pMOS gate C: p2 - VPWR
+variant 3: Y = f(A, B, C), 6 fets
+    nMOS gate A: Y - VGND
+    nMOS gate B: Y - VGND
+    nMOS gate C: Y - VGND
+    pMOS gate B: Y - p1
+    pMOS gate C: p1 - p2
+    pMOS gate A: p2 - VPWR
+variant 4: Y = f(A, B, C), 6 fets
+    nMOS gate A: Y - VGND
+    nMOS gate B: Y - VGND
+    nMOS gate C: Y - VGND
+    pMOS gate C: Y - p1
+    pMOS gate A: p1 - p2
+    pMOS gate B: p2 - VPWR
+variant 5: Y = f(A, B, C), 6 fets
+    nMOS gate A: Y - VGND
+    nMOS gate B: Y - VGND
+    nMOS gate C: Y - VGND
+    pMOS gate C: Y - p1
+    pMOS gate B: p1 - p2
+    pMOS gate A: p2 - VPWR
+
+== 3. switch-level check
+variant 0: every input combination gives the truth table
+variant 1: every input combination gives the truth table
+variant 2: every input combination gives the truth table
+variant 3: every input combination gives the truth table
+variant 4: every input combination gives the truth table
+variant 5: every input combination gives the truth table
+widths: NMOS 0.65 um, PMOS 1.0 um
+stack sizing, the first variant's transistors (the others alike):
+nMOS gate A (Y - VGND): 1 in series, 0.65 um -> 1 x 0.65 um
+nMOS gate B (Y - VGND): 1 in series, 0.65 um -> 1 x 0.65 um
+nMOS gate C (Y - VGND): 1 in series, 0.65 um -> 1 x 0.65 um
+pMOS gate A (Y - p1): 3 in series, 3 um -> 3 x 1.0 um
+pMOS gate B (p1 - p2): 3 in series, 3 um -> 3 x 1.0 um
+pMOS gate C (p2 - VPWR): 3 in series, 3 um -> 3 x 1.0 um
+
+== 4. Euler orders and placement (first 40 per variant, fewest contacts first)
+variant 0 gates C C C B B B A A A | n VGND Y Y Y VGND VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND Y Y Y VGND VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND Y Y Y VGND VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND Y Y Y Y VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND Y Y Y Y VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND Y Y Y Y VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND Y Y Y Y Y VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND Y Y Y Y Y VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND Y Y Y Y Y VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND VGND Y Y VGND VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND VGND Y Y VGND VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND VGND Y Y VGND VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND VGND Y Y Y VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND VGND Y Y Y VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND VGND Y Y Y VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND VGND Y Y Y Y VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND VGND Y Y Y Y VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND VGND Y Y Y Y VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND VGND VGND Y VGND VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND VGND VGND Y VGND VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND VGND VGND Y VGND VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND VGND VGND Y Y VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND VGND VGND Y Y VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND VGND VGND Y Y VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND VGND VGND Y Y Y VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND VGND VGND Y Y Y VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 0 gates C C C B B B A A A | n VGND VGND VGND Y Y Y VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 0 gates A A A B B B C C C | n VGND Y Y Y VGND VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 0 gates A A A B B B C C C | n VGND Y Y Y VGND VGND VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 0 gates A A A B B B C C C | n VGND Y Y Y VGND VGND VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 0 gates A A A B B B C C C | n VGND Y Y Y Y VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 0 gates A A A B B B C C C | n VGND Y Y Y Y VGND VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 0 gates A A A B B B C C C | n VGND Y Y Y Y VGND VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 0 gates A A A B B B C C C | n VGND Y Y Y Y Y VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 0 gates A A A B B B C C C | n VGND Y Y Y Y Y VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 0 gates A A A B B B C C C | n VGND Y Y Y Y Y VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 0 gates A A A B B B C C C | n VGND VGND Y Y VGND VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 0 gates A A A B B B C C C | n VGND VGND Y Y VGND VGND VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 0 gates A A A B B B C C C | n VGND VGND Y Y VGND VGND VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 0 gates A A A B B B C C C | n VGND VGND Y Y Y VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND Y Y Y VGND VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND Y Y Y VGND VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND Y Y Y VGND VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND Y Y Y Y VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND Y Y Y Y VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND Y Y Y Y VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND Y Y Y Y Y VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND Y Y Y Y Y VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND Y Y Y Y Y VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND VGND Y Y VGND VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND VGND Y Y VGND VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND VGND Y Y VGND VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND VGND Y Y Y VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND VGND Y Y Y VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND VGND Y Y Y VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND VGND Y Y Y Y VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND VGND Y Y Y Y VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND VGND Y Y Y Y VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND VGND VGND Y VGND VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND VGND VGND Y VGND VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND VGND VGND Y VGND VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND VGND VGND Y Y VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND VGND VGND Y Y VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND VGND VGND Y Y VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND VGND VGND Y Y Y VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND VGND VGND Y Y Y VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 1 gates B B B C C C A A A | n VGND VGND VGND Y Y Y VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 1 gates A A A C C C B B B | n VGND Y Y Y VGND VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 1 gates A A A C C C B B B | n VGND Y Y Y VGND VGND VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 1 gates A A A C C C B B B | n VGND Y Y Y VGND VGND VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 1 gates A A A C C C B B B | n VGND Y Y Y Y VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 1 gates A A A C C C B B B | n VGND Y Y Y Y VGND VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 1 gates A A A C C C B B B | n VGND Y Y Y Y VGND VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 1 gates A A A C C C B B B | n VGND Y Y Y Y Y VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 1 gates A A A C C C B B B | n VGND Y Y Y Y Y VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 1 gates A A A C C C B B B | n VGND Y Y Y Y Y VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 1 gates A A A C C C B B B | n VGND VGND Y Y VGND VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 1 gates A A A C C C B B B | n VGND VGND Y Y VGND VGND VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 1 gates A A A C C C B B B | n VGND VGND Y Y VGND VGND VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 1 gates A A A C C C B B B | n VGND VGND Y Y Y VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND Y Y Y VGND VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND Y Y Y VGND VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND Y Y Y VGND VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND Y Y Y Y VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND Y Y Y Y VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND Y Y Y Y VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND Y Y Y Y Y VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND Y Y Y Y Y VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND Y Y Y Y Y VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND VGND Y Y VGND VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND VGND Y Y VGND VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND VGND Y Y VGND VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND VGND Y Y Y VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND VGND Y Y Y VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND VGND Y Y Y VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND VGND Y Y Y Y VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND VGND Y Y Y Y VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND VGND Y Y Y Y VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND VGND VGND Y VGND VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND VGND VGND Y VGND VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND VGND VGND Y VGND VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND VGND VGND Y Y VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND VGND VGND Y Y VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND VGND VGND Y Y VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND VGND VGND Y Y Y VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND VGND VGND Y Y Y VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 2 gates C C C A A A B B B | n VGND VGND VGND Y Y Y VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 2 gates B B B A A A C C C | n VGND Y Y Y VGND VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 2 gates B B B A A A C C C | n VGND Y Y Y VGND VGND VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 2 gates B B B A A A C C C | n VGND Y Y Y VGND VGND VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 2 gates B B B A A A C C C | n VGND Y Y Y Y VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 2 gates B B B A A A C C C | n VGND Y Y Y Y VGND VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 2 gates B B B A A A C C C | n VGND Y Y Y Y VGND VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 2 gates B B B A A A C C C | n VGND Y Y Y Y Y VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 2 gates B B B A A A C C C | n VGND Y Y Y Y Y VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 2 gates B B B A A A C C C | n VGND Y Y Y Y Y VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 2 gates B B B A A A C C C | n VGND VGND Y Y VGND VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 2 gates B B B A A A C C C | n VGND VGND Y Y VGND VGND VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 2 gates B B B A A A C C C | n VGND VGND Y Y VGND VGND VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 2 gates B B B A A A C C C | n VGND VGND Y Y Y VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND Y Y Y VGND VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND Y Y Y VGND VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND Y Y Y VGND VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND Y Y Y Y VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND Y Y Y Y VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND Y Y Y Y VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND Y Y Y Y Y VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND Y Y Y Y Y VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND Y Y Y Y Y VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND VGND Y Y VGND VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND VGND Y Y VGND VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND VGND Y Y VGND VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND VGND Y Y Y VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND VGND Y Y Y VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND VGND Y Y Y VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND VGND Y Y Y Y VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND VGND Y Y Y Y VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND VGND Y Y Y Y VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND VGND VGND Y VGND VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND VGND VGND Y VGND VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND VGND VGND Y VGND VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND VGND VGND Y Y VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND VGND VGND Y Y VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND VGND VGND Y Y VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND VGND VGND Y Y Y VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND VGND VGND Y Y Y VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 3 gates A A A C C C B B B | n VGND VGND VGND Y Y Y VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 3 gates B B B C C C A A A | n VGND Y Y Y VGND VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 3 gates B B B C C C A A A | n VGND Y Y Y VGND VGND VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 3 gates B B B C C C A A A | n VGND Y Y Y VGND VGND VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 3 gates B B B C C C A A A | n VGND Y Y Y Y VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 3 gates B B B C C C A A A | n VGND Y Y Y Y VGND VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 3 gates B B B C C C A A A | n VGND Y Y Y Y VGND VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 3 gates B B B C C C A A A | n VGND Y Y Y Y Y VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 3 gates B B B C C C A A A | n VGND Y Y Y Y Y VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 3 gates B B B C C C A A A | n VGND Y Y Y Y Y VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 3 gates B B B C C C A A A | n VGND VGND Y Y VGND VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 3 gates B B B C C C A A A | n VGND VGND Y Y VGND VGND VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 3 gates B B B C C C A A A | n VGND VGND Y Y VGND VGND VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 3 gates B B B C C C A A A | n VGND VGND Y Y Y VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND Y Y Y VGND VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND Y Y Y VGND VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND Y Y Y VGND VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND Y Y Y Y VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND Y Y Y Y VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND Y Y Y Y VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND Y Y Y Y Y VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND Y Y Y Y Y VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND Y Y Y Y Y VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND VGND Y Y VGND VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND VGND Y Y VGND VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND VGND Y Y VGND VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND VGND Y Y Y VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND VGND Y Y Y VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND VGND Y Y Y VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND VGND Y Y Y Y VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND VGND Y Y Y Y VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND VGND Y Y Y Y VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND VGND VGND Y VGND VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND VGND VGND Y VGND VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND VGND VGND Y VGND VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND VGND VGND Y Y VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND VGND VGND Y Y VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND VGND VGND Y Y VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND VGND VGND Y Y Y VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND VGND VGND Y Y Y VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 4 gates B B B A A A C C C | n VGND VGND VGND Y Y Y VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 4 gates C C C A A A B B B | n VGND Y Y Y VGND VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 4 gates C C C A A A B B B | n VGND Y Y Y VGND VGND VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 4 gates C C C A A A B B B | n VGND Y Y Y VGND VGND VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 4 gates C C C A A A B B B | n VGND Y Y Y Y VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 4 gates C C C A A A B B B | n VGND Y Y Y Y VGND VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 4 gates C C C A A A B B B | n VGND Y Y Y Y VGND VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 4 gates C C C A A A B B B | n VGND Y Y Y Y Y VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 4 gates C C C A A A B B B | n VGND Y Y Y Y Y VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 4 gates C C C A A A B B B | n VGND Y Y Y Y Y VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 4 gates C C C A A A B B B | n VGND VGND Y Y VGND VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 4 gates C C C A A A B B B | n VGND VGND Y Y VGND VGND VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 4 gates C C C A A A B B B | n VGND VGND Y Y VGND VGND VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 4 gates C C C A A A B B B | n VGND VGND Y Y Y VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND Y Y Y VGND VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND Y Y Y VGND VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND Y Y Y VGND VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND Y Y Y Y VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND Y Y Y Y VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND Y Y Y Y VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND Y Y Y Y Y VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND Y Y Y Y Y VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND Y Y Y Y Y VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND VGND Y Y VGND VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND VGND Y Y VGND VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND VGND Y Y VGND VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND VGND Y Y Y VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND VGND Y Y Y VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND VGND Y Y Y VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND VGND Y Y Y Y VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND VGND Y Y Y Y VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND VGND Y Y Y Y VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND VGND VGND Y VGND VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND VGND VGND Y VGND VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND VGND VGND Y VGND VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND VGND VGND Y Y VGND VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND VGND VGND Y Y VGND VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND VGND VGND Y Y VGND VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND VGND VGND Y Y Y VGND Y Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND VGND VGND Y Y Y VGND VGND Y Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 5 gates A A A B B B C C C | n VGND VGND VGND Y Y Y VGND VGND VGND Y | p VPWR p2 VPWR p2 p1 p2 p1 Y p1 Y: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 5 gates C C C B B B A A A | n VGND Y Y Y VGND VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 5 gates C C C B B B A A A | n VGND Y Y Y VGND VGND VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 5 gates C C C B B B A A A | n VGND Y Y Y VGND VGND VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 5 gates C C C B B B A A A | n VGND Y Y Y Y VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 5 gates C C C B B B A A A | n VGND Y Y Y Y VGND VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 5 gates C C C B B B A A A | n VGND Y Y Y Y VGND VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 5 gates C C C B B B A A A | n VGND Y Y Y Y Y VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 5 gates C C C B B B A A A | n VGND Y Y Y Y Y VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 5 gates C C C B B B A A A | n VGND Y Y Y Y Y VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 29 contacts on the output stage, 29 in all
+variant 5 gates C C C B B B A A A | n VGND VGND Y Y VGND VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 5 gates C C C B B B A A A | n VGND VGND Y Y VGND VGND VGND VGND Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 5 gates C C C B B B A A A | n VGND VGND Y Y VGND VGND VGND VGND VGND Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+variant 5 gates C C C B B B A A A | n VGND VGND Y Y Y VGND VGND Y Y Y | p Y p1 Y p1 p2 p1 p2 VPWR p2 VPWR: 4.6 um, met1 inside, 27 contacts on the output stage, 29 in all
+every order needs met1: the 5 narrowest again, up to 60 more widenings each, for li alone
+
+== 5. chosen layout
+variant 0, gates C C C B B B A A A: li only beats met1, then the narrowest, then the most contacts on the output stage, then the most contacts, the first found on a tie
+width 4.6 um (10 sites), diffusion 0.285 .. 4.315
+gates   C@0.62  C@1.04  C@1.46  B@1.88  B@2.3  B@2.72  A@3.14  A@3.56  A@3.98
+nMOS columns:
+    VGND@0.41 narrow contacts y=[0.4, 0.74]
+    Y@0.83 wide contacts y=[0.4, 0.74]
+    Y@1.25 no contact
+    Y@1.67 no contact
+    VGND@2.09 narrow contacts y=[0.4]
+    VGND@2.51 no contact
+    VGND@2.93 no contact
+    Y@3.35 wide contacts y=[0.4, 0.74]
+    Y@3.77 no contact
+    Y@4.19 no contact
+    lane Y x 0.665 .. 3.515, inner edge, y 0.735 .. 0.905
+pMOS columns:
+    VPWR@0.41 narrow contacts y=[1.66, 2.0, 2.34]
+    p2@0.83 wide contacts y=[1.66, 2.0, 2.34]
+    VPWR@1.25 narrow contacts y=[2.0, 2.34]
+    p2@1.67 narrow contacts y=[1.66, 2.0]
+    p1@2.09 wide contacts y=[1.66, 2.0]
+    p2@2.51 narrow contacts y=[1.66, 2.0]
+    p1@2.93 narrow contacts y=[1.66, 2.0]
+    Y@3.35 narrow contacts y=[1.66, 2.0]
+    p1@3.77 wide contacts y=[1.66, 2.0]
+    Y@4.19 narrow contacts y=[1.66, 2.0]
+    lane Y x 3.265 .. 3.435, inner edge, y 1.495 .. 1.665
+    lane Y x 3.265 .. 4.275, outer edge, y 2.295 .. 2.465
+    lane p2 x 0.665 .. 1.755, inner edge, y 1.495 .. 1.665
+    lane p2 x 1.585 .. 2.595, outer edge, y 2.295 .. 2.465
+poly contact C@0.62 for gates 0..2, wide pad
+poly contact B@1.88 for gates 3..5, wide pad
+poly contact A@3.77 for gates 6..8, wide pad
+crossing Y at x 3.35
+
+== 6. checks
+DRC (Magic, in a row with tap cells): 0 errors
+LVS (Netgen): match; RC-LVS: match
+abutment: pass, 0 errors
+layer check: pass
+simulation (ngspice): pass
+
+== 7. response
+pass, 10 sites, 12.512 um2

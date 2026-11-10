@@ -1,0 +1,13 @@
+{
+  "cells": [
+    "dd2_gc1__f011f_1",
+    "dd2_gc1__f0017_1",
+    "dd2_gc1__f02ab_1",
+    "dd2_gc1__f001f_1",
+    "dd2_gc1__f0eef_1",
+    "dd2_gc1__f07ff_1"
+  ],
+  "baseline_um2": 86245.216,
+  "total_um2": 85968.7008,
+  "from": "greedy, then swaps"
+}

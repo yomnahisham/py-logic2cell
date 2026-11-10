@@ -1,0 +1,12 @@
+frequency against saving, the cells of the Liberty file, most frequent first:
+  dd2_gc1__f001f_1: 1184 occurrences, estimated saving 711.3102 um2, used 215 times in the mappings
+  dd2_gc1__f2b_1: 445 occurrences, estimated saving 2033.9113 um2, used 94 times in the mappings
+  dd2_gc1__f011f_1: 441 occurrences, estimated saving 3422.9004 um2, used 0 times in the mappings
+  dd2_gc1__f02ab_1: 439 occurrences, estimated saving 2319.7124 um2, used 0 times in the mappings
+  dd2_gc1__f002b_1: 301 occurrences, estimated saving 1569.529 um2, used 0 times in the mappings
+  dd2_gc1__f2bff_1: 293 occurrences, estimated saving 1550.7831 um2, used 0 times in the mappings
+  dd2_gc1__f17_1: 241 occurrences, estimated saving 1419.3147 um2, used 165 times in the mappings
+  dd2_gc1__f17ff_1: 224 occurrences, estimated saving 1791.0531 um2, used 0 times in the mappings
+  dd2_gc1__f0017_1: 224 occurrences, estimated saving 1777.752 um2, used 2 times in the mappings
+  dd2_gc1__f077f_1: 215 occurrences, estimated saving 1716.5046 um2, used 0 times in the mappings
+most frequent for how little it was used: dd2_gc1__f011f_1 (!((C & D) | ((A | B) & (C | D)))), 441 occurrences, 0 instances

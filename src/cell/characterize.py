@@ -119,6 +119,7 @@ def deck(name: str, netlist: str, ports: list[str], output: str, pin: str, side:
                       f"meas tran thi when v({output})={pct(f'slew_upper_threshold_pct_{edge_out}'):g} {cross_out}=1",
                       f"meas tran q integ i(V{pin}) from=0 to={tstop:g}",
                       f"meas tran qwin integ i(V{pin}) from={win[0]:g} to={win[1]:g}",
+                      f"meas tran evdd integ i(VPWR) from={TD:g} to={tstop:g}",
                       "destroy all"]
     lines += ["quit", ".endc", ".end"]
     return "\n".join(lines) + "\n"
@@ -131,7 +132,12 @@ def measure(folder: Path, name: str, netlist: str, ports: list[str], output: str
     stem = f"{name}_{pin}_{edge_in}_" + "".join(f"{p}{v}" for p, v in side.items()) + tag
     (folder / f"{stem}.spice").write_text(deck(name, netlist, ports, output, pin, side, edge_in, edge_out,
                                               slews, loads, setup, full_ramp))
-    out = run("ngspice", ["-b", f"{stem}.spice"], folder, folder / f"{stem}.log", timeout=3600, image=image)
+    try:
+        out = run("ngspice", ["-b", f"{stem}.spice"], folder, folder / f"{stem}.log", timeout=3600, image=image)
+    except RuntimeError as error:
+        if "exited with 137" not in str(error):     # killed for memory: the same deck once more, then give up
+            raise
+        out = run("ngspice", ["-b", f"{stem}.spice"], folder, folder / f"{stem}.log", timeout=3600, image=image)
     vdd, derate = setup["nom_voltage"], setup["slew_derate_from_library"]
     delay = [[None] * len(loads) for _ in slews]
     trans = [[None] * len(loads) for _ in slews]
@@ -139,11 +145,12 @@ def measure(folder: Path, name: str, netlist: str, ports: list[str], output: str
     cap = [[None] * len(loads) for _ in slews]
     cap_full = [[None] * len(loads) for _ in slews]
     errors = []
-    wanted = {"tin", "tout", "tlo", "thi", "q", "qwin"}
+    energy = [[None] * len(loads) for _ in slews]
+    wanted = {"tin", "tout", "tlo", "thi", "q", "qwin", "evdd"}
     blocks = re.split(r"^POINT (\d+) (\d+)\s*$", out, flags=re.M)
     for i, j, block in zip(blocks[1::3], blocks[2::3], blocks[3::3]):
         i, j = int(i), int(j)
-        m = {k: float(v) for k, v in re.findall(r"^(tin|tout|tlo|thi|qwin|q)\s*=\s*([-+\d.eE]+)", block, re.M)}
+        m = {k: float(v) for k, v in re.findall(r"^(tin|tout|tlo|thi|qwin|q|evdd)\s*=\s*([-+\d.eE]+)", block, re.M)}
         if not wanted <= m.keys():
             errors.append(f"slew {slews[i]} load {loads[j]}: missing {sorted(wanted - m.keys())}")
             continue
@@ -151,8 +158,13 @@ def measure(folder: Path, name: str, netlist: str, ports: list[str], output: str
         trans[i][j] = abs(m["thi"] - m["tlo"]) / derate * 1e9
         cap[i][j] = abs(m["qwin"]) / swing * 1e12
         cap_full[i][j] = abs(m["q"]) / vdd * 1e12
+        # internal energy of the transition, pJ: what VPWR delivers (the current into its + node is
+        # negative while it sources), less half the load's C V^2, which the STA tool adds as switching
+        # power. That is HD's convention: its fall_power is about -C V^2 / 2 (sky130_fd_sc_hd__inv_1).
+        energy[i][j] = -m["evdd"] * vdd * 1e12 - 0.5 * loads[j] * vdd ** 2
     return dict(pin=pin, side=side, edge_in=edge_in, edge_out=edge_out, deck=f"{stem}.spice",
-                delay=delay, transition=trans, capacitance=cap, capacitance_full=cap_full, errors=errors)
+                delay=delay, transition=trans, capacitance=cap, capacitance_full=cap_full, energy=energy,
+                errors=errors)
 
 
 def combine(tables: list[list[list[float | None]]], rule) -> list[list[float | None]]:
@@ -170,6 +182,34 @@ def nearest(values: list[float], target: float) -> int:
     return min(range(len(values)), key=lambda k: abs(values[k] - target))
 
 
+def leakage(folder: Path, name: str, netlist: str, ports: list[str], inputs: list[str], setup: dict, image: str,
+            tag: str = "") -> dict:
+    """Leakage power (nW, the Liberty's leakage_power_unit) in every input state: the DC operating point,
+    VPWR's current times VDD. Keys are the states as Liberty `when` conditions over the inputs."""
+    vdd = setup["nom_voltage"]
+    nets = {p: p for p in ports}
+    nets.update(VGND="0", VNB="0", VPWR="VPWR", VPB="VPWR")
+    lines = [f"* {name}: leakage in every input state", f'.lib "{MODELS}" tt', f'.include "{netlist}"',
+             f".temp {setup['nom_temperature']:g}", f"VPWR VPWR 0 {vdd:g}",
+             # ngspice's default gmin (1e-12 S on every junction) draws 1.8 pA at 1.8 V, more than a cell's
+             # leakage in some states (HD's nand2_1 with both inputs low: 30 fW); measure far below it
+             ".option gmin=1e-18 abstol=1e-18 reltol=1e-6"]
+    lines += [f"V{p} {p} 0 0" for p in inputs]
+    lines += [f"XU {' '.join(nets[p] for p in ports)} {name}", ".control"]
+    for state in range(1 << len(inputs)):
+        lines += [f"alter V{p} dc = {vdd * (state >> k & 1):g}" for k, p in enumerate(inputs)]
+        lines += ["op", f"echo STATE {state}", "print i(VPWR)", "destroy all"]
+    lines += ["quit", ".endc", ".end"]
+    stem = f"{name}_leakage{tag}"
+    (folder / f"{stem}.spice").write_text("\n".join(lines) + "\n")
+    out = run("ngspice", ["-b", f"{stem}.spice"], folder, folder / f"{stem}.log", timeout=600, image=image)
+    found = {}
+    for state, value in re.findall(r"^STATE (\d+)\s*\n(?:.*\n)*?i\(vpwr\)\s*=\s*([-+\d.eE]+)", out, re.M | re.I):
+        cond = "&".join(("" if int(state) >> k & 1 else "!") + p for k, p in enumerate(inputs))
+        found[cond] = -float(value) * vdd * 1e9
+    return found
+
+
 def characterize(folder: Path, name: str, netlist: str, inputs: list[str], output: str, table: int,
                  grids: dict, setup: dict, full_ramp: bool = False, image: str = IMAGE, tag: str = "") -> dict:
     """grids: pin -> (slews ns, loads pF). Writes <name>_timing<tag>.json in folder and returns it."""
@@ -184,7 +224,9 @@ def characterize(folder: Path, name: str, netlist: str, inputs: list[str], outpu
         for edge_in, edge_out, settings in arc.edges():
             for s in settings:
                 jobs.append((arc, edge_in, edge_out, s, slews, loads))
-    workers = max(1, min(len(jobs), os.cpu_count() or 2))      # ngspice is single-threaded
+    # ngspice is single-threaded, so one run per CPU, but each holds a few hundred MB in Docker's VM: a cap, so
+    # that a machine with less memory, or something else running, does not get runs killed (exit 137)
+    workers = max(1, min(len(jobs), os.cpu_count() or 2, int(os.getenv("CHAR_JOBS", "8"))))
     with ThreadPoolExecutor(workers) as pool:
         runs = list(pool.map(lambda j: measure(folder, name, netlist, ports, output, j[0].pin, j[3].side, j[1],
                                                j[2], j[4], j[5], setup, full_ramp, image, tag), jobs))
@@ -206,14 +248,18 @@ def characterize(folder: Path, name: str, netlist: str, inputs: list[str], outpu
             caps[key] = statistics.mean(both) if both else None
         caps["at"] = dict(slew_ns=slews[i], load_pf=loads[j])
         result["pins"][arc.pin] = caps
-        tables = {}
+        tables, power = {}, {}
         for edge_out in ("rise", "fall"):
             chosen = [r for r in mine if r["edge_out"] == edge_out]
             if chosen:
                 tables[f"cell_{edge_out}"] = combine([r["delay"] for r in chosen], SIDE_RULES[mode])
                 tables[f"{edge_out}_transition"] = combine([r["transition"] for r in chosen], SIDE_RULES[mode])
+                # internal energy, pJ, kept apart from the timing tables; not a worst case: the mean over the
+                # side settings
+                power[f"{edge_out}_power"] = combine([r["energy"] for r in chosen], statistics.mean)
         result["arcs"].append(dict(pin=arc.pin, output=output, sense=arc.sense, index_1=slews, index_2=loads,
-                                   tables=tables, runs=mine))
+                                   tables=tables, power=power, runs=mine))
+    result["leakage_nw"] = leakage(folder, name, netlist, ports, inputs, setup, image, tag)
     result["errors"] = [f"{r['deck']}: {e}" for r in runs for e in r["errors"]]
     (folder / f"{name}_timing{tag}.json").write_text(json.dumps(result, indent=2) + "\n")
     return result
@@ -232,12 +278,15 @@ def characterize_hd(short: str, grid: int | None = None, full_ramp: bool = False
                         read_setup(), full_ramp, image, tag)
 
 
-def hd_grids(short: str, pins: list[str], grid: int | None = None) -> dict:
-    """pin -> (slews, loads) from the cell_rise table of each of the HD cell's arcs."""
+def hd_grids(short: str, pins: list[str], grid: int | None = None, rename: dict | None = None) -> dict:
+    """pin -> (slews, loads) from the cell_rise table of each of the HD cell's arcs. rename maps our pin
+    to the HD cell's pin of the same role, when the names differ."""
     out = {}
     for a in read_cell(short).arcs:
         t = a.tables["cell_rise"] if "cell_rise" in a.tables else next(iter(a.tables.values()))
         out[a.pin] = (pick(t["index_1"], grid), pick(t["index_2"], grid))
+    if rename and all(rename.get(p) in out for p in pins):
+        return {p: out[rename[p]] for p in pins}
     if all(p in out for p in pins):
         return {p: out[p] for p in pins}
     # different pin names (a test cell's A, B, C against HD's A1, A2, B1): usable only if every arc of the
@@ -248,7 +297,7 @@ def hd_grids(short: str, pins: list[str], grid: int | None = None) -> dict:
 
 
 def characterize_ours(request: Path, grid_from: str, grid: int | None = None, full_ramp: bool = False,
-                      image: str = IMAGE, tag: str = "") -> dict:
+                      image: str = IMAGE, tag: str = "", rename: dict | None = None) -> dict:
     """Characterize one of our generated cells, as built by src.cell.build in build/cells/<name>/, on the
     table indexes of the HD cell grid_from (its HD counterpart, or a comparable x1 cell when there is none)."""
     from src.common.request import read_request
@@ -257,7 +306,7 @@ def characterize_ours(request: Path, grid_from: str, grid: int | None = None, fu
     if not (folder / f"{req.name}_pex.spice").exists():
         raise FileNotFoundError(f"{folder}: no extracted netlist; run python -m src.cell.build {request} first")
     stress(folder, req.name)
-    grids = hd_grids(grid_from, list(req.inputs), grid)
+    grids = hd_grids(grid_from, list(req.inputs), grid, rename)
     r = characterize(folder, req.name, f"{req.name}_sasb.spice", list(req.inputs), req.output, req.truth_table,
                      grids, read_setup(), full_ramp, image, tag)
     r["grid_from"] = PREFIX + grid_from

@@ -5,11 +5,14 @@
   "cell": "dd2_gc1__a21o_1_hd",
   "stages": 2,
   "transistors": 8,
-  "width_sites": 7,
-  "area_um2": 8.7584,
+  "width_sites": 6,
+  "area_um2": 7.5072,
   "files": {
     "gds": "cells/dd2_gc1__a21o_1_hd/cell.gds",
-    "report": "cells/dd2_gc1__a21o_1_hd/report.json"
+    "report": "cells/dd2_gc1__a21o_1_hd/report.json",
+    "liberty": "cells/dd2_gc1__a21o_1_hd/cell.lib",
+    "verilog": "cells/dd2_gc1__a21o_1_hd/cell.v",
+    "model_check": "cells/dd2_gc1__a21o_1_hd/model_check.json"
   },
   "checks": {
     "drc": 0,
@@ -17,7 +20,11 @@
     "rc_lvs": "match",
     "truth_table": "pass",
     "abutment": 0,
-    "layers": "pass"
+    "layers": "pass",
+    "model": "pass",
+    "round_trip": "pass"
   },
-  "tool_version": "git:f030390"
+  "tool_version": "git:6326eba",
+  "ngspice_sha256": "81a8991415fbee4065e1e54fcdf68ac67183eb9b1d2c4119c252066d370705ad",
+  "grid_from": "sky130_fd_sc_hd__a21o_1"
 }
