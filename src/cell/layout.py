@@ -89,6 +89,8 @@ TRACK_Y = (MCON_Y,) + tuple(  # the band first, then up over the PMOS row, then 
 # and its mcons stay on the row's li; lines one track pitch apart.
 _M1_HALF = MCON / 2 + M1_CUT
 BRIDGE_TRIES = 8    # bridge choices tried per plan (finish), fewest nets first
+EARLY_TRIES = 2000  # with bridges (stack cells, split networks): an order that has drawn nothing by then is
+                    # given up (probe of f011f's splits: every such order drew nothing in 20000 tries)
 ROW_TRACKS = {
     "p": tuple(y for y in [max(MCON_Y + 2 * _M1_HALF + M1_SPACE, P_LI[0] + MCON / 2) + k * TRACK_PITCH for k in range(4)]
                if y + _M1_HALF <= FRAME["rails"]["VPWR"]["met1"]["y"][0] - M1_SPACE + 1e-9 and y + MCON / 2 <= P_LI[1] + 1e-9),
@@ -161,6 +163,8 @@ class Plan:
     notches: dict = field(default_factory=dict)   # (row, column) -> (net, x0, x1, y): other nets' li keeps out of x0..x1 short of y
     tall: dict = field(default_factory=dict)      # (row, net, x0, x1) -> inner lane reaching to y, to meet a notched strip
     bridges: dict = field(default_factory=lambda: {"n": {}, "p": {}})   # row -> {net: y of its met1 line along the row}
+    verticals: dict = field(default_factory=dict)  # net -> x of the met1 joining its two row lines across the band
+    nodes: dict = field(default_factory=dict)      # row -> the net at each column
 
     def apart(self, row):
         """Nets whose li in this row is a strip on each of its columns: laned or bridged on met1."""
@@ -291,7 +295,9 @@ def place(stage: Stage, order: Order, wn: float = 0.65, wp: float = 1.0, widths:
         the li below them, and then with narrow pads, which pack closer; a tie keeps the first."""
         nonlocal error, spent, tries
         col_x, gate_x = columns(order, either, extra, steps)
-        options = route_crossings(stage, order, col_x, gate_x, n_cont, p_cont)
+        options = route_crossings(stage, order, col_x, gate_x, n_cont, p_cont, bridges)
+        verticals = {net for net, xs in options.items() if xs is None}
+        options = {net: xs for net, xs in options.items() if xs is not None}
         crowded, best = set(), None
         limit = LI_CROSSINGS if li_tries else MAX_CROSSINGS     # the search for li alone looks further down
         for choice, wide in product(islice(ranked(list(options.values())), limit), (True, False)):
@@ -304,7 +310,7 @@ def place(stage: Stage, order: Order, wn: float = 0.65, wp: float = 1.0, widths:
             try:
                 pads, joins = place_pads(order, gate_x, crossing, wide)
                 spent += 1      # only what reaches finish counts: a contact with no room fails at once
-                plan = finish(order, col_x, gate_x, crossing, pads, joins, diff_w, n_cont, p_cont, bridges)
+                plan = finish(order, col_x, gate_x, crossing, pads, joins, diff_w, n_cont, p_cont, bridges, verticals)
             except NoRoom as e:
                 crowded.add(e.gate)
                 error = e
@@ -322,7 +328,9 @@ def place(stage: Stage, order: Order, wn: float = 0.65, wp: float = 1.0, widths:
         backtracks where place_pads would not: li first, then with met1 bridges where li is full."""
         nonlocal error
         col_x, gate_x = columns(order, either, extra, steps)
-        options = route_crossings(stage, order, col_x, gate_x, n_cont, p_cont)
+        options = route_crossings(stage, order, col_x, gate_x, n_cont, p_cont, bridges)
+        verticals = {net for net, xs in options.items() if xs is None}
+        options = {net: xs for net, xs in options.items() if xs is not None}
         items = [midband.Item(net, "crossing", STRIP_HALF, candidates=tuple(xs)) for net, xs in options.items()]
         for gate, runs in gate_runs(order).items():
             blocked = tuple((x, CUT / 2 + POLY_CUT + POLY_SPACE + L / 2)
@@ -342,7 +350,7 @@ def place(stage: Stage, order: Order, wn: float = 0.65, wp: float = 1.0, widths:
                 pads = {gate: pads[gate] for gate in gate_runs(order)}
                 try:
                     joins = join_nets(pads, crossing)
-                    return finish(order, col_x, gate_x, crossing, pads, joins, diff_w, n_cont, p_cont, bridges), crowded
+                    return finish(order, col_x, gate_x, crossing, pads, joins, diff_w, n_cont, p_cont, bridges, verticals), crowded
                 except ValueError as e:
                     error = e
             crowded |= {items[i].net for i, n in stats.dead.items() if items[i].kind == "pad" and n}
@@ -361,6 +369,9 @@ def place(stage: Stage, order: Order, wn: float = 0.65, wp: float = 1.0, widths:
         if plan and fallback is None:
             fallback, since = plan, n
         if fallback and n - since >= li_tries:
+            break
+        if bridges and not spent and tries >= EARLY_TRIES:      # the fallback paths: no plan drawn yet, give up early
+            error = ValueError(f"gave up after {tries} tries, none drawn")
             break
         if not li_tries and (spent >= PLACE_BUDGET or tries >= TRY_BUDGET):    # li_tries has its own limit     # a fixed budget per order; raise it if a cell is found to need more
             error = ValueError(f"gave up after {tries} tries, {spent} of them drawn")
@@ -476,7 +487,8 @@ def columns(order: Order, either: set, extra: dict, steps: set = frozenset()):
     return col_x, gate_x
 
 
-def finish(order, col_x, gate_x, crossing, pads, joins, diff_w, n_cont, p_cont, bridges: bool = False) -> Plan:
+def finish(order, col_x, gate_x, crossing, pads, joins, diff_w, n_cont, p_cont, bridges: bool = False,
+           verticals: set = frozenset()) -> Plan:
     """Cell width, centring, and the li of each row."""
     diff_right = col_x[-1] + CUT / 2 + CUT_DIFF
     gates = [g for g, name in zip(gate_x, order.gates) if name != BREAK]
@@ -494,7 +506,8 @@ def finish(order, col_x, gate_x, crossing, pads, joins, diff_w, n_cont, p_cont, 
     shift = snap(shift + (width - need) / 2)
 
     plan = Plan(width=width, gates=tuple(order.gates), diff_x=(shift, snap(shift + diff_right)), diff_w=diff_w,
-                cont={"n": n_cont, "p": p_cont}, lanes={"n": [], "p": []}, jogs={"n": [], "p": []})
+                cont={"n": n_cont, "p": p_cont}, lanes={"n": [], "p": []}, jogs={"n": [], "p": []},
+                nodes={"n": order.n_nodes, "p": order.p_nodes})
     plan.col_x = [snap(x + shift) for x in col_x]
     plan.gate_x = [snap(g + shift) for g in gate_x]
     plan.pads = {k: [(snap(p + shift), first, last) for p, first, last in v] for k, v in pads.items()}
@@ -504,11 +517,25 @@ def finish(order, col_x, gate_x, crossing, pads, joins, diff_w, n_cont, p_cont, 
     plan.crossing = {k: snap(v + shift) for k, v in crossing.items()}
     pad_shapes(plan)
     rows = (("n", order.n_nodes), ("p", order.p_nodes))
-    try:
-        route_rows(plan, rows)
-        return plan
-    except ValueError as error:
-        first = error
+    if verticals:
+        # nets that cannot cross on li cross on met1: a line along each row, joined over the band at one of
+        # the net's PMOS columns, the one nearest its NMOS contacts
+        if any(mcons for _, mcons, _ in plan.joins.values()):
+            raise ValueError("a met1 crossing and a met1 bridge in the band")
+        for net in verticals:
+            px = [plan.col_x[j] for j in p_cont if order.p_nodes[j] == net]
+            nx = [plan.col_x[j] for j in n_cont if order.n_nodes[j] == net]
+            if not px or not nx:
+                raise ValueError(f"{net} has no contact in one row")
+            mid = sum(nx) / len(nx)
+            plan.verticals[net] = min(px, key=lambda x: abs(x - mid))
+        first = ValueError(f"cannot cross {', '.join(sorted(verticals))} on met1")
+    else:
+        try:
+            route_rows(plan, rows)
+            return plan
+        except ValueError as error:
+            first = error
     if not bridges:
         raise first
     # li alone cannot route the rows: the fewest nets join their contacts in a row by a met1 line along it
@@ -519,15 +546,37 @@ def finish(order, col_x, gate_x, crossing, pads, joins, diff_w, n_cont, p_cont, 
     # a fixed number of choices: finish runs once per placement try, so an unbounded search here multiplies
     # the cost of every order that cannot be drawn (f011f ran for hours); the nets the li error names first
     named = set(re.findall(r"[A-Za-z_][A-Za-z0-9_]*", str(first)))
-    for choice in islice(bridge_choices(plan, rows, named), BRIDGE_TRIES):
+    for choice in islice(bridge_choices(plan, rows, named, forced=set(plan.verticals)), BRIDGE_TRIES):
         plan.bridges = choice
         try:
             route_rows(plan, rows)
-            if bridges_fit(plan, rows):
+            if bridges_fit(plan, rows) and verticals_clear(plan):
                 return plan
         except ValueError:
             pass
     raise first
+
+
+def verticals_clear(plan: Plan) -> bool:
+    """A vertical keeps met1 spacing from every other net's row line at a track it passes."""
+    for net, x in plan.verticals.items():
+        lo, hi = plan.bridges["n"][net], plan.bridges["p"][net]
+        for row, lines in plan.bridges.items():
+            for other, y in lines.items():
+                if other == net or not lo - 1e-9 <= y <= hi + 1e-9:
+                    continue
+                a, b = line_span(plan, row, other)
+                if a - M1_SPACE - _M1_HALF < x < b + M1_SPACE + _M1_HALF:
+                    return False
+    return True
+
+
+def line_span(plan: Plan, row: str, net: str) -> tuple[float, float]:
+    """x extent of a met1 line along a row: the net's contacts in the row, and its vertical."""
+    nodes = plan.nodes[row]
+    xs = [plan.col_x[j] for j in plan.cont[row] if nodes[j] == net]
+    xs += [plan.verticals[net]] if net in plan.verticals else []
+    return min(xs) - MCON / 2 - M1_CUT_DIR, max(xs) + MCON / 2 + M1_CUT_DIR
 
 
 def route_rows(plan: Plan, rows):
@@ -541,23 +590,28 @@ def route_rows(plan: Plan, rows):
     check_lanes(plan)
 
 
-def bridge_choices(plan: Plan, rows, named: set = frozenset(), most: int = 2):
+def bridge_choices(plan: Plan, rows, named: set = frozenset(), most: int = 2, forced: set = frozenset()):
     """{row: {net: y}} to try, fewest bridged nets first. A net may be bridged in a row where it has two or
     more contacts and, if it crosses to the other row, crosses on one of them; nets whose contacts overlap
-    along the row take different tracks."""
-    can = []
+    along the row take different tracks. Nets in forced (met1 crossings) have a line in both rows always."""
+    can, must = [], []
     for row, nodes in rows:
         rail = ROWS[row][0]
         for net in sorted(set(nodes) - {rail}):
             xs = [plan.col_x[j] for j in plan.cont[row] if nodes[j] == net]
+            if net in forced:
+                xs.append(plan.verticals[net])
+                must.append((row, net, min(xs), max(xs)))
+                continue
             if len(xs) < 2:
                 continue
             if net in plan.crossing and all(abs(plan.crossing[net] - x) > 1e-6 for x in xs):
                 continue
             can.append((row, net, min(xs), max(xs)))
     can.sort(key=lambda c: c[1] not in named)       # the nets that met in the li first
-    for k in range(1, min(most, len(can)) + 1):
-        for picked in combinations(can, k):
+    for k in range(0 if must else 1, min(most, len(can)) + 1):
+        for extra in combinations(can, k):
+            picked = tuple(must) + extra
             for tracks in product(*(range(len(ROW_TRACKS[row])) for row, *_ in picked)):
                 taken, ok = [], True
                 for (row, net, a, b), t in zip(picked, tracks):
@@ -851,7 +905,7 @@ def check_lanes(plan: Plan):
                     raise ValueError(f"the lane of {other} meets the jog of {net} in the {row} row")
 
 
-def route_crossings(stage, order, col_x, gate_x, n_cont, p_cont) -> dict:
+def route_crossings(stage, order, col_x, gate_x, n_cont, p_cont, met1: bool = False) -> dict:
     """For each net in both rows, the x where its li may cross the npc band, best first: on a column
     or over a gate, as HD's nand3_1 does. The net's li in each row reaches from its contacts to the
     crossing; another net's contact in between needs a lane (plan_row): inner past a rail, outer past
@@ -894,7 +948,10 @@ def route_crossings(stage, order, col_x, gate_x, n_cont, p_cont) -> dict:
                 if left + STRIP_HALF < x < right - STRIP_HALF:
                     options.append((cost + (abs(d), h), x))
         if not options:
-            raise ValueError(f"cannot route {net} between the rows on li")
+            if not met1:
+                raise ValueError(f"cannot route {net} between the rows on li")
+            out[net] = None     # crosses on met1 instead (finish: a met1 line in each row, joined by a vertical)
+            continue
         out[net] = [x for _, x in sorted(options)]
     return out
 
@@ -1112,9 +1169,10 @@ def notched(c, plan: Plan, row, net, x0, y0, x1, y1):
         rect(c, "li", *piece)
 
 
-def draw(name: str, stage: Stage, order: Order, wn: float = 0.65, wp: float = 1.0, widths: dict | None = None):
+def draw(name: str, stage: Stage, order: Order, wn: float = 0.65, wp: float = 1.0, widths: dict | None = None,
+         bridges: bool = False):
     gf.gpdk.PDK.activate()
-    plan = place(stage, order, wn, wp, widths)
+    plan = place(stage, order, wn, wp, widths, bridges=bridges)     # as the search placed it
     w = plan.width
     old = gf.kcl.layout_cell(name)      # a cell drawn earlier in this run under the same name (--style tuned)
     if old is not None:
@@ -1209,10 +1267,10 @@ def draw(name: str, stage: Stage, order: Order, wn: float = 0.65, wp: float = 1.
         # nets with more than one contact in this row, or that cross to the other row
         laned = plan.apart(row)
         for net, y in plan.bridges[row].items():
-            xs = [plan.col_x[i] for i in cont if nodes[i] == net]
-            for x in xs:
+            for x in [plan.col_x[i] for i in cont if nodes[i] == net]:
                 box(c, "mcon", x, y, MCON, MCON)
-            rect(c, "met1", min(xs) - MCON / 2 - M1_CUT_DIR, y - _M1_HALF, max(xs) + MCON / 2 + M1_CUT_DIR, y + _M1_HALF)
+            x0, x1 = line_span(plan, row, net)
+            rect(c, "met1", x0, y - _M1_HALF, x1, y + _M1_HALF)
         for net in sorted(set(nodes) - {rail}):
             xs = [plan.col_x[i] for i in cont if nodes[i] == net]
             if net in laned:
@@ -1238,6 +1296,10 @@ def draw(name: str, stage: Stage, order: Order, wn: float = 0.65, wp: float = 1.
             rect(c, "li", x - STRIP_HALF, li[0], x + STRIP_HALF,
                  plan.top(x - STRIP_HALF, x + STRIP_HALF, net) if row == "n" else li[1])
 
+    for net, x in plan.verticals.items():
+        rect(c, "met1", x - _M1_HALF, plan.bridges["n"][net] - _M1_HALF, x + _M1_HALF, plan.bridges["p"][net] + _M1_HALF)
+        if net == stage.output:     # the pin on its PMOS strip at the vertical, a strip as wide as the pin
+            pins[net] = (x - STRIP_HALF, P_LI[0] + 0.04, "narrow")
     p_laned = plan.apart("p")
     for net, x in plan.crossing.items():
         # down into the net's NMOS li, which stops lower under the band's li
