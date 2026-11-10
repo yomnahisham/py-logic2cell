@@ -88,9 +88,11 @@ TRACK_Y = (MCON_Y,) + tuple(  # the band first, then up over the PMOS row, then 
 # contact strips at the line's height. Each line keeps met1 spacing from the band's met1 and the rails,
 # and its mcons stay on the row's li; lines one track pitch apart.
 _M1_HALF = MCON / 2 + M1_CUT
-BRIDGE_TRIES = 8    # bridge choices tried per plan (finish), fewest nets first
-EARLY_TRIES = 2000  # with bridges (stack cells, split networks): an order that has drawn nothing by then is
-                    # given up (probe of f011f's splits: every such order drew nothing in 20000 tries)
+BRIDGE_TRIES = 8    # bridge choices routed per plan (finish), fewest nets first
+BRIDGE_LOOK = 200   # choices looked at per plan to find those, the ones whose met1 collides skipped cheaply
+VERTICAL_PLACES = 6 # places tried for a met1 crossing between the rows, nearest the net's contacts first
+EARLY_TRIES = 2000  # an order that has drawn nothing by then is given up (f02ab and f011f's splits: every
+                    # such order drew nothing in 20000 tries); the build's widening retry still gets it
 ROW_TRACKS = {
     "p": tuple(y for y in [max(MCON_Y + 2 * _M1_HALF + M1_SPACE, P_LI[0] + MCON / 2) + k * TRACK_PITCH for k in range(4)]
                if y + _M1_HALF <= FRAME["rails"]["VPWR"]["met1"]["y"][0] - M1_SPACE + 1e-9 and y + MCON / 2 <= P_LI[1] + 1e-9),
@@ -370,7 +372,7 @@ def place(stage: Stage, order: Order, wn: float = 0.65, wp: float = 1.0, widths:
             fallback, since = plan, n
         if fallback and n - since >= li_tries:
             break
-        if bridges and not spent and tries >= EARLY_TRIES:      # the fallback paths: no plan drawn yet, give up early
+        if not spent and tries >= EARLY_TRIES:      # no plan drawn yet: this order will not draw, give up early
             error = ValueError(f"gave up after {tries} tries, none drawn")
             break
         if not li_tries and (spent >= PLACE_BUDGET or tries >= TRY_BUDGET):    # li_tries has its own limit     # a fixed budget per order; raise it if a cell is found to need more
@@ -518,17 +520,17 @@ def finish(order, col_x, gate_x, crossing, pads, joins, diff_w, n_cont, p_cont, 
     pad_shapes(plan)
     rows = (("n", order.n_nodes), ("p", order.p_nodes))
     if verticals:
-        # nets that cannot cross on li cross on met1: a line along each row, joined over the band at one of
-        # the net's PMOS columns, the one nearest its NMOS contacts
-        if any(mcons for _, mcons, _ in plan.joins.values()):
-            raise ValueError("a met1 crossing and a met1 bridge in the band")
-        for net in verticals:
+        # nets that cannot cross on li cross on met1: a line along each row, joined over the band by a vertical
+        # at one of the net's contact columns (either row), nearest its other row's contacts first; each place
+        # is tried until one keeps clear of the band's own met1 (met1_clear)
+        places = {}
+        for net in sorted(verticals):
             px = [plan.col_x[j] for j in p_cont if order.p_nodes[j] == net]
             nx = [plan.col_x[j] for j in n_cont if order.n_nodes[j] == net]
             if not px or not nx:
                 raise ValueError(f"{net} has no contact in one row")
-            mid = sum(nx) / len(nx)
-            plan.verticals[net] = min(px, key=lambda x: abs(x - mid))
+            mid = (sum(nx) / len(nx) + sum(px) / len(px)) / 2
+            places[net] = sorted(set(px + nx), key=lambda x: (abs(x - mid), x))
         first = ValueError(f"cannot cross {', '.join(sorted(verticals))} on met1")
     else:
         try:
@@ -539,22 +541,98 @@ def finish(order, col_x, gate_x, crossing, pads, joins, diff_w, n_cont, p_cont, 
     if not bridges:
         raise first
     # li alone cannot route the rows: the fewest nets join their contacts in a row by a met1 line along it
-    # (handout step 5: met1 only where li1 cannot), as HD's folded nor3_4 does. Only where the band uses no
-    # met1 track over the rows, so the lines meet nothing but each other.
-    if any(mcons and track for _, mcons, track in plan.joins.values()):
-        raise first
+    # (handout step 5: met1 only where li1 cannot), as HD's folded nor3_4 does; every met1 shape then keeps
+    # met1 spacing from every other net's (met1_clear)
     # a fixed number of choices: finish runs once per placement try, so an unbounded search here multiplies
     # the cost of every order that cannot be drawn (f011f ran for hours); the nets the li error names first
     named = set(re.findall(r"[A-Za-z_][A-Za-z0-9_]*", str(first)))
-    for choice in islice(bridge_choices(plan, rows, named, forced=set(plan.verticals)), BRIDGE_TRIES):
-        plan.bridges = choice
-        try:
-            route_rows(plan, rows)
-            if bridges_fit(plan, rows) and verticals_clear(plan):
-                return plan
-        except ValueError:
-            pass
+    joins0 = plan.joins
+    spots = list(islice(product(*places.values()), VERTICAL_PLACES)) if verticals else [()]
+    for spot in spots:
+        plan.verticals = dict(zip(places, spot)) if verticals else {}
+        routed = 0
+        for choice in islice(bridge_choices(plan, rows, named, forced=set(plan.verticals)), BRIDGE_LOOK):
+            plan.bridges = choice
+            plan.joins = joins0
+            if not met1_clear(plan):
+                # the band's bridges were planned before the rows' met1: plan them again around it
+                fixed = [r[1:] for r in met1_shapes(Plan(bridges=plan.bridges, verticals=plan.verticals,
+                                                         nodes=plan.nodes, cont=plan.cont, col_x=plan.col_x))]
+                try:
+                    plan.joins = join_nets(plan.pads, plan.crossing, fixed)
+                except ValueError:
+                    continue
+                pad_shapes(plan)
+            if not met1_clear(plan):        # cheap, before the rows are routed, and not counted
+                continue
+            routed += 1
+            if routed > BRIDGE_TRIES:
+                break
+            try:
+                route_rows(plan, rows)
+                if bridges_fit(plan, rows):
+                    return plan
+            except ValueError:
+                pass
     raise first
+
+
+def join_shapes(group, track: int) -> list[tuple[float, float, float, float]]:
+    """The met1 of one net's bridge in the band (draw()): along the band on track 0, else a stub from each
+    mcon to a track over a row and the track. group: the net's contact groups, (first centre, ...)."""
+    mcons = [x for x, *_ in group]
+    if track == 0:
+        return [(min(mcons) - MCON / 2 - M1_CUT_DIR, MCON_Y - _M1_HALF, max(mcons) + MCON / 2 + M1_CUT_DIR, MCON_Y + _M1_HALF)]
+    y = TRACK_Y[track]
+    if y > MCON_Y:      # a track over the PMOS row: stubs run up from the band
+        y0, y1 = MCON_Y - MCON / 2 - M1_CUT_DIR, y + _M1_HALF
+    else:               # over the NMOS row: down from it
+        y0, y1 = y - _M1_HALF, MCON_Y + MCON / 2 + M1_CUT_DIR
+    stubs = [(x - _M1_HALF, y0, x + _M1_HALF, y1) for x in mcons]
+    return stubs + [(min(mcons) - _M1_HALF, y - _M1_HALF, max(mcons) + _M1_HALF, y + _M1_HALF)]
+
+
+def apart(a, b) -> bool:
+    """Two met1 rectangles (x0, y0, x1, y1) keep met1.2 spacing."""
+    return not (a[0] < b[2] + M1_SPACE - 1e-9 and b[0] < a[2] + M1_SPACE - 1e-9
+                and a[1] < b[3] + M1_SPACE - 1e-9 and b[1] < a[3] + M1_SPACE - 1e-9)
+
+
+def met1_shapes(plan: Plan) -> list[tuple[str, float, float, float, float]]:
+    """(net, x0, y0, x1, y1) of every met1 shape inside the cell, as draw() draws them: the band's bridges
+    (along the band, or stubs to a track over a row and the track), the lines along the rows, the verticals."""
+    out = []
+    for net, (_, mcons, track) in plan.joins.items():
+        if not mcons:
+            continue
+        if track == 0:
+            out.append((net, min(mcons) - MCON / 2 - M1_CUT_DIR, MCON_Y - _M1_HALF, max(mcons) + MCON / 2 + M1_CUT_DIR,
+                        MCON_Y + _M1_HALF))
+            continue
+        y = TRACK_Y[track]
+        for x in mcons:
+            y0, y1 = ((MCON_Y - MCON / 2 - M1_CUT_DIR, y + _M1_HALF) if y > MCON_Y
+                      else (y - _M1_HALF, MCON_Y + MCON / 2 + M1_CUT_DIR))
+            out.append((net, x - _M1_HALF, y0, x + _M1_HALF, y1))
+        out.append((net, min(mcons) - _M1_HALF, y - _M1_HALF, max(mcons) + _M1_HALF, y + _M1_HALF))
+    for row, lines in plan.bridges.items():
+        for net, y in lines.items():
+            x0, x1 = line_span(plan, row, net)
+            out.append((net, x0, y - _M1_HALF, x1, y + _M1_HALF))
+    for net, x in plan.verticals.items():
+        out.append((net, x - _M1_HALF, plan.bridges["n"][net] - _M1_HALF, x + _M1_HALF, plan.bridges["p"][net] + _M1_HALF))
+    return out
+
+
+def met1_clear(plan: Plan) -> bool:
+    """Shapes of different nets keep met1.2 spacing (corner to corner counts as apart, as Magic's rule does)."""
+    shapes = met1_shapes(plan)
+    for i, (a, ax0, ay0, ax1, ay1) in enumerate(shapes):
+        for b, bx0, by0, bx1, by1 in shapes[i + 1:]:
+            if a != b and ax0 < bx1 + M1_SPACE - 1e-9 and bx0 < ax1 + M1_SPACE - 1e-9 \
+                    and ay0 < by1 + M1_SPACE - 1e-9 and by0 < ay1 + M1_SPACE - 1e-9:
+                return False
+    return True
 
 
 def verticals_clear(plan: Plan) -> bool:
@@ -1027,7 +1105,7 @@ def place_pads(order, gate_x, crossing: dict, wide: bool = False):
     return pads, join_nets(pads, crossing)
 
 
-def join_nets(pads: dict, crossing: dict) -> dict:
+def join_nets(pads: dict, crossing: dict, obstacles: list = ()) -> dict:
     """How each net's pads and own crossing are joined in the middle band: {net: (li joins, mcons)},
     li joins as (x, x) spans between contact centres, mcons as x.
 
@@ -1079,6 +1157,8 @@ def join_nets(pads: dict, crossing: dict) -> dict:
                                for x, *_ in groups[a] for y, *_ in groups[b])
                 if not fits:
                     break
+            if fits and obstacles:      # met1 already placed (finish: row lines, crossings) keeps clear too
+                fits = all(apart(r, o) for net in bridged for r in join_shapes(groups[net], on[net]) for o in obstacles)
             if fits:
                 return on
         return None
@@ -1298,8 +1378,9 @@ def draw(name: str, stage: Stage, order: Order, wn: float = 0.65, wp: float = 1.
 
     for net, x in plan.verticals.items():
         rect(c, "met1", x - _M1_HALF, plan.bridges["n"][net] - _M1_HALF, x + _M1_HALF, plan.bridges["p"][net] + _M1_HALF)
-        if net == stage.output:     # the pin on its PMOS strip at the vertical, a strip as wide as the pin
-            pins[net] = (x - STRIP_HALF, P_LI[0] + 0.04, "narrow")
+        if net == stage.output:     # the pin on its PMOS strip nearest the vertical, a strip as wide as the pin
+            px = min((plan.col_x[j] for j in plan.cont["p"] if order.p_nodes[j] == net), key=lambda c: abs(c - x))
+            pins[net] = (px - STRIP_HALF, P_LI[0] + 0.04, "narrow")
     p_laned = plan.apart("p")
     for net, x in plan.crossing.items():
         # down into the net's NMOS li, which stops lower under the band's li

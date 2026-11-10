@@ -1,7 +1,23 @@
 {
   "request_id": "GC1-02AB",
-  "status": "fail",
-  "reason": "no Euler order can be drawn: A C B D A_b A_b D: cannot route Y between the rows on li; D A_b A_b D B C A: cannot route Y between the rows on li; A B C D A_b A_b D: cannot route Y between the rows on li",
+  "status": "pass",
+  "reason": null,
   "cell": "dd2_gc1__f02ab_1",
-  "tool_version": "git:6326eba"
+  "stages": 2,
+  "transistors": 14,
+  "width_sites": 8,
+  "area_um2": 10.0096,
+  "files": {
+    "gds": "cells/dd2_gc1__f02ab_1/cell.gds",
+    "report": "cells/dd2_gc1__f02ab_1/report.json"
+  },
+  "checks": {
+    "drc": 0,
+    "lvs": "match",
+    "rc_lvs": "match",
+    "truth_table": "pass",
+    "abutment": 0,
+    "layers": "pass"
+  },
+  "tool_version": "git:7e3306d"
 }
