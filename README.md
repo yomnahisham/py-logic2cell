@@ -133,7 +133,7 @@ AGENTS.md · ai/use_log.md · ai/mistakes_log.md · report/ai_report.pdf
 
 - Some Option 2 candidates cannot be drawn on li alone (12 transistors in one stage, too dense for one li track between the rows); the generator then uses met1 where li cannot route, and as a last resort splits the function into stages. Five of the ten candidates are delivered (`results/hd/real_cells.csv`); the rest are listed with their reasons in `report/option1.md`.
 - met1 is used inside a cell only where li cannot route: multi-stage cells, and along a row in a folded (stack-sized) cell or a split network. The handout allows met1 inside multi-stage cells only; HD's own folded nor3_4 uses it too.
-- TT corner only; no power or leakage tables, no state-dependent (`when`) arcs, no LEF view or placement test.
+- TT corner only; no state-dependent (`when`) arcs, no LEF view or placement test. Power is measured (`python -m src.cell.power_validate`) but not written into the cells' Liberty: against HD it is 0.8% off on inv_1, 15 to 19% on the multi-input cells, and leakage 2 to 4x low (`results/power_validation.txt`).
 - Option 2 still maps with estimated areas until it reads the delivered cells (`src/hd/real_cells.py` on its branch).
 
 ## 10. Third-party files

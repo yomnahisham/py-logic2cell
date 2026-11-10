@@ -181,7 +181,13 @@ nand3_1, nor3_1, a31oi_1, o31ai_1 and the 4-input cells) are where it would show
 ## Limits
 
 Properties of a production cell that none of our checks covers:
-- power: no leakage or internal-power tables in the Liberty;
+- power: the characterizer measures leakage in every input state and the internal energy of every arc
+  (HD's convention: VPWR's energy less C V^2 / 2 of the load), but against the shipped Liberty
+  (`results/power_validation.txt`, the six reference cells, 3 x 3 of each grid) the internal energy has
+  a median error of 0.79% on inv_1 and 15 to 19% on every multi-input cell, mostly a fixed offset of
+  about 0.005 pJ at the smallest loads, and leakage is 2 to 4 times lower than HD's in every state, the
+  pattern of a different release of the device models. The cells' Liberty files therefore carry no
+  power (`liberty_write.WRITE_POWER`): the multi-input offset is not explained;
 - corners: TT only (no FF/SS), and no `when` (state-dependent) timing arcs; the side input is always the
   slowest setting;
 - the LEF view, router pin access and a placement test (OpenROAD);

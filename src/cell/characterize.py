@@ -119,6 +119,7 @@ def deck(name: str, netlist: str, ports: list[str], output: str, pin: str, side:
                       f"meas tran thi when v({output})={pct(f'slew_upper_threshold_pct_{edge_out}'):g} {cross_out}=1",
                       f"meas tran q integ i(V{pin}) from=0 to={tstop:g}",
                       f"meas tran qwin integ i(V{pin}) from={win[0]:g} to={win[1]:g}",
+                      f"meas tran evdd integ i(VPWR) from={TD:g} to={tstop:g}",
                       "destroy all"]
     lines += ["quit", ".endc", ".end"]
     return "\n".join(lines) + "\n"
@@ -139,11 +140,12 @@ def measure(folder: Path, name: str, netlist: str, ports: list[str], output: str
     cap = [[None] * len(loads) for _ in slews]
     cap_full = [[None] * len(loads) for _ in slews]
     errors = []
-    wanted = {"tin", "tout", "tlo", "thi", "q", "qwin"}
+    energy = [[None] * len(loads) for _ in slews]
+    wanted = {"tin", "tout", "tlo", "thi", "q", "qwin", "evdd"}
     blocks = re.split(r"^POINT (\d+) (\d+)\s*$", out, flags=re.M)
     for i, j, block in zip(blocks[1::3], blocks[2::3], blocks[3::3]):
         i, j = int(i), int(j)
-        m = {k: float(v) for k, v in re.findall(r"^(tin|tout|tlo|thi|qwin|q)\s*=\s*([-+\d.eE]+)", block, re.M)}
+        m = {k: float(v) for k, v in re.findall(r"^(tin|tout|tlo|thi|qwin|q|evdd)\s*=\s*([-+\d.eE]+)", block, re.M)}
         if not wanted <= m.keys():
             errors.append(f"slew {slews[i]} load {loads[j]}: missing {sorted(wanted - m.keys())}")
             continue
@@ -151,8 +153,13 @@ def measure(folder: Path, name: str, netlist: str, ports: list[str], output: str
         trans[i][j] = abs(m["thi"] - m["tlo"]) / derate * 1e9
         cap[i][j] = abs(m["qwin"]) / swing * 1e12
         cap_full[i][j] = abs(m["q"]) / vdd * 1e12
+        # internal energy of the transition, pJ: what VPWR delivers (the current into its + node is
+        # negative while it sources), less half the load's C V^2, which the STA tool adds as switching
+        # power. That is HD's convention: its fall_power is about -C V^2 / 2 (sky130_fd_sc_hd__inv_1).
+        energy[i][j] = -m["evdd"] * vdd * 1e12 - 0.5 * loads[j] * vdd ** 2
     return dict(pin=pin, side=side, edge_in=edge_in, edge_out=edge_out, deck=f"{stem}.spice",
-                delay=delay, transition=trans, capacitance=cap, capacitance_full=cap_full, errors=errors)
+                delay=delay, transition=trans, capacitance=cap, capacitance_full=cap_full, energy=energy,
+                errors=errors)
 
 
 def combine(tables: list[list[list[float | None]]], rule) -> list[list[float | None]]:
@@ -168,6 +175,34 @@ def combine(tables: list[list[list[float | None]]], rule) -> list[list[float | N
 
 def nearest(values: list[float], target: float) -> int:
     return min(range(len(values)), key=lambda k: abs(values[k] - target))
+
+
+def leakage(folder: Path, name: str, netlist: str, ports: list[str], inputs: list[str], setup: dict, image: str,
+            tag: str = "") -> dict:
+    """Leakage power (nW, the Liberty's leakage_power_unit) in every input state: the DC operating point,
+    VPWR's current times VDD. Keys are the states as Liberty `when` conditions over the inputs."""
+    vdd = setup["nom_voltage"]
+    nets = {p: p for p in ports}
+    nets.update(VGND="0", VNB="0", VPWR="VPWR", VPB="VPWR")
+    lines = [f"* {name}: leakage in every input state", f'.lib "{MODELS}" tt', f'.include "{netlist}"',
+             f".temp {setup['nom_temperature']:g}", f"VPWR VPWR 0 {vdd:g}",
+             # ngspice's default gmin (1e-12 S on every junction) draws 1.8 pA at 1.8 V, more than a cell's
+             # leakage in some states (HD's nand2_1 with both inputs low: 30 fW); measure far below it
+             ".option gmin=1e-18 abstol=1e-18 reltol=1e-6"]
+    lines += [f"V{p} {p} 0 0" for p in inputs]
+    lines += [f"XU {' '.join(nets[p] for p in ports)} {name}", ".control"]
+    for state in range(1 << len(inputs)):
+        lines += [f"alter V{p} dc = {vdd * (state >> k & 1):g}" for k, p in enumerate(inputs)]
+        lines += ["op", f"echo STATE {state}", "print i(VPWR)", "destroy all"]
+    lines += ["quit", ".endc", ".end"]
+    stem = f"{name}_leakage{tag}"
+    (folder / f"{stem}.spice").write_text("\n".join(lines) + "\n")
+    out = run("ngspice", ["-b", f"{stem}.spice"], folder, folder / f"{stem}.log", timeout=600, image=image)
+    found = {}
+    for state, value in re.findall(r"^STATE (\d+)\s*\n(?:.*\n)*?i\(vpwr\)\s*=\s*([-+\d.eE]+)", out, re.M | re.I):
+        cond = "&".join(("" if int(state) >> k & 1 else "!") + p for k, p in enumerate(inputs))
+        found[cond] = -float(value) * vdd * 1e9
+    return found
 
 
 def characterize(folder: Path, name: str, netlist: str, inputs: list[str], output: str, table: int,
@@ -206,14 +241,18 @@ def characterize(folder: Path, name: str, netlist: str, inputs: list[str], outpu
             caps[key] = statistics.mean(both) if both else None
         caps["at"] = dict(slew_ns=slews[i], load_pf=loads[j])
         result["pins"][arc.pin] = caps
-        tables = {}
+        tables, power = {}, {}
         for edge_out in ("rise", "fall"):
             chosen = [r for r in mine if r["edge_out"] == edge_out]
             if chosen:
                 tables[f"cell_{edge_out}"] = combine([r["delay"] for r in chosen], SIDE_RULES[mode])
                 tables[f"{edge_out}_transition"] = combine([r["transition"] for r in chosen], SIDE_RULES[mode])
+                # internal energy, pJ, kept apart from the timing tables; not a worst case: the mean over the
+                # side settings
+                power[f"{edge_out}_power"] = combine([r["energy"] for r in chosen], statistics.mean)
         result["arcs"].append(dict(pin=arc.pin, output=output, sense=arc.sense, index_1=slews, index_2=loads,
-                                   tables=tables, runs=mine))
+                                   tables=tables, power=power, runs=mine))
+    result["leakage_nw"] = leakage(folder, name, netlist, ports, inputs, setup, image, tag)
     result["errors"] = [f"{r['deck']}: {e}" for r in runs for e in r["errors"]]
     (folder / f"{name}_timing{tag}.json").write_text(json.dumps(result, indent=2) + "\n")
     return result

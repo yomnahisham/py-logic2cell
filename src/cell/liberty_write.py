@@ -52,12 +52,38 @@ def table(kind: str, index_1: list[float], index_2: list[float], values: list[li
             f'{pad}}}\n')
 
 
-def cell_group(timing: dict, area: float, function: str, footprint: str | None = None) -> str:
-    """The Liberty cell group of one characterized cell."""
+def power_table(kind: str, index_1: list[float], index_2: list[float], values: list, pad: str) -> str:
+    """An internal_power table on HD's own template, power_outputs_1 (input slew x output load), energy in pJ."""
+    if any(v is None for row in values for v in row):
+        raise ValueError(f"{kind}: missing entries, a table with holes is not written")
+    rows = ", ".join(f'"{", ".join(num(v) for v in row)}"' for row in values)
+    return (f'{pad}{kind} ("power_outputs_1") {{\n'
+            f'{pad}    index_1 ("{", ".join(num(v) for v in index_1)}");\n'
+            f'{pad}    index_2 ("{", ".join(num(v) for v in index_2)}");\n'
+            f'{pad}    values ({rows});\n'
+            f'{pad}}}')
+
+
+# Power tables are written only when asked: against the shipped HD Liberty the characterizer's internal energy
+# has a median error of 15-19% on the multi-input reference cells (0.8% on inv_1) and its leakage is 2-4x low
+# (results/power_validation.txt), against a 5% bar for timing (Table 5); a cell.lib does not carry numbers
+# that would look as checked as its timing.
+WRITE_POWER = False
+
+
+def cell_group(timing: dict, area: float, function: str, footprint: str | None = None,
+               power: bool = WRITE_POWER) -> str:
+    """The Liberty cell group of one characterized cell; with power, its leakage and internal power too."""
     name, output = timing["cell"], timing["output"]
     out = [f'    cell ("{name}") {{', f"        area : {num(area)};"]
     if footprint:
         out.append(f'        cell_footprint : "{footprint}";')
+    leak = timing.get("leakage_nw") if power else None    # power, where measured and asked for
+    if leak:
+        out.append(f"        cell_leakage_power : {num(sum(leak.values()) / len(leak))};")
+        for when, value in leak.items():
+            out += ["        leakage_power () {", f"            value : {num(value)};", f'            when : "{when}";',
+                    "        }"]
     for pin, kind, bias in POWER:
         out += [f'        pg_pin ("{pin}") {{', f'            pg_type : "{kind}";', f'            voltage_name : "{pin}";']
         out += [f'            related_bias_pin : "{bias}";'] if bias else []
@@ -79,6 +105,14 @@ def cell_group(timing: dict, area: float, function: str, footprint: str | None =
         for kind in TABLES:
             if kind in arc["tables"]:
                 out.append(table(kind, arc["index_1"], arc["index_2"], arc["tables"][kind], " " * 16).rstrip("\n"))
+        out.append("            }")
+    for arc in timing["arcs"] if power else []:
+        if not arc.get("power"):
+            continue
+        out += ["            internal_power () {", f'                related_pin : "{arc["pin"]}";']
+        for kind in ("rise_power", "fall_power"):
+            if kind in arc["power"]:
+                out.append(power_table(kind, arc["index_1"], arc["index_2"], arc["power"][kind], " " * 16))
         out.append("            }")
     out += ["        }", "    }"]
     return "\n".join(out) + "\n"
