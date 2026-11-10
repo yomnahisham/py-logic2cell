@@ -9,6 +9,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 import json
 import math
+import re
 from itertools import combinations, islice, product
 from pathlib import Path
 
@@ -87,6 +88,7 @@ TRACK_Y = (MCON_Y,) + tuple(  # the band first, then up over the PMOS row, then 
 # contact strips at the line's height. Each line keeps met1 spacing from the band's met1 and the rails,
 # and its mcons stay on the row's li; lines one track pitch apart.
 _M1_HALF = MCON / 2 + M1_CUT
+BRIDGE_TRIES = 8    # bridge choices tried per plan (finish), fewest nets first
 ROW_TRACKS = {
     "p": tuple(y for y in [max(MCON_Y + 2 * _M1_HALF + M1_SPACE, P_LI[0] + MCON / 2) + k * TRACK_PITCH for k in range(4)]
                if y + _M1_HALF <= FRAME["rails"]["VPWR"]["met1"]["y"][0] - M1_SPACE + 1e-9 and y + MCON / 2 <= P_LI[1] + 1e-9),
@@ -514,7 +516,10 @@ def finish(order, col_x, gate_x, crossing, pads, joins, diff_w, n_cont, p_cont, 
     # met1 track over the rows, so the lines meet nothing but each other.
     if any(mcons and track for _, mcons, track in plan.joins.values()):
         raise first
-    for choice in bridge_choices(plan, rows):
+    # a fixed number of choices: finish runs once per placement try, so an unbounded search here multiplies
+    # the cost of every order that cannot be drawn (f011f ran for hours); the nets the li error names first
+    named = set(re.findall(r"[A-Za-z_][A-Za-z0-9_]*", str(first)))
+    for choice in islice(bridge_choices(plan, rows, named), BRIDGE_TRIES):
         plan.bridges = choice
         try:
             route_rows(plan, rows)
@@ -536,7 +541,7 @@ def route_rows(plan: Plan, rows):
     check_lanes(plan)
 
 
-def bridge_choices(plan: Plan, rows, most: int = 3):
+def bridge_choices(plan: Plan, rows, named: set = frozenset(), most: int = 2):
     """{row: {net: y}} to try, fewest bridged nets first. A net may be bridged in a row where it has two or
     more contacts and, if it crosses to the other row, crosses on one of them; nets whose contacts overlap
     along the row take different tracks."""
@@ -550,6 +555,7 @@ def bridge_choices(plan: Plan, rows, most: int = 3):
             if net in plan.crossing and all(abs(plan.crossing[net] - x) > 1e-6 for x in xs):
                 continue
             can.append((row, net, min(xs), max(xs)))
+    can.sort(key=lambda c: c[1] not in named)       # the nets that met in the li first
     for k in range(1, min(most, len(can)) + 1):
         for picked in combinations(can, k):
             for tracks in product(*(range(len(ROW_TRACKS[row])) for row, *_ in picked)):
