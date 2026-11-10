@@ -1,4 +1,4 @@
-cellweaver (https://github.com/shalan/cellweaver, commit e7fd28e) on our three refused candidates,
+cellweaver (https://github.com/shalan/cellweaver, commit e7fd28e) on three candidates our generator refused before it could use met1 where li cannot (all three are delivered now, see the table below),
 layout only (no --verify), single height, its default --layout auto. Pin and metal layers read from its GDS/LEF.
 
 f011f: cw_f011f: 7.82 × 2.72 um; 12 transistor fingers; Layout backend: shared; pins on met3
@@ -13,25 +13,35 @@ metal area (um2) in its GDS:
 The same functions with both generators, layout only; cellweaver with --cell for inv/nand/nor (HD's own
 sizes), else --function (its default sizes: NMOS 0.42 um); ours from cells/<name>/response.json;
 HD from results/table6_vs_hd.csv (inv_1 from its report.json). sites = width / 0.46 um.
+Option 2's candidates (f...) have no HD cell. Ours: li1 pins in the npc band; cellweaver: pins on met3.
 
-cell              ours  cellweaver   HD  cellweaver backend
-a21o_1               6          25    6  shared
-a21oi_1              4           5    4  euler
-a22oi_1              6           7    6  euler
-a31oi_1              6           7    -  euler
-and2_1               5          17    5  shared
-and_a_or_b_cd        6          13    -  shared
-maj3_1               9          80    8  isolated
-mux2_1               9          28    9  shared
-o21ai_1              5          10    4  shared
-o22ai_1              6          12    5  shared
-o31ai_1              6          12    6  shared
-or_a_and_b_cd        6          13    -  shared
-or_and_maj          13          41    -  shared
-or_and_maj_n         8          18    -  shared
-xor2_1               9          24    7  shared
-inv_1                3           3    3  euler
-nand2_1              3           4    3  euler
-nand3_1              4           5    4  euler
-nor2_1               3           4    3  euler
-nor3_1               4           5    4  euler
+cell              ours  cellweaver   HD   transistors ours / cw  cellweaver backend
+a21o_1               6          25    6                  8 / 12  shared
+a21oi_1              4           5    4                   6 / 6  euler
+a22oi_1              6           7    6                   8 / 8  euler
+a31oi_1              6           7    -                   8 / 8  euler
+and2_1               5          17    5                   6 / 8  shared
+and_a_or_b_cd        6          13    -                   8 / 8  shared
+inv_1                3           3    3                   2 / 2  euler
+maj3_1               9          80    8                 12 / 16  isolated
+mux2_1               9          28    9                 12 / 14  shared
+nand2_1              3           4    3                   4 / 4  euler
+nand3_1              4           5    4                   6 / 6  euler
+nor2_1               3           4    3                   4 / 4  euler
+nor3_1               4           5    4                   6 / 6  euler
+o21ai_1              5          10    4                   6 / 6  shared
+o22ai_1              6          12    5                   8 / 8  shared
+o31ai_1              6          12    6                   8 / 8  shared
+or_a_and_b_cd        6          13    -                   8 / 8  shared
+or_and_maj          13          41    -                 14 / 20  shared
+or_and_maj_n         8          18    -                 12 / 12  shared
+xor2_1               9          24    7                 12 / 12  shared
+f0017                8          25    -                 12 / 12  shared
+f001f                6          13    -                   8 / 8  shared
+f011f                8          17    -                 12 / 12  shared
+f077f                8          18    -                 12 / 12  shared
+f07ff                6          13    -                   8 / 8  shared
+f0eef               15          31    -                 16 / 16  shared
+f17                  6          14    -                 10 / 10  shared
+f17ff                8          24    -                 12 / 12  shared
+f2b                  8          17    -                 12 / 12  shared
