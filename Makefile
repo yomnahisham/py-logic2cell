@@ -5,8 +5,10 @@ GIVEN    ?= ../DD2_Project1_student_pack/given
 IN       ?=
 TOP      ?=
 SV       ?=
+TUT2     ?= 
+TUT4	 ?= 
 
-.PHONY: setup check test all real full demo demo2 clean table5
+.PHONY: setup check test all real full demo demo2 clean table5 gls gls-real
 
 PDK      ?= $(firstword $(wildcard $(PDK_ROOT)/sky130A $(PDK_ROOT)/ciel/sky130/versions/*/sky130A))
 PY       := .venv/bin/python
@@ -105,6 +107,15 @@ table5:           ## the characterizer validation of Table 5 (option 1 handout, 
 	for i in dd2-layout-tools dd2-ngspice-stock; do echo "== $$i"; \
 		docker run --rm -v "$(CURDIR)/build/stress_test:/st" $$i sh /st/check_stress.sh; echo "exit $$?"; \
 	done > results/ngspice_builds.txt
+
+
+gls:              ## gate-level simulation of SPM and the multiplier: make gls TUT2=../tut_2/student TUT4=../tut_4/student
+	@test -n "$(TUT2)" -a -n "$(TUT4)" || (echo "usage: make gls TUT2=<Tutorial 2 folder> TUT4=<Tutorial 4 folder>"; exit 1)
+	$(PY) -m src.hd.gls --tut2 "$(TUT2)" --tut4 "$(TUT4)"
+
+gls-real:         ## the same with the real-cell library (after make real)
+	@test -n "$(TUT2)" -a -n "$(TUT4)" || (echo "usage: make gls-real TUT2=... TUT4=..."; exit 1)
+	$(PY) -m src.hd.gls --tut2 "$(TUT2)" --tut4 "$(TUT4)" --real
 
 clean:            ## removes build/ only; cells/ and results/ are committed outputs
 	rm -rf build

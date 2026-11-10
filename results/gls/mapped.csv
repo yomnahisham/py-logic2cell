@@ -1,0 +1,9 @@
+design,script,library,area_um2,cells,new_cell_instances,cec
+SPM,A,reduced,2869.0016,349,0,pass
+SPM,B,reduced,2907.7888,317,0,pass
+SPM,A,extended,2869.0016,349,0,pass
+SPM,B,extended,2907.7888,317,0,pass
+mul,A,reduced,1756.6848,380,0,pass
+mul,B,reduced,1948.1184,306,0,pass
+mul,A,extended,1756.6848,380,1,pass
+mul,B,extended,2023.1904,308,12,pass
