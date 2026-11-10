@@ -1,0 +1,8 @@
+swap search after the greedy: 216 trials, 2 swaps kept
+greedy 85972.4544 um2 (+0.32%) -> swaps 85968.7008 um2 (+0.32%), baseline 86245.216 um2
+  1. dd2_gc1__f011f_1
+  2. dd2_gc1__f0017_1
+  3. dd2_gc1__f02ab_1
+  4. dd2_gc1__f001f_1
+  5. dd2_gc1__f0eef_1
+  6. dd2_gc1__f07ff_1
