@@ -281,8 +281,8 @@ def picture(path: Path, cells: list):
                (66, 44): ("#000000", .9), (67, 20): ("#9467bd", .45), (67, 44): ("#444444", .9),
                (68, 20): ("#1f77b4", .35), (95, 20): ("#ff7f0e", .15)}
     right = max(region(layout, cell, (236, 0)).bbox().right * layout.dbu for _, (layout, cell) in cells) + 0.3
-    fig, axes = plt.subplots(1, len(cells), figsize=((right + 0.3) * 1.6 * len(cells), 6))
-    for ax, (title, (layout, cell)) in zip(axes, cells):
+    fig, axes = plt.subplots(1, len(cells), figsize=((right + 0.3) * 1.6 * len(cells), 6), squeeze=False)
+    for ax, (title, (layout, cell)) in zip(axes[0], cells):
         for layer, (colour, alpha) in colours.items():
             for p in region(layout, cell, layer).merged().each():
                 points = [(q.x * layout.dbu, q.y * layout.dbu) for q in p.each_point_hull()]
