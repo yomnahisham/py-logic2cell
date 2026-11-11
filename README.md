@@ -4,10 +4,14 @@
 
 GC1 · Option 3 (Options 1 and 2) · AI used as a development aid
 
-| Name         | Student ID |
-| ------------ | ---------- |
-| Yomna Othman | 900231105  |
-| Jacques Elia | 900233349  |
+| Name             | Student ID |
+| ---------------- | ---------- |
+| Yomna Othman.    | 900231105  |
+| Jacques Elia     | 900233349  |
+| Ayla Saleh       | 900232897  |
+| Ali Khattab      | 900231570  |
+| Abdelrahman Eid  | 900223842  |
+
 
 ## 2. Quick start
 Tools: Python 3.14.8 (gdsfactory 9.51.0, klayout 0.30.12), Magic 8.3.684, Netgen 1.5.133 (the git tag reports itself as 1.5.132), ngspice 47 with the BSIM4 fix (sha256 81a89914… as built on the machine of `results/ngspice_builds.txt`; the hash depends on where the image was built, so every Liberty file records its own), Yosys 0.33 and its ABC (in the `dd2-yosys` container), OpenSTA 3.1.0 (`dd2-opensta`, commit f2f431a), Icarus Verilog 13.0, Docker.
