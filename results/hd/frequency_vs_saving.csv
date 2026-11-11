@@ -1,11 +1,7 @@
-cell,expression,occurrences,estimated_saving_um2,area_um2,instances,instances_cpu8_A,instances_cpu8_B,instances_dsp8_A,instances_dsp8_B,instances_arlet6502_A,instances_arlet6502_B,instances_uart_apb_A,instances_uart_apb_B,instances_risc8_A,instances_risc8_B,instances_fir10_A,instances_fir10_B
-dd2_gc1__f001f_1,!(D | (C & (A | B))),1184,711.3102,7.5072,215,0,3,30,34,5,12,7,3,43,36,23,19
-dd2_gc1__f2b_1,!((!A & B) | (C & (!A | B))),445,2033.9113,11.2608,94,0,0,0,10,0,2,0,0,0,1,0,81
-dd2_gc1__f011f_1,!((C & D) | ((A | B) & (C | D))),441,3422.9004,11.2608,0,0,0,0,0,0,0,0,0,0,0,0,0
-dd2_gc1__f02ab_1,!((!A & D) | ((!A | D) & (B | C))),439,2319.7124,13.7632,0,0,0,0,0,0,0,0,0,0,0,0,0
-dd2_gc1__f002b_1,!(D | ((!A | B) & (C | (!A & B)))),301,1569.529,13.7632,0,0,0,0,0,0,0,0,0,0,0,0,0
-dd2_gc1__f2bff_1,!(D & ((!A & B) | (C & (!A | B)))),293,1550.7831,13.7632,0,0,0,0,0,0,0,0,0,0,0,0,0
-dd2_gc1__f17_1,!((A & B) | (C & (A | B))),241,1419.3147,10.0096,165,0,1,0,13,0,0,0,0,0,1,0,150
-dd2_gc1__f17ff_1,!(D & ((A & B) | (C & (A | B)))),224,1791.0531,11.2608,0,0,0,0,0,0,0,0,0,0,0,0,0
-dd2_gc1__f0017_1,!(D | ((A | B) & (C | (A & B)))),224,1777.752,11.2608,2,0,1,0,0,0,0,0,0,0,0,0,1
-dd2_gc1__f077f_1,!((C & D) | (A & B & (C | D))),215,1716.5046,11.2608,0,0,0,0,0,0,0,0,0,0,0,0,0
+cell,expression,occurrences,estimated_saving_um2,area_um2,instances,shared_occurrences,cone_nodes,removable_nodes,instances_cpu8_A,instances_cpu8_B,instances_dsp8_A,instances_dsp8_B,instances_arlet6502_A,instances_arlet6502_B,instances_uart_apb_A,instances_uart_apb_B,instances_risc8_A,instances_risc8_B,instances_fir10_A,instances_fir10_B
+dd2_gc1__f07ff_1,!(D & (C | (A & B))),1256,244.0549,7.5072,72,908,3876,2034,1,1,8,9,4,14,0,2,10,23,0,0
+dd2_gc1__f001f_1,!(D | (C & (A | B))),1184,711.3102,7.5072,215,1056,3605,1849,0,3,30,34,5,12,7,3,43,36,23,19
+dd2_gc1__f2b_1,!((!A & B) | (C & (!A | B))),445,2033.9113,11.2608,94,445,2219,461,0,0,0,10,0,2,0,0,0,1,0,81
+dd2_gc1__f17_1,!((A & B) | (C & (A | B))),241,1419.3147,10.0096,165,241,1204,241,0,1,0,13,0,0,0,0,0,1,0,150
+dd2_gc1__f0017_1,!(D | ((A | B) & (C | (A & B)))),224,1777.752,11.2608,2,224,1344,224,0,1,0,0,0,0,0,0,0,0,0,1
+dd2_gc1__f0eef_1,!((C & D) | (!A & !B & (C | D))),98,374.7714,15.0144,0,98,587,98,0,0,0,0,0,0,0,0,0,0,0,0
