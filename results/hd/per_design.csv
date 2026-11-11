@@ -1,14 +1,4 @@
 design,rank,cell,class_id,expression,buildable,occurrences,saving_um2
-arlet6502,1,dd2_gc1__f07ff_1,c4_07ff,!(D & (C | (A & B))),yes,187,166.412
-arlet6502,2,dd2_gc1__f001f_1,c4_001f,!(D | (C & (A | B))),yes,187,66.076
-arlet6502,3,dd2_gc1__f011f_1,c4_011f,!((C & D) | ((A | B) & (C | D))),yes,7,24.0188
-arlet6502,4,dd2_gc1__f88af_1,c4_0aee,!((!A | !B) & (D | (!A & C))),yes,6,22.7736
-arlet6502,5,dd2_gc1__f0abb_1,c4_0abb,!((!A & B) | (D & (!A | C))),yes,2,12.596
-arlet6502,6,dd2_gc1__f0abf_1,c4_0abf,!((!A & D) | (C & (D | (!A & B)))),yes,1,11.3208
-arlet6502,7,dd2_gc1__f17_1,c3_17,!((A & B) | (C & (A | B))),yes,3,7.5972
-arlet6502,8,dd2_gc1__f077f_1,c4_077f,!((C & D) | (A & B & (C | D))),yes,2,7.5792
-arlet6502,9,dd2_gc1__f02ab_1,c4_02ab,!((!A & D) | ((!A | D) & (B | C))),yes,7,6.502
-arlet6502,10,dd2_gc1__f2b_1,c3_2b,!((!A & B) | (C & (!A | B))),yes,7,6.46
 cpu8,1,dd2_gc1__f011f_1,c4_011f,!((C & D) | ((A | B) & (C | D))),yes,4,7.8338
 cpu8,2,dd2_gc1__f0017_1,c4_0017,!(D | ((A | B) & (C | (A & B)))),yes,1,2.5332
 cpu8,3,dd2_gc1__f17ff_1,c4_17ff,!(D & ((A & B) | (C & (A | B)))),yes,1,2.5332
@@ -29,26 +19,16 @@ dsp8,7,dd2_gc1__f07ff_1,c4_07ff,!(D & (C | (A & B))),yes,92,120.5875
 dsp8,8,dd2_gc1__f17ff_1,c4_17ff,!(D & ((A & B) | (C & (A | B)))),yes,15,103.4571
 dsp8,9,dd2_gc1__f077f_1,c4_077f,!((C & D) | (A & B & (C | D))),yes,15,94.671
 dsp8,10,dd2_gc1__f0017_1,c4_0017,!(D | ((A | B) & (C | (A & B)))),yes,14,88.3596
-fir10,1,dd2_gc1__f011f_1,c4_011f,!((C & D) | ((A | B) & (C | D))),yes,379,3089.9112
-fir10,2,dd2_gc1__f02ab_1,c4_02ab,!((!A & D) | ((!A | D) & (B | C))),yes,378,2139.0868
-fir10,3,dd2_gc1__f2b_1,c3_2b,!((!A & B) | (C & (!A | B))),yes,380,1868.536
-fir10,4,dd2_gc1__f0017_1,c4_0017,!(D | ((A | B) & (C | (A & B)))),yes,206,1679.4768
-fir10,5,dd2_gc1__f17ff_1,c4_17ff,!(D & ((A & B) | (C & (A | B)))),yes,206,1679.4768
-fir10,6,dd2_gc1__f077f_1,c4_077f,!((C & D) | (A & B & (C | D))),yes,198,1614.2544
-fir10,7,dd2_gc1__f002b_1,c4_002b,!(D | ((!A | B) & (C | (!A & B)))),yes,252,1427.1364
-fir10,8,dd2_gc1__f2bff_1,c4_2bff,!(D & ((!A & B) | (C & (!A | B)))),yes,249,1426.3632
-fir10,9,dd2_gc1__f17_1,c3_17,!((A & B) | (C & (A | B))),yes,217,1338.5428
-fir10,10,dd2_gc1__fa995_1,c4_17e8,!((A & (!((B & C) | (D & (B | C))))) | (!A & !(!((B & C) | (D & (B | C)))))),no,223,1074.3096
-risc8,1,dd2_gc1__f0017_1,c4_0017,!(D | ((A | B) & (C | (A & B)))),yes,2,3.5928
-risc8,2,dd2_gc1__f011f_1,c4_011f,!((C & D) | ((A | B) & (C | D))),yes,2,3.5928
-risc8,3,dd2_gc1__f17_1,c3_17,!((A & B) | (C & (A | B))),yes,5,2.1808
-risc8,4,dd2_gc1__f17ff_1,c4_17ff,!(D & ((A & B) | (C & (A | B)))),yes,1,1.7964
-risc8,5,dd2_gc1__f02ab_1,c4_02ab,!((!A & D) | ((!A | D) & (B | C))),yes,1,-0.706
-risc8,6,dd2_gc1__f2abf_1,c4_2abf,!((!A & D) | (B & C & (!A | D))),yes,1,-0.706
-risc8,7,dd2_gc1__f2b_1,c3_2b,!((!A & B) | (C & (!A | B))),yes,2,-0.7596
-risc8,8,dd2_gc1__f088a_1,c4_088a,!(!A | ((!B | C) & (D | (!B & C)))),yes,1,-1.9572
-risc8,9,dd2_gc1__f008e_1,c4_008e,!(D | ((!A | !B) & (C | (!A & !B)))),yes,2,-3.9144
-risc8,10,dd2_gc1__f08ae_1,c4_08ae,!((!A & D) | ((!A | D) & (!B | C))),yes,2,-3.9144
+arlet6502,1,dd2_gc1__f07ff_1,c4_07ff,!(D & (C | (A & B))),yes,187,166.412
+arlet6502,2,dd2_gc1__f001f_1,c4_001f,!(D | (C & (A | B))),yes,187,66.076
+arlet6502,3,dd2_gc1__f011f_1,c4_011f,!((C & D) | ((A | B) & (C | D))),yes,7,24.0188
+arlet6502,4,dd2_gc1__f88af_1,c4_0aee,!((!A | !B) & (D | (!A & C))),yes,6,22.7736
+arlet6502,5,dd2_gc1__f0abb_1,c4_0abb,!((!A & B) | (D & (!A | C))),yes,2,12.596
+arlet6502,6,dd2_gc1__f0abf_1,c4_0abf,!((!A & D) | (C & (D | (!A & B)))),yes,1,11.3208
+arlet6502,7,dd2_gc1__f17_1,c3_17,!((A & B) | (C & (A | B))),yes,3,7.5972
+arlet6502,8,dd2_gc1__f077f_1,c4_077f,!((C & D) | (A & B & (C | D))),yes,2,7.5792
+arlet6502,9,dd2_gc1__f02ab_1,c4_02ab,!((!A & D) | ((!A | D) & (B | C))),yes,7,6.502
+arlet6502,10,dd2_gc1__f2b_1,c3_2b,!((!A & B) | (C & (!A | B))),yes,7,6.46
 uart_apb,1,dd2_gc1__f03af_1,c4_03af,!((!A & C) | (D & (B | C))),yes,1,-4.9804
 uart_apb,2,dd2_gc1__f88af_1,c4_0aee,!((!A | !B) & (D | (!A & C))),yes,1,-7.4828
 uart_apb,3,dd2_gc1__f9bbb_1,c4_08f0,(B & A) | (!B & (!(A & C & D))),no,1,-8.0962
@@ -59,3 +39,43 @@ uart_apb,7,dd2_gc1__faacf_1,c4_02ce,(D & A) | (!D & (!(!B & C))),no,1,-11.2364
 uart_apb,8,dd2_gc1__fbd_1,c3_18,(A & (B | C)) | (!A & (!(B & C))),no,1,-13.4199
 uart_apb,9,dd2_gc1__f0246_1,c4_0246,(A & (!(B | C))) | (!A & (!(!B | D))),no,1,-13.4199
 uart_apb,10,dd2_gc1__f9bb3_1,c4_18f0,(B & (A & (C | D))) | (!B & (!(A & C & D))),no,1,-14.0333
+risc8,1,dd2_gc1__f0017_1,c4_0017,!(D | ((A | B) & (C | (A & B)))),yes,2,3.5928
+risc8,2,dd2_gc1__f011f_1,c4_011f,!((C & D) | ((A | B) & (C | D))),yes,2,3.5928
+risc8,3,dd2_gc1__f17_1,c3_17,!((A & B) | (C & (A | B))),yes,5,2.1808
+risc8,4,dd2_gc1__f17ff_1,c4_17ff,!(D & ((A & B) | (C & (A | B)))),yes,1,1.7964
+risc8,5,dd2_gc1__f02ab_1,c4_02ab,!((!A & D) | ((!A | D) & (B | C))),yes,1,-0.706
+risc8,6,dd2_gc1__f2abf_1,c4_2abf,!((!A & D) | (B & C & (!A | D))),yes,1,-0.706
+risc8,7,dd2_gc1__f2b_1,c3_2b,!((!A & B) | (C & (!A | B))),yes,2,-0.7596
+risc8,8,dd2_gc1__f088a_1,c4_088a,!(!A | ((!B | C) & (D | (!B & C)))),yes,1,-1.9572
+risc8,9,dd2_gc1__f008e_1,c4_008e,!(D | ((!A | !B) & (C | (!A & !B)))),yes,2,-3.9144
+risc8,10,dd2_gc1__f08ae_1,c4_08ae,!((!A & D) | ((!A | D) & (!B | C))),yes,2,-3.9144
+fir10,1,dd2_gc1__f011f_1,c4_011f,!((C & D) | ((A | B) & (C | D))),yes,379,3089.9112
+fir10,2,dd2_gc1__f02ab_1,c4_02ab,!((!A & D) | ((!A | D) & (B | C))),yes,378,2139.0868
+fir10,3,dd2_gc1__f2b_1,c3_2b,!((!A & B) | (C & (!A | B))),yes,380,1868.536
+fir10,4,dd2_gc1__f0017_1,c4_0017,!(D | ((A | B) & (C | (A & B)))),yes,206,1679.4768
+fir10,5,dd2_gc1__f17ff_1,c4_17ff,!(D & ((A & B) | (C & (A | B)))),yes,206,1679.4768
+fir10,6,dd2_gc1__f077f_1,c4_077f,!((C & D) | (A & B & (C | D))),yes,198,1614.2544
+fir10,7,dd2_gc1__f002b_1,c4_002b,!(D | ((!A | B) & (C | (!A & B)))),yes,252,1427.1364
+fir10,8,dd2_gc1__f2bff_1,c4_2bff,!(D & ((!A & B) | (C & (!A | B)))),yes,249,1426.3632
+fir10,9,dd2_gc1__f17_1,c3_17,!((A & B) | (C & (A | B))),yes,217,1338.5428
+fir10,10,dd2_gc1__fa995_1,c4_17e8,!((A & (!((B & C) | (D & (B | C))))) | (!A & !(!((B & C) | (D & (B | C)))))),no,223,1074.3096
+pic16,1,dd2_gc1__f0abb_1,c4_0abb,!((!A & B) | (D & (!A | C))),yes,2,5.6814
+pic16,2,dd2_gc1__f011f_1,c4_011f,!((C & D) | ((A | B) & (C | D))),yes,6,2.9427
+pic16,3,dd2_gc1__f0017_1,c4_0017,!(D | ((A | B) & (C | (A & B)))),yes,2,1.6524
+pic16,4,dd2_gc1__f17ff_1,c4_17ff,!(D & ((A & B) | (C & (A | B)))),yes,2,1.6524
+pic16,5,dd2_gc1__f88af_1,c4_0aee,!((!A | !B) & (D | (!A & C))),yes,1,0.3383
+pic16,6,dd2_gc1__f17_1,c3_17,!((A & B) | (C & (A | B))),yes,2,0.1258
+pic16,7,dd2_gc1__f03af_1,c4_03af,!((!A & C) | (D & (B | C))),yes,5,-1.9125
+pic16,8,dd2_gc1__f8aef_1,c4_08ae,!((!A & D) | (!B & C & (!A | D))),yes,1,-2.9274
+pic16,9,dd2_gc1__f2bff_1,c4_2bff,!(D & ((!A & B) | (C & (!A | B)))),yes,2,-3.3524
+pic16,10,dd2_gc1__fa995_1,c4_17e8,!((A & (!((B & C) | (D & (B | C))))) | (!A & !(!((B & C) | (D & (B | C)))))),no,1,-5.1544
+p16c5x,1,dd2_gc1__f011f_1,c4_011f,!((C & D) | ((A | B) & (C | D))),yes,8,2.8843
+p16c5x,2,dd2_gc1__f8aef_1,c4_08ae,!((!A & D) | (!B & C & (!A | D))),yes,1,-3.1458
+p16c5x,3,dd2_gc1__f8ace_1,c4_0acf,!((!A | C) & (!B | (!A & D))),yes,1,-5.8508
+p16c5x,4,dd2_gc1__f008e_1,c4_008e,!(D | ((!A | !B) & (C | (!A & !B)))),yes,2,-6.2916
+p16c5x,5,dd2_gc1__f1a_1,c3_1a,(C & (!(A | B))) | (!C & A),no,1,-7.102
+p16c5x,6,dd2_gc1__f6e_1,c3_6e,(A & (!(B & C))) | (!A & B),no,1,-7.102
+p16c5x,7,dd2_gc1__f8bbb_1,c4_08f8,(B & A) | (!B & (!(C & D))),no,1,-7.102
+p16c5x,8,dd2_gc1__f2cec_1,c4_2cec,(B & (!(C & D))) | (!B & (A & C)),no,1,-7.4237
+p16c5x,9,dd2_gc1__f2bff_1,c4_2bff,!(D & ((!A & B) | (C & (!A | B)))),yes,4,-7.5784
+p16c5x,10,dd2_gc1__f0bf0_1,c4_0bf0,(D & (!(C | (!A & B)))) | (!D & C),no,1,-8.8775
